@@ -8,7 +8,11 @@
 #ifndef SRC_COUGARLIB_COUGARSPEEDCONTROLLERAGGREGATE_H_
 #define SRC_COUGARLIB_COUGARSPEEDCONTROLLERAGGREGATE_H_
 
-#include "CougarIncludes.h"
+#include "WPILib.h"
+#include "CougarSpeedController.h"
+#include "../CougarDebug.h"
+#include <vector>
+#include <string>
 
 namespace cougar {
 

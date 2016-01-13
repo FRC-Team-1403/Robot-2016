@@ -8,13 +8,13 @@
 #ifndef SRC_COUGARLIB_COUGARJOYSTICK_H_
 #define SRC_COUGARLIB_COUGARJOYSTICK_H_
 
-#include "CougarIncludes.h"
+#include "WPILib.h"
 
 namespace cougar {
 
-class CougarJoystick {
+class CougarJoystick : public Joystick{
 public:
-	CougarJoystick();
+	CougarJoystick(uint32_t port);
 	virtual ~CougarJoystick();
 };
 
