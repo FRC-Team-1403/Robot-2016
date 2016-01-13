@@ -52,19 +52,15 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedContro
 }
 
 CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate() {
-	/*
-	for (CougarSpeedController controller : this->controllers_) {
+	for (CougarSpeedController *controller : *this->controllers_) {
 		delete controller;
 	}
 	delete this->controllers_;
-	*/
 }
 
 
 void CougarSpeedControllerAggregate::SetInverted(bool inverted) {
-	if (CougarDebug::DEBUG) {
-		printf("CougarSpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
-	}
+	CougarDebug::debugPrinter("CougarSpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
 	this->inverted_ = inverted;
 	for (CougarSpeedController *controller : *this->controllers_) {
 		controller->SetInverted(this->inverted_);
@@ -87,9 +83,7 @@ double CougarSpeedControllerAggregate::GetCurrent() {
 	return 0.0;
 }
 void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	if (CougarDebug::DEBUG) {
-		printf("CougarSpeedControllerAggregate %s set to speed %f at time %f", this->GetCName(), speed, Timer::GetFPGATimestamp());
-	}
+	CougarDebug::debugPrinter("CougarSpeedControllerAggregate %s set to speed %f at time %f", this->GetCName(), speed, Timer::GetFPGATimestamp());
 	for (CougarSpeedController *controller : *this->controllers_) {
 		controller->Set(speed);
 	}

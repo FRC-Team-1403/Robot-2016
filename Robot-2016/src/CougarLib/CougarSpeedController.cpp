@@ -29,9 +29,7 @@ CougarSpeedController::~CougarSpeedController() {
 }
 
 void CougarSpeedController::SetInverted(bool inverted) {
-	if (CougarDebug::DEBUG) {
-		printf("SpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
-	}
+	CougarDebug::debugPrinter("SpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
 	this->inverted_ = inverted;
 }
 
@@ -51,9 +49,7 @@ double CougarSpeedController::GetCurrent() {
 	return 0.0;
 }
 void CougarSpeedController::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	if (CougarDebug::DEBUG) {
-		printf("SpeedController %s set to speed %f at time %f", this->GetCName(), speed, Timer::GetFPGATimestamp());
-	}
+	CougarDebug::debugPrinter("SpeedController %s set to speed %f at time %f", this->GetCName(), speed, Timer::GetFPGATimestamp());
 	this->controller_->Set(speed);
 }
 float CougarSpeedController::Get() const{

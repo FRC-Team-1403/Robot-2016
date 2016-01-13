@@ -9,13 +9,14 @@
 
 namespace cougar {
 
-CougarDebug::CougarDebug() {
-	// TODO Auto-generated constructor stub
+CougarDebug::CougarDebug() {}
+CougarDebug::~CougarDebug() {}
 
+void CougarDebug::debugPrinter(const char *message, ...) {
+	va_list args;
+	va_start(args, message);
+	vprintf(message, args);
+	va_end(args);
 }
 
-CougarDebug::~CougarDebug() {
-	// TODO Auto-generated destructor stub
-}
-
-} /* namespace cougar */
+} // namespace cougar

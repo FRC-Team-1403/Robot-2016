@@ -8,14 +8,20 @@
 #ifndef SRC_COUGARLIB_COUGARDEBUG_H_
 #define SRC_COUGARLIB_COUGARDEBUG_H_
 
+#include <stdio.h>
+#include <stdarg.h>
+
 namespace cougar {
 
 class CougarDebug {
 public:
-	CougarDebug();
-	virtual ~CougarDebug();
+	static void debugPrinter(const char *message, ...);
 
 	static const bool DEBUG = false;
+
+private:
+	explicit CougarDebug();
+	virtual ~CougarDebug();
 };
 
 } /* namespace cougar */
