@@ -9,12 +9,23 @@
 
 namespace cougar {
 
-CougarDrive::CougarDrive(SpeedController *left, SpeedController *right) : RobotDrive(left, right){
+CougarDrive::CougarDrive(SpeedController *left, SpeedController *right) :
+		RobotDrive(left, right){
+
+}
+
+CougarDrive::CougarDrive(CougarSpeedController *left, CougarSpeedController *right) :
+		RobotDrive((SpeedController *)left, (SpeedController *)right){
+
+}
+
+CougarDrive::CougarDrive(CougarSpeedControllerAggregate *left, CougarSpeedControllerAggregate *right) :
+		RobotDrive((SpeedController *)left, (SpeedController *)right){
 
 }
 
 CougarDrive::~CougarDrive() {
-	// TODO Auto-generated destructor stub
+
 }
 
 } /* namespace cougar */

@@ -37,6 +37,7 @@ protected:
 	std::vector<CougarSpeedController*> *controllers_;
 	std::string name_;
 	bool inverted_;
+	bool shouldDelete_;
 
 };
 

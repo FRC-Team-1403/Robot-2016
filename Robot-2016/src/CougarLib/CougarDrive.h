@@ -17,6 +17,8 @@ namespace cougar {
 class CougarDrive : public RobotDrive {
 public:
 	explicit CougarDrive(SpeedController *left, SpeedController *right);
+	explicit CougarDrive(CougarSpeedController *left, CougarSpeedController *right);
+	explicit CougarDrive(CougarSpeedControllerAggregate *left, CougarSpeedControllerAggregate *right);
 	virtual ~CougarDrive();
 };
 
