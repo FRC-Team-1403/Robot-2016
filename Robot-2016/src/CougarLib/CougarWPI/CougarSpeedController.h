@@ -9,8 +9,7 @@
 #ifndef SRC_COUGARLIB_COUGARSPEEDCONTROLLER_H_
 #define SRC_COUGARLIB_COUGARSPEEDCONTROLLER_H_
 
-#include "WPILib.h"
-#include "CougarDebug.h"
+#include "CougarIncludes.h"
 
 namespace cougar {
 

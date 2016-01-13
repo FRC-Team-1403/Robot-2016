@@ -8,6 +8,8 @@
 #ifndef SRC_COUGARLIB_COUGARJOYSTICK_H_
 #define SRC_COUGARLIB_COUGARJOYSTICK_H_
 
+#include "CougarIncludes.h"
+
 namespace cougar {
 
 class CougarJoystick {

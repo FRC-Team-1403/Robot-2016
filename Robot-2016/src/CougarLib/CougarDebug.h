@@ -8,8 +8,6 @@
 #ifndef SRC_COUGARLIB_COUGARDEBUG_H_
 #define SRC_COUGARLIB_COUGARDEBUG_H_
 
-// Because all classes should include this file, all such includes should go here
-#include "WPILib.h"
 #include <stdio.h>
 #include <stdarg.h>
 #include <string>
