@@ -9,13 +9,13 @@
 
 namespace cougar {
 
-CougarJoystick::CougarJoystick(uint32_t port) : Joystick(port) {
-	// TODO Auto-generated constructor stub
+CougarJoystick::CougarJoystick(uint32_t port) {
+	this->joystick_ = new Joystick(port);
 
 }
 
 CougarJoystick::~CougarJoystick() {
-	// TODO Auto-generated destructor stub
+	delete this->joystick_;
 }
 
 } /* namespace cougar */

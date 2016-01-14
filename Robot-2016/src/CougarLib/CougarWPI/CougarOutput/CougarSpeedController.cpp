@@ -9,14 +9,14 @@
 
 namespace cougar {
 
-CougarSpeedController::CougarSpeedController(SpeedController *controller, std::string name, uint32_t pdpSlot, bool inverted/* = false*/) {
+CougarSpeedController::CougarSpeedController(SpeedController *controller, std::string name, uint32_t pdpSlot, bool inverted /* = false */) {
 	this->controller_ = controller;
 	this->name_ = name;
 	this->pdpSlot_ = pdpSlot;
 	this->inverted_ = inverted;
 }
 
-CougarSpeedController::CougarSpeedController(SpeedController *controller, const char *name, uint32_t pdpSlot, bool inverted/* = false*/) {
+CougarSpeedController::CougarSpeedController(SpeedController *controller, const char *name, uint32_t pdpSlot, bool inverted /* = false */) {
 	this->controller_ = controller;
 	std::string tmpName(name);
 	this->name_ = tmpName;
@@ -29,7 +29,7 @@ CougarSpeedController::~CougarSpeedController() {
 }
 
 void CougarSpeedController::SetInverted(bool inverted) {
-	CougarDebug::debugPrinter("SpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "SpeedController %s inversion set to %s\n\n", this->GetCName(), inverted ? "true" : "false");
 	this->inverted_ = inverted;
 }
 
@@ -49,7 +49,7 @@ double CougarSpeedController::GetCurrent() {
 	return 0.0;
 }
 void CougarSpeedController::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	CougarDebug::debugPrinter("SpeedController %s set to speed %f at time %f", this->GetCName(), speed, Timer::GetFPGATimestamp());
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "SpeedController %s set to speed %f at time %f\n\n", this->GetCName(), speed, Timer::GetFPGATimestamp());
 	this->controller_->Set(speed);
 }
 float CougarSpeedController::Get() const{

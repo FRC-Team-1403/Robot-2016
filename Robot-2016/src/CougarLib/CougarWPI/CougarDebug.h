@@ -16,9 +16,16 @@ namespace cougar {
 
 class CougarDebug {
 public:
-	static void debugPrinter(const char *message, ...);
+	static void debugPrinter(int level, const char *message, ...);
 
-	static const bool DEBUG = false;
+	// Messages marked with a debug level higher than
+	// or equal to current debug level will be shown.
+	enum DEBUG_LEVEL {
+		MESSAGE = 1,
+		ISSUE = 2,
+		FATAL_ERROR = 3
+	};
+	static const int DEBUG = MESSAGE;
 
 private:
 	explicit CougarDebug();

@@ -9,7 +9,7 @@
 
 namespace cougar {
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, std::string name, bool inverted/* = false*/) {
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, std::string name, bool inverted /* = false */) {
 	this->controllers_ = controllers;
 	this->name_ = name;
 	this->inverted_ = inverted;
@@ -19,7 +19,7 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<Couga
 	this->shouldDelete_ = false;
 }
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, const char *name, bool inverted/* = false*/) {
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, const char *name, bool inverted /* = false */) {
 	this->controllers_ = controllers;
 	std::string tmpName(name);
 	this->name_ = tmpName;
@@ -29,7 +29,7 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<Couga
 	}
 	this->shouldDelete_ = false;
 }
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, std::string name, bool inverted/* = false*/) {
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, std::string name, bool inverted /* = false */) {
 	this->controllers_ = new std::vector<CougarSpeedController*>();
 	for (uint32_t i = 0; i < count; i++) {
 		this->controllers_->push_back(&controllers[i]);
@@ -41,7 +41,7 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedContro
 	}
 	this->shouldDelete_ = true;
 }
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, const char *name, bool inverted/* = false*/) {
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, const char *name, bool inverted /* = false */) {
 	this->controllers_ = new std::vector<CougarSpeedController*>();
 	for (uint32_t i = 0; i < count; i++) {
 		this->controllers_->push_back(&controllers[i]);
@@ -63,7 +63,7 @@ CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate() {
 
 
 void CougarSpeedControllerAggregate::SetInverted(bool inverted) {
-	CougarDebug::debugPrinter("CougarSpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s inversion set to %s\n\n", this->GetCName(), inverted ? "true" : "false");
 	this->inverted_ = inverted;
 	for (CougarSpeedController *controller : *this->controllers_) {
 		controller->SetInverted(this->inverted_);
@@ -86,7 +86,7 @@ double CougarSpeedControllerAggregate::GetCurrent() {
 	return 0.0;
 }
 void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	CougarDebug::debugPrinter("CougarSpeedControllerAggregate %s set to speed %f at time %f", this->GetCName(), speed, Timer::GetFPGATimestamp());
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f at time %f\n\n", this->GetCName(), speed, Timer::GetFPGATimestamp());
 	for (CougarSpeedController *controller : *this->controllers_) {
 		controller->Set(speed);
 	}

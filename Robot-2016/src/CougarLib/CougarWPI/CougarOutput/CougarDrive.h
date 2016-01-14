@@ -11,6 +11,8 @@
 #include "WPILib.h"
 #include "CougarSpeedController.h"
 #include "CougarSpeedControllerAggregate.h"
+#include "../CougarHID/CougarJoystick.h"
+#include "../CougarDebug.h"
 
 namespace cougar {
 
@@ -19,8 +21,17 @@ public:
 	explicit CougarDrive(SpeedController *left, SpeedController *right);
 	virtual ~CougarDrive();
 
+	virtual void TankDrive(CougarJoystick *joystick, bool squaredInputs = true);
+	virtual void ArcadeDrive(CougarJoystick *joystick, int stick /* LEFT or RIGHT */ , bool squaredInputs = true);
+
+	enum ANALOG_STICKS {
+		LEFT,
+		RIGHT
+	};
 protected:
+
 	RobotDrive *drive_;
+	static const bool SMOOTHING = false;
 };
 
 } /* namespace cougar */

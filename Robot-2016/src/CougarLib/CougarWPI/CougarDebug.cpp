@@ -12,7 +12,7 @@ namespace cougar {
 CougarDebug::CougarDebug() {}
 CougarDebug::~CougarDebug() {}
 
-void CougarDebug::debugPrinter(const char *message, ...) {
+void CougarDebug::debugPrinter(int level, const char *message, ...) {
 	va_list args;
 	va_start(args, message);
 	vprintf(message, args);
