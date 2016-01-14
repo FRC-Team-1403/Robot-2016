@@ -20,6 +20,7 @@ public:
 	explicit CougarDrive(CougarSpeedController *left, CougarSpeedController *right);
 	explicit CougarDrive(CougarSpeedControllerAggregate *left, CougarSpeedControllerAggregate *right);
 	virtual ~CougarDrive();
+
 };
 
 } /* namespace cougar */
