@@ -9,23 +9,12 @@
 
 namespace cougar {
 
-CougarDrive::CougarDrive(SpeedController *left, SpeedController *right) :
-		RobotDrive(left, right){
-
-}
-
-CougarDrive::CougarDrive(CougarSpeedController *left, CougarSpeedController *right) :
-		RobotDrive((SpeedController *)left, (SpeedController *)right){
-
-}
-
-CougarDrive::CougarDrive(CougarSpeedControllerAggregate *left, CougarSpeedControllerAggregate *right) :
-		RobotDrive((SpeedController *)left, (SpeedController *)right){
-
+CougarDrive::CougarDrive(SpeedController *left, SpeedController *right) {
+	this->drive_ = new RobotDrive(left, right);
 }
 
 CougarDrive::~CougarDrive() {
-
+	delete this->drive_;
 }
 
 } /* namespace cougar */
