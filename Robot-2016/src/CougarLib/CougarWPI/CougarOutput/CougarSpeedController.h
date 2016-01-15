@@ -9,6 +9,7 @@
 #ifndef SRC_COUGARLIB_COUGARSPEEDCONTROLLER_H_
 #define SRC_COUGARLIB_COUGARSPEEDCONTROLLER_H_
 
+#include <memory>
 #include "WPILib.h"
 #include "../../CougarDebug.h"
 #include <vector>
@@ -18,8 +19,8 @@ namespace cougar {
 
 class CougarSpeedController : public SpeedController {
 public:
-	explicit CougarSpeedController(std::shared_ptr<CougarSpeedController> controller, std::string name, uint32_t pdpSlot, bool inverted = false);
-	explicit CougarSpeedController(std::shared_ptr<CougarSpeedController> controller, const char *name, uint32_t pdpSlot, bool inverted = false);
+	explicit CougarSpeedController(std::shared_ptr<SpeedController> controller, std::string name, uint32_t pdpSlot, bool inverted = false);
+	explicit CougarSpeedController(std::shared_ptr<SpeedController> controller, const char *name, uint32_t pdpSlot, bool inverted = false);
 	explicit CougarSpeedController(std::shared_ptr<CougarSpeedController> controller);
 	explicit CougarSpeedController(const CougarSpeedController &controller);
 	virtual ~CougarSpeedController();
@@ -40,17 +41,17 @@ protected:
 
 	class CougarSpeedControllerExtractor final {
 	public:
-		static std::shared_ptr<CougarSpeedController> extractController(std::shared_ptr<CougarSpeedController> controller);
-		static std::shared_ptr<CougarSpeedController> extractController(const CougarSpeedController &controller);
-		static uint32_t extractPDPSlot(std::shared_ptr<CougarSpeedController> controller);
-		static uint32_t extractPDPSlot(const CougarSpeedController &controller);
+		static std::shared_ptr<SpeedController> ExtractController(std::shared_ptr<CougarSpeedController> controller);
+		static std::shared_ptr<SpeedController> ExtractController(const CougarSpeedController &controller);
+		static uint32_t ExtractPDPSlot(std::shared_ptr<CougarSpeedController> controller);
+		static uint32_t ExtractPDPSlot(const CougarSpeedController &controller);
 	};
 	friend CougarSpeedControllerExtractor;
 
-	virtual std::shared_ptr<CougarSpeedController> getController() const;
-	virtual uint32_t getPDPSlot() const;
+	virtual std::shared_ptr<SpeedController> GetController() const;
+	virtual uint32_t GetPDPSlot() const;
 
-	std::shared_ptr<CougarSpeedController> controller_;
+	std::shared_ptr<SpeedController> controller_;
 	std::string name_;
 	uint32_t pdpSlot_;
 	bool inverted_;

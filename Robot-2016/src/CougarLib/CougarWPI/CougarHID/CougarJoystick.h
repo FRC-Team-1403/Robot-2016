@@ -8,6 +8,7 @@
 #ifndef SRC_COUGARLIB_COUGARJOYSTICK_H_
 #define SRC_COUGARLIB_COUGARJOYSTICK_H_
 
+#include <memory>
 #include "WPILib.h"
 
 namespace cougar {
@@ -35,7 +36,7 @@ public:
 	virtual float GetStickRightAxisX();
 	virtual float GetStickRightAxisY();
 protected:
-	Joystick *joystick_;
+	std::shared_ptr<Joystick> joystick_;
 };
 
 } /* namespace cougar */

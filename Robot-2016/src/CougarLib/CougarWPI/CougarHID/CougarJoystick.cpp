@@ -10,12 +10,11 @@
 namespace cougar {
 
 CougarJoystick::CougarJoystick(uint32_t port) {
-	this->joystick_ = new Joystick(port);
-
+	std::shared_ptr<Joystick> tmpJoystick(new Joystick(port));
+	this->joystick_ = tmpJoystick;
 }
 
 CougarJoystick::~CougarJoystick() {
-	delete this->joystick_;
 }
 
 bool CougarJoystick::GetButtonA() {

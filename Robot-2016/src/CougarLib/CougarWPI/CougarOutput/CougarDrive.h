@@ -8,6 +8,7 @@
 #ifndef SRC_COUGARLIB_COUGARDRIVE_H_
 #define SRC_COUGARLIB_COUGARDRIVE_H_
 
+#include <memory>
 #include "WPILib.h"
 #include "CougarSpeedController.h"
 #include "CougarSpeedControllerAggregate.h"
@@ -19,12 +20,10 @@ namespace cougar {
 
 class CougarDrive {
 public:
-	explicit CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right);
-	explicit CougarDrive(std::shared_ptr<RobotDrive> drive) = delete;
+	explicit CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name);
+	explicit CougarDrive(std::shared_ptr<CougarDrive> drive);
+	explicit CougarDrive(const CougarDrive &drive);
 	virtual ~CougarDrive();
-
-	// Some method will be const because they are intended to be basic wrappers over RobotDrive.
-	// The only thing they should be doing is calling the matching method on the drive_ object.
 
 	virtual void Drive(float outputMagnitude, float curve) const;
 	virtual void TankDrive(std::shared_ptr<CougarJoystick> joystick, bool squaredInputs = true);
@@ -33,24 +32,35 @@ public:
 	// But for right now, we rarely use anything else and I'm lazy
 
 	// Just some happy little wrapper methods
-	virtual void SetSensitivity(float sensitivity) const;
-	virtual void SetMaxOutput(double maxOutput) const;
-	virtual void SetExpiration(float timeout) const;
+	virtual void SetSensitivity(float sensitivity);
+	virtual void SetMaxOutput(double maxOutput);
+	virtual void SetExpiration(float timeout);
 	virtual float GetExpiration() const;
 	virtual bool IsAlive() const;
-	virtual void StopMotor() const;
+	virtual void StopMotor();
 	virtual bool IsSafetyEnabled() const;
-	virtual void SetSafetyEnabled(bool enabled) const;
+	virtual void SetSafetyEnabled(bool enabled);
+
+	virtual std::string GetName() const;
+	virtual const char *GetCName() const;
 
 	enum ANALOG_STICKS {
 		LEFT,
 		RIGHT
 	};
 protected:
+	class CougarDriveExtractor final {
+		static std::shared_ptr<RobotDrive> ExtractDrive(std::shared_ptr<CougarDrive> drive);
+		static std::shared_ptr<RobotDrive> ExtractDrive(const CougarDrive &drive);
+	};
+	friend CougarDriveExtractor;
 
-	float speedFactor(std::shared_ptr<CougarJoystick> joystick);
+	virtual std::shared_ptr<RobotDrive> GetDrive();
+	virtual const bool GetSmoothing();
+	virtual float speedFactor(std::shared_ptr<CougarJoystick> joystick);
 
 	std::shared_ptr<RobotDrive> drive_;
+	std::string name_;
 	static const bool SMOOTHING = false;
 };
 
