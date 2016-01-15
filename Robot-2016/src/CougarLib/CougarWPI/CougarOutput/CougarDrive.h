@@ -16,7 +16,8 @@
 
 namespace cougar {
 
-class CougarDrive {
+
+class CougarDrive : protected RobotDrive {
 public:
 	explicit CougarDrive(SpeedController *left, SpeedController *right);
 	virtual ~CougarDrive();
@@ -29,6 +30,8 @@ public:
 		RIGHT
 	};
 protected:
+
+	double speedFactor(CougarJoystick *joystick);
 
 	RobotDrive *drive_;
 	static const bool SMOOTHING = false;

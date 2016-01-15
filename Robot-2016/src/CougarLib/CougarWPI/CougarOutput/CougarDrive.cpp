@@ -9,7 +9,7 @@
 
 namespace cougar {
 
-CougarDrive::CougarDrive(SpeedController *left, SpeedController *right) {
+CougarDrive::CougarDrive(SpeedController *left, SpeedController *right) : RobotDrive(left, right){
 	this->drive_ = new RobotDrive(left, right);
 }
 
@@ -21,22 +21,27 @@ void CougarDrive::TankDrive(CougarJoystick *joystick, bool squaredInputs /* = tr
 	if (SMOOTHING) {
 		// TODO: Implement input smoothing
 	} else {
-		this->drive_->TankDrive(joystick->GetStickLeftAxisY(), joystick->GetStickRightAxisY(), squaredInputs);
+		this->drive_->TankDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick), joystick->GetStickRightAxisY() * this->speedFactor(joystick), squaredInputs);
 	}
 }
 void CougarDrive::ArcadeDrive(CougarJoystick *joystick, int stick /* LEFT or RIGHT */ , bool squaredInputs /* = true */) {
 	if (SMOOTHING) {
-			// TODO: Implement input smoothing
+		// TODO: Implement input smoothing
+	} else {
+		if (stick == LEFT) {
+			this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick), joystick->GetStickLeftAxisX() * this->speedFactor(joystick), squaredInputs);
+		} else if (stick == RIGHT) {
+			this->drive_->ArcadeDrive(joystick->GetStickRightAxisY() * this->speedFactor(joystick), joystick->GetStickRightAxisX() * this->speedFactor(joystick), squaredInputs);
 		} else {
-			if (stick == LEFT) {
-				this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY(), joystick->GetStickLeftAxisX(), squaredInputs);
-			} else if (stick == RIGHT) {
-				this->drive_->ArcadeDrive(joystick->GetStickRightAxisY(), joystick->GetStickRightAxisX(), squaredInputs);
-			} else {
-				CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::ISSUE, "An invalid analog stick has been specified...\n\n");
-				throw "An invalid analog stick has been specified...";
-			}
+			CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::ISSUE, "An invalid analog stick has been specified...\n\n");
+			throw "An invalid analog stick has been specified...";
 		}
+	}
+}
+
+double CougarDrive::speedFactor(CougarJoystick *joystick) {
+	const double SPEED_FACTOR = 0.5;
+	return joystick->GetButtonY() ? SPEED_FACTOR : 1;
 }
 
 } /* namespace cougar */

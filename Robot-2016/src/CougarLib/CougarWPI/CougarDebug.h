@@ -20,6 +20,7 @@ public:
 
 	// Messages marked with a debug level higher than
 	// or equal to current debug level will be shown.
+	// If DEBUG is higher, messages become more verbose.
 	enum DEBUG_LEVEL {
 		MESSAGE = 1,
 		ISSUE = 2,

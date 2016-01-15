@@ -13,10 +13,12 @@ CougarDebug::CougarDebug() {}
 CougarDebug::~CougarDebug() {}
 
 void CougarDebug::debugPrinter(int level, const char *message, ...) {
-	va_list args;
-	va_start(args, message);
-	vprintf(message, args);
-	va_end(args);
+	if (level >= DEBUG) {
+		va_list args;
+		va_start(args, message);
+		vprintf(message, args);
+		va_end(args);
+	}
 }
 
 } // namespace cougar
