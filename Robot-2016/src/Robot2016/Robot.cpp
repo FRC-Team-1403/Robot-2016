@@ -1,4 +1,5 @@
 #include "Robot.h"
+#include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
 
 void Robot::RobotInit()

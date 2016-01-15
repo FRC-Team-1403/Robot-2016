@@ -8,6 +8,7 @@
 #ifndef SRC_COUGARLIB_COUGARDEBUG_H_
 #define SRC_COUGARLIB_COUGARDEBUG_H_
 
+#include <WPILib.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <string>
@@ -16,9 +17,17 @@ namespace cougar {
 
 class CougarDebug {
 public:
-	static void debugPrinter(const char *message, ...);
+	static void debugPrinter(int level, const char *message, ...);
 
-	static const bool DEBUG = false;
+	// Messages marked with a debug level higher than
+	// or equal to current debug level will be shown.
+	// If DEBUG is higher, messages become more verbose.
+	enum DEBUG_LEVEL {
+		MESSAGE = 1,
+		ISSUE = 2,
+		FATAL_ERROR = 3
+	};
+	static const int DEBUG = ISSUE;
 
 private:
 	explicit CougarDebug();
