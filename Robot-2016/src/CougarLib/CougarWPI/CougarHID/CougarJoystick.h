@@ -30,10 +30,10 @@ public:
 	virtual bool GetButtonDPADLeft();
 	virtual bool GetButtonDPADRight();
 
-	virtual double GetStickLeftAxisX();
-	virtual double GetStickLeftAxisY();
-	virtual double GetStickRightAxisX();
-	virtual double GetStickRightAxisY();
+	virtual float GetStickLeftAxisX();
+	virtual float GetStickLeftAxisY();
+	virtual float GetStickRightAxisX();
+	virtual float GetStickRightAxisY();
 protected:
 	Joystick *joystick_;
 };

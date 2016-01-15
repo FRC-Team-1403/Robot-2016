@@ -74,14 +74,14 @@ bool CougarSpeedControllerAggregate::GetInverted() const{
 	return this->inverted_;
 }
 
-double CougarSpeedControllerAggregate::Sign() {
+float CougarSpeedControllerAggregate::Sign() {
 	if (this->inverted_) {
 		return -1.0;
 	} else {
 		return 1.0;
 	}
 }
-double CougarSpeedControllerAggregate::GetCurrent() {
+float CougarSpeedControllerAggregate::GetCurrent() {
 	// TODO implement this properly
 	return 0.0;
 }
@@ -91,7 +91,7 @@ void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/)
 		controller->Set(speed);
 	}
 }
-float CougarSpeedControllerAggregate::Get() const{
+float CougarSpeedControllerAggregate::Get() const {
 	return this->controllers_->at(0)->Get(); // All CougarSpeedControllers should be at the same speed anyway, so just get the first one
 }
 

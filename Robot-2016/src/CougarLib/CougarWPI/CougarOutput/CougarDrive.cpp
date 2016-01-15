@@ -17,6 +17,10 @@ CougarDrive::~CougarDrive() {
 	delete this->drive_;
 }
 
+void CougarDrive::Drive(float outputMagnitude, float curve) const{
+	this->drive_->Drive(outputMagnitude, curve);
+}
+
 void CougarDrive::TankDrive(CougarJoystick *joystick, bool squaredInputs /* = true */) {
 	if (SMOOTHING) {
 		// TODO: Implement input smoothing
@@ -39,8 +43,40 @@ void CougarDrive::ArcadeDrive(CougarJoystick *joystick, int stick /* LEFT or RIG
 	}
 }
 
-double CougarDrive::speedFactor(CougarJoystick *joystick) {
-	const double SPEED_FACTOR = 0.5;
+void CougarDrive::SetSensitivity(float sensitivity) const {
+	this->drive_->SetSensitivity(sensitivity);
+}
+
+void CougarDrive::SetMaxOutput(double maxOutput) const {
+	this->drive_->SetMaxOutput(maxOutput);
+}
+
+void CougarDrive::SetExpiration(float timeout) const {
+	this->drive_->SetExpiration(timeout);
+}
+
+float CougarDrive::GetExpiration() const {
+	return this->drive_->GetExpiration();
+}
+
+bool CougarDrive::IsAlive() const {
+	return this->drive_->IsAlive();
+}
+
+void CougarDrive::StopMotor() const {
+	this->drive_->StopMotor();
+}
+
+bool CougarDrive::IsSafetyEnabled() const {
+	return this->drive_->IsSafetyEnabled();
+}
+
+void CougarDrive::SetSafetyEnabled(bool enabled) const {
+	this->drive_->SetSafetyEnabled(enabled);
+}
+
+float CougarDrive::speedFactor(CougarJoystick *joystick) {
+	const float SPEED_FACTOR = 0.5;
 	return joystick->GetButtonY() ? SPEED_FACTOR : 1;
 }
 

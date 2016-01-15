@@ -27,8 +27,8 @@ public:
 	virtual void SetInverted(bool inverted) override;
 	virtual bool GetInverted() const override;
 
-	virtual double Sign();
-	virtual double GetCurrent();
+	virtual float Sign();
+	virtual float GetCurrent();
 	virtual void Set(float speed, uint8_t syncGroup = 0) override;
 	virtual float Get() const override;
 	virtual void Disable() override;

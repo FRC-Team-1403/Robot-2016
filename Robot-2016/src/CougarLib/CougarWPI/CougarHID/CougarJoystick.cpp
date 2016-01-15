@@ -74,22 +74,22 @@ bool CougarJoystick::GetButtonDPADRight() {
 	return false;
 }
 
-double CougarJoystick::GetStickLeftAxisX() {
+float CougarJoystick::GetStickLeftAxisX() {
 	// TODO
 	return false;
 }
 
-double CougarJoystick::GetStickLeftAxisY() {
+float CougarJoystick::GetStickLeftAxisY() {
 	// TODO
 	return false;
 }
 
-double CougarJoystick::GetStickRightAxisX() {
+float CougarJoystick::GetStickRightAxisX() {
 	// TODO
 	return false;
 }
 
-double CougarJoystick::GetStickRightAxisY() {
+float CougarJoystick::GetStickRightAxisY() {
 	// TODO
 	return false;
 }

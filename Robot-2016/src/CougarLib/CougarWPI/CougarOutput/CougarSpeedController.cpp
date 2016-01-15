@@ -37,14 +37,14 @@ bool CougarSpeedController::GetInverted() const{
 	return this->inverted_;
 }
 
-double CougarSpeedController::Sign() {
+float CougarSpeedController::Sign() {
 	if (this->inverted_) {
 		return -1.0;
 	} else {
 		return 1.0;
 	}
 }
-double CougarSpeedController::GetCurrent() {
+float CougarSpeedController::GetCurrent() {
 	// TODO implement this properly
 	return 0.0;
 }
