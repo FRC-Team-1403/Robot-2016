@@ -18,11 +18,9 @@ namespace cougar {
 
 class CougarSpeedControllerAggregate : SpeedController {
 public:
-	explicit CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, std::string name, bool inverted = false);
-	explicit CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, const char *name, bool inverted = false);
-	explicit CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, std::string name, bool inverted = false);
-	explicit CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, const char *name, bool inverted = false);
-	explicit CougarSpeedControllerAggregate(CougarSpeedControllerAggregate *controllers);
+	explicit CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers, std::string name, bool inverted = false);
+	explicit CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers, const char *name, bool inverted = false);
+	explicit CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers);
 	explicit CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers);
 	virtual ~CougarSpeedControllerAggregate();
 
@@ -42,17 +40,16 @@ protected:
 
 	class CougarSpeedControllerAggregateExtractor final {
 	public:
-		static std::vector<CougarSpeedController*> *extractControllers(CougarSpeedControllerAggregate *controllers);
-		static std::vector<CougarSpeedController*> *extractControllers(const CougarSpeedControllerAggregate &controllers);
+		static std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> extractControllers(std::shared_ptr<CougarSpeedControllerAggregate> controllers);
+		static std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> extractControllers(const CougarSpeedControllerAggregate &controllers);
 	};
 	friend CougarSpeedControllerAggregateExtractor;
 
-	virtual std::vector<CougarSpeedController*> *getControllers() const;
+	virtual std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> getControllers() const;
 
-	std::vector<CougarSpeedController*> *controllers_;
+	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers_;
 	std::string name_;
 	bool inverted_;
-	bool shouldDelete_;
 
 };
 

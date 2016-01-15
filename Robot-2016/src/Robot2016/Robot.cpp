@@ -55,7 +55,6 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit()
 {
-	cougar::CougarDrive *r = new cougar::CougarDrive(new Victor(0), new Victor(1));
 	// This makes sure that the autonomous stops running when
 	// teleop starts running. If you want the autonomous to
 	// continue until interrupted by another command, remove

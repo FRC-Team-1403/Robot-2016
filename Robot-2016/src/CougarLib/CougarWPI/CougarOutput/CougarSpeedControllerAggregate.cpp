@@ -9,81 +9,38 @@
 
 namespace cougar {
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, std::string name, bool inverted /* = false */) {
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers, std::string name, bool inverted /* = false */) {
 	this->controllers_ = controllers;
 	this->name_ = name;
 	this->inverted_ = inverted;
-	for (CougarSpeedController *controller : *this->controllers_) {
+	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->SetInverted(this->inverted_);
 	}
-	this->shouldDelete_ = false;
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
 }
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, const char *name, bool inverted /* = false */) {
-	this->controllers_ = controllers;
+// Ignore warning about not initializing things in these constructors
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers, const char *name, bool inverted /* = false */) {
 	std::string tmpName(name);
-	this->name_ = tmpName;
-	this->inverted_ = inverted;
-	for (CougarSpeedController *controller : *this->controllers_) {
-		controller->SetInverted(this->inverted_);
-	}
-	this->shouldDelete_ = false;
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
-}
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, std::string name, bool inverted /* = false */) {
-	this->controllers_ = new std::vector<CougarSpeedController*>();
-	for (uint32_t i = 0; i < count; i++) {
-		this->controllers_->push_back(new CougarSpeedController(controllers[i]));
-	}
-	this->name_ = name;
-	this->inverted_ = inverted;
-	for (CougarSpeedController *controller : *this->controllers_) {
-		controller->SetInverted(this->inverted_);
-	}
-	this->shouldDelete_ = true;
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
-}
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, const char *name, bool inverted /* = false */) {
-	this->controllers_ = new std::vector<CougarSpeedController*>();
-	for (uint32_t i = 0; i < count; i++) {
-		this->controllers_->push_back(new CougarSpeedController(controllers[i]));
-	}
-	std::string tmpName(name);
-	this->name_ = tmpName;
-	this->inverted_ = inverted;
-	for (CougarSpeedController *controller : *this->controllers_) {
-		controller->SetInverted(this->inverted_);
-	}
-	this->shouldDelete_ = true;
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
+	CougarSpeedControllerAggregate(controllers, tmpName, inverted);
 }
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedControllerAggregate *controllers) {
-	this->controllers_ = CougarSpeedControllerAggregateExtractor::extractControllers(controllers);
-	this->name_ = controllers->GetName();
-	this->inverted_ = controllers->GetInverted();
-	this->shouldDelete_ = false;
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers) {
+	CougarSpeedControllerAggregate(CougarSpeedControllerAggregateExtractor::extractControllers(controllers), controllers->GetName(), controllers->GetInverted());
 }
 
 CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers) {
-	this->controllers_ = CougarSpeedControllerAggregateExtractor::extractControllers(controllers);
-	this->name_ = controllers.GetName();
-	this->inverted_ = controllers.GetInverted();
-	this->shouldDelete_ = false;
+	CougarSpeedControllerAggregate(CougarSpeedControllerAggregateExtractor::extractControllers(controllers), controllers.GetName(), controllers.GetInverted());
 }
 
 CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate() {
-	if (this->shouldDelete_) {
-		delete this->controllers_;
-	}
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s destroyed", this->GetCName());
 }
 
 
 void CougarSpeedControllerAggregate::SetInverted(bool inverted) {
 	this->inverted_ = inverted;
-	for (CougarSpeedController *controller : *this->controllers_) {
+	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->SetInverted(this->inverted_);
 	}
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
@@ -105,7 +62,7 @@ float CougarSpeedControllerAggregate::GetCurrent() const {
 	return 0.0;
 }
 void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	for (CougarSpeedController *controller : *this->controllers_) {
+	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->Set(speed);
 	}
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
@@ -115,7 +72,7 @@ float CougarSpeedControllerAggregate::Get() const {
 }
 
 void CougarSpeedControllerAggregate::Disable() {
-	for (CougarSpeedController *controller : *this->controllers_) {
+	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->Disable();
 	}
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s disabled", this->GetCName());
@@ -123,7 +80,7 @@ void CougarSpeedControllerAggregate::Disable() {
 }
 
 void CougarSpeedControllerAggregate::PIDWrite(float output) {
-	for (CougarSpeedController *controller : *this->controllers_) {
+	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->PIDWrite(this->Sign() * output);
 	}
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s...did something with PIDWrite. I don't actually know what that method does.", this->GetCName());
@@ -137,15 +94,17 @@ const char *CougarSpeedControllerAggregate::GetCName() const {
 	return this->name_.c_str();
 }
 
-std::vector<CougarSpeedController*> *CougarSpeedControllerAggregate::CougarSpeedControllerAggregateExtractor::extractControllers(CougarSpeedControllerAggregate *controllers) {
-	return new std::vector<CougarSpeedController*>(controllers->getControllers());
+std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> CougarSpeedControllerAggregate::CougarSpeedControllerAggregateExtractor::extractControllers(std::shared_ptr<CougarSpeedControllerAggregate> controllers) {
+	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> tmpControllers(controllers->getControllers());
+	return tmpControllers;
 }
 
-std::vector<CougarSpeedController*> *CougarSpeedControllerAggregate::CougarSpeedControllerAggregateExtractor::extractControllers(const CougarSpeedControllerAggregate &controllers) {
-	return new std::vector<CougarSpeedController*>(controllers.getControllers());
+std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> CougarSpeedControllerAggregate::CougarSpeedControllerAggregateExtractor::extractControllers(const CougarSpeedControllerAggregate &controllers) {
+	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> tmpControllers(controllers.getControllers());
+	return tmpControllers;
 }
 
-std::vector<CougarSpeedController*> *CougarSpeedControllerAggregate::getControllers() const {
+std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> CougarSpeedControllerAggregate::getControllers() const {
 	return this->controllers_;
 }
 

@@ -19,16 +19,16 @@ namespace cougar {
 
 class CougarDrive {
 public:
-	explicit CougarDrive(SpeedController *left, SpeedController *right);
-	explicit CougarDrive(RobotDrive *drive) = delete;
+	explicit CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right);
+	explicit CougarDrive(std::shared_ptr<RobotDrive> drive) = delete;
 	virtual ~CougarDrive();
 
 	// Some method will be const because they are intended to be basic wrappers over RobotDrive.
 	// The only thing they should be doing is calling the matching method on the drive_ object.
 
 	virtual void Drive(float outputMagnitude, float curve) const;
-	virtual void TankDrive(CougarJoystick *joystick, bool squaredInputs = true);
-	virtual void ArcadeDrive(CougarJoystick *joystick, int stick /* LEFT or RIGHT */ , bool squaredInputs = true);
+	virtual void TankDrive(std::shared_ptr<CougarJoystick> joystick, bool squaredInputs = true);
+	virtual void ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool squaredInputs = true);
 	// I will implement more drive methods, e.g. mecanum, holonomic, if we decide to use them
 	// But for right now, we rarely use anything else and I'm lazy
 
@@ -48,9 +48,9 @@ public:
 	};
 protected:
 
-	float speedFactor(CougarJoystick *joystick);
+	float speedFactor(std::shared_ptr<CougarJoystick> joystick);
 
-	RobotDrive *drive_;
+	std::shared_ptr<RobotDrive> drive_;
 	static const bool SMOOTHING = false;
 };
 
