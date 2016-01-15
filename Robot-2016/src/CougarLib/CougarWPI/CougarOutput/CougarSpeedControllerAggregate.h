@@ -27,14 +27,14 @@ public:
 	virtual void SetInverted(bool inverted) override;
 	virtual bool GetInverted() const override;
 
-	virtual float Sign();
-	virtual float GetCurrent();
+	virtual float Sign() const;
+	virtual float GetCurrent() const;
 	virtual void Set(float speed, uint8_t syncGroup = 0) override;
 	virtual float Get() const override;
 	virtual void Disable() override;
 	virtual void PIDWrite(float output) override;
-	virtual std::string GetName();
-	virtual const char *GetCName();
+	virtual std::string GetName() const;
+	virtual const char *GetCName() const;
 
 protected:
 	std::vector<CougarSpeedController*> *controllers_;

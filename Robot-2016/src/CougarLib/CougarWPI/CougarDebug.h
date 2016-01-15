@@ -8,6 +8,7 @@
 #ifndef SRC_COUGARLIB_COUGARDEBUG_H_
 #define SRC_COUGARLIB_COUGARDEBUG_H_
 
+#include <WPILib.h>
 #include <stdio.h>
 #include <stdarg.h>
 #include <string>
@@ -26,7 +27,7 @@ public:
 		ISSUE = 2,
 		FATAL_ERROR = 3
 	};
-	static const int DEBUG = MESSAGE;
+	static const int DEBUG = ISSUE;
 
 private:
 	explicit CougarDebug();

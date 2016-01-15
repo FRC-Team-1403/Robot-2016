@@ -17,6 +17,7 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<Couga
 		controller->SetInverted(this->inverted_);
 	}
 	this->shouldDelete_ = false;
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
 }
 
 CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, const char *name, bool inverted /* = false */) {
@@ -28,11 +29,12 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::vector<Couga
 		controller->SetInverted(this->inverted_);
 	}
 	this->shouldDelete_ = false;
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
 }
 CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, std::string name, bool inverted /* = false */) {
 	this->controllers_ = new std::vector<CougarSpeedController*>();
 	for (uint32_t i = 0; i < count; i++) {
-		this->controllers_->push_back(&controllers[i]);
+		this->controllers_->push_back(new CougarSpeedController(controllers[i]));
 	}
 	this->name_ = name;
 	this->inverted_ = inverted;
@@ -40,11 +42,12 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedContro
 		controller->SetInverted(this->inverted_);
 	}
 	this->shouldDelete_ = true;
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
 }
 CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, const char *name, bool inverted /* = false */) {
 	this->controllers_ = new std::vector<CougarSpeedController*>();
 	for (uint32_t i = 0; i < count; i++) {
-		this->controllers_->push_back(&controllers[i]);
+		this->controllers_->push_back(new CougarSpeedController(controllers[i]));
 	}
 	std::string tmpName(name);
 	this->name_ = tmpName;
@@ -53,43 +56,45 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedContro
 		controller->SetInverted(this->inverted_);
 	}
 	this->shouldDelete_ = true;
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
 }
 
 CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate() {
 	if (this->shouldDelete_) {
 		delete this->controllers_;
 	}
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s destroyed", this->GetCName());
 }
 
 
 void CougarSpeedControllerAggregate::SetInverted(bool inverted) {
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s inversion set to %s\n\n", this->GetCName(), inverted ? "true" : "false");
 	this->inverted_ = inverted;
 	for (CougarSpeedController *controller : *this->controllers_) {
 		controller->SetInverted(this->inverted_);
 	}
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
 }
 
-bool CougarSpeedControllerAggregate::GetInverted() const{
+bool CougarSpeedControllerAggregate::GetInverted() const {
 	return this->inverted_;
 }
 
-float CougarSpeedControllerAggregate::Sign() {
+float CougarSpeedControllerAggregate::Sign() const {
 	if (this->inverted_) {
 		return -1.0;
 	} else {
 		return 1.0;
 	}
 }
-float CougarSpeedControllerAggregate::GetCurrent() {
+float CougarSpeedControllerAggregate::GetCurrent() const {
 	// TODO implement this properly
 	return 0.0;
 }
 void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f at time %f\n\n", this->GetCName(), speed, Timer::GetFPGATimestamp());
 	for (CougarSpeedController *controller : *this->controllers_) {
 		controller->Set(speed);
 	}
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
 }
 float CougarSpeedControllerAggregate::Get() const {
 	return this->controllers_->at(0)->Get(); // All CougarSpeedControllers should be at the same speed anyway, so just get the first one
@@ -99,18 +104,22 @@ void CougarSpeedControllerAggregate::Disable() {
 	for (CougarSpeedController *controller : *this->controllers_) {
 		controller->Disable();
 	}
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s disabled", this->GetCName());
+
 }
 
 void CougarSpeedControllerAggregate::PIDWrite(float output) {
 	for (CougarSpeedController *controller : *this->controllers_) {
 		controller->PIDWrite(this->Sign() * output);
 	}
+	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s...did something with PIDWrite. I don't actually know what that method does.", this->GetCName());
+
 }
 
-std::string CougarSpeedControllerAggregate::GetName() {
+std::string CougarSpeedControllerAggregate::GetName() const {
 	return this->name_;
 }
-const char *CougarSpeedControllerAggregate::GetCName() {
+const char *CougarSpeedControllerAggregate::GetCName() const {
 	return this->name_.c_str();
 }
 
