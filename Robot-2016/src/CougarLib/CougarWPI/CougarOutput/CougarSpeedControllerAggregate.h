@@ -22,6 +22,8 @@ public:
 	explicit CougarSpeedControllerAggregate(std::vector<CougarSpeedController*> *controllers, const char *name, bool inverted = false);
 	explicit CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, std::string name, bool inverted = false);
 	explicit CougarSpeedControllerAggregate(CougarSpeedController *controllers, uint32_t count, const char *name, bool inverted = false);
+	explicit CougarSpeedControllerAggregate(CougarSpeedControllerAggregate *controllers);
+	explicit CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers);
 	virtual ~CougarSpeedControllerAggregate();
 
 	virtual void SetInverted(bool inverted) override;
@@ -37,6 +39,16 @@ public:
 	virtual const char *GetCName() const;
 
 protected:
+
+	class CougarSpeedControllerAggregateExtractor final {
+	public:
+		static std::vector<CougarSpeedController*> *extractControllers(CougarSpeedControllerAggregate *controllers);
+		static std::vector<CougarSpeedController*> *extractControllers(const CougarSpeedControllerAggregate &controllers);
+	};
+	friend CougarSpeedControllerAggregateExtractor;
+
+	virtual std::vector<CougarSpeedController*> *getControllers() const;
+
 	std::vector<CougarSpeedController*> *controllers_;
 	std::string name_;
 	bool inverted_;

@@ -27,16 +27,16 @@ CougarSpeedController::CougarSpeedController(SpeedController *controller, const 
 }
 
 CougarSpeedController::CougarSpeedController(CougarSpeedController *controller) {
-	this->controller_ = CougarSpeedControllerExtractor::extractSpeedController(controller);
-	this->name_ = CougarSpeedControllerExtractor::extractName(controller);
+	this->controller_ = CougarSpeedControllerExtractor::extractController(controller);
+	this->name_ = controller->GetName();
 	this->pdpSlot_ = CougarSpeedControllerExtractor::extractPDPSlot(controller);
 	this->inverted_ = controller->GetInverted();
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s constructed", this->GetCName());
 }
 
-CougarSpeedController::CougarSpeedController(CougarSpeedController &controller) {
-	this->controller_ = CougarSpeedControllerExtractor::extractSpeedController(controller);
-	this->name_ = CougarSpeedControllerExtractor::extractName(controller);
+CougarSpeedController::CougarSpeedController(const CougarSpeedController &controller) {
+	this->controller_ = CougarSpeedControllerExtractor::extractController(controller);
+	this->name_ = controller.GetName();
 	this->pdpSlot_ = CougarSpeedControllerExtractor::extractPDPSlot(controller);
 	this->inverted_ = controller.GetInverted();
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s constructed", this->GetCName());
@@ -91,36 +91,24 @@ const char *CougarSpeedController::GetCName() const {
 	return this->name_.c_str();
 }
 
-SpeedController *CougarSpeedController::CougarSpeedControllerExtractor::extractSpeedController(CougarSpeedController *controller) {
+SpeedController *CougarSpeedController::CougarSpeedControllerExtractor::extractController(CougarSpeedController *controller) {
 	return controller->getController();
 }
 
-SpeedController *CougarSpeedController::CougarSpeedControllerExtractor::extractSpeedController(CougarSpeedController &controller) {
+SpeedController *CougarSpeedController::CougarSpeedControllerExtractor::extractController(const CougarSpeedController &controller) {
 	return controller.getController();
-}
-
-std::string CougarSpeedController::CougarSpeedControllerExtractor::extractName(CougarSpeedController *controller) {
-	return controller->getName();
-}
-
-std::string CougarSpeedController::CougarSpeedControllerExtractor::extractName(CougarSpeedController &controller) {
-	return controller.getName();
 }
 
 uint32_t CougarSpeedController::CougarSpeedControllerExtractor::extractPDPSlot(CougarSpeedController *controller) {
 	return controller->getPDPSlot();
 }
 
-uint32_t CougarSpeedController::CougarSpeedControllerExtractor::extractPDPSlot(CougarSpeedController &controller) {
+uint32_t CougarSpeedController::CougarSpeedControllerExtractor::extractPDPSlot(const CougarSpeedController &controller) {
 	return controller.getPDPSlot();
 }
 
 SpeedController *CougarSpeedController::getController() const {
 	return this->controller_;
-}
-
-std::string CougarSpeedController::getName() const {
-	return this->name_;
 }
 
 uint32_t CougarSpeedController::getPDPSlot() const {

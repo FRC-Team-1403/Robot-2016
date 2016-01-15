@@ -21,7 +21,7 @@ public:
 	explicit CougarSpeedController(SpeedController *controller, std::string name, uint32_t pdpSlot, bool inverted = false);
 	explicit CougarSpeedController(SpeedController *controller, const char *name, uint32_t pdpSlot, bool inverted = false);
 	explicit CougarSpeedController(CougarSpeedController *controller);
-	explicit CougarSpeedController(CougarSpeedController &controller);
+	explicit CougarSpeedController(const CougarSpeedController &controller);
 	virtual ~CougarSpeedController();
 
 	virtual void SetInverted(bool inverted) override;
@@ -40,17 +40,14 @@ protected:
 
 	class CougarSpeedControllerExtractor final {
 	public:
-		static SpeedController *extractSpeedController(CougarSpeedController *controller);
-		static SpeedController *extractSpeedController(CougarSpeedController &controller);
-		static std::string extractName(CougarSpeedController *controller);
-		static std::string extractName(CougarSpeedController &controller);
+		static SpeedController *extractController(CougarSpeedController *controller);
+		static SpeedController *extractController(const CougarSpeedController &controller);
 		static uint32_t extractPDPSlot(CougarSpeedController *controller);
-		static uint32_t extractPDPSlot(CougarSpeedController &controller);
+		static uint32_t extractPDPSlot(const CougarSpeedController &controller);
 	};
 	friend CougarSpeedControllerExtractor;
 
 	virtual SpeedController *getController() const;
-	virtual std::string getName() const;
 	virtual uint32_t getPDPSlot() const;
 
 	SpeedController *controller_;

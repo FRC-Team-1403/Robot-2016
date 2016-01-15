@@ -59,6 +59,20 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedContro
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s constructed", this->GetCName());
 }
 
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(CougarSpeedControllerAggregate *controllers) {
+	this->controllers_ = CougarSpeedControllerAggregateExtractor::extractControllers(controllers);
+	this->name_ = controllers->GetName();
+	this->inverted_ = controllers->GetInverted();
+	this->shouldDelete_ = false;
+}
+
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers) {
+	this->controllers_ = CougarSpeedControllerAggregateExtractor::extractControllers(controllers);
+	this->name_ = controllers.GetName();
+	this->inverted_ = controllers.GetInverted();
+	this->shouldDelete_ = false;
+}
+
 CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate() {
 	if (this->shouldDelete_) {
 		delete this->controllers_;
@@ -121,6 +135,18 @@ std::string CougarSpeedControllerAggregate::GetName() const {
 }
 const char *CougarSpeedControllerAggregate::GetCName() const {
 	return this->name_.c_str();
+}
+
+std::vector<CougarSpeedController*> *CougarSpeedControllerAggregate::CougarSpeedControllerAggregateExtractor::extractControllers(CougarSpeedControllerAggregate *controllers) {
+	return new std::vector<CougarSpeedController*>(controllers->getControllers());
+}
+
+std::vector<CougarSpeedController*> *CougarSpeedControllerAggregate::CougarSpeedControllerAggregateExtractor::extractControllers(const CougarSpeedControllerAggregate &controllers) {
+	return new std::vector<CougarSpeedController*>(controllers.getControllers());
+}
+
+std::vector<CougarSpeedController*> *CougarSpeedControllerAggregate::getControllers() const {
+	return this->controllers_;
 }
 
 
