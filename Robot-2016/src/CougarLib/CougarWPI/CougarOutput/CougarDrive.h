@@ -12,7 +12,7 @@
 #include "CougarSpeedController.h"
 #include "CougarSpeedControllerAggregate.h"
 #include "../CougarHID/CougarJoystick.h"
-#include "../CougarDebug.h"
+#include "../../CougarDebug.h"
 
 namespace cougar {
 

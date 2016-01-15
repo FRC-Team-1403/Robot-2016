@@ -10,7 +10,7 @@
 #define SRC_COUGARLIB_COUGARSPEEDCONTROLLER_H_
 
 #include "WPILib.h"
-#include "../CougarDebug.h"
+#include "../../CougarDebug.h"
 #include <vector>
 #include <string>
 

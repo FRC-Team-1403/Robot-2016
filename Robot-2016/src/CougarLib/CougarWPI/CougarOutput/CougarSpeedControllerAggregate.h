@@ -10,7 +10,7 @@
 
 #include "WPILib.h"
 #include "CougarSpeedController.h"
-#include "../CougarDebug.h"
+#include "../../CougarDebug.h"
 #include <vector>
 #include <string>
 
