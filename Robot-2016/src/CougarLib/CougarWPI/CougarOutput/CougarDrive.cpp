@@ -9,7 +9,7 @@
 
 namespace cougar {
 
-CougarDrive::CougarDrive(SpeedController *left, SpeedController *right) : RobotDrive(left, right){
+CougarDrive::CougarDrive(SpeedController *left, SpeedController *right) {
 	this->drive_ = new RobotDrive(left, right);
 }
 

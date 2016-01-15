@@ -12,7 +12,7 @@
 
 namespace cougar {
 
-class CougarJoystick : protected Joystick {
+class CougarJoystick {
 public:
 	explicit CougarJoystick(uint32_t port);
 	virtual ~CougarJoystick();
