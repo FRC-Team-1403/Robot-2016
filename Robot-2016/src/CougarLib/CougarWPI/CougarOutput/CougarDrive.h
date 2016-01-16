@@ -20,7 +20,7 @@ namespace cougar {
 
 class CougarDrive {
 public:
-	explicit CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name);
+	CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name);
 	explicit CougarDrive(std::shared_ptr<CougarDrive> drive);
 	explicit CougarDrive(const CougarDrive &drive);
 	virtual ~CougarDrive();

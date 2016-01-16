@@ -18,10 +18,6 @@ CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> co
 }
 
 // Ignore warnings about not initializing things in these constructors
-CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> controller, const char *name, uint32_t pdpSlot, bool inverted /* = false */) {
-	std::string tmpName(name);
-	CougarSpeedController(controller, tmpName, pdpSlot, inverted);
-}
 
 CougarSpeedController::CougarSpeedController(std::shared_ptr<CougarSpeedController> controller) {
 	CougarSpeedController(CougarSpeedControllerExtractor::ExtractController(controller), controller->GetName(), CougarSpeedControllerExtractor::ExtractPDPSlot(controller), controller->GetInverted());

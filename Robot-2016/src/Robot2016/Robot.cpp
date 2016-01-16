@@ -1,6 +1,8 @@
 #include "Robot.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
+std::shared_ptr<ExampleSubsystem> Robot::exampleSubsystem = 0;
+std::shared_ptr<OI> Robot::oi = 0;
 
 void Robot::RobotInit()
 {
@@ -8,6 +10,7 @@ void Robot::RobotInit()
 	//chooser->AddDefault("Default Auto", new ExampleCommand());
 	//chooser->AddObject("My Auto", new MyAutoCommand());
 	SmartDashboard::PutData("Auto Modes", chooser);
+	exampleSubsystem.reset(new ExampleSubsystem());
 }
 
 /**
@@ -73,6 +76,6 @@ void Robot::TestPeriodic()
 	LiveWindow::GetInstance()->Run();
 }
 
-
+START_ROBOT_CLASS(Robot)
 
 

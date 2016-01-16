@@ -3,12 +3,20 @@
 
 #include "WPILib.h"
 #include "Commands/Command.h"
+#include "Commands/ExampleCommand.h"
+#include "Subsystems/ExampleSubsystem.h"
+#include <memory>
+#include "OI.h"
+#include "../CougarLib/CougarDebug.h"
 
 class Robot: public IterativeRobot
 {
-private:
+public:
 	std::unique_ptr<Command> autonomousCommand;
 	SendableChooser *chooser;
+	static std::shared_ptr<OI> oi;
+	LiveWindow *lw = LiveWindow::GetInstance();
+	static std::shared_ptr<ExampleSubsystem> exampleSubsystem;
 
 	virtual void RobotInit();
 	virtual void DisabledInit();
@@ -20,7 +28,5 @@ private:
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
 };
-
-START_ROBOT_CLASS(Robot)
 
 #endif // ROBOT__H

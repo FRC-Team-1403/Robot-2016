@@ -20,10 +20,6 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<s
 }
 
 // Ignore warnings about not initializing things in these constructors
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers, const char *name, bool inverted /* = false */) {
-	std::string tmpName(name);
-	CougarSpeedControllerAggregate(controllers, tmpName, inverted);
-}
 
 CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers) {
 	CougarSpeedControllerAggregate(CougarSpeedControllerAggregateExtractor::ExtractControllers(controllers), controllers->GetName(), controllers->GetInverted());

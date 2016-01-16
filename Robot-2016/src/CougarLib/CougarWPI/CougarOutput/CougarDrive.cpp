@@ -88,7 +88,7 @@ std::shared_ptr<RobotDrive> CougarDrive::CougarDriveExtractor::ExtractDrive(std:
 }
 
 std::shared_ptr<RobotDrive> CougarDrive::CougarDriveExtractor::ExtractDrive(const CougarDrive &drive) {
-	return drive.GetDrive();
+	//return drive.GetDrive();
 }
 
 std::shared_ptr<RobotDrive> CougarDrive::GetDrive() {

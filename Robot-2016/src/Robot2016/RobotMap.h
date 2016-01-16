@@ -1,7 +1,10 @@
 #ifndef SRC_ROBOTMAP_H_
 #define SRC_ROBOTMAP_H_
 
+#include <memory>
 #include "WPILib.h"
+#include "../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
+#include "../CougarLib/CougarDebug.h"
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -22,7 +25,9 @@
 
 class RobotMap {
 public:
-	void init();
+	static void init();
+
+	static std::shared_ptr<SpeedController> motor;
 };
 
 #endif
