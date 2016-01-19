@@ -19,13 +19,11 @@ CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> co
 
 // Ignore warnings about not initializing things in these constructors
 
-CougarSpeedController::CougarSpeedController(std::shared_ptr<CougarSpeedController> controller) {
-	CougarSpeedController(CougarSpeedControllerExtractor::ExtractController(controller), controller->GetName(), CougarSpeedControllerExtractor::ExtractPDPSlot(controller), controller->GetInverted());
-}
+CougarSpeedController::CougarSpeedController(std::shared_ptr<CougarSpeedController> controller) :
+		CougarSpeedController(CougarSpeedControllerExtractor::ExtractController(controller), controller->GetName(), controller->GetPDPSlot(), controller->GetInverted()){}
 
-CougarSpeedController::CougarSpeedController(const CougarSpeedController &controller) {
-	CougarSpeedController(CougarSpeedControllerExtractor::ExtractController(controller), controller.GetName(), CougarSpeedControllerExtractor::ExtractPDPSlot(controller), controller.GetInverted());
-}
+CougarSpeedController::CougarSpeedController(const CougarSpeedController &controller) :
+			CougarSpeedController(CougarSpeedControllerExtractor::ExtractController(controller), controller.GetName(), controller.GetPDPSlot(), controller.GetInverted()){}
 
 CougarSpeedController::~CougarSpeedController() {
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s destroyed", this->GetCName());
@@ -76,6 +74,10 @@ const char *CougarSpeedController::GetCName() const {
 	return this->name_.c_str();
 }
 
+uint32_t CougarSpeedController::GetPDPSlot() const {
+	return this->pdpSlot_;
+}
+
 std::shared_ptr<SpeedController> CougarSpeedController::CougarSpeedControllerExtractor::ExtractController(std::shared_ptr<CougarSpeedController> controller) {
 	return controller->GetController();
 }
@@ -84,20 +86,8 @@ std::shared_ptr<SpeedController> CougarSpeedController::CougarSpeedControllerExt
 	return controller.GetController();
 }
 
-uint32_t CougarSpeedController::CougarSpeedControllerExtractor::ExtractPDPSlot(std::shared_ptr<CougarSpeedController> controller) {
-	return controller->GetPDPSlot();
-}
-
-uint32_t CougarSpeedController::CougarSpeedControllerExtractor::ExtractPDPSlot(const CougarSpeedController &controller) {
-	return controller.GetPDPSlot();
-}
-
 std::shared_ptr<SpeedController> CougarSpeedController::GetController() const {
 	return this->controller_;
-}
-
-uint32_t CougarSpeedController::GetPDPSlot() const {
-	return this->pdpSlot_;
 }
 
 }

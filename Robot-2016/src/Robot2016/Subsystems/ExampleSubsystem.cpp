@@ -5,7 +5,8 @@ ExampleSubsystem::ExampleSubsystem() :
 		Subsystem("ExampleSubsystem")
 {
 	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "ExampleSubsystem constructor running");
-	motor = RobotMap::motor;
+	talon = RobotMap::talon;
+	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "ExampleSubsystem constructor finished");
 }
 
 void ExampleSubsystem::InitDefaultCommand()

@@ -35,6 +35,7 @@ public:
 	virtual void PIDWrite(float output) override;
 	virtual std::string GetName() const;
 	virtual const char *GetCName() const;
+	virtual uint32_t GetPDPSlot() const;
 
 protected:
 
@@ -42,13 +43,10 @@ protected:
 	public:
 		static std::shared_ptr<SpeedController> ExtractController(std::shared_ptr<CougarSpeedController> controller);
 		static std::shared_ptr<SpeedController> ExtractController(const CougarSpeedController &controller);
-		static uint32_t ExtractPDPSlot(std::shared_ptr<CougarSpeedController> controller);
-		static uint32_t ExtractPDPSlot(const CougarSpeedController &controller);
 	};
 	friend CougarSpeedControllerExtractor;
 
 	virtual std::shared_ptr<SpeedController> GetController() const;
-	virtual uint32_t GetPDPSlot() const;
 
 	std::shared_ptr<SpeedController> controller_;
 	std::string name_;

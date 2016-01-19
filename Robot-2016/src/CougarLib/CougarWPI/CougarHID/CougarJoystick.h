@@ -26,17 +26,51 @@ public:
 	virtual bool GetButtonLT();
 	virtual bool GetButtonRB();
 	virtual bool GetButtonLB();
-	virtual bool GetButtonDPADUp();
-	virtual bool GetButtonDPADDown();
-	virtual bool GetButtonDPADLeft();
-	virtual bool GetButtonDPADRight();
+	virtual bool GetButtonStart();
+	virtual bool GetButtonBack();
 
 	virtual float GetStickLeftAxisX();
 	virtual float GetStickLeftAxisY();
 	virtual float GetStickRightAxisX();
 	virtual float GetStickRightAxisY();
+	virtual float GetRawAxis(uint32_t axis);
 protected:
+
+	class Accel final {
+	public:
+		Accel() {
+			accel_ = 0;
+			vel_ = 0;
+			time_ = Timer::GetFPGATimestamp();
+		}
+
+		float getVel(float a) {
+			double dt = Timer::GetFPGATimestamp() - time_;
+
+		}
+
+		float floor(float f) {
+
+			//return f > LIMIT ? LIMIT : f;
+		}
+	private:
+		float accel_;
+		float vel_;
+		double time_;
+	};
+
+	struct accelCurve {
+		Accel LX();
+		Accel LY();
+		Accel RX();
+		Accel RY();
+	};
+
 	std::shared_ptr<Joystick> joystick_;
+	static const bool SMOOTHING = false;
+	static const double FACTOR = 1.0;
+
+
 };
 
 } /* namespace cougar */

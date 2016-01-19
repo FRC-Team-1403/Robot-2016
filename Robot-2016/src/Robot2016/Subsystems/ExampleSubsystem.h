@@ -16,11 +16,11 @@ private:
 public:
 	ExampleSubsystem();
 	void InitDefaultCommand();
-	std::shared_ptr<SpeedController> getMotor() { return motor; }
+	std::shared_ptr<CANTalon> getTalon() { return talon; }
 
 
 private:
-	std::shared_ptr<SpeedController> motor;
+	std::shared_ptr<CANTalon> talon;
 };
 
 #endif

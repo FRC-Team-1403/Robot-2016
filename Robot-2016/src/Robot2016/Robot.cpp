@@ -1,16 +1,19 @@
 #include "Robot.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
-std::shared_ptr<ExampleSubsystem> Robot::exampleSubsystem = 0;
-std::shared_ptr<OI> Robot::oi = 0;
+std::shared_ptr<ExampleSubsystem> Robot::exampleSubsystem;
+std::shared_ptr<OI> Robot::oi;
 
 void Robot::RobotInit()
 {
+	RobotMap::init();
 	chooser = new SendableChooser();
 	//chooser->AddDefault("Default Auto", new ExampleCommand());
 	//chooser->AddObject("My Auto", new MyAutoCommand());
 	SmartDashboard::PutData("Auto Modes", chooser);
 	exampleSubsystem.reset(new ExampleSubsystem());
+
+	oi.reset(new OI());
 }
 
 /**
@@ -69,6 +72,8 @@ void Robot::TeleopInit()
 void Robot::TeleopPeriodic()
 {
 	Scheduler::GetInstance()->Run();
+	SmartDashboard::PutNumber("Joystick value", oi->GetJoystick()->GetStickLeftAxisY());
+	//SmartDashboard::PutNumber("Talon value", ((CANTalon&)exampleSubsystem->getMotor())->Get());
 }
 
 void Robot::TestPeriodic()

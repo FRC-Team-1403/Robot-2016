@@ -4,6 +4,7 @@
 #include <memory>
 #include "WPILib.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
+#include "../CougarLib/CougarWPI/CougarOutput/CougarSpeedControllerAggregate.h"
 #include "../CougarLib/CougarDebug.h"
 
 /**
@@ -27,7 +28,7 @@ class RobotMap {
 public:
 	static void init();
 
-	static std::shared_ptr<SpeedController> motor;
+	static std::shared_ptr<CANTalon> talon;
 };
 
 #endif

@@ -21,13 +21,11 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<s
 
 // Ignore warnings about not initializing things in these constructors
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers) {
-	CougarSpeedControllerAggregate(CougarSpeedControllerAggregateExtractor::ExtractControllers(controllers), controllers->GetName(), controllers->GetInverted());
-}
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers) :
+		CougarSpeedControllerAggregate(CougarSpeedControllerAggregateExtractor::ExtractControllers(controllers), controllers->GetName(), controllers->GetInverted()){}
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers) {
-	CougarSpeedControllerAggregate(CougarSpeedControllerAggregateExtractor::ExtractControllers(controllers), controllers.GetName(), controllers.GetInverted());
-}
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers) :
+			CougarSpeedControllerAggregate(CougarSpeedControllerAggregateExtractor::ExtractControllers(controllers), controllers.GetName(), controllers.GetInverted()){}
 
 CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate() {
 	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s destroyed", this->GetCName());

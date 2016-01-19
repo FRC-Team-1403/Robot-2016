@@ -17,7 +17,7 @@
 
 namespace cougar {
 
-class CougarSpeedControllerAggregate : SpeedController {
+class CougarSpeedControllerAggregate : public SpeedController {
 public:
 	CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers, std::string name, bool inverted = false);
 	explicit CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers);

@@ -61,7 +61,6 @@ protected:
 
 	std::shared_ptr<RobotDrive> drive_;
 	std::string name_;
-	static const bool SMOOTHING = false;
 };
 
 } /* namespace cougar */

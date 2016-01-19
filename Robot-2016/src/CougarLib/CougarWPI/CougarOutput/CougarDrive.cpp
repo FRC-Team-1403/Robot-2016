@@ -24,23 +24,15 @@ void CougarDrive::Drive(float outputMagnitude, float curve) const{
 }
 
 void CougarDrive::TankDrive(std::shared_ptr<CougarJoystick> joystick, bool squaredInputs /* = true */) {
-	if (SMOOTHING) {
-		// TODO: Implement input smoothing
-	} else {
-		this->drive_->TankDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick), joystick->GetStickRightAxisY() * this->speedFactor(joystick), squaredInputs);
-	}
+	this->drive_->TankDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick), joystick->GetStickRightAxisY() * this->speedFactor(joystick), squaredInputs);
 }
 void CougarDrive::ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool squaredInputs /* = true */) {
-	if (SMOOTHING) {
-		// TODO: Implement input smoothing
+	if (stick == LEFT) {
+		this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick), joystick->GetStickLeftAxisX() * this->speedFactor(joystick), squaredInputs);
+	} else if (stick == RIGHT) {
+		this->drive_->ArcadeDrive(joystick->GetStickRightAxisY() * this->speedFactor(joystick), joystick->GetStickRightAxisX() * this->speedFactor(joystick), squaredInputs);
 	} else {
-		if (stick == LEFT) {
-			this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick), joystick->GetStickLeftAxisX() * this->speedFactor(joystick), squaredInputs);
-		} else if (stick == RIGHT) {
-			this->drive_->ArcadeDrive(joystick->GetStickRightAxisY() * this->speedFactor(joystick), joystick->GetStickRightAxisX() * this->speedFactor(joystick), squaredInputs);
-		} else {
-			CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::ISSUE, "An invalid analog stick has been specified...\n\n");
-		}
+		CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::ISSUE, "An invalid analog stick has been specified...\n\n");
 	}
 }
 
@@ -88,7 +80,8 @@ std::shared_ptr<RobotDrive> CougarDrive::CougarDriveExtractor::ExtractDrive(std:
 }
 
 std::shared_ptr<RobotDrive> CougarDrive::CougarDriveExtractor::ExtractDrive(const CougarDrive &drive) {
-	//return drive.GetDrive();
+	std::shared_ptr<CougarDrive> tmp(&(CougarDrive&)drive);
+	return ExtractDrive(tmp);
 }
 
 std::shared_ptr<RobotDrive> CougarDrive::GetDrive() {
