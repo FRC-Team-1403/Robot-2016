@@ -12,5 +12,8 @@ namespace cougar {
 IPathDeserializer::IPathDeserializer() {
 
 }
+IPathDeserializer::~IPathDeserializer() {
+
+}
 
 } /* namespace cougar */

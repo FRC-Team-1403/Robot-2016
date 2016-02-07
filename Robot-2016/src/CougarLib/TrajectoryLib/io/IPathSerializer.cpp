@@ -13,4 +13,8 @@ IPathSerializer::IPathSerializer() {
 
 }
 
+IPathSerializer::~IPathSerializer() {
+
+}
+
 } /* namespace cougar */
