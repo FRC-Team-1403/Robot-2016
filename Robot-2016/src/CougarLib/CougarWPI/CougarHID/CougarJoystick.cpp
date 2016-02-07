@@ -10,12 +10,15 @@
 namespace cougar {
 
 CougarJoystick::CougarJoystick(uint32_t port) {
-	this->joystick_ = new Joystick(port);
-
+	std::shared_ptr<Joystick> tmpJoystick(new Joystick(port));
+	this->joystick_ = tmpJoystick;
+	this->LX = new Accel(0);
+	this->LY = new Accel(1);
+	this->RX = new Accel(4);
+	this->RY = new Accel(5);
 }
 
 CougarJoystick::~CougarJoystick() {
-	delete this->joystick_;
 }
 
 bool CougarJoystick::GetButtonA() {
@@ -34,64 +37,68 @@ bool CougarJoystick::GetButtonY() {
 	return this->joystick_->GetRawButton(4);
 }
 
-bool CougarJoystick::GetButtonRT() {
-	// TODO
-	return false;
-}
-
-bool CougarJoystick::GetButtonLT() {
-	// TODO
-	return false;
-}
-
 bool CougarJoystick::GetButtonRB() {
-	// TODO
-	return false;
+	return this->joystick_->GetRawButton(6);
 }
 
 bool CougarJoystick::GetButtonLB() {
-	// TODO
-	return false;
+	return this->joystick_->GetRawButton(5);
 }
 
-bool CougarJoystick::GetButtonDPADUp() {
-	// TODO
-	return false;
+bool CougarJoystick::GetButtonRT() {
+	return this->joystick_->GetRawAxis(3) > 0.5;
 }
 
-bool CougarJoystick::GetButtonDPADDown() {
-	// TODO
-	return false;
+bool CougarJoystick::GetButtonLT() {
+	return this->joystick_->GetRawAxis(2) > 0.5;
 }
 
-bool CougarJoystick::GetButtonDPADLeft() {
-	// TODO
-	return false;
+bool CougarJoystick::GetButtonStart() {
+	return this->joystick_->GetRawButton(8);
 }
 
-bool CougarJoystick::GetButtonDPADRight() {
-	// TODO
-	return false;
+bool CougarJoystick::GetButtonBack() {
+	return this->joystick_->GetRawButton(7);
 }
 
 float CougarJoystick::GetStickLeftAxisX() {
-	// TODO
-	return false;
+	if (!SMOOTHING) {
+		return this->joystick_->GetRawAxis(0);
+	} else {
+
+	}
 }
 
 float CougarJoystick::GetStickLeftAxisY() {
-	// TODO
-	return false;
+	if (!SMOOTHING) {
+		return this->joystick_->GetRawAxis(1);
+	}
+	else {
+		float val = this->LX->getVel(this->joystick_->GetRawAxis(1));
+		CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "Motor set to %f", val);
+		return val;
+
+	}
 }
 
 float CougarJoystick::GetStickRightAxisX() {
-	// TODO
-	return false;
+	if (!SMOOTHING) {
+		return this->joystick_->GetRawAxis(4);
+	} else {
+
+	}
 }
 
 float CougarJoystick::GetStickRightAxisY() {
-	// TODO
-	return false;
+	if (!SMOOTHING) {
+		return this->joystick_->GetRawAxis(5);
+	} else {
+
+	}
+}
+
+float CougarJoystick::GetRawAxis(uint32_t axis) {
+	return this->joystick_->GetRawAxis(axis);
 }
 
 } /* namespace cougar */
