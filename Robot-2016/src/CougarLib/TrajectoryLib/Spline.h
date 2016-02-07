@@ -9,7 +9,6 @@
 #define SRC_SPLINE_H_
 
 #include <cmath>
-#include "WPILib.h"
 #include "../CougarMath.h"
 #include "WaypointSequence.h"
 namespace cougar {

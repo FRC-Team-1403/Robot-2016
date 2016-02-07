@@ -8,7 +8,6 @@
 #ifndef SRC_TRAJECTORYFOLLOWER_H_
 #define SRC_TRAJECTORYFOLLOWER_H_
 
-#include "WPILib.h"
 #include "Trajectory.h"
 
 namespace cougar {

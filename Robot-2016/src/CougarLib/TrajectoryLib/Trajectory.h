@@ -8,9 +8,9 @@
 #ifndef SRC_TRAJECTORY_H_
 #define SRC_TRAJECTORY_H_
 
-#include "WPILib.h"
 #include "../CougarMath.h"
 #include <string>
+#include <vector>
 #include <memory>
 
 namespace cougar {

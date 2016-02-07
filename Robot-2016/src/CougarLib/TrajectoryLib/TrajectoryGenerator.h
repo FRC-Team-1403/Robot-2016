@@ -8,7 +8,6 @@
 #ifndef SRC_TRAJECTORYGENERATOR_H_
 #define SRC_TRAJECTORYGENERATOR_H_
 
-#include "WPILib.h"
 #include "Trajectory.h"
 #include <string>
 #include <memory>

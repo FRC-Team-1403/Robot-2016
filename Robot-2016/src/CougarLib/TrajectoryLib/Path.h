@@ -8,7 +8,6 @@
 #ifndef SRC_PATH_H_
 #define SRC_PATH_H_
 
-#include "WPILib.h"
 #include "Trajectory.h"
 
 namespace cougar {
