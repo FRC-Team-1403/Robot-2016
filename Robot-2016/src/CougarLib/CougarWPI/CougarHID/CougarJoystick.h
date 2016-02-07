@@ -10,6 +10,7 @@
 
 #include <memory>
 #include "WPILib.h"
+#include "../../CougarDebug.h"
 
 namespace cougar {
 
@@ -38,37 +39,52 @@ protected:
 
 	class Accel final {
 	public:
-		Accel() {
-			accel_ = 0;
+		Accel(uint32_t port) {
+			port_ = port;
 			vel_ = 0;
 			time_ = Timer::GetFPGATimestamp();
 		}
 
 		float getVel(float a) {
-			double dt = Timer::GetFPGATimestamp() - time_;
-
+			float accel_ = (vel_ - a) * FACTOR;
+			double t = Timer::GetFPGATimestamp();
+			double dt = t - time_;
+			time_ = t;
+			vel_ += accel_ * dt;
+			if (accel_ > 0) {
+				if (vel_ > accel_) {
+					vel_ = accel_;
+				}
+			} else if (accel_ < 0) {
+				if (vel_ < accel_) {
+					vel_ = accel_;
+				}
+			}
+			if (vel_ > LIMIT || vel_ < (LIMIT * -1)) {
+				if (vel_ > 0) {
+					vel_ = LIMIT;
+				} else if (vel_< 0) {
+					vel_ = LIMIT * -1;
+				}
+			}
+			return vel_;
 		}
 
-		float floor(float f) {
-
-			//return f > LIMIT ? LIMIT : f;
-		}
 	private:
-		float accel_;
+		uint32_t port_;
 		float vel_;
 		double time_;
 	};
 
-	struct accelCurve {
-		Accel LX();
-		Accel LY();
-		Accel RX();
-		Accel RY();
-	};
+	Accel *LX;
+	Accel *LY;
+	Accel *RX;
+	Accel *RY;
 
 	std::shared_ptr<Joystick> joystick_;
 	static const bool SMOOTHING = false;
-	static const double FACTOR = 1.0;
+	static constexpr double FACTOR = 1.0;
+	static constexpr double LIMIT = 0.5;
 
 
 };

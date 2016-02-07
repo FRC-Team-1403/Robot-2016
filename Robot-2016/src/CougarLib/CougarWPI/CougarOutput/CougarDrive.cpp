@@ -88,9 +88,6 @@ std::shared_ptr<RobotDrive> CougarDrive::GetDrive() {
 	return this->drive_;
 }
 
-const bool CougarDrive::GetSmoothing() {
-	return SMOOTHING;
-}
 
 float CougarDrive::speedFactor(std::shared_ptr<CougarJoystick> joystick) {
 	const float SPEED_FACTOR = 0.5;

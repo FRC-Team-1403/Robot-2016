@@ -12,6 +12,10 @@ namespace cougar {
 CougarJoystick::CougarJoystick(uint32_t port) {
 	std::shared_ptr<Joystick> tmpJoystick(new Joystick(port));
 	this->joystick_ = tmpJoystick;
+	this->LX = new Accel(0);
+	this->LY = new Accel(1);
+	this->RX = new Accel(4);
+	this->RY = new Accel(5);
 }
 
 CougarJoystick::~CougarJoystick() {
@@ -70,6 +74,9 @@ float CougarJoystick::GetStickLeftAxisY() {
 		return this->joystick_->GetRawAxis(1);
 	}
 	else {
+		float val = this->LX->getVel(this->joystick_->GetRawAxis(1));
+		CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "Motor set to %f", val);
+		return val;
 
 	}
 }
