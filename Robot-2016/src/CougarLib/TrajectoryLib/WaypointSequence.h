@@ -8,7 +8,7 @@
 #ifndef SRC_WAYPOINTSEQUENCE_H_
 #define SRC_WAYPOINTSEQUENCE_H_
 
-#include "WPILib.h"
+#include <iostream>
 #include <vector>
 #include <memory>
 #include "../CougarMath.h"

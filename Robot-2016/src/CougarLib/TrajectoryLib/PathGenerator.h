@@ -8,7 +8,6 @@
 #ifndef SRC_PATHGENERATOR_H_
 #define SRC_PATHGENERATOR_H_
 
-#include "WPILib.h"
 #include "Trajectory.h"
 #include "TrajectoryGenerator.h"
 #include "Spline.h"
