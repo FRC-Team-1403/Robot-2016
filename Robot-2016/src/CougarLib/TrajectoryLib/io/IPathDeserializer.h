@@ -16,8 +16,9 @@ class IPathDeserializer {
 public:
 	virtual Path deserialize(std::string serialized) = 0;
 
-private:
+protected:
 	IPathDeserializer();
+	virtual ~IPathDeserializer();
 };
 
 } /* namespace cougar */
