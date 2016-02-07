@@ -29,8 +29,9 @@ public:
 		 * public:
 		 * 	path->getName() {
 		 * 		this->name = "path->getName()";
-		 * 		std::shared_ptr<std::vector<std::shared_ptr<Trajectory::Segment>>> tmpLeft(new std::vector<std::shared_ptr<Trajectory::Segment>>);
-		 *		for (int i = 0;
+		 * 		vector <segment*>* v = new vector<segment*>;
+		 * 		v->push_back(new Segment(1, 2, 3);
+		 * 		this->kLeftWheel = new Trajectory(v);
 		 * 		this->kLeftWheel = seralizeTrajectory(path->getLeftWheelTrajectory());
 		 *		this->kRightWheel = seralizeTrajectory(path->getRightWheelTrajectory());
 		 *		this->go_left_pair_ = std::shared_ptr<Trajectory::Pair>(new Trajectory::Pair(kLeftWheel, kRightWheel));
@@ -54,9 +55,9 @@ public:
 		path->goLeft();
 		contents += "\t" + path->getName() + "() {\n";
 		contents += "\t\tthis->name_ = \"" + path->getName() + "\";\n";
-		contents += "\t\tthis->kLeftWheel = " + seralizeTrajectory(path->getLeftWheelTrajectory()) + ";\n";
-		contents += "\t\tthis->kRightWheel = " + seralizeTrajectory(path->getRightWheelTrajectory()) + ";\n";
-		contents += "\t\this->go_left_pair_ = std::shared_ptr<Trajectory::Pair>(new Trajectory::Pair(kLeftWheel, kRightWheel));\n";
+		contents += seralizeTrajectory("kLeftWheel", path->getLeftWheelTrajectory());
+		contents += seralizeTrajectory("kRightWheel", path->getRightWheelTrajectory());
+		contents += "\t\this->go_left_pair_.reset(new Trajectory::Pair(kLeftWheel, kRightWheel));\n";
 		contents += "\t}\n\n";
 		contents += "private:\n";
 		contents += "\tstd::shared_ptr<Trajectory> kLeftWheel;\n";
@@ -68,15 +69,40 @@ public:
 	}
 
 private:
+
 	/*
-	 * std::shared_ptr<Trajectory>(new Trajectory())
+	 * std::shared_ptr<std::vector<std::shared_ptr<Segment>>> tmpname;
+	 * tmpname.reset(new std::vector<std::shared_ptr<Segment>>);
+	 * tmpname->push_back(std::shared_ptr<Trajectory::Segment>(new Trajectory::Segment(pos, vel, acc, jerk, heading, dt, x, y)));
+	 * ...
+	 * this->name.reset(new Trajectory(tmpname));
 	 */
 
-
-
-	std::string seralizeTrajectory(std::shared_ptr<Trajectory> traj) {
-
-		//std::string contents = "std::shared_ptr<Trajectory> " + name + "(new Trajectory( new std::vector<";
+	std::string seralizeTrajectory(std::string name, std::shared_ptr<Trajectory> traj) {
+		std::string contents = "\t\tstd::shared_ptr<std::vector<std::shared_ptr<Segment>>> tmp" + name + ";\n";
+		contents == "\t\ttmp" + name + ".reset(new std::vector<std::shared_ptr<Segment>>);\n";
+		for (uint32_t i = 0; i < traj->getNumSegments(); ++i) {
+			std::shared_ptr<Trajectory::Segment> seg = traj->getSegment(i);
+			contents += "\t\ttmp" + name + "->push_back(std::shared_ptr<Trajectory::Segment>(new Trajectory::Segment(";
+			contents += seg->pos;
+			contents += ", ";
+			contents += seg->vel;
+			contents += ", ";
+			contents += seg->acc;
+			contents += ", ";
+			contents += seg->jerk;
+			contents += ", ";
+			contents += seg->heading;
+			contents += ", ";
+			contents += seg->dt;
+			contents += ", ";
+			contents += seg->x;
+			contents += ", ";
+			contents += seg->y;
+			contents += ")));\n";
+		}
+		contents += "\t\tthis->" + name + ".reset(new Trajectory(tmp" + name + "));\n";
+		return contents;
 	}
 };
 
