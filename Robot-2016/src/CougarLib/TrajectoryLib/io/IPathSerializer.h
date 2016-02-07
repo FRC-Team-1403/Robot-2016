@@ -17,8 +17,9 @@ class IPathSerializer {
 public:
 	virtual std::string serialize(Path path) = 0;
 
-private:
+protected:
 	IPathSerializer();
+	virtual ~IPathSerializer();
 };
 
 } /* namespace cougar */
