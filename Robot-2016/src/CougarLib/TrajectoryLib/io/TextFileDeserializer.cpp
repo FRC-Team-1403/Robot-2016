@@ -9,13 +9,5 @@
 
 namespace cougar {
 
-TextFileDeserializer::TextFileDeserializer() {
-	// TODO Auto-generated constructor stub
-
-}
-
-TextFileDeserializer::~TextFileDeserializer() {
-	// TODO Auto-generated destructor stub
-}
 
 } /* namespace cougar */
