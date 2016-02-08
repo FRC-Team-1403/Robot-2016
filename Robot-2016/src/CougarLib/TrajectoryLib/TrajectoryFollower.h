@@ -15,13 +15,16 @@ namespace cougar {
 class TrajectoryFollower {
 public:
 	TrajectoryFollower();
+	virtual ~TrajectoryFollower() {
 
-	void configure(double kp, double ki, double kd, double kv, double ka);
-	void reset();
-	void setTrajectory(std::shared_ptr<Trajectory> profile);
-	double calculate(double distance_so_far);
-	double getHeading();
-	bool isFinishedTrajectory();
+	}
+
+	virtual void configure(double kp, double ki, double kd, double kv, double ka);
+	virtual void reset();
+	virtual void setTrajectory(std::shared_ptr<Trajectory> profile);
+	virtual double calculate(double distance_so_far);
+	virtual double getHeading();
+	virtual bool isFinishedTrajectory();
 
 private:
 	double kp_;

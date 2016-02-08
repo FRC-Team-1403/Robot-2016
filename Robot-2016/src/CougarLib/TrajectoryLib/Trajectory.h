@@ -34,7 +34,7 @@ public:
 						double heading, double dt, double x, double y);
 		Segment(std::shared_ptr<Segment> to_copy);
 
-		std::string toString();
+		virtual std::string toString();
 	};
 
 	std::shared_ptr<std::vector<std::shared_ptr<Segment>>> segments_;
@@ -42,21 +42,24 @@ public:
 
 	Trajectory(uint32_t length);
 	Trajectory(std::shared_ptr<std::vector<std::shared_ptr<Segment>>> segments);
+	virtual ~Trajectory() {
 
-	void setInvertedY(bool inverted);
-	uint32_t getNumSegments();
-	std::shared_ptr<Segment> getSegment(uint32_t index);
-	void setSegment(uint32_t index, std::shared_ptr<Segment> segment);
-	void scale(double scaling_factor);
-	void append(std::shared_ptr<Trajectory> to_append);
-	std::shared_ptr<Trajectory> copy();
+	}
 
-	std::string toString();
-	std::string toStringProfile();
-	std::string toStringEuclidean();
+	virtual void setInvertedY(bool inverted);
+	virtual uint32_t getNumSegments();
+	virtual std::shared_ptr<Segment> getSegment(uint32_t index);
+	virtual void setSegment(uint32_t index, std::shared_ptr<Segment> segment);
+	virtual void scale(double scaling_factor);
+	virtual void append(std::shared_ptr<Trajectory> to_append);
+	virtual std::shared_ptr<Trajectory> copy();
+
+	virtual std::string toString();
+	virtual std::string toStringProfile();
+	virtual std::string toStringEuclidean();
 
 private:
-	std::shared_ptr<std::vector<std::shared_ptr<Segment>>> copySegments(std::shared_ptr<std::vector<std::shared_ptr<Segment>>> tocopy);
+	virtual std::shared_ptr<std::vector<std::shared_ptr<Segment>>> copySegments(std::shared_ptr<std::vector<std::shared_ptr<Segment>>> tocopy);
 };
 
 } /* namespace cougar */
