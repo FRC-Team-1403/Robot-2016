@@ -9,13 +9,5 @@
 
 namespace cougar {
 
-Main::Main() {
-	// TODO Auto-generated constructor stub
-
-}
-
-Main::~Main() {
-	// TODO Auto-generated destructor stub
-}
 
 } /* namespace cougar */

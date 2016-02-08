@@ -34,10 +34,10 @@ public:
 	WaypointSequence(uint32_t max_size);
 	virtual ~WaypointSequence();
 
-	void addWaypoint(std::shared_ptr<Waypoint> w);
-	uint32_t getNumWaypoints();
-	std::shared_ptr<Waypoint> getWaypoint(uint32_t index);
-	std::shared_ptr<WaypointSequence> invertY();
+	virtual void addWaypoint(std::shared_ptr<Waypoint> w);
+	virtual uint32_t getNumWaypoints();
+	virtual std::shared_ptr<Waypoint> getWaypoint(uint32_t index);
+	virtual std::shared_ptr<WaypointSequence> invertY();
 };
 
 } /* namespace cougar */

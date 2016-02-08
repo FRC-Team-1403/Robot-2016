@@ -29,7 +29,7 @@ public:
 
 	class Strategy {
 	public:
-		std::string toString();
+		virtual std::string toString();
 
 		Strategy(std::string value);
 	private:

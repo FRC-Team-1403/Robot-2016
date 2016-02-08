@@ -19,13 +19,16 @@ public:
 	public:
 		Type(std::string value);
 
-		std::string toString();
+		virtual std::string toString();
 
 	private:
 		std::string value_;
 	};
 
 	Spline();
+	virtual ~Spline() {
+
+	}
 
 	// Cubic spline where positions and first derivatives (angle) constraints will
 	// be met but second derivatives may be discontinuous.
@@ -56,20 +59,20 @@ public:
 	static bool reticulateSplines(double x0, double y0, double theta0,
 					double x1, double y1, double theta1,
 					std::shared_ptr<Spline> result, std::shared_ptr<Type> type);
-	double calculateLength();
-	double getPercentageForDistance(double distance);
-	std::shared_ptr<std::vector<double>> getXandY(double percentage);
-	double valueAt(double percentage);
-	double angleAt(double percentage);
-	double angleChangeAt(double percentage);
+	virtual double calculateLength();
+	virtual double getPercentageForDistance(double distance);
+	virtual std::shared_ptr<std::vector<double>> getXandY(double percentage);
+	virtual double valueAt(double percentage);
+	virtual double angleAt(double percentage);
+	virtual double angleChangeAt(double percentage);
 
-	std::string toString();
+	virtual std::string toString();
 private:
 
 
 	static bool almostEqual(double x, double y);
-	double derivativeAt(double percentage);
-	double secondDerivativeAt(double percentage);
+	virtual double derivativeAt(double percentage);
+	virtual double secondDerivativeAt(double percentage);
 
 };
 
