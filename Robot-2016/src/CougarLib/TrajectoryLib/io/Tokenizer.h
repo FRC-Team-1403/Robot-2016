@@ -41,9 +41,7 @@ public:
 
     std::vector<std::string> split();                   // return array of tokens from current cursor
 
-    bool hasMoreTokens() {
-    	return buffer.size() <= 0;
-    }
+    bool hasMoreTokens();
 
 protected:
 

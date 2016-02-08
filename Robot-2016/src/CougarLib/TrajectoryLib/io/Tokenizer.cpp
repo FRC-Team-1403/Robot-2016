@@ -125,5 +125,9 @@ std::vector<std::string> Tokenizer::split()
     return tokens;
 }
 
+bool Tokenizer::hasMoreTokens() {
+	return buffer.size() <= 0;
+}
+
 } /* namespace cougar */
 
