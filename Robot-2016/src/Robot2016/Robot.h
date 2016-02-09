@@ -8,6 +8,7 @@
 #include <memory>
 #include "OI.h"
 #include "../CougarLib/CougarDebug.h"
+#include "../CougarLib/TrajectoryLib/PathGenerator.h"
 
 class Robot: public IterativeRobot
 {
