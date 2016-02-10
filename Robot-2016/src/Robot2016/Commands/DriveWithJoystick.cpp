@@ -1,38 +1,40 @@
-#include "DriveTrainCommand.h"
+#include "DriveWithJoystick.h"
+#include "../Robot.h"
 
-DriveTrainCommand::DriveTrainCommand()
+DriveWithJoystick::DriveWithJoystick()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
+	Requires(Robot::driveTrain.get());
 }
 
 // Called just before this Command runs the first time
-void DriveTrainCommand::Initialize()
+void DriveWithJoystick::Initialize()
 {
-	//Robot::driveTrain->resetEncoders();
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void DriveTrainCommand::Execute()
+void DriveWithJoystick::Execute()
 {
-
+	Robot::driveTrain->drive();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool DriveTrainCommand::IsFinished()
+bool DriveWithJoystick::IsFinished()
 {
 	return false;
 }
 
 // Called once after isFinished returns true
-void DriveTrainCommand::End()
+void DriveWithJoystick::End()
 {
-
+	Robot::driveTrain->stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveTrainCommand::Interrupted()
+void DriveWithJoystick::Interrupted()
 {
-
+	End();
 }

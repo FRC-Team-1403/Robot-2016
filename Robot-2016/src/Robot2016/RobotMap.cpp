@@ -28,6 +28,7 @@ void RobotMap::init(){
 	 */
 	driveTrainRightTalon.reset(new CANTalon(1));
 	driveTrainLeftTalon.reset(new CANTalon(2));
+	drive.reset(new cougar::CougarDrive(driveTrainRightTalon, driveTrainLeftTalon, "Drive"));
 	driveTrainRightEncoder.reset(new Encoder(1, 2));
 	driveTrainLeftEncoder.reset(new Encoder(3, 4));
 	driveTrainGyro.reset(new cougar::CougarGyro(0));
