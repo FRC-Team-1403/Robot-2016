@@ -44,6 +44,8 @@ public:
 	virtual std::string GetName() const;
 	virtual const char *GetCName() const;
 
+	virtual std::shared_ptr<RobotDrive> GetDrive();
+
 	enum ANALOG_STICKS {
 		LEFT,
 		RIGHT
@@ -57,7 +59,6 @@ protected:
 
 private:
 
-	virtual std::shared_ptr<RobotDrive> GetDrive();
 	virtual float speedFactor(std::shared_ptr<CougarJoystick> joystick);
 
 	std::shared_ptr<RobotDrive> drive_;

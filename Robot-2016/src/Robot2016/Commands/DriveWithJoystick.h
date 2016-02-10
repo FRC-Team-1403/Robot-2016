@@ -1,13 +1,13 @@
-#ifndef DriveTrainCommand_H
-#define DriveTrainCommand_H
+#ifndef DriveWithJoystick_H
+#define DriveWithJoystick_H
 
 #include "Commands/Command.h"
 #include "WPILib.h"
 
-class DriveTrainCommand: public Command
+class DriveWithJoystick: public Command
 {
 public:
-	DriveTrainCommand();
+	DriveWithJoystick();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

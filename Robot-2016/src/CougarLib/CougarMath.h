@@ -9,6 +9,7 @@
 #define SRC_COUGARMATH_H_
 
 #include <cmath>
+#include "CougarDebug.h"
 
 namespace cougar {
 

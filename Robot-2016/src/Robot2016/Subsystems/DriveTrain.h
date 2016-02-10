@@ -5,6 +5,7 @@
 #include "WPILib.h"
 #include "../../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
 #include <cmath>
+#include "../../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
 class DriveTrain: public Subsystem
 {
@@ -17,8 +18,7 @@ public:
 	void drive();
 
 	void setLeftRightPower(double leftPower, double rightPower) {
-		driveTrainLeftTalon->Set(leftPower);
-		driveTrainRightTalon->Set(rightPower);
+		this->driveT->GetDrive()->TankDrive(leftPower, rightPower, false);
 	  }
 
 	void stop() {
@@ -46,8 +46,7 @@ public:
 		 this->driveTrainRightEncoder->Reset();
 	 }
 
-	std::shared_ptr<CANTalon> driveTrainRightTalon;
-	std::shared_ptr<CANTalon> driveTrainLeftTalon;
+	std::shared_ptr<cougar::CougarDrive> driveT;
 	std::shared_ptr<Encoder> driveTrainRightEncoder;
 	std::shared_ptr<Encoder> driveTrainLeftEncoder;
 	std::shared_ptr<cougar::CougarGyro> driveTrainGyro;

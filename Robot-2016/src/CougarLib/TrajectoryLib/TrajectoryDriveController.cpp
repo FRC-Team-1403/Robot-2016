@@ -11,7 +11,7 @@
 
 namespace cougar {
 
-TrajectoryDriveController::TrajectoryDriveController() {
+TrajectoryDriveController::TrajectoryDriveController() : CougarController() {
 	followerLeft.reset(new TrajectoryFollower("left"));
 	followerRight.reset(new TrajectoryFollower("right"));
 	init();

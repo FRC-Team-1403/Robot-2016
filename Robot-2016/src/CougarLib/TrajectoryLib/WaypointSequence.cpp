@@ -42,7 +42,11 @@ uint32_t WaypointSequence::getNumWaypoints() {
 }
 
 std::shared_ptr<WaypointSequence::Waypoint> WaypointSequence::getWaypoint(uint32_t index) {
-	return this->waypoints_->at(index);
+	try {
+		return this->waypoints_->at(index);
+	} catch (const std::out_of_range& oor) {
+		CougarDebug::debugPrinter(CougarDebug::ISSUE, "Out of range error in WaypointSequence::getWaypoint; trying to get element at index %d", index);
+	}
 }
 
 std::shared_ptr<WaypointSequence> WaypointSequence::invertY() {
