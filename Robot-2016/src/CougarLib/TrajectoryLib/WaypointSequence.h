@@ -11,6 +11,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include <stdexcept>
 #include "../CougarMath.h"
 
 namespace cougar {

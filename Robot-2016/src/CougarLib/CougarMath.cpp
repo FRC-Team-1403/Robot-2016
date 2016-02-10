@@ -74,8 +74,8 @@ double CougarMath::boundAngleNegPiToPiRadians(double angle) {
 	while (angle < -M_PI) {
 		angle += 2.0 * M_PI;
 	}
-	return angle;
 	CougarDebug::debugPrinter("CougarMath::boundAngle0to2PiRadians finished");
+	return angle;
 }
 
 } /* namespace cougar */

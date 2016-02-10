@@ -34,7 +34,7 @@ bool Spline::reticulateSplines(std::shared_ptr<WaypointSequence::Waypoint> start
 bool Spline::reticulateSplines(double x0, double y0, double theta0,
 				double x1, double y1, double theta1,
 				std::shared_ptr<Spline> result, std::shared_ptr<Type> type) {
-	std::cout << "Reticulating splines...\n";
+	CougarDebug::debugPrinter("Spline::reticulateSplines started");
 	result->type_ = type;
 
 	// Transform x to the origin
@@ -44,12 +44,15 @@ bool Spline::reticulateSplines(double x0, double y0, double theta0,
 	if (x1_hat == 0) {
 		return false;
 	}
+	CougarDebug::debugPrinter("Spline::reticulateSplines checkpoint 1");
 	result->knot_distance_ = x1_hat;
 	result->theta_offset_ = atan2(y1 - y0, x1 - x0);
 	double theta0_hat = CougarMath::getDifferenceInAngleRadians(
 					result->theta_offset_, theta0);
 	double theta1_hat = CougarMath::getDifferenceInAngleRadians(
 					result->theta_offset_, theta1);
+
+	CougarDebug::debugPrinter("Spline::reticulateSplines checkpoint 2");
 	// We cannot handle vertical slopes in our rotated, translated basis.
 	// This would mean the user wants to end up 90 degrees off of the straight
 	// line between p0 and p1.
@@ -64,25 +67,28 @@ bool Spline::reticulateSplines(double x0, double y0, double theta0,
 					>= M_PI / 2) {
 		return false;
 	}
+	CougarDebug::debugPrinter("Spline::reticulateSplines checkpoint 3");
 	// Turn angles into derivatives (slopes)
 	double yp0_hat = tan(theta0_hat);
 	double yp1_hat = tan(theta1_hat);
-
+	CougarDebug::debugPrinter("Spline::reticulateSplines checkpoint 4");
 	if (type == CubicHermite) {
 		// Calculate the cubic spline coefficients
+		CougarDebug::debugPrinter("Cubic Hermite");
 		result->a_ = 0;
 		result->b_ = 0;
 		result->c_ = (yp1_hat + yp0_hat) / (x1_hat * x1_hat);
 		result->d_ = -(2 * yp0_hat + yp1_hat) / x1_hat;
 		result->e_ = yp0_hat;
 	} else if (type == QuinticHermite) {
+		CougarDebug::debugPrinter("Quintic Hermite");
 		result->a_ = -(3 * (yp0_hat + yp1_hat)) / (x1_hat * x1_hat * x1_hat * x1_hat);
 		result->b_ = (8 * yp0_hat + 7 * yp1_hat) / (x1_hat * x1_hat * x1_hat);
 		result->c_ = -(6 * yp0_hat + 4 * yp1_hat) / (x1_hat * x1_hat);
 		result->d_ = 0;
 		result->e_ = yp0_hat;
 	}
-
+	CougarDebug::debugPrinter("Spline::reticulateSplines finished");
 	return true;
 }
 

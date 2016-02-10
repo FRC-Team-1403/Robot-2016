@@ -10,10 +10,11 @@
 namespace cougar {
 
 CougarDrive::CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name) {
+	CougarDebug::debugPrinter("Started constructing CougarDrive object with name %s", name.c_str());
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(left, right));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarDrive %s constructed", this->GetCName());
+	CougarDebug::debugPrinter("Finished constructing CougarDrive object with name %s", name.c_str());
 }
 
 CougarDrive::~CougarDrive() {

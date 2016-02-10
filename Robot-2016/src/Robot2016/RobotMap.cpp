@@ -1,7 +1,8 @@
 #include "RobotMap.h"
 
-std::shared_ptr<CANTalon> RobotMap::driveTrainRightTalon;
-std::shared_ptr<CANTalon> RobotMap::driveTrainLeftTalon;
+std::shared_ptr<SpeedController> RobotMap::driveTrainRightTalon;
+std::shared_ptr<SpeedController> RobotMap::driveTrainLeftTalon;
+std::shared_ptr<cougar::CougarDrive> RobotMap::drive;
 std::shared_ptr<Encoder> RobotMap::driveTrainRightEncoder;
 std::shared_ptr<Encoder> RobotMap::driveTrainLeftEncoder;
 std::shared_ptr<cougar::CougarGyro> RobotMap::driveTrainGyro;
@@ -26,8 +27,8 @@ void RobotMap::init(){
 	//motor.reset(new cougar::CougarSpeedControllerAggregate(asdf5, "pls work"));
 
 	 */
-	driveTrainRightTalon.reset(new CANTalon(1));
-	driveTrainLeftTalon.reset(new CANTalon(2));
+	driveTrainRightTalon.reset(new Victor(0));
+	driveTrainLeftTalon.reset(new Victor(1));
 	drive.reset(new cougar::CougarDrive(driveTrainRightTalon, driveTrainLeftTalon, "Drive"));
 	driveTrainRightEncoder.reset(new Encoder(1, 2));
 	driveTrainLeftEncoder.reset(new Encoder(3, 4));

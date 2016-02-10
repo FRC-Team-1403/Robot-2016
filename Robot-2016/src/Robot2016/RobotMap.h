@@ -30,8 +30,8 @@ class RobotMap {
 public:
 	static void init();
 
-	static std::shared_ptr<CANTalon> driveTrainRightTalon;
-	static std::shared_ptr<CANTalon> driveTrainLeftTalon;
+	static std::shared_ptr<SpeedController> driveTrainRightTalon;
+	static std::shared_ptr<SpeedController> driveTrainLeftTalon;
 
 	static std::shared_ptr<cougar::CougarDrive> drive;
 
