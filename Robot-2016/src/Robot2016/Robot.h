@@ -9,6 +9,7 @@
 #include "../CougarLib/CougarDebug.h"
 #include "../CougarLib/TrajectoryLib/PathGenerator.h"
 #include "../CougarLib/TrajectoryLib/Path.h"
+#include "Commands/AutonomousDrive.h"
 #include <boost/thread.hpp>
 
 

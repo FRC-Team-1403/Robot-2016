@@ -10,7 +10,8 @@ void Robot::RobotInit()
 {
 	RobotMap::init();
 	chooser = new SendableChooser();
-	//chooser->AddDefault("Default Auto", new ExampleCommand());
+	//this->autonomousCommand.reset(new AutonomousDrive());
+	chooser->AddDefault("Default Auto", new AutonomousDrive());
 	//chooser->AddObject("My Auto", new MyAutoCommand());
 	SmartDashboard::PutData("Auto Modes", chooser);
 	oi.reset(new OI());

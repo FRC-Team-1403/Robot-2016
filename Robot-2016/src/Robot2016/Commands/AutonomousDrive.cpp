@@ -1,4 +1,5 @@
 #include "AutonomousDrive.h"
+#include "../Robot.h"
 
 AutonomousDrive::AutonomousDrive()
 {

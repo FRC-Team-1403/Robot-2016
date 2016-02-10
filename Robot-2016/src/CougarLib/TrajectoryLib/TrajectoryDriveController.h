@@ -13,17 +13,12 @@
 #include "TrajectoryFollower.h"
 #include "../CougarMath.h"
 #include <memory>
-#include "../../Robot2016/Robot.h"
 
 namespace cougar {
 
 class TrajectoryDriveController : public CougarController {
 public:
-	TrajectoryDriveController() {
-		followerLeft.reset(new TrajectoryFollower("left"));
-		followerRight.reset(new TrajectoryFollower("right"));
-		init();
-	}
+	TrajectoryDriveController();
 
 	virtual ~TrajectoryDriveController() {
 
@@ -55,11 +50,7 @@ public:
 		followerRight->setTrajectory(rightProfile);
 	}
 
-	virtual void reset() {
-		followerLeft->reset();
-		followerRight->reset();
-		Robot::driveTrain->resetEncoders();
-	}
+	virtual void reset();
 
 	virtual int getFollowerCurrentSegment() {
 		return followerLeft->getCurrentSegment();
@@ -69,30 +60,7 @@ public:
 		return followerLeft->getNumSegments();
 	}
 
-	virtual void update() {
-		if (!enabled) {
-			return;
-		}
-
-		if (onTarget()) {
-			Robot::driveTrain->setLeftRightPower(0.0, 0.0);
-		} else	{
-			double distanceL = direction * Robot::driveTrain->getLeftEncoderDistance();
-			double distanceR = direction * Robot::driveTrain->getRightEncoderDistance();
-
-			double speedLeft = direction * followerLeft->calculate(distanceL);
-			double speedRight = direction * followerRight->calculate(distanceR);
-
-			double goalHeading = followerLeft->getHeading();
-			double observedHeading = Robot::driveTrain->getGyroAngleInRadians();
-
-			double angleDiffRads = CougarMath::getDifferenceInAngleRadians(observedHeading, goalHeading);
-			double angleDiff = (angleDiffRads * 180) / M_PI;
-
-			double turn = kTurn * angleDiff;
-			Robot::driveTrain->setLeftRightPower(speedLeft + turn, speedRight - turn);
-		}
-	}
+	virtual void update();
 
 	void setTrajectory(std::shared_ptr<Trajectory> t) {
 		this->trajectory = t;

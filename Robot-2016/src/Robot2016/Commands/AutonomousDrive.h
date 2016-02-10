@@ -5,7 +5,6 @@
 #include "WPILib.h"
 #include <iostream>
 #include <memory>
-#include "../Robot.h"
 #include "../../CougarLib/TrajectoryLib/TrajectoryDriveController.h"
 
 class AutonomousDrive: public Command
