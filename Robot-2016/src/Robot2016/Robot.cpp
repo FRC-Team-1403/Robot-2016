@@ -1,19 +1,38 @@
 #include "Robot.h"
+#include "RobotMap.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
-std::shared_ptr<ExampleSubsystem> Robot::exampleSubsystem;
 std::shared_ptr<OI> Robot::oi;
+std::shared_ptr<cougar::Path> Robot::path;
+std::shared_ptr<DriveTrain> Robot::driveTrain;
 
 void Robot::RobotInit()
 {
 	RobotMap::init();
 	chooser = new SendableChooser();
-	//chooser->AddDefault("Default Auto", new ExampleCommand());
+	//this->autonomousCommand.reset(new AutonomousDrive());
+	chooser->AddDefault("Default Auto", new AutonomousDrive());
 	//chooser->AddObject("My Auto", new MyAutoCommand());
 	SmartDashboard::PutData("Auto Modes", chooser);
-	exampleSubsystem.reset(new ExampleSubsystem());
-
 	oi.reset(new OI());
+	driveTrain.reset(new DriveTrain());
+
+	std::shared_ptr<cougar::TrajectoryGenerator::Config> config(new cougar::TrajectoryGenerator::Config());
+	//TODO find these values
+	const double kWheelbaseWidth = 25.5/12;
+	config->dt = 0.02; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
+	config->max_acc = 100;
+	config->max_jerk = 100;
+	config->max_vel = 100;
+
+	const std::string path_name = "TEST";
+
+	std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(7.0, 0, 0)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(14.0, 1.0, M_PI / 12.0)));
+
+	path = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 }
 
 /**

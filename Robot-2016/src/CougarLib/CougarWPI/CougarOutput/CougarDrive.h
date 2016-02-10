@@ -55,6 +55,8 @@ protected:
 	};
 	friend CougarDriveExtractor;
 
+private:
+
 	virtual std::shared_ptr<RobotDrive> GetDrive();
 	virtual float speedFactor(std::shared_ptr<CougarJoystick> joystick);
 
