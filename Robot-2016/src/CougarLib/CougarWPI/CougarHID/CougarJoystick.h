@@ -11,6 +11,7 @@
 #include <memory>
 #include "WPILib.h"
 #include "../../CougarDebug.h"
+#include <cmath>
 
 namespace cougar {
 
@@ -38,56 +39,32 @@ public:
 	virtual float GetRawAxis(uint32_t axis);
 protected:
 
-	class Accel final {
+	class Smoothing final {
 	public:
-		Accel(uint32_t port) {
-			port_ = port;
-			vel_ = 0;
-			time_ = Timer::GetFPGATimestamp();
-		}
-
-		float getVel(float a) {
-			float accel_ = (vel_ - a) * FACTOR;
-			double t = Timer::GetFPGATimestamp();
-			double dt = t - time_;
-			time_ = t;
-			vel_ += accel_ * dt;
-			if (accel_ > 0) {
-				if (vel_ > accel_) {
-					vel_ = accel_;
-				}
-			} else if (accel_ < 0) {
-				if (vel_ < accel_) {
-					vel_ = accel_;
-				}
-			}
-			if (vel_ > LIMIT || vel_ < (LIMIT * -1)) {
-				if (vel_ > 0) {
-					vel_ = LIMIT;
-				} else if (vel_< 0) {
-					vel_ = LIMIT * -1;
-				}
-			}
-			return vel_;
+		static float get(float a) {
+			//Let's try some sine
+			//Triple sine, in fact
+			float vel;
+			vel = sin(scale(a));
+			vel = sin(scale(vel));
+			vel = sin(scale(vel));
+			return vel;
 		}
 
 	private:
-		uint32_t port_;
-		float vel_;
-		double time_;
+		static float scale(float a) {
+			float val = a * (M_PI / 2) * FACTOR;
+			if (abs(val) > LIMIT) {
+				val = LIMIT * (val / abs(val));
+			}
+			return val;
+		}
 	};
-
-	Accel *LX;
-	Accel *LY;
-	Accel *RX;
-	Accel *RY;
 
 	std::shared_ptr<Joystick> joystick_;
 	static const bool SMOOTHING = false;
 	static constexpr double FACTOR = 1.0;
 	static constexpr double LIMIT = 0.5;
-
-
 };
 
 } /* namespace cougar */

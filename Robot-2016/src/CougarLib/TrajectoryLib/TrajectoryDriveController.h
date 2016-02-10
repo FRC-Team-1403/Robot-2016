@@ -18,7 +18,7 @@ namespace cougar {
 
 class TrajectoryDriveController : public CougarController {
 public:
-	TrajectoryDriveController();
+	explicit TrajectoryDriveController();
 
 	virtual ~TrajectoryDriveController() {
 

@@ -1,8 +1,8 @@
 /*
  * CougarGyro.cpp
  *
- *  Created on: Feb 9, 2016
- *      Author: Thejas
+ *	Created on: Feb 9, 2016
+ *			Author: Thejas
  */
 
 #include <CougarLib/CougarWPI/CougarInput/CougarGyro.h>
@@ -26,10 +26,10 @@ constexpr float CougarGyro::kDefaultVoltsPerDegreePerSecond;
  * Gyro constructor using the Analog Input channel number.
  *
  * @param channel The analog channel the gyro is connected to. Gyros
-                      can only be used on on-board Analog Inputs 0-1.
+											can only be used on on-board Analog Inputs 0-1.
  */
 CougarGyro::CougarGyro(int32_t channel) :
-    CougarGyro(std::make_shared<AnalogInput>(channel)) {}
+		CougarGyro(std::make_shared<AnalogInput>(channel)) {}
 
 /**
  * Gyro constructor with a precreated AnalogInput object.
@@ -41,8 +41,11 @@ CougarGyro::CougarGyro(int32_t channel) :
  * to.
  */
 CougarGyro::CougarGyro(AnalogInput *channel)
-    : CougarGyro(
-          std::shared_ptr<AnalogInput>(channel, NullDeleter<AnalogInput>())) {}
+		: CougarGyro(
+					std::shared_ptr<AnalogInput>(channel, NullDeleter<AnalogInput>())) {
+	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel->GetChannel());
+	CougarDebug::debugPrinter("Finished constructing CougarGyro object in channel %d", channel->GetChannel());
+}
 
 /**
  * Gyro constructor with a precreated AnalogInput object.
@@ -53,13 +56,15 @@ CougarGyro::CougarGyro(AnalogInput *channel)
  * connected to.
  */
 CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel)
-    : m_analog(channel) {
-  if (channel == nullptr) {
-    wpi_setWPIError(NullParameter);
-  } else {
-    InitGyro();
-    Calibrate();
-  }
+		: m_analog(channel) {
+	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel->GetChannel());
+	if (channel == nullptr) {
+		wpi_setWPIError(NullParameter);
+	} else {
+		InitGyro();
+		Calibrate();
+	}
+	CougarDebug::debugPrinter("Finished constructing CougarGyro object in channel %d", channel->GetChannel());
 }
 
 /**
@@ -67,17 +72,19 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel)
  * presetting the center and offset values. Bypasses calibration.
  *
  * @param channel The analog channel the gyro is connected to. Gyros
- *        can only be used on on-board Analog Inputs 0-1.
+ *				can only be used on on-board Analog Inputs 0-1.
  * @param center Preset uncalibrated value to use as the accumulator center value.
  * @param offset Preset uncalibrated value to use as the gyro offset.
  */
 CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset) {
-  m_analog = std::make_shared<AnalogInput>(channel);
-  InitGyro();
-  m_center = center;
-  m_offset = offset;
-  m_analog->SetAccumulatorCenter(m_center);
-  m_analog->ResetAccumulator();
+	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel);
+	m_analog = std::make_shared<AnalogInput>(channel);
+	InitGyro();
+	m_center = center;
+	m_offset = offset;
+	m_analog->SetAccumulatorCenter(m_center);
+	m_analog->ResetAccumulator();
+	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel);
 }
 
 /**
@@ -89,15 +96,17 @@ CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset) {
  * connected to.
  */
 CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, float offset) : m_analog(channel) {
-  if (channel == nullptr) {
-    wpi_setWPIError(NullParameter);
-  } else {
-    InitGyro();
-    m_center = center;
-    m_offset = offset;
-    m_analog->SetAccumulatorCenter(m_center);
-    m_analog->ResetAccumulator();
-  }
+	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel->GetChannel());
+	if (channel == nullptr) {
+		wpi_setWPIError(NullParameter);
+	} else {
+		InitGyro();
+		m_center = center;
+		m_offset = offset;
+		m_analog->SetAccumulatorCenter(m_center);
+		m_analog->ResetAccumulator();
+	}
+	CougarDebug::debugPrinter("Finished constructing CougarGyro object in channel %d", channel->GetChannel());
 }
 
 /**
@@ -107,59 +116,64 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, fl
  * drift in the gyro and it needs to be recalibrated after it has been running.
  */
 void CougarGyro::Reset() {
-  if (StatusIsFatal()) return;
-  m_analog->ResetAccumulator();
+	CougarDebug::debugPrinter("CougarGyro::Reset started");
+	if (StatusIsFatal()) return;
+	m_analog->ResetAccumulator();
+	CougarDebug::debugPrinter("CougarGyro::Reset finished");
 }
 
 /**
- * Initialize the gyro.  Calibration is handled by Calibrate().
+ * Initialize the gyro.	Calibration is handled by Calibrate().
  */
 void CougarGyro::InitGyro() {
-  if (StatusIsFatal()) return;
+	CougarDebug::debugPrinter("CougarGyro::InitGyro started");
+	if (StatusIsFatal()) return;
 
-  if (!m_analog->IsAccumulatorChannel()) {
-    wpi_setWPIErrorWithContext(ParameterOutOfRange,
-                               " channel (must be accumulator channel)");
-    m_analog = nullptr;
-    return;
-  }
+	if (!m_analog->IsAccumulatorChannel()) {
+		wpi_setWPIErrorWithContext(ParameterOutOfRange, " channel (must be accumulator channel)");
+		m_analog = nullptr;
+		return;
+	}
 
-  m_voltsPerDegreePerSecond = kDefaultVoltsPerDegreePerSecond;
-  m_analog->SetAverageBits(kAverageBits);
-  m_analog->SetOversampleBits(kOversampleBits);
-  float sampleRate =
-      kSamplesPerSecond * (1 << (kAverageBits + kOversampleBits));
-  m_analog->SetSampleRate(sampleRate);
-  Wait(0.1);
+	m_voltsPerDegreePerSecond = kDefaultVoltsPerDegreePerSecond;
+	m_analog->SetAverageBits(kAverageBits);
+	m_analog->SetOversampleBits(kOversampleBits);
+	float sampleRate =
+			kSamplesPerSecond * (1 << (kAverageBits + kOversampleBits));
+	m_analog->SetSampleRate(sampleRate);
+	Wait(0.1);
 
 
-  SetDeadband(0.0f);
+	SetDeadband(0.0f);
 
-  SetPIDSourceType(PIDSourceType::kDisplacement);
+	SetPIDSourceType(PIDSourceType::kDisplacement);
 
-  HALReport(HALUsageReporting::kResourceType_Gyro, m_analog->GetChannel());
-  LiveWindow::GetInstance()->AddSensor("CougarGyro", m_analog->GetChannel(), this);
+	HALReport(HALUsageReporting::kResourceType_Gyro, m_analog->GetChannel());
+	LiveWindow::GetInstance()->AddSensor("CougarGyro", m_analog->GetChannel(), this);
+	CougarDebug::debugPrinter("CougarGyro::InitGyro finished");
 }
 
 /**
  * {@inheritDoc}
  */
 void CougarGyro::Calibrate() {
-  if (StatusIsFatal()) return;
+	CougarDebug::debugPrinter("CougarGyro::Calibrate started");
+	if (StatusIsFatal()) return;
 
-  m_analog->InitAccumulator();
+	m_analog->InitAccumulator();
 
-  Wait(kCalibrationSampleTime);
+	Wait(kCalibrationSampleTime);
 
-  int64_t value;
-  uint32_t count;
-  m_analog->GetAccumulatorOutput(value, count);
+	int64_t value;
+	uint32_t count;
+	m_analog->GetAccumulatorOutput(value, count);
 
-  m_center = (uint32_t)((float)value / (float)count + .5);
+	m_center = (uint32_t)((float)value / (float)count + .5);
 
-  m_offset = ((float)value / (float)count) - (float)m_center;
-  m_analog->SetAccumulatorCenter(m_center);
-  m_analog->ResetAccumulator();
+	m_offset = ((float)value / (float)count) - (float)m_center;
+	m_analog->SetAccumulatorCenter(m_center);
+	m_analog->ResetAccumulator();
+	CougarDebug::debugPrinter("CougarGyro::Calibrate finished");
 }
 
 /**
@@ -178,19 +192,21 @@ void CougarGyro::Calibrate() {
  * of the returned rate from the gyro.
  */
 float CougarGyro::GetAngle() const {
-  if (StatusIsFatal()) return 0.f;
+	CougarDebug::debugPrinter("CougarGyro::GetAngle started");
+	if (StatusIsFatal()) return 0.f;
 
-  int64_t rawValue;
-  uint32_t count;
-  m_analog->GetAccumulatorOutput(rawValue, count);
+	int64_t rawValue;
+	uint32_t count;
+	m_analog->GetAccumulatorOutput(rawValue, count);
 
-  int64_t value = rawValue - (int64_t)((float)count * m_offset);
+	int64_t value = rawValue - (int64_t)((float)count * m_offset);
 
-  double scaledValue = value * 1e-9 * (double)m_analog->GetLSBWeight() *
-                       (double)(1 << m_analog->GetAverageBits()) /
-                       (m_analog->GetSampleRate() * m_voltsPerDegreePerSecond);
+	double scaledValue = value * 1e-9 * (double)m_analog->GetLSBWeight() *
+											 (double)(1 << m_analog->GetAverageBits()) /
+											 (m_analog->GetSampleRate() * m_voltsPerDegreePerSecond);
 
-  return (float)scaledValue;
+	return (float)scaledValue;
+	CougarDebug::debugPrinter("CougarGyro::GetAngle started");
 }
 
 /**
@@ -201,11 +217,13 @@ float CougarGyro::GetAngle() const {
  * @return the current rate in degrees per second
  */
 double CougarGyro::GetRate() const {
-  if (StatusIsFatal()) return 0.0;
+	CougarDebug::debugPrinter("CougarGyro::GetRate started");
+	if (StatusIsFatal()) return 0.0;
 
-  return (m_analog->GetAverageValue() - ((double)m_center + m_offset)) * 1e-9 *
-         m_analog->GetLSBWeight() /
-         ((1 << m_analog->GetOversampleBits()) * m_voltsPerDegreePerSecond);
+	return (m_analog->GetAverageValue() - ((double)m_center + m_offset)) * 1e-9 *
+				 m_analog->GetLSBWeight() /
+				 ((1 << m_analog->GetOversampleBits()) * m_voltsPerDegreePerSecond);
+	CougarDebug::debugPrinter("CougarGyro::GetRate finished");
 }
 
 /**
@@ -215,7 +233,7 @@ double CougarGyro::GetRate() const {
  * @return the current offset value
  */
 float CougarGyro::GetOffset() const {
-  return m_offset;
+	return m_offset;
 }
 
 /**
@@ -225,7 +243,7 @@ float CougarGyro::GetOffset() const {
  * @return the current center value
  */
 uint32_t CougarGyro::GetCenter() const {
-  return m_center;
+	return m_center;
 }
 
 /**
@@ -239,23 +257,27 @@ uint32_t CougarGyro::GetCenter() const {
  * @param voltsPerDegreePerSecond The sensitivity in Volts/degree/second
  */
 void CougarGyro::SetSensitivity(float voltsPerDegreePerSecond) {
-  m_voltsPerDegreePerSecond = voltsPerDegreePerSecond;
+	CougarDebug::debugPrinter("CougarGyro::SetSensitivity started");
+	m_voltsPerDegreePerSecond = voltsPerDegreePerSecond;
+	CougarDebug::debugPrinter("CougarGyro::SetSensitivity finished");
 }
 
 /**
- * Set the size of the neutral zone.  Any voltage from the gyro less than this
- * amount from the center is considered stationary.  Setting a deadband will
+ * Set the size of the neutral zone.	Any voltage from the gyro less than this
+ * amount from the center is considered stationary.	Setting a deadband will
  * decrease the amount of drift when the gyro isn't rotating, but will make it
  * less accurate.
  *
  * @param volts The size of the deadband in volts
  */
 void CougarGyro::SetDeadband(float volts) {
-  if (StatusIsFatal()) return;
+	CougarDebug::debugPrinter("CougarGyro::SetDeadband started");
+	if (StatusIsFatal()) return;
 
-  int32_t deadband = volts * 1e9 / m_analog->GetLSBWeight() *
-                     (1 << m_analog->GetOversampleBits());
-  m_analog->SetAccumulatorDeadband(deadband);
+	int32_t deadband = volts * 1e9 / m_analog->GetLSBWeight() *
+										 (1 << m_analog->GetOversampleBits());
+	m_analog->SetAccumulatorDeadband(deadband);
+	CougarDebug::debugPrinter("CougarGyro::SetDeadband finished");
 }
 
 } /* namespace cougar */

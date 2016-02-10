@@ -1,12 +1,14 @@
 /*
  * CougarController.h
  *
- *  Created on: Feb 9, 2016
- *      Author: Thejas
+ *	Created on: Feb 9, 2016
+ *			Author: Thejas
  */
 
 #ifndef SRC_COUGARLIB_COUGARCONTROLLER_H_
 #define SRC_COUGARLIB_COUGARCONTROLLER_H_
+
+#include "CougarDebug.h"
 
 namespace cougar {
 
@@ -15,21 +17,34 @@ protected:
 	bool enabled = false;
 
 public:
-	  virtual void update() = 0;
-	  virtual void reset() = 0;
-	  virtual double getGoal() = 0;
+	explicit CougarController() {
+		CougarDebug::debugPrinter("Started constructing CougarController object");
+		CougarDebug::debugPrinter("Finished constructing CougarController object");
+	}
+	virtual ~CougarController() {
+		CougarDebug::debugPrinter("Started destroying CougarController object");
+		CougarDebug::debugPrinter("Finished destroying CougarController object");
+	}
 
-	  void enable() {
-	    enabled = true;
-	  }
+	virtual void update() = 0;
+	virtual void reset() = 0;
+	virtual double getGoal() = 0;
 
-	  void disable() {
-	    enabled = false;
-	  }
+	virtual void enable() {
+		CougarDebug::debugPrinter("CougarController::enable started");
+		enabled = true;
+		CougarDebug::debugPrinter("CougarController::enable finished");
+	}
 
-	  bool isEnabled() {
-	    return enabled;
-	  }
+	virtual void disable() {
+		CougarDebug::debugPrinter("CougarController::disable started");
+		enabled = false;
+		CougarDebug::debugPrinter("CougarController::disable finished");
+	}
+
+	virtual bool isEnabled() const {
+		return enabled;
+	}
 };
 
 } /* namespace cougar */

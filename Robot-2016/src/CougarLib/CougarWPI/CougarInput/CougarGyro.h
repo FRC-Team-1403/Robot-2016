@@ -9,6 +9,7 @@
 #define SRC_COUGARLIB_COUGARWPI_COUGARINPUT_COUGARGYRO_H_
 
 #include "WPILib.h"
+#include "../../CougarDebug.h"
 
 namespace cougar {
 
@@ -27,15 +28,15 @@ public:
 	CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, float offset);
 	virtual ~CougarGyro() = default;
 
-	float GetAngle() const override;
-	double GetRate() const override;
+	virtual float GetAngle() const override;
+	virtual double GetRate() const override;
 	virtual uint32_t GetCenter() const;
 	virtual float GetOffset() const;
-	void SetSensitivity(float voltsPerDegreePerSecond);
-	void SetDeadband(float volts);
-	void Reset() override;
+	virtual void SetSensitivity(float voltsPerDegreePerSecond);
+	virtual void SetDeadband(float volts);
+	virtual void Reset() override;
 	virtual void InitGyro();
-	void Calibrate() override;
+	virtual void Calibrate() override;
 
  protected:
 	std::shared_ptr<AnalogInput> m_analog;

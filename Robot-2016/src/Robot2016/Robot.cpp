@@ -8,6 +8,7 @@ std::shared_ptr<DriveTrain> Robot::driveTrain;
 
 void Robot::RobotInit()
 {
+	cougar::CougarDebug::init();
 	RobotMap::init();
 	chooser = new SendableChooser();
 	//this->autonomousCommand.reset(new AutonomousDrive());

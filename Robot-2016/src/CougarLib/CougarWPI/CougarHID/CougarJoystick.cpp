@@ -10,12 +10,10 @@
 namespace cougar {
 
 CougarJoystick::CougarJoystick(uint32_t port) {
+	CougarDebug::debugPrinter("Started constructing CougarJoystick object with port %d", port);
 	std::shared_ptr<Joystick> tmpJoystick(new Joystick(port));
 	this->joystick_ = tmpJoystick;
-	this->LX = new Accel(0);
-	this->LY = new Accel(1);
-	this->RX = new Accel(4);
-	this->RY = new Accel(5);
+	CougarDebug::debugPrinter("Finished constructing CougarJoystick object with port %d", port);
 }
 
 CougarJoystick::~CougarJoystick() {
@@ -69,7 +67,7 @@ float CougarJoystick::GetStickLeftAxisX() {
 	if (!SMOOTHING) {
 		return this->joystick_->GetRawAxis(0);
 	} else {
-
+		return Smoothing::get(this->joystick_->GetRawAxis(0));
 	}
 }
 
@@ -78,10 +76,7 @@ float CougarJoystick::GetStickLeftAxisY() {
 		return this->joystick_->GetRawAxis(1);
 	}
 	else {
-		float val = this->LX->getVel(this->joystick_->GetRawAxis(1));
-		CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "Motor set to %f", val);
-		return val;
-
+		return Smoothing::get(this->joystick_->GetRawAxis(1));
 	}
 }
 
@@ -89,7 +84,7 @@ float CougarJoystick::GetStickRightAxisX() {
 	if (!SMOOTHING) {
 		return this->joystick_->GetRawAxis(4);
 	} else {
-
+		return Smoothing::get(this->joystick_->GetRawAxis(4));
 	}
 }
 
@@ -97,7 +92,7 @@ float CougarJoystick::GetStickRightAxisY() {
 	if (!SMOOTHING) {
 		return this->joystick_->GetRawAxis(5);
 	} else {
-
+		return Smoothing::get(this->joystick_->GetRawAxis(5));
 	}
 }
 
