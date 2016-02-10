@@ -61,6 +61,10 @@ bool CougarJoystick::GetButtonBack() {
 	return this->joystick_->GetRawButton(7);
 }
 
+bool CougarJoystick::GetRawButton(uint32_t port) {
+	return this->joystick_->GetRawButton(port);
+}
+
 float CougarJoystick::GetStickLeftAxisX() {
 	if (!SMOOTHING) {
 		return this->joystick_->GetRawAxis(0);

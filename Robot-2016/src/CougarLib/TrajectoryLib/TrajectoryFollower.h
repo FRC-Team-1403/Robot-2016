@@ -9,12 +9,13 @@
 #define SRC_TRAJECTORYFOLLOWER_H_
 
 #include "Trajectory.h"
+#include <string>
 
 namespace cougar {
 
 class TrajectoryFollower {
 public:
-	TrajectoryFollower();
+	TrajectoryFollower(std::string name);
 	virtual ~TrajectoryFollower() {
 
 	}
@@ -25,6 +26,15 @@ public:
 	virtual double calculate(double distance_so_far);
 	virtual double getHeading();
 	virtual bool isFinishedTrajectory();
+	virtual int getCurrentSegment() {
+		return current_segment;
+	}
+
+	virtual int getNumSegments() {
+		return profile_->getNumSegments();
+	}
+
+	std::string name;
 
 private:
 	double kp_;

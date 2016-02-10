@@ -9,7 +9,9 @@
 
 namespace cougar {
 
-TrajectoryFollower::TrajectoryFollower() {}
+TrajectoryFollower::TrajectoryFollower(std::string name) {
+	this->name = name;
+}
 
 void TrajectoryFollower::configure(double kp, double ki, double kd, double kv, double ka) {
 	kp_ = kp;

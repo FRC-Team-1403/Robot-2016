@@ -29,6 +29,7 @@ public:
 	virtual bool GetButtonLB();
 	virtual bool GetButtonStart();
 	virtual bool GetButtonBack();
+	virtual bool GetRawButton(uint32_t port);
 
 	virtual float GetStickLeftAxisX();
 	virtual float GetStickLeftAxisY();

@@ -6,6 +6,7 @@
 #include "../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarSpeedControllerAggregate.h"
 #include "../CougarLib/CougarDebug.h"
+#include "../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
@@ -28,7 +29,13 @@ class RobotMap {
 public:
 	static void init();
 
-	static std::shared_ptr<CANTalon> talon;
+	static std::shared_ptr<CANTalon> driveTrainRightTalon;
+	static std::shared_ptr<CANTalon> driveTrainLeftTalon;
+
+	static std::shared_ptr<Encoder> driveTrainRightEncoder;
+	static std::shared_ptr<Encoder> driveTrainLeftEncoder;
+
+	static std::shared_ptr<cougar::CougarGyro> driveTrainGyro;
 };
 
 #endif

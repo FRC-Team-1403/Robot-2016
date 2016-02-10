@@ -46,6 +46,8 @@ protected:
 	};
 	friend CougarSpeedControllerExtractor;
 
+private:
+
 	virtual std::shared_ptr<SpeedController> GetController() const;
 
 	std::shared_ptr<SpeedController> controller_;
