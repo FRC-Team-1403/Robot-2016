@@ -22,7 +22,9 @@ void AutonomousDrive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void AutonomousDrive::Execute()
 {
+	cougar::CougarDebug::debugPrinter("Execute method starting");
 	driveController->update();
+	cougar::CougarDebug::debugPrinter("Execute method finishing");
 }
 
 // Make this return true when this Command no longer needs to run execute()
