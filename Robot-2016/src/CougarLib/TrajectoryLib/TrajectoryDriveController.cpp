@@ -33,17 +33,27 @@ void TrajectoryDriveController::update() {
 		} else	{
 			double distanceL = direction * Robot::driveTrain->getLeftEncoderDistance();
 			double distanceR = direction * Robot::driveTrain->getRightEncoderDistance();
+			std::cout << "distancel: " << distanceL << "\tdistancer: " << distanceR << "\n";
 
 			double speedLeft = direction * followerLeft->calculate(distanceL);
 			double speedRight = direction * followerRight->calculate(distanceR);
+			std::cout << "speedleft: " << speedLeft << "\tspeedright: " << speedRight << "\n";
 
 			double goalHeading = followerLeft->getHeading();
 			double observedHeading = Robot::driveTrain->getGyroAngleInRadians();
+			std::cout << "goalheading: " << goalHeading << "\tobservedheading: " << observedHeading << "\n";
+
 
 			double angleDiffRads = CougarMath::getDifferenceInAngleRadians(observedHeading, goalHeading);
 			double angleDiff = (angleDiffRads * 180) / M_PI;
 
 			double turn = kTurn * angleDiff;
+
+			std::cout << "anglediff: " << angleDiff << "\tturn: " << turn << "\n";
+			std::cout << "isfinished: " << this->onTarget() << "\n";
+
+
+
 			Robot::driveTrain->setLeftRightPower(speedLeft + turn, speedRight - turn);
 		}
 	}

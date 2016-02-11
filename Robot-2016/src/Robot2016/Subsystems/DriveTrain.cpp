@@ -21,7 +21,7 @@ void DriveTrain::InitDefaultCommand()
 {
 	// Set the default command for a subsystem here.
 	//SetDefaultCommand(new MySpecialCommand());
-	SetDefaultCommand(new DriveWithJoystick());
+	//SetDefaultCommand(new DriveWithJoystick());
 }
 
 void DriveTrain::drive() {
@@ -55,13 +55,7 @@ double DriveTrain::getJerk() {
 }
 
 double DriveTrain::getAngularVelocity() {
-	double a = this->getGyroAngleInRadians();
-	double t = Timer::GetFPGATimestamp();
-	double result = (a - angle) / (t - time);
-	this->angle = a;
-	this->time = t;
-
-	return result;
+	return (this->driveTrainGyro->GetRate() * M_PI) / 180.0;
 }
 
 // Put methods for controlling this subsystem
