@@ -38,7 +38,7 @@ public:
 	static std::shared_ptr<Encoder> driveTrainRightEncoder;
 	static std::shared_ptr<Encoder> driveTrainLeftEncoder;
 
-	static std::shared_ptr<cougar::CougarGyro> driveTrainGyro;
+	static std::shared_ptr<Gyro> driveTrainGyro;
 };
 
 #endif

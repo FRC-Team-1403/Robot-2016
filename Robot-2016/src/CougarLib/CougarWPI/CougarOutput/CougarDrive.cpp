@@ -24,14 +24,16 @@ void CougarDrive::Drive(float outputMagnitude, float curve) const{
 	this->drive_->Drive(outputMagnitude, curve);
 }
 
-void CougarDrive::TankDrive(std::shared_ptr<CougarJoystick> joystick, bool squaredInputs /* = true */) {
-	this->drive_->TankDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick), joystick->GetStickRightAxisY() * this->speedFactor(joystick), squaredInputs);
+void CougarDrive::TankDrive(std::shared_ptr<CougarJoystick> joystick, bool reversed,  bool squaredInputs /* = true */) {
+	int reverse = reversed ? -1 : 1;
+	this->drive_->TankDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickRightAxisY() * this->speedFactor(joystick) * reverse, squaredInputs);
 }
-void CougarDrive::ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool squaredInputs /* = true */) {
+void CougarDrive::ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool reversed, bool squaredInputs /* = true */) {
+	int reverse = reversed ? -1 : 1;
 	if (stick == LEFT) {
-		this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick), joystick->GetStickLeftAxisX() * this->speedFactor(joystick), squaredInputs);
+		this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickLeftAxisX() * this->speedFactor(joystick) * reverse, squaredInputs);
 	} else if (stick == RIGHT) {
-		this->drive_->ArcadeDrive(joystick->GetStickRightAxisY() * this->speedFactor(joystick), joystick->GetStickRightAxisX() * this->speedFactor(joystick), squaredInputs);
+		this->drive_->ArcadeDrive(joystick->GetStickRightAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickRightAxisX() * this->speedFactor(joystick) * reverse, squaredInputs);
 	} else {
 		CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::ISSUE, "An invalid analog stick has been specified...\n\n");
 	}

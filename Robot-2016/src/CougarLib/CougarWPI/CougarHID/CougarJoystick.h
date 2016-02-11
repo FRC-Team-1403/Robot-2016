@@ -62,9 +62,9 @@ protected:
 	};
 
 	std::shared_ptr<Joystick> joystick_;
-	static const bool SMOOTHING = false;
+	static const bool SMOOTHING = true;
 	static constexpr double FACTOR = 1.0;
-	static constexpr double LIMIT = 0.5;
+	static constexpr double LIMIT = 1;
 };
 
 } /* namespace cougar */

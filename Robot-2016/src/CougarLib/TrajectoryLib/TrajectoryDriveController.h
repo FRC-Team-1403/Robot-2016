@@ -72,8 +72,8 @@ public:
 
 private:
 	void init() {
-		followerLeft->configure(1.5, 0, 0, 1.0/15.0, 1.0/34.0);
-		followerRight->configure(1.5, 0, 0, 1.0/15.0, 1.0/34.0);
+		followerLeft->configure(1.5, 0, 0, 1.0/7.5, 1.0/40.0);
+		followerRight->configure(1.5, 0, 0, 1.0/7.5, 1.0/40.0);
 	}
 
 };
