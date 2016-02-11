@@ -23,6 +23,7 @@ void AutonomousDrive::Initialize()
 void AutonomousDrive::Execute()
 {
 	cougar::CougarDebug::debugPrinter("Execute method starting");
+    driveController->loadProfileNoReset(Robot::path->getLeftWheelTrajectory(), Robot::path->getRightWheelTrajectory());
 	driveController->update();
 	cougar::CougarDebug::debugPrinter("Execute method finishing");
 }
