@@ -29,7 +29,11 @@ constexpr float CougarGyro::kDefaultVoltsPerDegreePerSecond;
 											can only be used on on-board Analog Inputs 0-1.
  */
 CougarGyro::CougarGyro(int32_t channel) :
-		CougarGyro(std::make_shared<AnalogInput>(channel)) {}
+		CougarGyro(std::make_shared<AnalogInput>(channel)) {
+	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
+	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
+
+}
 
 /**
  * Gyro constructor with a precreated AnalogInput object.
@@ -43,8 +47,8 @@ CougarGyro::CougarGyro(int32_t channel) :
 CougarGyro::CougarGyro(AnalogInput *channel)
 		: CougarGyro(
 					std::shared_ptr<AnalogInput>(channel, NullDeleter<AnalogInput>())) {
-	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel->GetChannel());
-	CougarDebug::debugPrinter("Finished constructing CougarGyro object in channel %d", channel->GetChannel());
+	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
+	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 }
 
 /**
@@ -57,14 +61,14 @@ CougarGyro::CougarGyro(AnalogInput *channel)
  */
 CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel)
 		: m_analog(channel) {
-	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel->GetChannel());
+	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 	if (channel == nullptr) {
 		wpi_setWPIError(NullParameter);
 	} else {
 		InitGyro();
 		Calibrate();
 	}
-	CougarDebug::debugPrinter("Finished constructing CougarGyro object in channel %d", channel->GetChannel());
+	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 }
 
 /**
@@ -77,14 +81,14 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel)
  * @param offset Preset uncalibrated value to use as the gyro offset.
  */
 CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset) {
-	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel);
+	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 	m_analog = std::make_shared<AnalogInput>(channel);
 	InitGyro();
 	m_center = center;
 	m_offset = offset;
 	m_analog->SetAccumulatorCenter(m_center);
 	m_analog->ResetAccumulator();
-	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel);
+	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 }
 
 /**
@@ -96,7 +100,7 @@ CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset) {
  * connected to.
  */
 CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, float offset) : m_analog(channel) {
-	CougarDebug::debugPrinter("Started constructing CougarGyro object in channel %d", channel->GetChannel());
+	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 	if (channel == nullptr) {
 		wpi_setWPIError(NullParameter);
 	} else {
@@ -106,7 +110,7 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, fl
 		m_analog->SetAccumulatorCenter(m_center);
 		m_analog->ResetAccumulator();
 	}
-	CougarDebug::debugPrinter("Finished constructing CougarGyro object in channel %d", channel->GetChannel());
+	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 }
 
 /**
@@ -116,17 +120,17 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, fl
  * drift in the gyro and it needs to be recalibrated after it has been running.
  */
 void CougarGyro::Reset() {
-	CougarDebug::debugPrinter("CougarGyro::Reset started");
+	CougarDebug::startMethod("CougarGyro::Reset");
 	if (StatusIsFatal()) return;
 	m_analog->ResetAccumulator();
-	CougarDebug::debugPrinter("CougarGyro::Reset finished");
+	CougarDebug::endMethod("CougarGyro::Reset");
 }
 
 /**
  * Initialize the gyro.	Calibration is handled by Calibrate().
  */
 void CougarGyro::InitGyro() {
-	CougarDebug::debugPrinter("CougarGyro::InitGyro started");
+	CougarDebug::startMethod("CougarGyro::InitGyro");
 	if (StatusIsFatal()) return;
 
 	if (!m_analog->IsAccumulatorChannel()) {
@@ -150,14 +154,14 @@ void CougarGyro::InitGyro() {
 
 	HALReport(HALUsageReporting::kResourceType_Gyro, m_analog->GetChannel());
 	LiveWindow::GetInstance()->AddSensor("CougarGyro", m_analog->GetChannel(), this);
-	CougarDebug::debugPrinter("CougarGyro::InitGyro finished");
+	CougarDebug::endMethod("CougarGyro::Reset");
 }
 
 /**
  * {@inheritDoc}
  */
 void CougarGyro::Calibrate() {
-	CougarDebug::debugPrinter("CougarGyro::Calibrate started");
+	CougarDebug::startMethod("CougarGyro::Calibrate");
 	if (StatusIsFatal()) return;
 
 	m_analog->InitAccumulator();
@@ -173,7 +177,7 @@ void CougarGyro::Calibrate() {
 	m_offset = ((float)value / (float)count) - (float)m_center;
 	m_analog->SetAccumulatorCenter(m_center);
 	m_analog->ResetAccumulator();
-	CougarDebug::debugPrinter("CougarGyro::Calibrate finished");
+	CougarDebug::endMethod("CougarGyro::Calibrate");
 }
 
 /**
@@ -192,7 +196,7 @@ void CougarGyro::Calibrate() {
  * of the returned rate from the gyro.
  */
 float CougarGyro::GetAngle() const {
-	CougarDebug::debugPrinter("CougarGyro::GetAngle started");
+	CougarDebug::startMethod("CougarGyro::GetAngle");
 	if (StatusIsFatal()) return 0.f;
 
 	int64_t rawValue;
@@ -206,7 +210,7 @@ float CougarGyro::GetAngle() const {
 											 (m_analog->GetSampleRate() * m_voltsPerDegreePerSecond);
 
 	return (float)scaledValue;
-	CougarDebug::debugPrinter("CougarGyro::GetAngle started");
+	CougarDebug::endMethod("CougarGyro::GetAngle");
 }
 
 /**
@@ -217,13 +221,13 @@ float CougarGyro::GetAngle() const {
  * @return the current rate in degrees per second
  */
 double CougarGyro::GetRate() const {
-	CougarDebug::debugPrinter("CougarGyro::GetRate started");
+	CougarDebug::startMethod("CougarGyro::GetAngle");
 	if (StatusIsFatal()) return 0.0;
 
 	return (m_analog->GetAverageValue() - ((double)m_center + m_offset)) * 1e-9 *
 				 m_analog->GetLSBWeight() /
 				 ((1 << m_analog->GetOversampleBits()) * m_voltsPerDegreePerSecond);
-	CougarDebug::debugPrinter("CougarGyro::GetRate finished");
+	CougarDebug::endMethod("CougarGyro::GetAngle");
 }
 
 /**
@@ -257,9 +261,9 @@ uint32_t CougarGyro::GetCenter() const {
  * @param voltsPerDegreePerSecond The sensitivity in Volts/degree/second
  */
 void CougarGyro::SetSensitivity(float voltsPerDegreePerSecond) {
-	CougarDebug::debugPrinter("CougarGyro::SetSensitivity started");
+	CougarDebug::startMethod("CougarGyro::SetSensitivity");
 	m_voltsPerDegreePerSecond = voltsPerDegreePerSecond;
-	CougarDebug::debugPrinter("CougarGyro::SetSensitivity finished");
+	CougarDebug::endMethod("CougarGyro::SetSensitivity");
 }
 
 /**
@@ -271,13 +275,13 @@ void CougarGyro::SetSensitivity(float voltsPerDegreePerSecond) {
  * @param volts The size of the deadband in volts
  */
 void CougarGyro::SetDeadband(float volts) {
-	CougarDebug::debugPrinter("CougarGyro::SetDeadband started");
+	CougarDebug::startMethod("CougarGyro::SetDeadband");
 	if (StatusIsFatal()) return;
 
 	int32_t deadband = volts * 1e9 / m_analog->GetLSBWeight() *
 										 (1 << m_analog->GetOversampleBits());
 	m_analog->SetAccumulatorDeadband(deadband);
-	CougarDebug::debugPrinter("CougarGyro::SetDeadband finished");
+	CougarDebug::endMethod("CougarGyro::SetDeadband");
 }
 
 } /* namespace cougar */

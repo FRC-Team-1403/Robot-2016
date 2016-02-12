@@ -29,6 +29,10 @@ public:
 	static void indent(int amount = 1);
 	static void unindent(int amount = 1);
 
+	// Used to print out nicely indented method debugging blocks.
+	// Should be used in all methods except simple getters.
+	// Setter methods should have these as well as a separate debug message
+	// stating what value was set to which variable.
 	static void startMethod(std::string name);
 	static void startMethod(const char *name);
 	static void endMethod(std::string name);

@@ -3,6 +3,9 @@
  *
  *	Created on: Feb 9, 2016
  *			Author: Thejas
+ *
+ *	Currently just a copy of AnalogGyro with some logging added in.
+ *	Might do something more interesting with it if I have time.
  */
 
 #ifndef SRC_COUGARLIB_COUGARWPI_COUGARINPUT_COUGARGYRO_H_

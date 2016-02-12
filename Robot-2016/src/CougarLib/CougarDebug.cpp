@@ -110,7 +110,7 @@ void CougarDebug::startMethod(std::string name) {
 
 void CougarDebug::startMethod(const char *name) {
 	indent();
-	debugPrinter(name + " started");
+	debugPrinter((std::string(name) + std::string(" started")).c_str());
 }
 
 void CougarDebug::endMethod(std::string name) {
@@ -120,7 +120,7 @@ void CougarDebug::endMethod(std::string name) {
 
 void CougarDebug::endMethod(const char *name) {
 	unindent();
-	debugPrinter(name + std::string(" finished"));
+	debugPrinter((std::string(name) + std::string(" finished")).c_str());
 }
 
 } // namespace cougar

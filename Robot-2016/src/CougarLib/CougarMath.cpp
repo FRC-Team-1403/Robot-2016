@@ -10,9 +10,15 @@
 namespace cougar {
 
 CougarMath::CougarMath() {
+	CougarDebug::indent();
 	CougarDebug::debugPrinter(CougarDebug::ISSUE, "CougarMath class being instantiated");
+	CougarDebug::unindent();
 }
-CougarMath::~CougarMath() {}
+CougarMath::~CougarMath() {
+	CougarDebug::indent();
+	CougarDebug::debugPrinter(CougarDebug::ISSUE, "CougarMath object being destroyed (there shouldn't have been an object in the first place");
+	CougarDebug::unindent();
+}
 
 double CougarMath::getDifferenceInAngleRadians(double from, double to) {
 	CougarDebug::startMethod("CougarMath::getDifferenceInAngleRadians");
