@@ -47,7 +47,8 @@ public:
 		ISSUE = 2,
 		FATAL_ERROR = 3
 	};
-	static const int DEBUG = UNIMPORTANT;
+	static const int DEBUG =
+			UNIMPORTANT;
 
 private:
 	explicit CougarDebug();
