@@ -5,7 +5,9 @@
 #include "WPILib.h"
 #include <iostream>
 #include <memory>
+#include <cmath>
 #include "../../CougarLib/TrajectoryLib/TrajectoryDriveController.h"
+#include "../../CougarLib/TrajectoryLib/TrajectoryGenerator.h"
 
 class AutonomousDrive: public Command
 {
