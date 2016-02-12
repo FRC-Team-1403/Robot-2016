@@ -15,19 +15,19 @@ CougarMath::CougarMath() {
 CougarMath::~CougarMath() {}
 
 double CougarMath::getDifferenceInAngleRadians(double from, double to) {
-	CougarDebug::debugPrinter("CougarMath::getDifferenceInAngleRadians started");
+	CougarDebug::startMethod("CougarMath::getDifferenceInAngleRadians");
 	return boundAngleNegPiToPiRadians(to - from);
-	CougarDebug::debugPrinter("CougarMath::getDifferenceInAngleRadians finished");
+	CougarDebug::endMethod("CougarMath::getDifferenceInAngleRadians");
 }
 
 double CougarMath::getDifferenceInAngleDegrees(double from, double to) {
-	CougarDebug::debugPrinter("CougarMath::getDifferenceInAngleDegrees started");
+	CougarDebug::startMethod("CougarMath::getDifferenceInAngleDegrees");
 	return boundAngleNeg180to180Degrees(to - from);
-	CougarDebug::debugPrinter("CougarMath::getDifferenceInAngleDegrees finished");
+	CougarDebug::endMethod("CougarMath::getDifferenceInAngleDegrees");
 }
 
 double CougarMath::boundAngle0to360Degrees(double angle) {
-	CougarDebug::debugPrinter("CougarMath::boundAngle0to360Degrees started");
+	CougarDebug::startMethod("CougarMath::boundAngle0to360Degrees");
 	// Naive algorithm
 	while (angle >= 360.0) {
 		angle -= 360.0;
@@ -36,11 +36,11 @@ double CougarMath::boundAngle0to360Degrees(double angle) {
 		angle += 360.0;
 	}
 	return angle;
-	CougarDebug::debugPrinter("CougarMath::boundAngle0to360Degrees finished");
+	CougarDebug::endMethod("CougarMath::boundAngle0to360Degrees");
 }
 
 double CougarMath::boundAngleNeg180to180Degrees(double angle) {
-	CougarDebug::debugPrinter("CougarMath::boundAngleNet180to180Degrees started");
+	CougarDebug::startMethod("CougarMath::boundAngleNet180to180Degrees");
 	// Naive algorithm
 	while (angle >= 180.0) {
 		angle -= 360.0;
@@ -49,11 +49,11 @@ double CougarMath::boundAngleNeg180to180Degrees(double angle) {
 		angle += 360.0;
 	}
 	return angle;
-	CougarDebug::debugPrinter("CougarMath::boundAngleNet180to180Degrees finished");
+	CougarDebug::endMethod("CougarMath::boundAngleNet180to180Degrees");
 }
 
 double CougarMath::boundAngle0to2PiRadians(double angle) {
-	CougarDebug::debugPrinter("CougarMath::boundAngle0to2PiRadians started");
+	CougarDebug::startMethod("CougarMath::boundAngle0to2PiRadians");
 	// Naive algorithm
 	while (angle >= 2.0 * M_PI) {
 		angle -= 2.0 * M_PI;
@@ -62,11 +62,11 @@ double CougarMath::boundAngle0to2PiRadians(double angle) {
 		angle += 2.0 * M_PI;
 	}
 	return angle;
-	CougarDebug::debugPrinter("CougarMath::boundAngle0to2PiRadians finished");
+	CougarDebug::endMethod("CougarMath::boundAngle0to2PiRadians");
 }
 
 double CougarMath::boundAngleNegPiToPiRadians(double angle) {
-	CougarDebug::debugPrinter("CougarMath::boundAngleNegPitoPiRadians started");
+	CougarDebug::startMethod("CougarMath::boundAngleNegPitoPiRadians");
 	// Naive algorithm
 	while (angle >= M_PI) {
 		angle -= 2.0 * M_PI;
@@ -74,7 +74,7 @@ double CougarMath::boundAngleNegPiToPiRadians(double angle) {
 	while (angle < -M_PI) {
 		angle += 2.0 * M_PI;
 	}
-	CougarDebug::debugPrinter("CougarMath::boundAngle0to2PiRadians finished");
+	CougarDebug::endMethod("CougarMath::boundAngle0to2PiRadians");
 	return angle;
 }
 

@@ -26,6 +26,13 @@ public:
 	static void debugPrinter(int level = UNIMPORTANT, std::string message = "");
 	static void debugPrinter(std::string message = "");
 
+	static void indent(int amount = 1);
+	static void unindent(int amount = 1);
+
+	static void startMethod(std::string name);
+	static void startMethod(const char *name);
+	static void endMethod(std::string name);
+	static void endMethod(const char *name);
 
 	// Messages marked with a debug level higher than
 	// or equal to current debug level will be shown.
@@ -43,7 +50,9 @@ private:
 	virtual ~CougarDebug();
 
 	static std::map<int, std::string> debugLevels;
+	static int indentation;
 	static bool didInit;
+	static bool doIndent;
 };
 
 } /* namespace cougar */
