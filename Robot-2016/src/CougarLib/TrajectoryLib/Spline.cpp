@@ -185,8 +185,7 @@ double Spline::angleChangeAt(double percentage) {
 }
 
 std::string Spline::toString() {
-	//return "a=" + a_ + "; b=" + b_ + "; c=" + c_ + "; d=" + d_ + "; e=" + e_;
-	return "";
+	return std::string("a=") + std::to_string(a_) + "; b=" + std::to_string(b_) + "; c=" + std::to_string(c_) + "; d=" + std::to_string(d_) + "; e=" + std::to_string(e_);
 }
 
 bool Spline::almostEqual(double x, double y) {

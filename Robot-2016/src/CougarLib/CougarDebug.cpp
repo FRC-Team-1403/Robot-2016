@@ -94,6 +94,7 @@ void CougarDebug::debugPrinter(std::string message) {
 
 void CougarDebug::indent(int amount) {
 	indentation += amount;
+	printf("{\n");
 }
 
 void CougarDebug::unindent(int amount) {
@@ -101,6 +102,7 @@ void CougarDebug::unindent(int amount) {
 	if (indentation < 0) {
 		indentation = 0;
 	}
+	printf("}\n");
 }
 
 void CougarDebug::startMethod(std::string name) {
