@@ -69,8 +69,8 @@ double TrajectoryFollower::getHeading() {
 }
 
 bool TrajectoryFollower::isFinishedTrajectory() {
-	CougarDebug::startMethod("TrajectoryFollower::getHeading");
-	CougarDebug::endMethod("TrajectoryFollower::getHeading");
+	CougarDebug::startMethod("TrajectoryFollower::isFinishedTrajectory");
+	CougarDebug::endMethod("TrajectoryFollower::isFinishedTrajectory");
 	return current_segment >= profile_->getNumSegments();
 }
 
