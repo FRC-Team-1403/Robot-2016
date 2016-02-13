@@ -42,7 +42,7 @@ public:
 	static double boundAngleNegPiToPiRadians(double angle);
 
 private:
-	CougarMath();
+	explicit CougarMath();
 	virtual ~CougarMath();
 };
 

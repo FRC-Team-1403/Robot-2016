@@ -5,19 +5,24 @@
  *      Author: Thejas
  */
 
+// TODO Finish debugging for this class.
+// Not doing it right now because TrajectoryLib needs to be fixed first.
+
 #include "CougarDrive.h"
 
 namespace cougar {
 
 CougarDrive::CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name) {
-	CougarDebug::debugPrinter("Started constructing CougarDrive object with name %s", name.c_str());
+	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(left, right));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
-	CougarDebug::debugPrinter("Finished constructing CougarDrive object with name %s", name.c_str());
+	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
 }
 
 CougarDrive::~CougarDrive() {
+	CougarDebug::startMethod("CougarDrive::~CougarDrive " + this->GetName());
+	CougarDebug::endMethod("CougarDrive::~CougarDrive " + this->GetName());
 }
 
 void CougarDrive::Drive(float outputMagnitude, float curve) const{

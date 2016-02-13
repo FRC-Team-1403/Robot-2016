@@ -26,6 +26,17 @@ public:
 	static void debugPrinter(int level = UNIMPORTANT, std::string message = "");
 	static void debugPrinter(std::string message = "");
 
+	static void indent(int amount = 1);
+	static void unindent(int amount = 1);
+
+	// Used to print out nicely indented method debugging blocks.
+	// Should be used in all methods except simple getters.
+	// Setter methods should have these as well as a separate debug message
+	// stating what value was set to which variable.
+	static void startMethod(std::string name);
+	static void startMethod(const char *name);
+	static void endMethod(std::string name);
+	static void endMethod(const char *name);
 
 	// Messages marked with a debug level higher than
 	// or equal to current debug level will be shown.
@@ -36,14 +47,17 @@ public:
 		ISSUE = 2,
 		FATAL_ERROR = 3
 	};
-	static const int DEBUG = UNIMPORTANT;
+	static const int DEBUG =
+			UNIMPORTANT;
 
 private:
 	explicit CougarDebug();
 	virtual ~CougarDebug();
 
 	static std::map<int, std::string> debugLevels;
+	static int indentation;
 	static bool didInit;
+	static bool doIndent;
 };
 
 } /* namespace cougar */

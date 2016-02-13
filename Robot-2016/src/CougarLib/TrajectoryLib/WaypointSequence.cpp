@@ -45,7 +45,9 @@ std::shared_ptr<WaypointSequence::Waypoint> WaypointSequence::getWaypoint(uint32
 	try {
 		return this->waypoints_->at(index);
 	} catch (const std::out_of_range& oor) {
-		CougarDebug::debugPrinter(CougarDebug::ISSUE, "Out of range error in WaypointSequence::getWaypoint; trying to get element at index %d", index);
+		CougarDebug::debugPrinter(CougarDebug::ISSUE, "Out of range error in WaypointSequence::getWaypoint - trying to get element at index %d", index);
+		std::shared_ptr<WaypointSequence::Waypoint> nullwaypnt;
+		return nullwaypnt;
 	}
 }
 

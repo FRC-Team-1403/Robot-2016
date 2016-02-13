@@ -32,18 +32,18 @@ void Robot::RobotInit()
 	std::shared_ptr<cougar::TrajectoryGenerator::Config> config(new cougar::TrajectoryGenerator::Config());
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 1");
 	//TODO find these values
-	const double kWheelbaseWidth = 23.0/12;
-	config->dt = 0.02; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
-	config->max_acc = 40;
-	config->max_jerk = 200;
-	config->max_vel = 7.5;
+	const double kWheelbaseWidth = 25.5/12;
+	config->dt = 0.01; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
+	config->max_acc = 10.0;
+	config->max_jerk = 60.0;
+	config->max_vel = 15.0;
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 2");
 	const std::string path_name = "TEST";
 
 	std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2.0, -2, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(5.0, 2.0, M_PI / 2.0)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(7.0, 0, 0)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(14.0, 1.0, M_PI / 12.0)));
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 3");
 	path = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");

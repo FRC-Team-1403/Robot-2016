@@ -40,8 +40,8 @@ Trajectory::Segment::Segment(std::shared_ptr<Segment> to_copy) {
 }
 
 std::string Trajectory::Segment::toString() {
-	//return std::string("pos: " + std::to_string(pos).c_str() + "; vel: " + std::to_string(vel).c_str() + "; acc: " + std::to_string(acc).c_str() + "; jerk: "
-	//				+ std::to_string(jerk).c_str() + "; heading: " + std::to_string(heading).c_str());
+	return std::string("pos: ") + std::to_string(pos) + "; vel: " + std::to_string(vel) + "; acc: " + std::to_string(acc) + "; jerk: "
+					+ std::to_string(jerk) + "; heading: " + std::to_string(heading);
 	return "";
 }
 
@@ -114,22 +114,19 @@ std::shared_ptr<Trajectory> Trajectory::copy() {
 }
 
 std::string Trajectory::toString() {
-	/*
 	std::string str = "Segment\tPos\tVel\tAcc\tJerk\tHeading\n";
 	for (uint32_t i = 0; i < getNumSegments(); ++i) {
 		Trajectory::Segment segment = getSegment(i);
-		str += i + "\t";
-		str += segment.pos + "\t";
-		str += segment.vel + "\t";
-		str += segment.acc + "\t";
-		str += segment.jerk + "\t";
-		str += segment.heading + "\t";
+		str += std::to_string(i) + "\t";
+		str += std::to_string(segment.pos) + "\t";
+		str += std::to_string(segment.vel) + "\t";
+		str += std::to_string(segment.acc) + "\t";
+		str += std::to_string(segment.jerk) + "\t";
+		str += std::to_string(segment.heading) + "\t";
 		str += "\n";
 	}
 
 	return str;
-	*/
-	return "";
 }
 
 std::string Trajectory::toStringProfile() {

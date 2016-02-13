@@ -61,6 +61,7 @@ protected:
 		}
 	};
 
+	uint32_t port;
 	std::shared_ptr<Joystick> joystick_;
 	static const bool SMOOTHING = true;
 	static constexpr double FACTOR = 1.0;
