@@ -33,7 +33,7 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 		tabs += " ";
 	}
 	try {
-		message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n\n")).c_str();
+		message = (tabs + debugLevels.at(level) + std::string(": ")/* + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();
 	} catch (const std::out_of_range& err) {
 		if (level < UNIMPORTANT || level > FATAL_ERROR) {
 			debugPrinter(MESSAGE, "Invalid debug level passed");
@@ -45,7 +45,7 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 			}
 			init();
 		}
-		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n\n")).c_str();
+		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ")/* + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();
 	}
 	if (level >= DEBUG) {
 		va_list args;
@@ -62,7 +62,7 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 	}
 	int level = UNIMPORTANT;
 	try {
-		message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
+		message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message)/* + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();
 	} catch (const std::out_of_range& err) {
 		if (level < UNIMPORTANT || level > FATAL_ERROR) {
 			debugPrinter(MESSAGE, "Invalid debug level passed");
@@ -74,7 +74,7 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 			}
 			init();
 		}
-		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
+		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message)/* + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();
 	}
 	if (level >= DEBUG) {
 		va_list args;
@@ -93,15 +93,18 @@ void CougarDebug::debugPrinter(std::string message) {
 }
 
 void CougarDebug::indent(int amount) {
+	/*
 	std::string tabs = "";
 	for (int i = 0; i < indentation; i++) {
 		tabs += " ";
 	}
 	printf((tabs + "{\n").c_str());
 	indentation += amount;
+	*/
 }
 
 void CougarDebug::unindent(int amount) {
+	/*
 	indentation -= amount;
 	if (indentation < 0) {
 		indentation = 0;
@@ -111,6 +114,7 @@ void CougarDebug::unindent(int amount) {
 		tabs += " ";
 	}
 	printf((tabs + "}\n").c_str());
+	*/
 }
 
 void CougarDebug::startMethod(std::string name) {
