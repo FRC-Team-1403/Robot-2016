@@ -20,8 +20,9 @@ Spline::Type::Type(std::string value) {
 
 std::string Spline::Type::toString() {
 	CougarDebug::startMethod("Spline::Type::toString");
-	return value_;
 	CougarDebug::endMethod("Spline::Type::toString");
+	return value_;
+
 
 }
 

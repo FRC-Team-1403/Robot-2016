@@ -10,8 +10,10 @@
 namespace cougar {
 
 Trajectory::Pair::Pair(std::shared_ptr<Trajectory> left, std::shared_ptr<Trajectory> right) {
+	CougarDebug::startmethod("Trajectory::Pair::Pair");
 	this->left = left;
 	this->right = right;
+	CougarDebug::endmethod("Trajectory::Pair::Pair");
 }
 
 Trajectory::Segment::Segment() {}
