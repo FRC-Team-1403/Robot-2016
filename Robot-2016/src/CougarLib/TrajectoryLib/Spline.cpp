@@ -201,35 +201,35 @@ double Spline::valueAt(double percentage) {
 }
 
 double Spline::angleAt(double percentage) {
-	CougarDebug::startmethod("Spline::angleAt");
+	CougarDebug::startMethod("Spline::angleAt");
 
 	double angle = CougarMath::boundAngle0to2PiRadians(
 					atan(derivativeAt(percentage)) + theta_offset_);
-	CougarDebug::endmethod("Spline::angleAt");
+	CougarDebug::endMethod("Spline::angleAt");
 	return angle;
 }
 
 double Spline::angleChangeAt(double percentage) {
-	CougarDebug::startmethod("Spline::angleChangeAt");
-	CougarDebug::endmethod("Spline::angleChangeAt");
+	CougarDebug::startMethod("Spline::angleChangeAt");
+	CougarDebug::endMethod("Spline::angleChangeAt");
 	return CougarMath::boundAngleNegPiToPiRadians(
 					atan(secondDerivativeAt(percentage)));
 }
 
 std::string Spline::toString() {
-	CougarDebug::startmethod("Spline::toString");
-	CougarDebug::endmethod("Spline::toString");
+	CougarDebug::startMethod("Spline::toString");
+	CougarDebug::endMethod("Spline::toString");
 	return std::string("a=") + std::to_string(a_) + "; b=" + std::to_string(b_) + "; c=" + std::to_string(c_) + "; d=" + std::to_string(d_) + "; e=" + std::to_string(e_);
 }
 
 bool Spline::almostEqual(double x, double y) {
-	CougarDebug::startmethod("Spline::almostEqual");
-	CougarDebug::endmethod("Spline::almostEqual");
+	CougarDebug::startMethod("Spline::almostEqual");
+	CougarDebug::endMethod("Spline::almostEqual");
 	return abs(x - y) < 1E-6;
 }
 
 double Spline::derivativeAt(double percentage) {
-	CougarDebug::startmethod("Spline::derivativeAt");
+	CougarDebug::startMethod("Spline::derivativeAt");
 
 	percentage = fmax(fmin(percentage, 1), 0);
 
@@ -237,18 +237,18 @@ double Spline::derivativeAt(double percentage) {
 	double yp_hat = (5 * a_ * x_hat + 4 * b_) * x_hat * x_hat * x_hat + 3 * c_ * x_hat * x_hat
 					+ 2 * d_ * x_hat + e_;
 
-	CougarDebug::endmethod("Spline::derivativeAt");
+	CougarDebug::endMethod("Spline::derivativeAt");
 	return yp_hat;
 }
 
 double Spline::secondDerivativeAt(double percentage) {
-	CougarDebug::startmethod("Spline::secondDerivativeAt");
+	CougarDebug::startMethod("Spline::secondDerivativeAt");
 	percentage = fmax(fmin(percentage, 1), 0);
 
 	double x_hat = percentage * knot_distance_;
 	double ypp_hat = (20 * a_ * x_hat + 12 * b_) * x_hat * x_hat + 6 * c_ * x_hat + 2 * d_;
 
-	CougarDebug::endmethod("Spline::secondDerivativeAt");
+	CougarDebug::endMethod("Spline::secondDerivativeAt");
 	return ypp_hat;
 }
 
