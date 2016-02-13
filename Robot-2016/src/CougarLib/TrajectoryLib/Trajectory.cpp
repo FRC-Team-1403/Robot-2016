@@ -53,7 +53,6 @@ std::string Trajectory::Segment::toString() {
 	CougarDebug::endMethod("Trajectory::Segment::toString");
 	return std::string("pos: ") + std::to_string(pos) + "; vel: " + std::to_string(vel) + "; acc: " + std::to_string(acc) + "; jerk: "
 					+ std::to_string(jerk) + "; heading: " + std::to_string(heading);
-	return "";
 }
 
 Trajectory::Trajectory(uint32_t length) {
