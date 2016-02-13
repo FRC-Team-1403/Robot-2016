@@ -10,12 +10,12 @@
 namespace cougar {
 
 CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> controller, std::string name, uint32_t pdpSlot, bool inverted /* = false */) {
-	CougarDebug::startMethod("CougarSpeedController::CougarSpeedController " + name);
+//	CougarDebug::startMethod("CougarSpeedController::CougarSpeedController " + name);
 	this->controller_ = controller;
 	this->name_ = name;
 	this->pdpSlot_ = pdpSlot;
 	this->inverted_ = inverted;
-	CougarDebug::endMethod("CougarSpeedController::CougarSpeedController " + this->GetName());
+//	CougarDebug::endMethod("CougarSpeedController::CougarSpeedController " + this->GetName());
 }
 
 // Ignore warnings about not initializing things in these constructors
@@ -27,15 +27,15 @@ CougarSpeedController::CougarSpeedController(const CougarSpeedController &contro
 			CougarSpeedController(CougarSpeedControllerExtractor::ExtractController(controller), controller.GetName(), controller.GetPDPSlot(), controller.GetInverted()){}
 
 CougarSpeedController::~CougarSpeedController() {
-	CougarDebug::startMethod("CougarSpeedController::~CougarSpeedController " + this->GetName());
-	CougarDebug::endMethod("CougarSpeedController::~CougarSpeedController " + this->GetName());
+//	CougarDebug::startMethod("CougarSpeedController::~CougarSpeedController " + this->GetName());
+//	CougarDebug::endMethod("CougarSpeedController::~CougarSpeedController " + this->GetName());
 }
 
 void CougarSpeedController::SetInverted(bool inverted) {
-	CougarDebug::startMethod("CougarSpeedController::SetInverted " + this->GetName());
+//	CougarDebug::startMethod("CougarSpeedController::SetInverted " + this->GetName());
 	this->inverted_ = inverted;
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "SpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
-	CougarDebug::endMethod("CougarSpeedController::SetInverted " + this->GetName());
+//	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "SpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
+//	CougarDebug::endMethod("CougarSpeedController::SetInverted " + this->GetName());
 }
 
 bool CougarSpeedController::GetInverted() const {
@@ -54,26 +54,26 @@ float CougarSpeedController::GetCurrent() const {
 	return 0.0;
 }
 void CougarSpeedController::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	CougarDebug::startMethod("CougarSpeedController::Set " + this->GetName());
+//	CougarDebug::startMethod("CougarSpeedController::Set " + this->GetName());
 	this->controller_->Set(speed);
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "SpeedController %s set to speed %f", this->GetCName(), speed);
-	CougarDebug::endMethod("CougarSpeedController::Set " + this->GetName());
+//	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "SpeedController %s set to speed %f", this->GetCName(), speed);
+//	CougarDebug::endMethod("CougarSpeedController::Set " + this->GetName());
 }
 float CougarSpeedController::Get() const {
 	return this->controller_->Get();
 }
 
 void CougarSpeedController::Disable() {
-	CougarDebug::startMethod("CougarSpeedController::Disable " + this->GetName());
+//	CougarDebug::startMethod("CougarSpeedController::Disable " + this->GetName());
 	this->controller_->Disable();
-	CougarDebug::endMethod("CougarSpeedController::Disable " + this->GetName());
+//	CougarDebug::endMethod("CougarSpeedController::Disable " + this->GetName());
 }
 
 void CougarSpeedController::PIDWrite(float output) {
-	CougarDebug::startMethod("CougarSpeedController::PIDWrite " + this->GetName());
+//	CougarDebug::startMethod("CougarSpeedController::PIDWrite " + this->GetName());
 	this->controller_->PIDWrite(this->Sign() * output);
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s...did something with PIDWrite. I don't actually know what that method does.", this->GetCName());
-	CougarDebug::endMethod("CougarSpeedController::PIDWrite " + this->GetName());
+//	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s...did something with PIDWrite. I don't actually know what that method does.", this->GetCName());
+//	CougarDebug::endMethod("CougarSpeedController::PIDWrite " + this->GetName());
 }
 
 std::string CougarSpeedController::GetName() const {

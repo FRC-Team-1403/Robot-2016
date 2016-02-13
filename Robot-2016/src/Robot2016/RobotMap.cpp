@@ -9,7 +9,7 @@ std::shared_ptr<Gyro> RobotMap::driveTrainGyro;
 
 
 void RobotMap::init(){
-	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "RobotMap::init running");
+//	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "RobotMap::init running");
 	// Couldn't get smart pointers working :(
 	// BTW I don't actually like smart pointers
 	// I'm just using them because they're less painful sometimes

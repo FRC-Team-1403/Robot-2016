@@ -30,8 +30,8 @@ constexpr float CougarGyro::kDefaultVoltsPerDegreePerSecond;
  */
 CougarGyro::CougarGyro(int32_t channel) :
 		CougarGyro(std::make_shared<AnalogInput>(channel)) {
-	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
-	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
+//	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
+//	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 
 }
 
@@ -47,8 +47,8 @@ CougarGyro::CougarGyro(int32_t channel) :
 CougarGyro::CougarGyro(AnalogInput *channel)
 		: CougarGyro(
 					std::shared_ptr<AnalogInput>(channel, NullDeleter<AnalogInput>())) {
-	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
-	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
+//	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
+//	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 }
 
 /**
@@ -61,14 +61,14 @@ CougarGyro::CougarGyro(AnalogInput *channel)
  */
 CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel)
 		: m_analog(channel) {
-	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
+//	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 	if (channel == nullptr) {
 		wpi_setWPIError(NullParameter);
 	} else {
 		InitGyro();
 		Calibrate();
 	}
-	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
+//	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 }
 
 /**
@@ -81,14 +81,14 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel)
  * @param offset Preset uncalibrated value to use as the gyro offset.
  */
 CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset) {
-	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
+//	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 	m_analog = std::make_shared<AnalogInput>(channel);
 	InitGyro();
 	m_center = center;
 	m_offset = offset;
 	m_analog->SetAccumulatorCenter(m_center);
 	m_analog->ResetAccumulator();
-	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
+//	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 }
 
 /**
@@ -100,7 +100,7 @@ CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset) {
  * connected to.
  */
 CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, float offset) : m_analog(channel) {
-	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
+//	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 	if (channel == nullptr) {
 		wpi_setWPIError(NullParameter);
 	} else {
@@ -110,7 +110,7 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, fl
 		m_analog->SetAccumulatorCenter(m_center);
 		m_analog->ResetAccumulator();
 	}
-	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
+//	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 }
 
 /**
@@ -120,17 +120,17 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, fl
  * drift in the gyro and it needs to be recalibrated after it has been running.
  */
 void CougarGyro::Reset() {
-	CougarDebug::startMethod("CougarGyro::Reset");
+//	CougarDebug::startMethod("CougarGyro::Reset");
 	if (StatusIsFatal()) return;
 	m_analog->ResetAccumulator();
-	CougarDebug::endMethod("CougarGyro::Reset");
+//	CougarDebug::endMethod("CougarGyro::Reset");
 }
 
 /**
  * Initialize the gyro.	Calibration is handled by Calibrate().
  */
 void CougarGyro::InitGyro() {
-	CougarDebug::startMethod("CougarGyro::InitGyro");
+//	CougarDebug::startMethod("CougarGyro::InitGyro");
 	if (StatusIsFatal()) return;
 
 	if (!m_analog->IsAccumulatorChannel()) {
@@ -154,7 +154,7 @@ void CougarGyro::InitGyro() {
 
 	HALReport(HALUsageReporting::kResourceType_Gyro, m_analog->GetChannel());
 	LiveWindow::GetInstance()->AddSensor("CougarGyro", m_analog->GetChannel(), this);
-	CougarDebug::endMethod("CougarGyro::Reset");
+//	CougarDebug::endMethod("CougarGyro::Reset");
 }
 
 /**

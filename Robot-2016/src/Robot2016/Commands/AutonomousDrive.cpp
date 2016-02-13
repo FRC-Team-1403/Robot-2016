@@ -10,7 +10,7 @@ AutonomousDrive::AutonomousDrive()
 // Called just before this Command runs the first time
 void AutonomousDrive::Initialize()
 {
-	std::cout << "Initializing autonomous drive\n";
+//	std::cout << "Initializing autonomous drive\n";
 	Robot::driveTrain->resetEncoders();
 	Robot::driveTrain->resetGyro();
 	this->driveController.reset(new cougar::TrajectoryDriveController());
@@ -37,7 +37,7 @@ bool AutonomousDrive::IsFinished()
 // Called once after isFinished returns true
 void AutonomousDrive::End()
 {
-	std::cout << "Finished driving\n";
+//	std::cout << "Finished driving\n";
 	Robot::driveTrain->stop();
 	driveController->disable();
 }

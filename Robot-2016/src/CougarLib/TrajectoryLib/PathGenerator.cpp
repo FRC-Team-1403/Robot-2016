@@ -13,17 +13,19 @@ std::shared_ptr<Path> PathGenerator::makePath(std::shared_ptr<WaypointSequence> 
 		std::shared_ptr<TrajectoryGenerator::Config> config, double wheelbase_width,
 				std::string name) {
 	CougarDebug::startMethod("PathGenerator::makePath");
+	CougarDebug::endMethod("PathGenerator::makePath");
 	return std::shared_ptr<Path>(new Path(name,
 					generateLeftAndRightFromSeq(waypoints, config, wheelbase_width)));
-	CougarDebug::endMethod("PathGenerator::makePath");
+
 }
 
 std::shared_ptr<Trajectory::Pair> PathGenerator::generateLeftAndRightFromSeq(std::shared_ptr<WaypointSequence> path,
 		std::shared_ptr<TrajectoryGenerator::Config> config, double wheelbase_width) {
 	CougarDebug::startMethod("PathGenerator::generateLeftAndRightFromSeq");
+	CougarDebug::endMethod("PathGenerator::generateLeftAndRightFromSeq");
 	return makeLeftAndRightTrajectories(generateFromPath(path, config),
 					wheelbase_width);
-	CougarDebug::endMethod("PathGenerator::generateLeftAndRightFromSeq");
+
 }
 
 std::shared_ptr<Trajectory> PathGenerator::generateFromPath(std::shared_ptr<WaypointSequence> path,

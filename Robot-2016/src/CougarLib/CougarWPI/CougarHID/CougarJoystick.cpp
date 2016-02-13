@@ -10,16 +10,16 @@
 namespace cougar {
 
 CougarJoystick::CougarJoystick(uint32_t port) {
-	CougarDebug::startMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+//	CougarDebug::startMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 	std::shared_ptr<Joystick> tmpJoystick(new Joystick(port));
 	this->joystick_ = tmpJoystick;
 	this->port = port;
-	CougarDebug::endMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+//	CougarDebug::endMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 }
 
 CougarJoystick::~CougarJoystick() {
-	CougarDebug::startMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
-	CougarDebug::endMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+//	CougarDebug::startMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+//	CougarDebug::endMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 }
 
 bool CougarJoystick::GetButtonA() {
