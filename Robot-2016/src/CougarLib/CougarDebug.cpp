@@ -9,7 +9,6 @@
 
 namespace cougar {
 
-FILE *CougarDebug::logFile = std::fopen("log.txt", "rw");
 std::map<int, std::string> CougarDebug::debugLevels;
 int CougarDebug::indentation = 0;
 bool CougarDebug::didInit = false;
@@ -28,10 +27,6 @@ void CougarDebug::init() {
 	didInit = true;
 }
 
-void CougarDebug::end() {
-	std::fclose(logFile);
-	delete logFile;
-}
 
 void CougarDebug::debugPrinter(int level, const char *message, ...) {
 	std::string tabs = "";
@@ -39,7 +34,7 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 		tabs += " ";
 	}
 	try {
-		message = (tabs + debugLevels.at(level) + std::string(": ")/* + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();
+		message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
 	} catch (const std::out_of_range& err) {
 		if (level < UNIMPORTANT || level > FATAL_ERROR) {
 			debugPrinter(MESSAGE, "Invalid debug level passed");
@@ -51,12 +46,12 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 			}
 			init();
 		}
-		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ")/* + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();
+		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
 	}
 	if (level >= DEBUG) {
 		va_list args;
 		va_start(args, message);
-		vfprintf(logFile, message, args);
+		vprintf(message, args);
 		va_end(args);
 	}
 }
@@ -85,7 +80,7 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 	if (level >= DEBUG) {
 		va_list args;
 		va_start(args, message);
-		vfprintf(logFile, message, args);
+		vprintf(message, args);
 		va_end(args);
 	}
 }
@@ -125,22 +120,22 @@ void CougarDebug::unindent(int amount) {
 
 void CougarDebug::startMethod(std::string name) {
 	indent();
-	debugPrinter(name/* + std::string(" started")*/);
+	debugPrinter(name + std::string(" started"));
 }
 
 void CougarDebug::startMethod(const char *name) {
 	indent();
-	debugPrinter((std::string(name)/* + std::string(" started")*/).c_str());
+	debugPrinter((std::string(name) + std::string(" started")).c_str());
 }
 
 void CougarDebug::endMethod(std::string name) {
 	unindent();
-	debugPrinter(name/* + " finished"*/);
+	debugPrinter(name + " finished");
 }
 
 void CougarDebug::endMethod(const char *name) {
 	unindent();
-	debugPrinter((std::string(name)/* + std::string(" finished")*/).c_str());
+	debugPrinter((std::string(name) + std::string(" finished")).c_str());
 }
 
 } // namespace cougar
