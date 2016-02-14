@@ -24,7 +24,7 @@ public:
 	double getAngularVelocity();
 
 	void setLeftRightPower(double leftPower, double rightPower) {
-		this->driveT->GetDrive()->TankDrive(leftPower, rightPower, false);
+		this->driveT->TankDrive(leftPower, rightPower);
 	  }
 
 	void stop() {

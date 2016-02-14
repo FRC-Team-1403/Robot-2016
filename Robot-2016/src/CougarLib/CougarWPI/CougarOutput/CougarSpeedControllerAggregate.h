@@ -19,7 +19,10 @@ namespace cougar {
 
 class CougarSpeedControllerAggregate : public SpeedController {
 public:
-	CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers, std::string name, bool inverted = false);
+	CougarSpeedControllerAggregate(uint32_t port1, uint32_t port2,
+			uint32_t PDPSlot1, uint32_t PDPSlot2, std::string name, bool inverted = false);
+	CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers,
+			std::string name, bool inverted = false);
 	explicit CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers);
 	explicit CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers);
 	virtual ~CougarSpeedControllerAggregate();
@@ -37,16 +40,6 @@ public:
 	virtual const char *GetCName() const;
 
 protected:
-
-	class CougarSpeedControllerAggregateExtractor final {
-	public:
-		static std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> ExtractControllers(std::shared_ptr<CougarSpeedControllerAggregate> controllers);
-		static std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> ExtractControllers(const CougarSpeedControllerAggregate &controllers);
-	};
-	friend CougarSpeedControllerAggregateExtractor;
-
-private:
-
 	virtual std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> GetControllers() const;
 
 	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers_;

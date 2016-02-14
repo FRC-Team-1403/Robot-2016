@@ -9,6 +9,7 @@
 
 namespace cougar {
 
+FILE *CougarDebug::logFile = std::fopen("log.txt", "rw");
 std::map<int, std::string> CougarDebug::debugLevels;
 int CougarDebug::indentation = 0;
 bool CougarDebug::didInit = false;
@@ -25,6 +26,11 @@ void CougarDebug::init() {
 	debugLevels[2] = "ISSUE";
 	debugLevels[3] = "FATAL_ERROR";
 	didInit = true;
+}
+
+void CougarDebug::end() {
+	std::fclose(logFile);
+	delete logFile;
 }
 
 void CougarDebug::debugPrinter(int level, const char *message, ...) {
@@ -50,7 +56,7 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 	if (level >= DEBUG) {
 		va_list args;
 		va_start(args, message);
-		vprintf(message, args);
+		vfprintf(logFile, message, args);
 		va_end(args);
 	}
 }
@@ -79,7 +85,7 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 	if (level >= DEBUG) {
 		va_list args;
 		va_start(args, message);
-		vprintf(message, args);
+		vfprintf(logFile, message, args);
 		va_end(args);
 	}
 }
@@ -119,22 +125,22 @@ void CougarDebug::unindent(int amount) {
 
 void CougarDebug::startMethod(std::string name) {
 	indent();
-	debugPrinter(name + std::string(" started"));
+	debugPrinter(name/* + std::string(" started")*/);
 }
 
 void CougarDebug::startMethod(const char *name) {
 	indent();
-	debugPrinter((std::string(name) + std::string(" started")).c_str());
+	debugPrinter((std::string(name)/* + std::string(" started")*/).c_str());
 }
 
 void CougarDebug::endMethod(std::string name) {
 	unindent();
-	debugPrinter(name + " finished");
+	debugPrinter(name/* + " finished"*/);
 }
 
 void CougarDebug::endMethod(const char *name) {
 	unindent();
-	debugPrinter((std::string(name) + std::string(" finished")).c_str());
+	debugPrinter((std::string(name)/* + std::string(" finished")*/).c_str());
 }
 
 } // namespace cougar
