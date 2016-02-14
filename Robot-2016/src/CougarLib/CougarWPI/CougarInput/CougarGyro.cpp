@@ -161,7 +161,7 @@ void CougarGyro::InitGyro() {
  * {@inheritDoc}
  */
 void CougarGyro::Calibrate() {
-	CougarDebug::startMethod("CougarGyro::Calibrate");
+//	CougarDebug::startMethod("CougarGyro::Calibrate");
 	if (StatusIsFatal()) return;
 
 	m_analog->InitAccumulator();
@@ -177,7 +177,7 @@ void CougarGyro::Calibrate() {
 	m_offset = ((float)value / (float)count) - (float)m_center;
 	m_analog->SetAccumulatorCenter(m_center);
 	m_analog->ResetAccumulator();
-	CougarDebug::endMethod("CougarGyro::Calibrate");
+//	CougarDebug::endMethod("CougarGyro::Calibrate");
 }
 
 /**
@@ -196,7 +196,7 @@ void CougarGyro::Calibrate() {
  * of the returned rate from the gyro.
  */
 float CougarGyro::GetAngle() const {
-	CougarDebug::startMethod("CougarGyro::GetAngle");
+//	CougarDebug::startMethod("CougarGyro::GetAngle");
 	if (StatusIsFatal()) return 0.f;
 
 	int64_t rawValue;
@@ -210,7 +210,7 @@ float CougarGyro::GetAngle() const {
 											 (m_analog->GetSampleRate() * m_voltsPerDegreePerSecond);
 
 	return (float)scaledValue;
-	CougarDebug::endMethod("CougarGyro::GetAngle");
+//	CougarDebug::endMethod("CougarGyro::GetAngle");
 }
 
 /**
@@ -221,13 +221,13 @@ float CougarGyro::GetAngle() const {
  * @return the current rate in degrees per second
  */
 double CougarGyro::GetRate() const {
-	CougarDebug::startMethod("CougarGyro::GetAngle");
+//	CougarDebug::startMethod("CougarGyro::GetAngle");
 	if (StatusIsFatal()) return 0.0;
 
 	return (m_analog->GetAverageValue() - ((double)m_center + m_offset)) * 1e-9 *
 				 m_analog->GetLSBWeight() /
 				 ((1 << m_analog->GetOversampleBits()) * m_voltsPerDegreePerSecond);
-	CougarDebug::endMethod("CougarGyro::GetAngle");
+//	CougarDebug::endMethod("CougarGyro::GetAngle");
 }
 
 /**

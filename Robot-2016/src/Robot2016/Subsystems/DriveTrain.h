@@ -1,9 +1,9 @@
 #ifndef DriveTrain_H
 #define DriveTrain_H
 
-#include "Commands/Subsystem.h"
+//#include "Commands/Subsystem.h"
 #include "WPILib.h"
-#include "../../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
+//#include "../../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
 #include <cmath>
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
