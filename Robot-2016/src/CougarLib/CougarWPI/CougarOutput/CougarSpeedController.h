@@ -19,7 +19,8 @@ namespace cougar {
 
 class CougarSpeedController : public SpeedController {
 public:
-	CougarSpeedController(std::shared_ptr<SpeedController> controller, std::string name, uint32_t pdpSlot, bool inverted = false);
+	CougarSpeedController(uint32_t port, uint32_t pdpSlot, std::string name, bool inverted = false); // Creates a Victor by default
+	CougarSpeedController(std::shared_ptr<SpeedController> controller, uint32_t pdpSlot, std::string name, bool inverted = false);
 	explicit CougarSpeedController(std::shared_ptr<CougarSpeedController> controller);
 	explicit CougarSpeedController(const CougarSpeedController &controller);
 	virtual ~CougarSpeedController();
@@ -38,16 +39,6 @@ public:
 	virtual uint32_t GetPDPSlot() const;
 
 protected:
-
-	class CougarSpeedControllerExtractor final {
-	public:
-		static std::shared_ptr<SpeedController> ExtractController(std::shared_ptr<CougarSpeedController> controller);
-		static std::shared_ptr<SpeedController> ExtractController(const CougarSpeedController &controller);
-	};
-	friend CougarSpeedControllerExtractor;
-
-private:
-
 	virtual std::shared_ptr<SpeedController> GetController() const;
 
 	std::shared_ptr<SpeedController> controller_;

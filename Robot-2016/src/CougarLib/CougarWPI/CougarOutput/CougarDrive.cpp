@@ -12,6 +12,34 @@
 
 namespace cougar {
 
+CougarDrive::CougarDrive(uint32_t leftPort, uint32_t rightPort,
+		uint32_t leftPDPSlot, uint32_t rightPDPSlot, std::string name) {
+//	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
+	std::shared_ptr<SpeedController> tmpLeft(new CougarSpeedController(leftPort, leftPDPSlot, name + "Left"));
+	std::shared_ptr<SpeedController> tmpRight(new CougarSpeedController(rightPort, rightPDPSlot, name + "Right"));
+	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(tmpLeft, tmpRight));
+	this->drive_ = tmpDrive;
+	this->name_ = name;
+//	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
+}
+
+CougarDrive::CougarDrive(uint32_t leftPort1, uint32_t leftPort2,
+		uint32_t rightPort1, uint32_t rightPort2,
+		uint32_t leftPDPSlot1, uint32_t leftPDPSlot2,
+		uint32_t rightPDPSlot1, uint32_t rightPDPSlot2,
+		std::string name) {
+//	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
+	std::shared_ptr<SpeedController> tmpLeft(new CougarSpeedControllerAggregate(leftPort1, leftPort2,
+			leftPDPSlot1, leftPDPSlot2, name + "Left"));
+	std::shared_ptr<SpeedController> tmpRight(new CougarSpeedControllerAggregate(rightPort1, rightPort2,
+				rightPDPSlot1, rightPDPSlot2, name + "Right"));
+	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(tmpLeft, tmpRight));
+	this->drive_ = tmpDrive;
+	this->name_ = name;
+//	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
+}
+
+
 CougarDrive::CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name) {
 //	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(left, right));
@@ -28,6 +56,11 @@ CougarDrive::~CougarDrive() {
 void CougarDrive::Drive(float outputMagnitude, float curve) const{
 	this->drive_->Drive(outputMagnitude, curve);
 }
+
+void CougarDrive::TankDrive(float leftPower, float rightPower, bool squaredInputs /* = false */) {
+	this->drive_->TankDrive(leftPower, rightPower, squaredInputs);
+}
+
 
 void CougarDrive::TankDrive(std::shared_ptr<CougarJoystick> joystick, bool reversed,  bool squaredInputs /* = true */) {
 	int reverse = reversed ? -1 : 1;
@@ -81,15 +114,6 @@ std::string CougarDrive::GetName() const {
 
 const char *CougarDrive::GetCName() const {
 	return this->name_.c_str();
-}
-
-std::shared_ptr<RobotDrive> CougarDrive::CougarDriveExtractor::ExtractDrive(std::shared_ptr<CougarDrive> drive) {
-	return drive->GetDrive();
-}
-
-std::shared_ptr<RobotDrive> CougarDrive::CougarDriveExtractor::ExtractDrive(const CougarDrive &drive) {
-	std::shared_ptr<CougarDrive> tmp(&(CougarDrive&)drive);
-	return ExtractDrive(tmp);
 }
 
 std::shared_ptr<RobotDrive> CougarDrive::GetDrive() {

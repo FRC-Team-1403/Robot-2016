@@ -20,14 +20,27 @@ namespace cougar {
 
 class CougarDrive {
 public:
+	CougarDrive(uint32_t leftPort, uint32_t rightPort,
+			uint32_t leftPDPSlot, uint32_t rightPDPSlot, std::string name);
+	CougarDrive(uint32_t leftPort1, uint32_t leftPort2,
+			uint32_t rightPort1, uint32_t rightPort2,
+			uint32_t leftPDPSlot1, uint32_t leftPDPSlot2,
+			uint32_t rightPDPSlot1, uint32_t rightPDPSlot2,
+			std::string name);
 	CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name);
+
+	// TODO implement these constructors
+	/*
 	explicit CougarDrive(std::shared_ptr<CougarDrive> drive);
 	explicit CougarDrive(const CougarDrive &drive);
+	*/
+
 	virtual ~CougarDrive();
 
 	virtual void Drive(float outputMagnitude, float curve) const;
-	virtual void TankDrive(std::shared_ptr<CougarJoystick> joystick, bool reversed = false, bool squaredInputs = true);
-	virtual void ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool reversed = false, bool squaredInputs = true);
+	virtual void TankDrive(float leftPower, float rightPower, bool squaredInputs = false);
+	virtual void TankDrive(std::shared_ptr<CougarJoystick> joystick, bool reversed = false, bool squaredInputs = false);
+	virtual void ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool reversed = false, bool squaredInputs = false);
 	// I will implement more drive methods, e.g. mecanum, holonomic, if we decide to use them
 	// But for right now, we rarely use anything else and I'm lazy
 
@@ -44,21 +57,12 @@ public:
 	virtual std::string GetName() const;
 	virtual const char *GetCName() const;
 
-	virtual std::shared_ptr<RobotDrive> GetDrive();
-
 	enum ANALOG_STICKS {
 		LEFT,
 		RIGHT
 	};
 protected:
-	class CougarDriveExtractor final {
-		static std::shared_ptr<RobotDrive> ExtractDrive(std::shared_ptr<CougarDrive> drive);
-		static std::shared_ptr<RobotDrive> ExtractDrive(const CougarDrive &drive);
-	};
-	friend CougarDriveExtractor;
-
-private:
-
+	virtual std::shared_ptr<RobotDrive> GetDrive();
 	virtual float speedFactor(std::shared_ptr<CougarJoystick> joystick);
 
 	std::shared_ptr<RobotDrive> drive_;

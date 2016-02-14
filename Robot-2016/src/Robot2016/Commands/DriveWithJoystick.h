@@ -1,8 +1,8 @@
 #ifndef DriveWithJoystick_H
 #define DriveWithJoystick_H
 
-#include "Commands/Command.h"
 #include "WPILib.h"
+#include "Commands/Command.h"
 
 class DriveWithJoystick: public Command
 {
