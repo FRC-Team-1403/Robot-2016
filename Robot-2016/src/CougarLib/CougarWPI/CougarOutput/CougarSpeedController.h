@@ -31,6 +31,7 @@ public:
 	virtual float Sign() const;
 	virtual float GetCurrent() const;
 	virtual void Set(float speed, uint8_t syncGroup = 0) override;
+	virtual void StopMotor() override;
 	virtual float Get() const override;
 	virtual void Disable() override;
 	virtual void PIDWrite(float output) override;
