@@ -68,6 +68,11 @@ void CougarSpeedController::Set(float speed, uint8_t syncGroup/* = 0*/) {
 //	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "SpeedController %s set to speed %f", this->GetCName(), speed);
 //	CougarDebug::endMethod("CougarSpeedController::Set " + this->GetName());
 }
+
+void CougarSpeedController::StopMotor() {
+	this->Set(0);
+}
+
 float CougarSpeedController::Get() const {
 	return this->controller_->Get();
 }
