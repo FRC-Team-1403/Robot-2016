@@ -10,25 +10,25 @@
 namespace cougar {
 
 CougarController::CougarController() {
-	CougarDebug::startMethod("CougarController::CougarController");
-	CougarDebug::endMethod("CougarController::CougarController");
+//	CougarDebug::startMethod("CougarController::CougarController");
+//	CougarDebug::endMethod("CougarController::CougarController");
 }
 
 CougarController::~CougarController() {
-	CougarDebug::startMethod("CougarController::~CougarController");
-	CougarDebug::endMethod("CougarController::~CougarController");
+//	CougarDebug::startMethod("CougarController::~CougarController");
+//	CougarDebug::endMethod("CougarController::~CougarController");
 }
 
 void CougarController::enable() {
-	CougarDebug::startMethod("CougarController::enable");
+//	CougarDebug::startMethod("CougarController::enable");
 	enabled = true;
-	CougarDebug::endMethod("CougarController::enable");
+//	CougarDebug::endMethod("CougarController::enable");
 }
 
 void CougarController::disable() {
-	CougarDebug::startMethod("CougarController::enable");
+//	CougarDebug::startMethod("CougarController::enable");
 	enabled = false;
-	CougarDebug::endMethod("CougarController::enable");
+//	CougarDebug::endMethod("CougarController::enable");
 }
 
 bool CougarController::isEnabled() const {

@@ -13,27 +13,40 @@ std::shared_ptr<Spline::Type> Spline::CubicHermite = std::shared_ptr<Type>(new T
 std::shared_ptr<Spline::Type> Spline::QuinticHermite = std::shared_ptr<Type>(new Type("QuinticHermite"));
 
 Spline::Type::Type(std::string value) {
+	CougarDebug::startMethod("Spline::Type::Type");
 	this->value_ = value;
+	CougarDebug::endMethod("Spline::Type::Type");
 }
 
 std::string Spline::Type::toString() {
+	CougarDebug::startMethod("Spline::Type::toString");
+	CougarDebug::endMethod("Spline::Type::toString");
 	return value_;
+
+
 }
 
 Spline::Spline() {
+	CougarDebug::startMethod("Spline::Spline");
 	// All splines should be made via the static interface
 	arc_length_ = -1;
+	CougarDebug::endMethod("Spline::Spline");
 }
 
 bool Spline::reticulateSplines(std::shared_ptr<WaypointSequence::Waypoint> start,
 		std::shared_ptr<WaypointSequence::Waypoint> goal, std::shared_ptr<Spline> result, std::shared_ptr<Type> type) {
+	CougarDebug::startMethod("Spline::reticulateSplines");
+	CougarDebug::endMethod("Spline::reticulateSplines");
 	return reticulateSplines(start->x, start->y, start->theta, goal->x, goal->y,
 					goal->theta, result, type);
+
+
 }
 
 bool Spline::reticulateSplines(double x0, double y0, double theta0,
 				double x1, double y1, double theta1,
 				std::shared_ptr<Spline> result, std::shared_ptr<Type> type) {
+	CougarDebug::startMethod("Spline::reticulateSplines");
 	CougarDebug::debugPrinter("Spline::reticulateSplines started");
 	result->type_ = type;
 
@@ -89,10 +102,13 @@ bool Spline::reticulateSplines(double x0, double y0, double theta0,
 		result->e_ = yp0_hat;
 	}
 	CougarDebug::debugPrinter("Spline::reticulateSplines finished");
+	CougarDebug::endMethod("Spline::reticulateSplines");
 	return true;
 }
 
 double Spline::calculateLength() {
+	CougarDebug::startMethod("Spline::calculateLength");
+
 	if (arc_length_ >= 0) {
 		return arc_length_;
 	}
@@ -110,10 +126,14 @@ double Spline::calculateLength() {
 		last_integrand = integrand;
 	}
 	arc_length_ = knot_distance_ * arc_length;
+	CougarDebug::endMethod("Spline::calculateLength");
+
 	return arc_length_;
 }
 
 double Spline::getPercentageForDistance(double distance) {
+	CougarDebug::startMethod("Spline::getPercentageForDistance");
+
 	const int kNumSamples = 100000;
 	double arc_length = 0;
 	double t = 0;
@@ -140,10 +160,12 @@ double Spline::getPercentageForDistance(double distance) {
 		interpolated += ((distance - last_arc_length)
 						/ (arc_length - last_arc_length) - 1) / (double) kNumSamples;
 	}
+
 	return interpolated;
 }
 
 std::shared_ptr<std::vector<double>> Spline::getXandY(double percentage) {
+
 	std::shared_ptr<std::vector<double>> result(new std::vector<double>());
 
 	percentage = fmax(fmin(percentage, 1), 0);
@@ -157,10 +179,13 @@ std::shared_ptr<std::vector<double>> Spline::getXandY(double percentage) {
 	result->push_back(x_hat * cos_theta - y_hat * sin_theta + x_offset_);
 	result->push_back(x_hat * sin_theta + y_hat * cos_theta + y_offset_);
 
+	CougarDebug::endMethod("Spline::getPercentageForDistance");
 	return result;
 }
 
 double Spline::valueAt(double percentage) {
+	CougarDebug::startMethod("Spline::valueAt");
+
 	percentage = fmax(fmin(percentage, 1), 0);
 	double x_hat = percentage * knot_distance_;
 	double y_hat = (a_ * x_hat + b_) * x_hat * x_hat * x_hat * x_hat
@@ -170,44 +195,60 @@ double Spline::valueAt(double percentage) {
 	double sin_theta = sin(theta_offset_);
 
 	double value = x_hat * sin_theta + y_hat * cos_theta + y_offset_;
+
+	CougarDebug::endMethod("Spline::valueAt");
 	return value;
 }
 
 double Spline::angleAt(double percentage) {
+	CougarDebug::startMethod("Spline::angleAt");
+
 	double angle = CougarMath::boundAngle0to2PiRadians(
 					atan(derivativeAt(percentage)) + theta_offset_);
+	CougarDebug::endMethod("Spline::angleAt");
 	return angle;
 }
 
 double Spline::angleChangeAt(double percentage) {
+	CougarDebug::startMethod("Spline::angleChangeAt");
+	CougarDebug::endMethod("Spline::angleChangeAt");
 	return CougarMath::boundAngleNegPiToPiRadians(
 					atan(secondDerivativeAt(percentage)));
 }
 
 std::string Spline::toString() {
+	CougarDebug::startMethod("Spline::toString");
+	CougarDebug::endMethod("Spline::toString");
 	return std::string("a=") + std::to_string(a_) + "; b=" + std::to_string(b_) + "; c=" + std::to_string(c_) + "; d=" + std::to_string(d_) + "; e=" + std::to_string(e_);
 }
 
 bool Spline::almostEqual(double x, double y) {
+	CougarDebug::startMethod("Spline::almostEqual");
+	CougarDebug::endMethod("Spline::almostEqual");
 	return abs(x - y) < 1E-6;
 }
 
 double Spline::derivativeAt(double percentage) {
+	CougarDebug::startMethod("Spline::derivativeAt");
+
 	percentage = fmax(fmin(percentage, 1), 0);
 
 	double x_hat = percentage * knot_distance_;
 	double yp_hat = (5 * a_ * x_hat + 4 * b_) * x_hat * x_hat * x_hat + 3 * c_ * x_hat * x_hat
 					+ 2 * d_ * x_hat + e_;
 
+	CougarDebug::endMethod("Spline::derivativeAt");
 	return yp_hat;
 }
 
 double Spline::secondDerivativeAt(double percentage) {
+	CougarDebug::startMethod("Spline::secondDerivativeAt");
 	percentage = fmax(fmin(percentage, 1), 0);
 
 	double x_hat = percentage * knot_distance_;
 	double ypp_hat = (20 * a_ * x_hat + 12 * b_) * x_hat * x_hat + 6 * c_ * x_hat + 2 * d_;
 
+	CougarDebug::endMethod("Spline::secondDerivativeAt");
 	return ypp_hat;
 }
 

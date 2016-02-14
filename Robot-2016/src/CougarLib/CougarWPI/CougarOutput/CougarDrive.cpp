@@ -13,16 +13,16 @@
 namespace cougar {
 
 CougarDrive::CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name) {
-	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
+//	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(left, right));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
-	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
+//	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
 }
 
 CougarDrive::~CougarDrive() {
-	CougarDebug::startMethod("CougarDrive::~CougarDrive " + this->GetName());
-	CougarDebug::endMethod("CougarDrive::~CougarDrive " + this->GetName());
+//	CougarDebug::startMethod("CougarDrive::~CougarDrive " + this->GetName());
+//	CougarDebug::endMethod("CougarDrive::~CougarDrive " + this->GetName());
 }
 
 void CougarDrive::Drive(float outputMagnitude, float curve) const{
