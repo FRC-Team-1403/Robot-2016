@@ -53,14 +53,13 @@ CougarDrive::~CougarDrive() {
 	CougarDebug::endMethod("CougarDrive::~CougarDrive " + this->GetName());
 }
 
-void CougarDrive::Drive(float outputMagnitude, float curve) const{
+void CougarDrive::Drive(float outputMagnitude, float curve) const {
 	this->drive_->Drive(outputMagnitude, curve);
 }
 
 void CougarDrive::TankDrive(float leftPower, float rightPower, bool squaredInputs /* = false */) {
 	this->drive_->TankDrive(leftPower, rightPower, squaredInputs);
 }
-
 
 void CougarDrive::TankDrive(std::shared_ptr<CougarJoystick> joystick, bool reversed,  bool squaredInputs /* = true */) {
 	int reverse = reversed ? -1 : 1;

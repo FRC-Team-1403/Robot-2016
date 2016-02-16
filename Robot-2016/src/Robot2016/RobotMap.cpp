@@ -28,7 +28,7 @@ void RobotMap::init(){
 	/*driveTrainRightTalon.reset(new Victor(0));
 	driveTrainLeftTalon.reset(new Victor(1));
 	*/
-	drive.reset(new cougar::CougarDrive(0, 1, 2, 3, 0, 1, 14, 15, "Drive"));
+	drive.reset(new cougar::CougarDrive(0, 1, 12, 2, "Drive"));
 	driveTrainRightEncoder.reset(new Encoder(0, 1));
 	driveTrainLeftEncoder.reset(new Encoder(2, 3));
 

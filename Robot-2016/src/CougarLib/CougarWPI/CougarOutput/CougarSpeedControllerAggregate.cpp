@@ -75,12 +75,12 @@ float CougarSpeedControllerAggregate::GetCurrent() const {
 	return 0.0;
 }
 void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	CougarDebug::startMethod("CougarSpeedControllerAggregate::Set");
+	//CougarDebug::startMethod("CougarSpeedControllerAggregate::Set");
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->Set(speed);
 	}
-	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
-	CougarDebug::endMethod("CougarSpeedControllerAggregate::Set");
+	//CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
+	//CougarDebug::endMethod("CougarSpeedControllerAggregate::Set");
 }
 
 void CougarSpeedControllerAggregate::StopMotor() {

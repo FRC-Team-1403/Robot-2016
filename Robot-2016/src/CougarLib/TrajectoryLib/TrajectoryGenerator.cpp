@@ -19,15 +19,15 @@ std::shared_ptr<TrajectoryGenerator::IntegrationMethod> TrajectoryGenerator::Tra
 
 
 std::string TrajectoryGenerator::Strategy::toString() {
-	CougarDebug::startMethod("TrajectoryGenerator::Strategy::toString");
-	CougarDebug::endMethod("TrajectoryGenerator::Strategy::toString");
+	//CougarDebug::startMethod("TrajectoryGenerator::Strategy::toString");
+	//CougarDebug::endMethod("TrajectoryGenerator::Strategy::toString");
 	return value_;
 }
 
 TrajectoryGenerator::Strategy::Strategy(std::string value) {
-	CougarDebug::startMethod("TrajectoryGenerator::Strategy::Strategy");
+	//CougarDebug::startMethod("TrajectoryGenerator::Strategy::Strategy");
 	value_ = value;
-	CougarDebug::endMethod("TrajectoryGenerator::Strategy::Strategy");
+	//CougarDebug::endMethod("TrajectoryGenerator::Strategy::Strategy");
 }
 
 std::shared_ptr<Trajectory> TrajectoryGenerator::generate (
@@ -38,7 +38,7 @@ std::shared_ptr<Trajectory> TrajectoryGenerator::generate (
 			double goal_pos,
 			double goal_vel,
 			double goal_heading) {
-	CougarDebug::startMethod("TrajectoryGenerator::generate");
+	//CougarDebug::startMethod("TrajectoryGenerator::generate");
 	// Choose an automatic strategy.
 	if (strategy == AutomaticStrategy) {
 		strategy = chooseStrategy(start_vel, goal_vel, config->max_vel);
@@ -116,13 +116,13 @@ std::shared_ptr<Trajectory> TrajectoryGenerator::generate (
 						/ traj->segments_->at(traj->getNumSegments() - 1)->pos;
 	}
 
-	CougarDebug::endMethod("TrajectoryGenerator::generate");
+	//CougarDebug::endMethod("TrajectoryGenerator::generate");
 	return traj;
 }
 
 std::shared_ptr<TrajectoryGenerator::Strategy> TrajectoryGenerator::chooseStrategy(double start_vel, double goal_vel,
 				double max_vel) {
-	CougarDebug::startMethod("TrajectoryGenerator::chooseStrategy");
+	//CougarDebug::startMethod("TrajectoryGenerator::chooseStrategy");
 	std::shared_ptr<Strategy> strategy;
 	if (start_vel == goal_vel && start_vel == max_vel) {
 		strategy = StepStrategy;
@@ -131,20 +131,20 @@ std::shared_ptr<TrajectoryGenerator::Strategy> TrajectoryGenerator::chooseStrate
 	} else {
 		strategy = TrapezoidalStrategy;
 	}
-	CougarDebug::endMethod("TrajectoryGenerator::chooseStrategy");
+	//CougarDebug::endMethod("TrajectoryGenerator::chooseStrategy");
 	return strategy;
 }
 
 std::string TrajectoryGenerator::IntegrationMethod::toString() {
-	CougarDebug::startMethod("TrajectoryGenerator::IntegrationMethod::toString");
-	CougarDebug::endMethod("TrajectoryGenerator::IntegrationMethod::toString");
+	//CougarDebug::startMethod("TrajectoryGenerator::IntegrationMethod::toString");
+	//CougarDebug::endMethod("TrajectoryGenerator::IntegrationMethod::toString");
 	return value_;
 }
 
 TrajectoryGenerator::IntegrationMethod::IntegrationMethod(std::string value) {
-	CougarDebug::startMethod("TrajectoryGenerator::IntegrationMethod::IntegrationMethod");
+	//CougarDebug::startMethod("TrajectoryGenerator::IntegrationMethod::IntegrationMethod");
 	value_ = value;
-	CougarDebug::endMethod("TrajectoryGenerator::IntegrationMethod::IntegrationMethod");
+	//CougarDebug::endMethod("TrajectoryGenerator::IntegrationMethod::IntegrationMethod");
 }
 
 std::shared_ptr<Trajectory> TrajectoryGenerator::secondOrderFilter(
@@ -156,7 +156,7 @@ std::shared_ptr<Trajectory> TrajectoryGenerator::secondOrderFilter(
 				double total_impulse,
 				uint32_t length,
 				std::shared_ptr<IntegrationMethod> integration) {
-	CougarDebug::startMethod("TrajectoryGenerator::secondOrderFilter");
+	//CougarDebug::startMethod("TrajectoryGenerator::secondOrderFilter");
 	if (length <= 0) {
 		//TODO fix
 		//return std::shared_pt;
@@ -228,7 +228,7 @@ std::shared_ptr<Trajectory> TrajectoryGenerator::secondOrderFilter(
 		last = traj->segments_->at(i);
 	}
 
-	CougarDebug::endMethod("TrajectoryGenerator::secondOrderFilter");
+	//CougarDebug::endMethod("TrajectoryGenerator::secondOrderFilter");
 	return traj;
 }
 
