@@ -8,12 +8,13 @@
 #ifndef SRC_COUGARLIB_COUGARWPI_COUGARHID_COUGARBUTTON_H_
 #define SRC_COUGARLIB_COUGARWPI_COUGARHID_COUGARBUTTON_H_
 
+#include "WPILib.h"
 #include "CougarJoystick.h"
 #include "../../CougarDebug.h"
 
 namespace cougar {
 
-class CougarButton {
+class CougarButton : public Button {
 public:
 
 	uint32_t buttonPort;
@@ -21,10 +22,10 @@ public:
 	CougarButton(std::shared_ptr<CougarJoystick> stick, uint32_t buttonPort);
 	virtual ~CougarButton();
 
-	bool getWasPressed();
-	bool getWasReleased();
-	bool get();
-	void update();
+	virtual bool getWasPressed();
+	virtual bool getWasReleased();
+	virtual bool get();
+	virtual void update();
 
 private:
 	bool wasPressed, wasReleased, isDown;

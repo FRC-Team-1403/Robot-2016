@@ -94,28 +94,11 @@ void CougarDebug::debugPrinter(std::string message) {
 }
 
 void CougarDebug::indent(int amount) {
-	/*
-	std::string tabs = "";
-	for (int i = 0; i < indentation; i++) {
-		tabs += " ";
-	}
-	printf((tabs + "{\n").c_str());
 	indentation += amount;
-	*/
 }
 
 void CougarDebug::unindent(int amount) {
-	/*
 	indentation -= amount;
-	if (indentation < 0) {
-		indentation = 0;
-	}
-	std::string tabs = "";
-	for (int i = 0; i < indentation; i++) {
-		tabs += " ";
-	}
-	printf((tabs + "}\n").c_str());
-	*/
 }
 
 void CougarDebug::startMethod(std::string name) {

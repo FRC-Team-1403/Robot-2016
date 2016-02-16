@@ -14,13 +14,13 @@ namespace cougar {
 
 CougarDrive::CougarDrive(uint32_t leftPort, uint32_t rightPort,
 		uint32_t leftPDPSlot, uint32_t rightPDPSlot, std::string name) {
-//	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
+	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<SpeedController> tmpLeft(new CougarSpeedController(leftPort, leftPDPSlot, name + "Left"));
 	std::shared_ptr<SpeedController> tmpRight(new CougarSpeedController(rightPort, rightPDPSlot, name + "Right"));
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(tmpLeft, tmpRight));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
-//	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
+	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
 }
 
 CougarDrive::CougarDrive(uint32_t leftPort1, uint32_t leftPort2,
@@ -28,7 +28,7 @@ CougarDrive::CougarDrive(uint32_t leftPort1, uint32_t leftPort2,
 		uint32_t leftPDPSlot1, uint32_t leftPDPSlot2,
 		uint32_t rightPDPSlot1, uint32_t rightPDPSlot2,
 		std::string name) {
-//	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
+	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<SpeedController> tmpLeft(new CougarSpeedControllerAggregate(leftPort1, leftPort2,
 			leftPDPSlot1, leftPDPSlot2, name + "Left"));
 	std::shared_ptr<SpeedController> tmpRight(new CougarSpeedControllerAggregate(rightPort1, rightPort2,
@@ -36,21 +36,21 @@ CougarDrive::CougarDrive(uint32_t leftPort1, uint32_t leftPort2,
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(tmpLeft, tmpRight));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
-//	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
+	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
 }
 
 
 CougarDrive::CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name) {
-//	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
+	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(left, right));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
-//	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
+	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
 }
 
 CougarDrive::~CougarDrive() {
-//	CougarDebug::startMethod("CougarDrive::~CougarDrive " + this->GetName());
-//	CougarDebug::endMethod("CougarDrive::~CougarDrive " + this->GetName());
+	CougarDebug::startMethod("CougarDrive::~CougarDrive " + this->GetName());
+	CougarDebug::endMethod("CougarDrive::~CougarDrive " + this->GetName());
 }
 
 void CougarDrive::Drive(float outputMagnitude, float curve) const{
