@@ -3,6 +3,10 @@
  *
  *	Created on: Feb 9, 2016
  *			Author: Thejas
+ *
+ * Inspired by Team 254
+ * Thank you to the Cheesy Poofs for open-sourcing their code.
+ *
  */
 
 #ifndef SRC_COUGARLIB_TRAJECTORYLIB_TRAJECTORYDRIVECONTROLLER_H_
@@ -30,7 +34,7 @@ public:
 	std::shared_ptr<TrajectoryFollower> followerRight;
 	double direction;
 	double heading;
-	double kTurn = 1.0/90.0;
+	double kTurn = -1.0/90.0;
 
 	bool onTarget() {
 		return followerLeft->isFinishedTrajectory();
@@ -73,8 +77,8 @@ public:
 
 private:
 	void init() {
-		followerLeft->configure(1, 0, 0, 1.0/7.5, 1.0/40.0);
-		followerRight->configure(1, 0, 0, 1.0/7.5, 1.0/40.0);
+		followerLeft->configure(1.5, 0, 0, 1.0/7.5, 1.0/40.0);
+		followerRight->configure(1.5, 0, 0, 1.0/7.5, 1.0/40.0);
 	}
 
 };

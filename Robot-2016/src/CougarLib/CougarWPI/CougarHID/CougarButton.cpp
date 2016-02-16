@@ -10,17 +10,17 @@
 namespace cougar {
 
 CougarButton::CougarButton(std::shared_ptr<CougarJoystick> stick, uint32_t buttonPort){
-//	CougarDebug::startMethod("CougarButton::CougarButton [port " + std::to_string(buttonPort) + "]");
+	CougarDebug::startMethod("CougarButton::CougarButton [port " + std::to_string(buttonPort) + "]");
 	this->stick = stick;
 	this->buttonPort = buttonPort;
 	this->isDown = stick->GetRawButton(buttonPort);
 	update();
-//	CougarDebug::endMethod("CougarButton::CougarButton [port " + std::to_string(buttonPort) + "]");
+	CougarDebug::endMethod("CougarButton::CougarButton [port " + std::to_string(buttonPort) + "]");
 }
 
 CougarButton::~CougarButton() {
-//	CougarDebug::startMethod("CougarButton::~CougarButton [port " + std::to_string(this->buttonPort) + "]");
-//	CougarDebug::startMethod("CougarButton::~CougarButton [port " + std::to_string(this->buttonPort) + "]");
+	CougarDebug::startMethod("CougarButton::~CougarButton [port " + std::to_string(this->buttonPort) + "]");
+	CougarDebug::startMethod("CougarButton::~CougarButton [port " + std::to_string(this->buttonPort) + "]");
 }
 
 bool CougarButton::getWasPressed() {
@@ -39,12 +39,12 @@ bool CougarButton::get() {
 }
 
 void CougarButton::update() {
-//	CougarDebug::startMethod("CougarButton::update");
+	CougarDebug::startMethod("CougarButton::update");
 	bool pressed = stick->GetRawButton(buttonPort);
 	wasPressed = pressed && !isDown;
 	wasReleased = !pressed && isDown;
 	isDown = pressed;
-//	CougarDebug::endMethod("CougarButton::update");
+	CougarDebug::endMethod("CougarButton::update");
 }
 
 } /* namespace cougar */

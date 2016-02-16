@@ -9,17 +9,27 @@
 
 namespace cougar {
 
+int CougarJoystick::SMOOTHING_MODE;
+
 CougarJoystick::CougarJoystick(uint32_t port) {
-//	CougarDebug::startMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+	CougarDebug::startMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 	std::shared_ptr<Joystick> tmpJoystick(new Joystick(port));
+	this->setSmoothingMode(Smoothing::TRIPLE_SINE);
 	this->joystick_ = tmpJoystick;
 	this->port = port;
-//	CougarDebug::endMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+	CougarDebug::endMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 }
 
 CougarJoystick::~CougarJoystick() {
-//	CougarDebug::startMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
-//	CougarDebug::endMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+	CougarDebug::startMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+	CougarDebug::endMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+}
+
+void CougarJoystick::setSmoothingMode(int32_t mode) {
+	CougarDebug::startMethod("CougarJoystick::setSmoothingMode");
+	SMOOTHING_MODE = mode;
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarJoystick smoothing mode set to %d", mode);
+	CougarDebug::endMethod("CougarJoystick::setSmoothingMode");
 }
 
 bool CougarJoystick::GetButtonA() {

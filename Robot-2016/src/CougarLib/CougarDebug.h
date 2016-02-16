@@ -20,7 +20,6 @@ namespace cougar {
 class CougarDebug {
 public:
 	static void init();
-	static void end();
 
 	static void debugPrinter(int level = UNIMPORTANT, const char *message = "", ...);
 	static void debugPrinter(const char *message = "", ...); // If no level is given, it is assumed to be UNIMPORTANT
@@ -48,14 +47,12 @@ public:
 		ISSUE = 2,
 		FATAL_ERROR = 3
 	};
-	static const int DEBUG =
-			UNIMPORTANT;
+	static const int DEBUG = MESSAGE;
 
 private:
 	explicit CougarDebug();
 	virtual ~CougarDebug();
 
-	static FILE *logFile;
 	static std::map<int, std::string> debugLevels;
 	static int indentation;
 	static bool didInit;

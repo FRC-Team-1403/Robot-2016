@@ -3,6 +3,10 @@
  *
  *  Created on: Feb 6, 2016
  *      Author: Thejas
+ *
+ * Inspired by Team 254
+ * Thank you to the Cheesy Poofs for open-sourcing their code.
+ *
  */
 
 #ifndef SRC_WAYPOINTSEQUENCE_H_

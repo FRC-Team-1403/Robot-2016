@@ -9,11 +9,11 @@ std::shared_ptr<DriveTrain> Robot::driveTrain;
 void Robot::RobotInit()
 {
 //	cougar::CougarDebug::debugPrinter("Robot::RobotInit started");
-
+	cougar::CougarDebug::init();
 //	cougar::CougarDebug::debugPrinter("Initialization part 1 started");
 //	cougar::CougarDebug::init();
 	RobotMap::init();
-//	cougar::CougarDebug::debugPrinter("Initialization part 1 finished");
+	cougar::CougarDebug::debugPrinter("Initialization part 1 finished");
 
 //	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
@@ -30,23 +30,23 @@ void Robot::RobotInit()
 
 //	cougar::CougarDebug::debugPrinter("Motion mapping initialization started");
 	std::shared_ptr<cougar::TrajectoryGenerator::Config> config(new cougar::TrajectoryGenerator::Config());
-//	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 1");
+	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 1");
 	//TODO find these values
-	const double kWheelbaseWidth = 25.5/12;
-	config->dt = 0.01; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
-	config->max_acc = 10.0;
+	const double kWheelbaseWidth = 22.25/12;
+	config->dt = 0.02; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
+	config->max_acc = 40.0;
 	config->max_jerk = 60.0;
-	config->max_vel = 15.0;
-//	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 2");
+	config->max_vel = 7.8;
+	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 2");
 	const std::string path_name = "TEST";
 
 	std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(7.0, 0, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(14.0, 1.0, M_PI / 12.0)));
-//	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 3");
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(3.0, 0, 0)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(7.0, 0.0, 0)));
+	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 3");
 	path = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
-//	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");
+	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");
 }
 
 /**

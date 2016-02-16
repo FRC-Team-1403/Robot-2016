@@ -199,7 +199,7 @@ std::shared_ptr<Trajectory> TrajectoryGenerator::secondOrderFilter(
 		f2 = 0;
 		// Filter through F2
 		for (uint32_t j = 0; j < f2_length; ++j) {
-			if (i - j < 0) {
+			if ((int)i - (int)j < 0) {
 				break;
 			}
 
