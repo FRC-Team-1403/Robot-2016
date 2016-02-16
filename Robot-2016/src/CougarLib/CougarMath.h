@@ -3,6 +3,10 @@
  *
  *  Created on: Feb 6, 2016
  *      Author: Thejas
+ *
+ * Inspired by Team 254
+ * Thank you to the Cheesy Poofs for open-sourcing their code.
+ *
  */
 
 #ifndef SRC_COUGARMATH_H_
@@ -15,8 +19,8 @@ namespace cougar {
 
 class CougarMath {
 public:
-	// constants
 
+	// There should not be debugging printers in CougarMath methods.
 
 	/**
 	* Get the difference in angle between two angles.
