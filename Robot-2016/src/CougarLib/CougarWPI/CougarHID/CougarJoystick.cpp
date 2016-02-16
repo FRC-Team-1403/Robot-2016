@@ -26,7 +26,10 @@ CougarJoystick::~CougarJoystick() {
 }
 
 void CougarJoystick::setSmoothingMode(int32_t mode) {
+	CougarDebug::startMethod("CougarJoystick::setSmoothingMode");
 	SMOOTHING_MODE = mode;
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarJoystick smoothing mode set to %d", mode);
+	CougarDebug::endMethod("CougarJoystick::setSmoothingMode");
 }
 
 bool CougarJoystick::GetButtonA() {

@@ -73,20 +73,29 @@ void CougarDrive::ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stic
 	} else if (stick == RIGHT) {
 		this->drive_->ArcadeDrive(joystick->GetStickRightAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickRightAxisX() * this->speedFactor(joystick) * reverse, squaredInputs);
 	} else {
-//		CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::ISSUE, "An invalid analog stick has been specified...\n\n");
+		CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::ISSUE, "An invalid analog stick has been specified...\n\n");
 	}
 }
 
 void CougarDrive::SetSensitivity(float sensitivity) {
+	CougarDebug::startMethod("CougarDrive::SetSensitivity");
 	this->drive_->SetSensitivity(sensitivity);
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarDrive " + this->GetName() + "sensitivity set to " + std::to_string(sensitivity));
+	CougarDebug::endMethod("CougarDrive::SetSensitivity");
 }
 
 void CougarDrive::SetMaxOutput(double maxOutput) {
+	CougarDebug::startMethod("CougarDrive::SetMaxOutput");
 	this->drive_->SetMaxOutput(maxOutput);
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarDrive " + this->GetName() + "max output set to " + std::to_string(maxOutput));
+	CougarDebug::endMethod("CougarDrive::SetMaxOutput");
 }
 
 void CougarDrive::SetExpiration(float timeout) {
+	CougarDebug::startMethod("CougarDrive::SetExpiration");
 	this->drive_->SetExpiration(timeout);
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarDrive " + this->GetName() + "expiration set to " + std::to_string(timeout));
+	CougarDebug::endMethod("CougarDrive::SetExpiration");
 }
 
 float CougarDrive::GetExpiration() const {
@@ -106,7 +115,10 @@ bool CougarDrive::IsSafetyEnabled() const {
 }
 
 void CougarDrive::SetSafetyEnabled(bool enabled) {
+	CougarDebug::startMethod("CougarDrive::SetSafetyEnabled");
 	this->drive_->SetSafetyEnabled(enabled);
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarDrive " + this->GetName() + "safety set to " + std::to_string(enabled));
+	CougarDebug::endMethod("CougarDrive::SetSafetyEnabled");
 }
 std::string CougarDrive::GetName() const {
 	return this->name_;
@@ -119,7 +131,6 @@ const char *CougarDrive::GetCName() const {
 std::shared_ptr<RobotDrive> CougarDrive::GetDrive() {
 	return this->drive_;
 }
-
 
 float CougarDrive::speedFactor(std::shared_ptr<CougarJoystick> joystick) {
 	const float SPEED_FACTOR = 0.5;

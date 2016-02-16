@@ -55,7 +55,7 @@ void CougarSpeedControllerAggregate::SetInverted(bool inverted) {
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->SetInverted(this->inverted_);
 	}
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedController %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarSpeedControllerAggregate %s inversion set to %s", this->GetCName(), inverted ? "true" : "false");
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::SetInverted");
 }
 
@@ -79,7 +79,7 @@ void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/)
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->Set(speed);
 	}
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::Set");
 }
 
@@ -98,7 +98,7 @@ void CougarSpeedControllerAggregate::Disable() {
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->Disable();
 	}
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s disabled", this->GetCName());
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarSpeedControllerAggregate %s disabled", this->GetCName());
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::Set");
 }
 
@@ -107,7 +107,7 @@ void CougarSpeedControllerAggregate::PIDWrite(float output) {
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->PIDWrite(this->Sign() * output);
 	}
-	CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::MESSAGE, "CougarSpeedControllerAggregate %s...did something with PIDWrite. I don't actually know what that method does.", this->GetCName());
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarSpeedControllerAggregate %s...did something with PIDWrite. I don't actually know what that method does.", this->GetCName());
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::PIDWrite");
 }
 

@@ -154,7 +154,7 @@ void CougarGyro::InitGyro() {
 
 	HALReport(HALUsageReporting::kResourceType_Gyro, m_analog->GetChannel());
 	LiveWindow::GetInstance()->AddSensor("CougarGyro", m_analog->GetChannel(), this);
-	CougarDebug::endMethod("CougarGyro::Reset");
+	CougarDebug::endMethod("CougarGyro::InitGyro");
 }
 
 /**
@@ -196,7 +196,6 @@ void CougarGyro::Calibrate() {
  * of the returned rate from the gyro.
  */
 float CougarGyro::GetAngle() const {
-	CougarDebug::startMethod("CougarGyro::GetAngle");
 	if (StatusIsFatal()) return 0.f;
 
 	int64_t rawValue;
@@ -210,7 +209,6 @@ float CougarGyro::GetAngle() const {
 											 (m_analog->GetSampleRate() * m_voltsPerDegreePerSecond);
 
 	return (float)scaledValue;
-	CougarDebug::endMethod("CougarGyro::GetAngle");
 }
 
 /**
@@ -221,13 +219,11 @@ float CougarGyro::GetAngle() const {
  * @return the current rate in degrees per second
  */
 double CougarGyro::GetRate() const {
-	CougarDebug::startMethod("CougarGyro::GetAngle");
 	if (StatusIsFatal()) return 0.0;
 
 	return (m_analog->GetAverageValue() - ((double)m_center + m_offset)) * 1e-9 *
 				 m_analog->GetLSBWeight() /
 				 ((1 << m_analog->GetOversampleBits()) * m_voltsPerDegreePerSecond);
-	CougarDebug::endMethod("CougarGyro::GetAngle");
 }
 
 /**
@@ -263,6 +259,7 @@ uint32_t CougarGyro::GetCenter() const {
 void CougarGyro::SetSensitivity(float voltsPerDegreePerSecond) {
 	CougarDebug::startMethod("CougarGyro::SetSensitivity");
 	m_voltsPerDegreePerSecond = voltsPerDegreePerSecond;
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarGyro sensitivity set to %f volts per degree per second", voltsPerDegreePerSecond);
 	CougarDebug::endMethod("CougarGyro::SetSensitivity");
 }
 
@@ -281,6 +278,7 @@ void CougarGyro::SetDeadband(float volts) {
 	int32_t deadband = volts * 1e9 / m_analog->GetLSBWeight() *
 										 (1 << m_analog->GetOversampleBits());
 	m_analog->SetAccumulatorDeadband(deadband);
+	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarGyro deadband set to %f volts", volts);
 	CougarDebug::endMethod("CougarGyro::SetDeadband");
 }
 
