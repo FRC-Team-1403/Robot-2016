@@ -40,8 +40,8 @@ void Robot::RobotInit()
 
 	std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(3, 1, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(7, 0, M_PI/12)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, M_PI/12)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 0, M_PI/6)));
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 3");
 	path = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");
