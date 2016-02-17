@@ -12,11 +12,11 @@
 namespace cougar {
 
 TrajectoryDriveController::TrajectoryDriveController() {
-	//CougarDebug::startMethod("TrajectoryDriveController::TrajectoryDriveController");
+	CougarDebug::startMethod("TrajectoryDriveController::TrajectoryDriveController");
 	followerLeft.reset(new TrajectoryFollower("left"));
 	followerRight.reset(new TrajectoryFollower("right"));
 	init();
-	//CougarDebug::endMethod("TrajectoryDriveController::TrajectoryDriveController");
+	CougarDebug::endMethod("TrajectoryDriveController::TrajectoryDriveController");
 }
 
 bool TrajectoryDriveController::onTarget() {
@@ -39,11 +39,11 @@ void TrajectoryDriveController::loadProfileNoReset(std::shared_ptr<Trajectory> l
 }
 
 void TrajectoryDriveController::reset() {
-	//CougarDebug::startMethod("TrajectoryDriveController::reset");
+	CougarDebug::startMethod("TrajectoryDriveController::reset");
 		followerLeft->reset();
 		followerRight->reset();
 		Robot::driveTrain->resetEncoders();
-	//CougarDebug::endMethod("TrajectoryDriveController::reset");
+	CougarDebug::endMethod("TrajectoryDriveController::reset");
 }
 
 int TrajectoryDriveController::getFollowerCurrentSegment() {
@@ -55,7 +55,6 @@ int TrajectoryDriveController::getNumSegments() {
 }
 
 void TrajectoryDriveController::update() {
-	//CougarDebug::startMethod("TrajectoryDriveController::update");
 	if (!enabled) {
 		return;
 	}
@@ -85,7 +84,6 @@ void TrajectoryDriveController::update() {
 
 		Robot::driveTrain->setLeftRightPower(speedLeft - turn, speedRight - turn);
 	}
-	//CougarDebug::endMethod("TrajectoryDriveController::update");
 }
 
 void TrajectoryDriveController::setTrajectory(std::shared_ptr<Trajectory> t) {

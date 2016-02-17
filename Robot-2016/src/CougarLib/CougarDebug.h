@@ -50,7 +50,7 @@ public:
 	// just to avoid inundating the output stream.
 	// Setter methods should have these as well as a separate debug message
 	// stating what value was set to which variable.
-	// Will always be UNIMPORTANT.
+	// Will always be UNIMPORTANT. Avoid using in TrajectoryLib.
 	static void startMethod(std::string name);
 	static void startMethod(const char *name);
 	static void endMethod(std::string name);

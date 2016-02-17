@@ -21,7 +21,7 @@ public:
 
 	Path(std::string name, std::shared_ptr<Trajectory::Pair> go_left_pair);
 	Path();
-	virtual ~Path();
+	virtual ~Path() = default;
 
 	virtual std::string getName();
 	virtual void goLeft();

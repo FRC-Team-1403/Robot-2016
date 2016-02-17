@@ -19,9 +19,6 @@ Path::Path() {
 
 }
 
-Path::~Path() {
-}
-
 std::string Path::getName() {
 	return name_;
 }
