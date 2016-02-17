@@ -16,9 +16,9 @@ bool CougarDebug::didInit = false;
 bool CougarDebug::doIndent = true;
 
 CougarDebug::CougarDebug() {}
-CougarDebug::~CougarDebug() {}
 
 void CougarDebug::init() {
+	std::cout << "CougarDebug::init starting\n";
 	if (!debugLevels.empty())
 		debugLevels.clear();
 	debugLevels[0] = "UNIMPORTANT";
@@ -38,13 +38,16 @@ void CougarDebug::init() {
 		system(change_permissions_command.c_str());
 		logFile = fopen(filename.c_str(), "rw");
 	}
+	std::cout << "CougarDebug::init finished\n";
 }
 
 void CougarDebug::end() {
+	std::cout << "CougarDebug::end starting\n";
 	if (WRITE_TO_FILE) {
 		fclose(logFile);
 		delete logFile;
 	}
+	std::cout << "CougarDebug::init finished\n";
 }
 
 void CougarDebug::debugPrinter(int level, const char *message, ...) {

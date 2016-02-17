@@ -9,9 +9,10 @@ std::shared_ptr<DriveTrain> Robot::driveTrain;
 
 void Robot::RobotInit()
 {
+	cougar::CougarDebug::startMethod("Robot::RobotInit");
+
 	buffer = 2;
 
-	cougar::CougarDebug::debugPrinter("Robot::RobotInit started");
 	cougar::CougarDebug::debugPrinter("Calling init methods started");
 	cougar::CougarDebug::init();
 	RobotMap::init();
@@ -46,6 +47,7 @@ void Robot::RobotInit()
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 3");
 	path = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");
+	cougar::CougarDebug::endMethod("Robot::RobotInit");
 }
 
 /**
@@ -55,11 +57,13 @@ void Robot::RobotInit()
  */
 void Robot::DisabledInit()
 {
+	cougar::CougarDebug::startMethod("Robot::DisabledInit");
 	buffer--;
 	if (buffer == 0) {
 		cougar::CougarDebug::end();
 		buffer = 1;
 	}
+	cougar::CougarDebug::endMethod("Robot::DisabledInit");
 }
 
 void Robot::DisabledPeriodic()
@@ -78,6 +82,7 @@ void Robot::DisabledPeriodic()
  */
 void Robot::AutonomousInit()
 {
+	cougar::CougarDebug::startMethod("Robot::AutonomousInit");
 	/* std::string autoSelected = SmartDashboard::GetString("Auto Selector", "Default");
 	if(autoSelected == "My Auto") {
 		autonomousCommand.reset(new MyAutoCommand());
@@ -89,6 +94,7 @@ void Robot::AutonomousInit()
 
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
+	cougar::CougarDebug::endMethod("Robot::AutonomousInit");
 }
 
 void Robot::AutonomousPeriodic()
@@ -98,12 +104,14 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit()
 {
+	cougar::CougarDebug::startMethod("Robot::TeleopInit");
 	// This makes sure that the autonomous stops running when
 	// teleop starts running. If you want the autonomous to
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
+	cougar::CougarDebug::endMethod("Robot::TInit");
 }
 
 void Robot::TeleopPeriodic()
