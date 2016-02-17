@@ -2,18 +2,21 @@
 #include "RobotMap.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
+int Robot::buffer;
 std::shared_ptr<OI> Robot::oi;
 std::shared_ptr<cougar::Path> Robot::path;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 
 void Robot::RobotInit()
 {
+	cougar::CougarDebug::startMethod("Robot::RobotInit");
 
-	cougar::CougarDebug::debugPrinter("Robot::RobotInit started");
+	buffer = 2;
+
+	cougar::CougarDebug::debugPrinter("Calling init methods started");
 	cougar::CougarDebug::init();
-	cougar::CougarDebug::debugPrinter("Initialization part 1 started");
 	RobotMap::init();
-	cougar::CougarDebug::debugPrinter("Initialization part 1 finished");
+	cougar::CougarDebug::debugPrinter("Calling init methods finished");
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
@@ -37,7 +40,6 @@ void Robot::RobotInit()
 	config->max_vel = 7.8;
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 2");
 	const std::string path_name = "TEST";
-
 	std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
 	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, M_PI/12)));
@@ -45,6 +47,7 @@ void Robot::RobotInit()
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 3");
 	path = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");
+	cougar::CougarDebug::endMethod("Robot::RobotInit");
 }
 
 /**
@@ -54,6 +57,13 @@ void Robot::RobotInit()
  */
 void Robot::DisabledInit()
 {
+	cougar::CougarDebug::startMethod("Robot::DisabledInit");
+	buffer--;
+	if (buffer == 0) {
+		cougar::CougarDebug::end();
+		buffer = 1;
+	}
+	cougar::CougarDebug::endMethod("Robot::DisabledInit");
 }
 
 void Robot::DisabledPeriodic()
@@ -72,6 +82,7 @@ void Robot::DisabledPeriodic()
  */
 void Robot::AutonomousInit()
 {
+	cougar::CougarDebug::startMethod("Robot::AutonomousInit");
 	/* std::string autoSelected = SmartDashboard::GetString("Auto Selector", "Default");
 	if(autoSelected == "My Auto") {
 		autonomousCommand.reset(new MyAutoCommand());
@@ -83,6 +94,7 @@ void Robot::AutonomousInit()
 
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
+	cougar::CougarDebug::endMethod("Robot::AutonomousInit");
 }
 
 void Robot::AutonomousPeriodic()
@@ -92,17 +104,21 @@ void Robot::AutonomousPeriodic()
 
 void Robot::TeleopInit()
 {
+	cougar::CougarDebug::startMethod("Robot::TeleopInit");
 	// This makes sure that the autonomous stops running when
 	// teleop starts running. If you want the autonomous to
 	// continue until interrupted by another command, remove
 	// this line or comment it out.
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
+	cougar::CougarDebug::endMethod("Robot::TInit");
 }
 
 void Robot::TeleopPeriodic()
 {
 	Scheduler::GetInstance()->Run();
+
+	/*
 	SmartDashboard::PutNumber("Joystick value", oi->GetJoystick()->GetStickLeftAxisY());
 	SmartDashboard::PutNumber("Position", driveTrain->getDistance());
 	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
@@ -110,6 +126,7 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Jerk", driveTrain->getJerk());
 	SmartDashboard::PutNumber("Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Angular Velocity", driveTrain->getAngularVelocity());
+	*/
 
 
 	//SmartDashboard::PutNumber("Talon value", ((CANTalon&)exampleSubsystem->getMotor())->Get());

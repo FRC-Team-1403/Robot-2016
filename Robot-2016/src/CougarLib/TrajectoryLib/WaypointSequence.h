@@ -37,7 +37,7 @@ public:
 	uint32_t max_waypoints_;
 
 	WaypointSequence(uint32_t max_size);
-	virtual ~WaypointSequence();
+	virtual ~WaypointSequence() = default;
 
 	virtual void addWaypoint(std::shared_ptr<Waypoint> w);
 	virtual uint32_t getNumWaypoints();

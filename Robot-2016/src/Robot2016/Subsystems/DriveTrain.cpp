@@ -18,8 +18,6 @@ DriveTrain::DriveTrain() :
 
 void DriveTrain::InitDefaultCommand()
 {
-	// Set the default command for a subsystem here.
-	//SetDefaultCommand(new MySpecialCommand());
 //	SetDefaultCommand(new DriveWithJoystick());
 }
 
@@ -57,5 +55,31 @@ double DriveTrain::getAngularVelocity() {
 	return (this->driveTrainGyro->GetRate() * M_PI) / 180.0;
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void DriveTrain::setLeftRightPower(double leftPower, double rightPower) {
+	this->driveT->TankDrive(leftPower, rightPower);
+}
+
+void DriveTrain::stop() {
+	setLeftRightPower(0, 0);
+}
+
+ double DriveTrain::getRightEncoderDistance() {
+	return driveTrainRightEncoder->GetDistance();
+}
+
+ double DriveTrain::getLeftEncoderDistance() {
+	return driveTrainLeftEncoder->GetDistance();
+}
+
+ double DriveTrain::getGyroAngleInRadians() {
+	 return (driveTrainGyro->GetAngle() *M_PI) / 180.0;
+}
+
+ void DriveTrain::resetGyro() {
+	 driveTrainGyro->Reset();
+}
+
+ void DriveTrain::resetEncoders() {
+	 this->driveTrainLeftEncoder->Reset();
+	 this->driveTrainRightEncoder->Reset();
+ }

@@ -27,8 +27,6 @@ CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> co
 	CougarDebug::endMethod("CougarSpeedController::CougarSpeedController " + this->GetName());
 }
 
-// Ignore warnings about not initializing things in these constructors
-
 CougarSpeedController::CougarSpeedController(std::shared_ptr<CougarSpeedController> controller) :
 		CougarSpeedController(controller->GetController(), controller->GetPDPSlot(), controller->GetName(), controller->GetInverted()){}
 
@@ -63,10 +61,8 @@ float CougarSpeedController::GetCurrent() const {
 	return 0.0;
 }
 void CougarSpeedController::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	//CougarDebug::startMethod("CougarSpeedController::Set " + this->GetName());
 	this->controller_->Set(speed);
-	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "SpeedController %s set to speed %f", this->GetCName(), speed);
-	//CougarDebug::endMethod("CougarSpeedController::Set " + this->GetName());
+	CougarDebug::debugPrinter(CougarDebug::UNIMPORTANT, "SpeedController %s set to speed %f", this->GetCName(), speed);
 }
 
 void CougarSpeedController::StopMotor() {

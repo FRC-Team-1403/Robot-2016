@@ -22,35 +22,13 @@ public:
 	double getAcceleration();
 	double getJerk();
 	double getAngularVelocity();
-
-	void setLeftRightPower(double leftPower, double rightPower) {
-		this->driveT->TankDrive(leftPower, rightPower);
-	  }
-
-	void stop() {
-		setLeftRightPower(0, 0);
-	}
-
-	 double getRightEncoderDistance() {
-		return driveTrainRightEncoder->GetDistance();
-	  }
-
-	 double getLeftEncoderDistance() {
-	    return driveTrainLeftEncoder->GetDistance();
-	  }
-
-	 double getGyroAngleInRadians() {
-		 return (driveTrainGyro->GetAngle() *M_PI) / 180.0;
-	 }
-
-	 void resetGyro() {
-	     driveTrainGyro->Reset();
-	   }
-
-	 void resetEncoders() {
-		 this->driveTrainLeftEncoder->Reset();
-		 this->driveTrainRightEncoder->Reset();
-	 }
+	void setLeftRightPower(double leftPower, double rightPower);
+	void stop();
+	double getRightEncoderDistance();
+	double getLeftEncoderDistance();
+	double getGyroAngleInRadians();
+	void resetGyro();
+	void resetEncoders();
 
 	std::shared_ptr<cougar::CougarDrive> driveT;
 	std::shared_ptr<Encoder> driveTrainRightEncoder;
