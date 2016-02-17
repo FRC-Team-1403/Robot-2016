@@ -31,10 +31,8 @@ public:
 	static void init();
 
 	static std::shared_ptr<cougar::CougarDrive> drive;
-
 	static std::shared_ptr<Encoder> driveTrainRightEncoder;
 	static std::shared_ptr<Encoder> driveTrainLeftEncoder;
-
 	static std::shared_ptr<Gyro> driveTrainGyro;
 };
 

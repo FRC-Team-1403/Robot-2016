@@ -29,8 +29,6 @@ bool Spline::reticulateSplines(std::shared_ptr<WaypointSequence::Waypoint> start
 		std::shared_ptr<WaypointSequence::Waypoint> goal, std::shared_ptr<Spline> result, std::shared_ptr<Type> type) {
 	return reticulateSplines(start->x, start->y, start->theta, goal->x, goal->y,
 					goal->theta, result, type);
-
-
 }
 
 bool Spline::reticulateSplines(double x0, double y0, double theta0,

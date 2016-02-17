@@ -68,10 +68,7 @@ float CougarSpeedControllerAggregate::Sign() const {
 		return 1.0;
 	}
 }
-float CougarSpeedControllerAggregate::GetCurrent() const {
-	// TODO implement this properly
-	return 0.0;
-}
+
 void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/) {
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->Set(speed);

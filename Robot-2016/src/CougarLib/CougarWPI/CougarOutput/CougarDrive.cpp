@@ -105,7 +105,7 @@ bool CougarDrive::IsAlive() const {
 	return this->drive_->IsAlive();
 }
 
-void CougarDrive::StopMotor() {
+void CougarDrive::Stop() {
 	this->drive_->StopMotor();
 }
 

@@ -47,14 +47,14 @@ void CougarDebug::end() {
 		fclose(logFile);
 		delete logFile;
 	}
-	std::cout << "CougarDebug::init finished\n";
+	std::cout << "CougarDebug::end finished\n";
 }
 
 void CougarDebug::debugPrinter(int level, const char *message, ...) {
 	if (level >= DEBUG) {
 		std::string tabs = "";
 		for (int i = 0; i < indentation; i++) {
-			tabs += " ";
+			tabs += "  ";
 		}
 		try {
 			message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
@@ -87,7 +87,7 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 	if (level >= DEBUG) {
 		std::string tabs = "";
 		for (int i = 0; i < indentation; i++) {
-			tabs += " ";
+			tabs += "  ";
 		}
 		try {
 			message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message)/* + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();

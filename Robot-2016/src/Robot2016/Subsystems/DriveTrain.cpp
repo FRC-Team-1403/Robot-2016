@@ -22,7 +22,7 @@ void DriveTrain::InitDefaultCommand()
 }
 
 void DriveTrain::drive() {
-	this->driveT->ArcadeDrive(Robot::oi->GetJoystick(), cougar::CougarDrive::LEFT, true);
+	this->driveT->ArcadeDrive(Robot::oi->GetDriverJoystick(), cougar::CougarDrive::LEFT, true);
 }
 
 double DriveTrain::getDistance() {
@@ -60,7 +60,7 @@ void DriveTrain::setLeftRightPower(double leftPower, double rightPower) {
 }
 
 void DriveTrain::stop() {
-	setLeftRightPower(0, 0);
+	this->driveT->Stop();
 }
 
  double DriveTrain::getRightEncoderDistance() {
