@@ -42,6 +42,7 @@ public:
 
 	class Smoothing final {
 	public:
+		// TODO actually use this
 		enum smoothingModes {
 			NONE = -1,
 			SINGLE_SINE = 0,

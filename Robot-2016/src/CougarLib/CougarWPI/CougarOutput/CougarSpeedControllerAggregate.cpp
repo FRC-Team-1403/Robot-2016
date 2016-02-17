@@ -35,8 +35,6 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<s
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::CougarSpeedControllerAggregate " + this->GetName());
 }
 
-// Ignore warnings about not initializing things in these constructors
-
 CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers) :
 		CougarSpeedControllerAggregate(controllers->GetControllers(), controllers->GetName(), controllers->GetInverted()){}
 
@@ -75,12 +73,10 @@ float CougarSpeedControllerAggregate::GetCurrent() const {
 	return 0.0;
 }
 void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/) {
-	//CougarDebug::startMethod("CougarSpeedControllerAggregate::Set");
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->Set(speed);
 	}
-	//CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
-	//CougarDebug::endMethod("CougarSpeedControllerAggregate::Set");
+	CougarDebug::debugPrinter(CougarDebug::UNIMPORTANT, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
 }
 
 void CougarSpeedControllerAggregate::StopMotor() {
