@@ -2,9 +2,10 @@
 
 OI::OI()
 {
-//	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "OI constructor running");
-	joy.reset(new cougar::CougarJoystick(5));
-
+	cougar::CougarDebug::startMethod("OI::OI");
+	this->driverJoy.reset(new cougar::CougarJoystick(0));
+	this->operatorJoy.reset(new cougar::CougarJoystick(1));
+	cougar::CougarDebug::endMethod("OI::OI");
 }
 
 

@@ -36,5 +36,5 @@ void RobotMap::init(){
 	driveTrainRightEncoder->SetDistancePerPulse(1.0/163.0);
 
 	driveTrainGyro.reset(new cougar::CougarGyro(0));
-	//motor.reset(new CANTalon(1));
+
 }

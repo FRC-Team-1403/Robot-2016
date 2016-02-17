@@ -5,6 +5,7 @@ AutonomousDrive::AutonomousDrive()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
+	Requires(Robot::driveTrain.get());
 	start_time = Timer::GetFPGATimestamp();
 }
 
@@ -23,16 +24,15 @@ void AutonomousDrive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void AutonomousDrive::Execute()
 {
-	cougar::CougarDebug::debugPrinter("Execute method starting");
     driveController->loadProfileNoReset(Robot::path->getLeftWheelTrajectory(), Robot::path->getRightWheelTrajectory());
 	driveController->update();
-	cougar::CougarDebug::debugPrinter("Execute method finishing");
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutonomousDrive::IsFinished()
 {
-	return driveController->onTarget() || Timer::GetFPGATimestamp() - start_time > 20;
+	//return driveController->onTarget() || Timer::GetFPGATimestamp() - start_time > 20;
+	return false; // Autonomous commands should never end on their own
 }
 
 // Called once after isFinished returns true

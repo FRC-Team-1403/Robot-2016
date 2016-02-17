@@ -9,10 +9,12 @@
 class OI
 {
 private:
-	std::shared_ptr<cougar::CougarJoystick> joy;
+	std::shared_ptr<cougar::CougarJoystick> driverJoy;
+	std::shared_ptr<cougar::CougarJoystick> operatorJoy;
 
 public:
-	std::shared_ptr<cougar::CougarJoystick> GetJoystick() { return joy; }
+	std::shared_ptr<cougar::CougarJoystick> GetDriverJoystick() { return this-> driverJoy; }
+	std::shared_ptr<cougar::CougarJoystick> GetOperatorJoystick() { return this->operatorJoy; }
 	OI();
 
 };

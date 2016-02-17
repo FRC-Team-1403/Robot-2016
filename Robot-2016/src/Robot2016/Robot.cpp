@@ -6,6 +6,42 @@ int Robot::buffer;
 std::shared_ptr<OI> Robot::oi;
 std::shared_ptr<cougar::Path> Robot::path;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
+bool Robot::enabled;
+bool Robot::autonomous;
+bool Robot::teleop;
+bool Robot::test;
+
+
+void Robot::initModes() {
+	setMode(false, false, false, false);
+}
+
+void Robot::setMode(bool e, bool a, bool t1, bool t2) {
+	enabled = e;
+	autonomous = a;
+	teleop = t1;
+	test = t2;
+}
+
+void Robot::update() {
+	setMode(IsEnabled(), IsAutonomous(), IsOperatorControl(), IsTest());
+}
+
+bool Robot::isEnabled() {
+	return enabled;
+}
+
+bool Robot::isAutonomous() {
+	return autonomous;
+}
+
+bool Robot::isTeleop() {
+	return teleop;
+}
+
+bool Robot::isTest() {
+	return test;
+}
 
 void Robot::RobotInit()
 {
@@ -14,6 +50,7 @@ void Robot::RobotInit()
 	buffer = 2;
 
 	cougar::CougarDebug::debugPrinter("Calling init methods started");
+	initModes();
 	cougar::CougarDebug::init();
 	RobotMap::init();
 	cougar::CougarDebug::debugPrinter("Calling init methods finished");
@@ -57,6 +94,7 @@ void Robot::RobotInit()
  */
 void Robot::DisabledInit()
 {
+	update();
 	cougar::CougarDebug::startMethod("Robot::DisabledInit");
 	buffer--;
 	if (buffer == 0) {
@@ -69,6 +107,7 @@ void Robot::DisabledInit()
 void Robot::DisabledPeriodic()
 {
 	Scheduler::GetInstance()->Run();
+	update();
 }
 
 /**
@@ -82,6 +121,7 @@ void Robot::DisabledPeriodic()
  */
 void Robot::AutonomousInit()
 {
+	update();
 	cougar::CougarDebug::startMethod("Robot::AutonomousInit");
 	/* std::string autoSelected = SmartDashboard::GetString("Auto Selector", "Default");
 	if(autoSelected == "My Auto") {
@@ -100,11 +140,14 @@ void Robot::AutonomousInit()
 void Robot::AutonomousPeriodic()
 {
 	Scheduler::GetInstance()->Run();
+	update();
+
 }
 
 void Robot::TeleopInit()
 {
 	cougar::CougarDebug::startMethod("Robot::TeleopInit");
+	update();
 	// This makes sure that the autonomous stops running when
 	// teleop starts running. If you want the autonomous to
 	// continue until interrupted by another command, remove
@@ -117,7 +160,7 @@ void Robot::TeleopInit()
 void Robot::TeleopPeriodic()
 {
 	Scheduler::GetInstance()->Run();
-
+	update();
 	/*
 	SmartDashboard::PutNumber("Joystick value", oi->GetJoystick()->GetStickLeftAxisY());
 	SmartDashboard::PutNumber("Position", driveTrain->getDistance());
@@ -135,6 +178,7 @@ void Robot::TeleopPeriodic()
 void Robot::TestPeriodic()
 {
 	LiveWindow::GetInstance()->Run();
+	update();
 }
 
 START_ROBOT_CLASS(Robot)

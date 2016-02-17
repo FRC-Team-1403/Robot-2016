@@ -26,9 +26,9 @@ void CougarController::enable() {
 }
 
 void CougarController::disable() {
-	CougarDebug::startMethod("CougarController::enable");
+	CougarDebug::startMethod("CougarController::disable");
 	enabled = false;
-	CougarDebug::endMethod("CougarController::enable");
+	CougarDebug::endMethod("CougarController::disable");
 }
 
 bool CougarController::isEnabled() const {

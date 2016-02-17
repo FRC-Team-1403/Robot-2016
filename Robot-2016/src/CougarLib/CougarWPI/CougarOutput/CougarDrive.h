@@ -50,7 +50,7 @@ public:
 	virtual void SetExpiration(float timeout);
 	virtual float GetExpiration() const;
 	virtual bool IsAlive() const;
-	virtual void StopMotor();
+	virtual void Stop();
 	virtual bool IsSafetyEnabled() const;
 	virtual void SetSafetyEnabled(bool enabled);
 

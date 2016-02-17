@@ -48,9 +48,10 @@ public:
 	// Methods that will be called a lot (whether in a simple loop or
 	// as a periodic method) probably shouldn't have them either,
 	// just to avoid inundating the output stream.
-	// Setter methods should have these as well as a separate debug message
-	// stating what value was set to which variable.
-	// Will always be UNIMPORTANT. Avoid using in TrajectoryLib.
+	// Setter methods should have these as well as a separate
+	// debug message stating what value was set to which
+	// variable. Will always be UNIMPORTANT. For your own sanity,
+	// avoid using in TrajectoryLib.
 	static void startMethod(std::string name);
 	static void startMethod(const char *name);
 	static void endMethod(std::string name);
@@ -66,7 +67,7 @@ public:
 		ISSUE = 2,
 		FATAL_ERROR = 3
 	};
-	static const int DEBUG = MESSAGE;
+	static const int DEBUG = UNIMPORTANT;
 
 private:
 	// Prevent this class from being instantiated

@@ -22,16 +22,28 @@ public:
 	static std::shared_ptr<DriveTrain> driveTrain;
 	static std::shared_ptr<cougar::Path> path;
 	static int buffer;
+	static bool enabled;
+	static bool autonomous;
+	static bool teleop;
+	static bool test;
+
+	static bool isEnabled();
+	static bool isAutonomous();
+	static bool isTeleop();
+	static bool isTest();
 
 	virtual void RobotInit();
 	virtual void DisabledInit();
-
 	virtual void DisabledPeriodic();
 	virtual void AutonomousInit();
 	virtual void AutonomousPeriodic();
 	virtual void TeleopInit();
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
+private:
+	static void initModes();
+	static void setMode(bool e, bool a, bool t1, bool t2);
+	virtual void update();
 };
 
 #endif // ROBOT__H

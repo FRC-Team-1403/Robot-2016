@@ -18,11 +18,10 @@ void DriveWithJoystick::Initialize()
 void DriveWithJoystick::Execute()
 {
 	Robot::driveTrain->drive();
-	if (Robot::oi->GetJoystick()->GetButtonA()) {
+	if (Robot::oi->GetDriverJoystick()->GetButtonA()) {
 		Robot::driveTrain->resetEncoders();
 		Robot::driveTrain->resetGyro();
 	}
-	cougar::CougarDebug::debugPrinter("Execute method called");
 }
 
 // Make this return true when this Command no longer needs to run execute()
