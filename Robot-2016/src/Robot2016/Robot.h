@@ -21,6 +21,7 @@ public:
 	LiveWindow *lw = LiveWindow::GetInstance();
 	static std::shared_ptr<DriveTrain> driveTrain;
 	static std::shared_ptr<cougar::Path> path;
+	static int buffer;
 
 	virtual void RobotInit();
 	virtual void DisabledInit();

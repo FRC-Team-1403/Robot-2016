@@ -101,7 +101,6 @@ bool Spline::reticulateSplines(double x0, double y0, double theta0,
 		result->d_ = 0;
 		result->e_ = yp0_hat;
 	}
-	//CougarDebug::debugPrinter("Spline::reticulateSplines finished");
 	//CougarDebug::endMethod("Spline::reticulateSplines");
 	return true;
 }

@@ -11,12 +11,31 @@
 
 namespace cougar {
 
-TrajectoryDriveController::TrajectoryDriveController() : CougarController() {
+TrajectoryDriveController::TrajectoryDriveController() {
 	//CougarDebug::startMethod("TrajectoryDriveController::TrajectoryDriveController");
 	followerLeft.reset(new TrajectoryFollower("left"));
 	followerRight.reset(new TrajectoryFollower("right"));
 	init();
 	//CougarDebug::endMethod("TrajectoryDriveController::TrajectoryDriveController");
+}
+
+bool TrajectoryDriveController::onTarget() {
+	return followerLeft->isFinishedTrajectory();
+}
+
+void TrajectoryDriveController::loadProfile(std::shared_ptr<Trajectory> leftProfile,
+		std::shared_ptr<Trajectory> rightProfile, double direction, double heading) {
+	reset();
+	followerLeft->setTrajectory(leftProfile);
+	followerRight->setTrajectory(rightProfile);
+	this->direction = direction;
+	this->heading = heading;
+}
+
+void TrajectoryDriveController::loadProfileNoReset(std::shared_ptr<Trajectory> leftProfile,
+		std::shared_ptr<Trajectory> rightProfile) {
+	followerLeft->setTrajectory(leftProfile);
+	followerRight->setTrajectory(rightProfile);
 }
 
 void TrajectoryDriveController::reset() {
@@ -25,43 +44,61 @@ void TrajectoryDriveController::reset() {
 		followerRight->reset();
 		Robot::driveTrain->resetEncoders();
 	//CougarDebug::endMethod("TrajectoryDriveController::reset");
-	}
+}
+
+int TrajectoryDriveController::getFollowerCurrentSegment() {
+	return followerLeft->getCurrentSegment();
+}
+
+int TrajectoryDriveController::getNumSegments() {
+	return followerLeft->getNumSegments();
+}
 
 void TrajectoryDriveController::update() {
 	//CougarDebug::startMethod("TrajectoryDriveController::update");
-		if (!enabled) {
-			return;
-		}
-
-		if (onTarget()) {
-			Robot::driveTrain->setLeftRightPower(0.0, 0.0);
-		} else	{
-			double distanceL = direction * Robot::driveTrain->getLeftEncoderDistance();
-			double distanceR = direction * Robot::driveTrain->getRightEncoderDistance();
-			std::cout << "distancel: " << distanceL << "\tdistancer: " << distanceR << "\n";
-
-			double speedLeft = direction * followerLeft->calculate(distanceL);
-			double speedRight = direction * followerRight->calculate(distanceR);
-			std::cout << "speedleft: " << speedLeft << "\tspeedright: " << speedRight << "\n";
-
-			double goalHeading = followerLeft->getHeading();
-			double observedHeading = Robot::driveTrain->getGyroAngleInRadians();
-			std::cout << "goalheading: " << goalHeading << "\tobservedheading: " << observedHeading << "\n";
-
-
-			double angleDiffRads = CougarMath::getDifferenceInAngleRadians(observedHeading, goalHeading);
-			double angleDiff = (angleDiffRads * 180) / M_PI;
-
-			double turn = kTurn * angleDiff;
-
-			std::cout << "anglediff: " << angleDiff << "\tturn: " << turn << "\n";
-			std::cout << "isfinished: " << this->onTarget() << "\n";
-
-
-			std::cout << "Speeds: " << speedLeft << "\n";
-			Robot::driveTrain->setLeftRightPower(speedLeft - turn, speedRight - turn);
-		}
-	//CougarDebug::endMethod("TrajectoryDriveController::update");
+	if (!enabled) {
+		return;
 	}
+
+	if (onTarget()) {
+		Robot::driveTrain->setLeftRightPower(0.0, 0.0);
+	} else	{
+		double distanceL = direction * Robot::driveTrain->getLeftEncoderDistance();
+		double distanceR = direction * Robot::driveTrain->getRightEncoderDistance();
+		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Distance Left: %f\tDistance Right: %f", distanceL, distanceR);
+
+		double speedLeft = direction * followerLeft->calculate(distanceL);
+		double speedRight = direction * followerRight->calculate(distanceR);
+		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Speed Left: %f\Speed Right: %f", speedLeft, speedRight);
+
+		double goalHeading = followerLeft->getHeading();
+		double observedHeading = Robot::driveTrain->getGyroAngleInRadians();
+		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Goal Heading: %f\Observed Heading: %f", goalHeading, observedHeading);
+
+		double angleDiffRads = CougarMath::getDifferenceInAngleRadians(observedHeading, goalHeading);
+		double angleDiff = (angleDiffRads * 180) / M_PI;
+
+		double turn = kTurn * angleDiff;
+
+		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Angle Difference: %f\tTurn: %f", angleDiff, turn);
+		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Is Finished: %d", this->onTarget());
+
+		Robot::driveTrain->setLeftRightPower(speedLeft - turn, speedRight - turn);
+	}
+	//CougarDebug::endMethod("TrajectoryDriveController::update");
+}
+
+void TrajectoryDriveController::setTrajectory(std::shared_ptr<Trajectory> t) {
+	this->trajectory = t;
+}
+
+double TrajectoryDriveController::getGoal() {
+	return 0;
+}
+
+void TrajectoryDriveController::init() {
+	followerLeft->configure(1.25, 0, 0.15, 1.0/7.8, 1.0/40.0);
+	followerRight->configure(1.25, 0, 0.15, 1.0/7.8, 1.0/40.0);
+}
 
 } /* namespace cougar */

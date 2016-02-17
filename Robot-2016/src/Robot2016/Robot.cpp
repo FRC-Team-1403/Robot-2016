@@ -2,18 +2,20 @@
 #include "RobotMap.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
+int Robot::buffer;
 std::shared_ptr<OI> Robot::oi;
 std::shared_ptr<cougar::Path> Robot::path;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 
 void Robot::RobotInit()
 {
+	buffer = 2;
 
 	cougar::CougarDebug::debugPrinter("Robot::RobotInit started");
+	cougar::CougarDebug::debugPrinter("Calling init methods started");
 	cougar::CougarDebug::init();
-	cougar::CougarDebug::debugPrinter("Initialization part 1 started");
 	RobotMap::init();
-	cougar::CougarDebug::debugPrinter("Initialization part 1 finished");
+	cougar::CougarDebug::debugPrinter("Calling init methods finished");
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
@@ -37,7 +39,6 @@ void Robot::RobotInit()
 	config->max_vel = 7.8;
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 2");
 	const std::string path_name = "TEST";
-
 	std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
 	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, M_PI/12)));
@@ -54,6 +55,11 @@ void Robot::RobotInit()
  */
 void Robot::DisabledInit()
 {
+	buffer--;
+	if (buffer == 0) {
+		cougar::CougarDebug::end();
+		buffer = 1;
+	}
 }
 
 void Robot::DisabledPeriodic()
@@ -103,6 +109,8 @@ void Robot::TeleopInit()
 void Robot::TeleopPeriodic()
 {
 	Scheduler::GetInstance()->Run();
+
+	/*
 	SmartDashboard::PutNumber("Joystick value", oi->GetJoystick()->GetStickLeftAxisY());
 	SmartDashboard::PutNumber("Position", driveTrain->getDistance());
 	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
@@ -110,6 +118,7 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Jerk", driveTrain->getJerk());
 	SmartDashboard::PutNumber("Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Angular Velocity", driveTrain->getAngularVelocity());
+	*/
 
 
 	//SmartDashboard::PutNumber("Talon value", ((CANTalon&)exampleSubsystem->getMotor())->Get());

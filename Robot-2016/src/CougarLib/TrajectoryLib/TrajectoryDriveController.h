@@ -25,9 +25,7 @@ class TrajectoryDriveController : public CougarController {
 public:
 	explicit TrajectoryDriveController();
 
-	virtual ~TrajectoryDriveController() {
-
-	}
+	virtual ~TrajectoryDriveController() = default;
 
 	std::shared_ptr<Trajectory> trajectory;
 	std::shared_ptr<TrajectoryFollower> followerLeft;
@@ -36,50 +34,20 @@ public:
 	double heading;
 	double kTurn = -1.0/30.0;
 
-	bool onTarget() {
-		return followerLeft->isFinishedTrajectory();
-	}
-
-
-
-	virtual void loadProfile(std::shared_ptr<Trajectory> leftProfile, std::shared_ptr<Trajectory> rightProfile, double direction, double heading) {
-		reset();
-		followerLeft->setTrajectory(leftProfile);
-		followerRight->setTrajectory(rightProfile);
-		this->direction = direction;
-		this->heading = heading;
-	}
-
-	virtual void loadProfileNoReset(std::shared_ptr<Trajectory> leftProfile, std::shared_ptr<Trajectory> rightProfile) {
-		followerLeft->setTrajectory(leftProfile);
-		followerRight->setTrajectory(rightProfile);
-	}
-
-	virtual void reset();
-
-	virtual int getFollowerCurrentSegment() {
-		return followerLeft->getCurrentSegment();
-	}
-
-	virtual int getNumSegments() {
-		return followerLeft->getNumSegments();
-	}
-
-	virtual void update();
-
-	void setTrajectory(std::shared_ptr<Trajectory> t) {
-		this->trajectory = t;
-	}
-
-	double getGoal() {
-		return 0;
-	}
+	virtual bool onTarget();
+	virtual void loadProfile(std::shared_ptr<Trajectory> leftProfile,
+			std::shared_ptr<Trajectory> rightProfile, double direction, double heading);
+	virtual void loadProfileNoReset(std::shared_ptr<Trajectory> leftProfile,
+			std::shared_ptr<Trajectory> rightProfile);
+	virtual void reset() override;
+	virtual int getFollowerCurrentSegment();
+	virtual int getNumSegments();
+	virtual void update() override;
+	virtual void setTrajectory(std::shared_ptr<Trajectory> t);
+	virtual double getGoal() override;
 
 private:
-	void init() {
-		followerLeft->configure(1.25, 0, 0.15, 1.0/7.8, 1.0/40.0);
-		followerRight->configure(1.25, 0, 0.15, 1.0/7.8, 1.0/40.0);
-	}
+	virtual void init();
 
 };
 

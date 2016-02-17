@@ -14,12 +14,14 @@
 #include <string>
 #include <map>
 #include <stdexcept>
+#include <chrono>
 
 namespace cougar {
 
 class CougarDebug {
 public:
 	static void init();
+	static void end();
 
 	static void debugPrinter(int level = UNIMPORTANT, const char *message = "", ...);
 	static void debugPrinter(const char *message = "", ...); // If no level is given, it is assumed to be UNIMPORTANT
@@ -41,22 +43,26 @@ public:
 	// Messages marked with a debug level higher than
 	// or equal to current debug level will be shown.
 	// If DEBUG is higher, messages become more verbose.
+	// TODO implement different debug levels for riolog and file
 	enum DEBUG_LEVEL {
 		UNIMPORTANT = 0,
 		MESSAGE = 1,
 		ISSUE = 2,
 		FATAL_ERROR = 3
 	};
-	static const int DEBUG = UNIMPORTANT;
+	static const int DEBUG = MESSAGE;
 
 private:
 	explicit CougarDebug();
 	virtual ~CougarDebug();
 
+	static FILE *logFile;
 	static std::map<int, std::string> debugLevels;
 	static int indentation;
 	static bool didInit;
 	static bool doIndent;
+	static const bool WRITE_TO_RIOLOG = true;
+	static const bool WRITE_TO_FILE = true;
 };
 
 } /* namespace cougar */
