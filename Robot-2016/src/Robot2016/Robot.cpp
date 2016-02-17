@@ -8,27 +8,25 @@ std::shared_ptr<DriveTrain> Robot::driveTrain;
 
 void Robot::RobotInit()
 {
-//	cougar::CougarDebug::debugPrinter("Robot::RobotInit started");
+
+	cougar::CougarDebug::debugPrinter("Robot::RobotInit started");
 	cougar::CougarDebug::init();
-//	cougar::CougarDebug::debugPrinter("Initialization part 1 started");
-//	cougar::CougarDebug::init();
+	cougar::CougarDebug::debugPrinter("Initialization part 1 started");
 	RobotMap::init();
 	cougar::CougarDebug::debugPrinter("Initialization part 1 finished");
 
-//	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
+	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
-	//this->autonomousCommand.reset(new AutonomousDrive());
 	chooser->AddDefault("Default Auto", new AutonomousDrive());
-	//chooser->AddObject("My Auto", new MyAutoCommand());
 	SmartDashboard::PutData("Auto Modes", chooser);
-//	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
+	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
 
-//	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization started");
+	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization started");
 	oi.reset(new OI());
 	driveTrain.reset(new DriveTrain());
-//	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
+	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
 
-//	cougar::CougarDebug::debugPrinter("Motion mapping initialization started");
+	cougar::CougarDebug::debugPrinter("Motion mapping initialization started");
 	std::shared_ptr<cougar::TrajectoryGenerator::Config> config(new cougar::TrajectoryGenerator::Config());
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 1");
 	//TODO find these values
@@ -42,8 +40,8 @@ void Robot::RobotInit()
 
 	std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(3.0, 0, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(7.0, 0.0, 0)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, M_PI/12)));
+	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 0, M_PI/6)));
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 3");
 	path = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");

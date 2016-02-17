@@ -12,23 +12,23 @@
 namespace cougar {
 
 TrajectoryDriveController::TrajectoryDriveController() : CougarController() {
-	CougarDebug::startMethod("TrajectoryDriveController::TrajectoryDriveController");
+	//CougarDebug::startMethod("TrajectoryDriveController::TrajectoryDriveController");
 	followerLeft.reset(new TrajectoryFollower("left"));
 	followerRight.reset(new TrajectoryFollower("right"));
 	init();
-	CougarDebug::endMethod("TrajectoryDriveController::TrajectoryDriveController");
+	//CougarDebug::endMethod("TrajectoryDriveController::TrajectoryDriveController");
 }
 
 void TrajectoryDriveController::reset() {
-	CougarDebug::startMethod("TrajectoryDriveController::reset");
+	//CougarDebug::startMethod("TrajectoryDriveController::reset");
 		followerLeft->reset();
 		followerRight->reset();
 		Robot::driveTrain->resetEncoders();
-	CougarDebug::endMethod("TrajectoryDriveController::reset");
+	//CougarDebug::endMethod("TrajectoryDriveController::reset");
 	}
 
 void TrajectoryDriveController::update() {
-	CougarDebug::startMethod("TrajectoryDriveController::update");
+	//CougarDebug::startMethod("TrajectoryDriveController::update");
 		if (!enabled) {
 			return;
 		}
@@ -58,10 +58,10 @@ void TrajectoryDriveController::update() {
 			std::cout << "isfinished: " << this->onTarget() << "\n";
 
 
-
-			Robot::driveTrain->setLeftRightPower(speedLeft + turn, speedRight - turn);
+			std::cout << "Speeds: " << speedLeft << "\n";
+			Robot::driveTrain->setLeftRightPower(speedLeft - turn, speedRight - turn);
 		}
-	CougarDebug::endMethod("TrajectoryDriveController::update");
+	//CougarDebug::endMethod("TrajectoryDriveController::update");
 	}
 
 } /* namespace cougar */
