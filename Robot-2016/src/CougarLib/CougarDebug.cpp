@@ -41,8 +41,10 @@ void CougarDebug::init() {
 }
 
 void CougarDebug::end() {
-	fclose(logFile);
-	delete logFile;
+	if (WRITE_TO_FILE) {
+		fclose(logFile);
+		delete logFile;
+	}
 }
 
 void CougarDebug::debugPrinter(int level, const char *message, ...) {
