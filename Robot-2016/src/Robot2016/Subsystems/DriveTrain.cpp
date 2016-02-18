@@ -1,6 +1,7 @@
 #include "DriveTrain.h"
 #include "../RobotMap.h"
 #include "../Robot.h"
+#include "../Commands/DriveWithJoystick.h"
 
 DriveTrain::DriveTrain() :
 		Subsystem("ExampleSubsystem")
@@ -18,7 +19,7 @@ DriveTrain::DriveTrain() :
 
 void DriveTrain::InitDefaultCommand()
 {
-//	SetDefaultCommand(new DriveWithJoystick());
+	SetDefaultCommand(new DriveWithJoystick());
 }
 
 void DriveTrain::drive() {
@@ -60,7 +61,8 @@ void DriveTrain::setLeftRightPower(double leftPower, double rightPower) {
 }
 
 void DriveTrain::stop() {
-	this->driveT->Stop();
+	setLeftRightPower(0, 0);
+	//this->driveT->Stop();
 }
 
  double DriveTrain::getRightEncoderDistance() {

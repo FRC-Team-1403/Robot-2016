@@ -82,7 +82,7 @@ void TrajectoryDriveController::update() {
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Angle Difference: %f\tTurn: %f", angleDiff, turn);
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Is Finished: %d", this->onTarget());
 
-		Robot::driveTrain->setLeftRightPower(speedLeft - turn, speedRight - turn);
+		Robot::driveTrain->setLeftRightPower(speedLeft + turn, speedRight - turn);
 	}
 }
 

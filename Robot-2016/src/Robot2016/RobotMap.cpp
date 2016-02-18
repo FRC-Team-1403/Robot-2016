@@ -32,8 +32,8 @@ void RobotMap::init(){
 	driveTrainRightEncoder.reset(new Encoder(0, 1));
 	driveTrainLeftEncoder.reset(new Encoder(2, 3));
 
-	driveTrainLeftEncoder->SetDistancePerPulse(1.0/163.0);
-	driveTrainRightEncoder->SetDistancePerPulse(1.0/163.0);
+	driveTrainLeftEncoder->SetDistancePerPulse(1.0/170.0);
+	driveTrainRightEncoder->SetDistancePerPulse(1.0/170.0);//23.8/85 to account for wierdness
 
 	driveTrainGyro.reset(new cougar::CougarGyro(0));
 
