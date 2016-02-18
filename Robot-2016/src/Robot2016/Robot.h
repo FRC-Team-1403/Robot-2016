@@ -1,6 +1,7 @@
 #ifndef SRC_ROBOT_H_
 #define SRC_ROBOT_H_
 
+#include <Robot2016/Commands/LowBarAutonomous_Drive.h>
 #include "WPILib.h"
 #include <memory>
 #include "OI.h"
@@ -8,7 +9,6 @@
 #include "../CougarLib/CougarDebug.h"
 #include "../CougarLib/TrajectoryLib/PathGenerator.h"
 #include "../CougarLib/TrajectoryLib/Path.h"
-#include "Commands/AutonomousDrive.h"
 //#include <boost/thread.hpp>
 
 
@@ -20,7 +20,7 @@ public:
 	static std::shared_ptr<OI> oi;
 	LiveWindow *lw = LiveWindow::GetInstance();
 	static std::shared_ptr<DriveTrain> driveTrain;
-	static std::shared_ptr<cougar::Path> path;
+	static std::shared_ptr<cougar::Path> lowBarPath;
 	static int buffer;
 	static bool enabled;
 	static bool autonomous;

@@ -68,11 +68,11 @@ void TrajectoryDriveController::update() {
 
 		double speedLeft = direction * followerLeft->calculate(distanceL);
 		double speedRight = direction * followerRight->calculate(distanceR);
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Speed Left: %f\Speed Right: %f", speedLeft, speedRight);
+		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Speed Left: %f\tSpeed Right: %f", speedLeft, speedRight);
 
 		double goalHeading = followerLeft->getHeading();
 		double observedHeading = Robot::driveTrain->getGyroAngleInRadians();
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Goal Heading: %f\Observed Heading: %f", goalHeading, observedHeading);
+		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Goal Heading: %f\tObserved Heading: %f", goalHeading, observedHeading);
 
 		double angleDiffRads = CougarMath::getDifferenceInAngleRadians(observedHeading, goalHeading);
 		double angleDiff = (angleDiffRads * 180) / M_PI;
@@ -95,8 +95,8 @@ double TrajectoryDriveController::getGoal() {
 }
 
 void TrajectoryDriveController::init() {
-	followerLeft->configure(1.25, 0, 0.15, 1.0/7.8, 1.0/40.0);
-	followerRight->configure(1.25, 0, 0.15, 1.0/7.8, 1.0/40.0);
+	followerLeft->configure(1, 0, 0.15, 1.0/7.8, 1.0/30.0);
+	followerRight->configure(1, 0, 0.15, 1.0/7.8, 1.0/30.0);
 }
 
 } /* namespace cougar */

@@ -1,5 +1,5 @@
-#ifndef AutonomousDrive_H
-#define AutonomousDrive_H
+#ifndef LowBarAutonomous_Drive_H
+#define LowBarAutonomous_Drive_H
 
 #include "Commands/Command.h"
 #include "WPILib.h"
@@ -9,10 +9,10 @@
 #include "../../CougarLib/TrajectoryLib/TrajectoryDriveController.h"
 #include "../../CougarLib/TrajectoryLib/TrajectoryGenerator.h"
 
-class AutonomousDrive: public Command
+class LowBarAutonomous_Drive: public Command
 {
 public:
-	AutonomousDrive();
+	LowBarAutonomous_Drive();
 	void Initialize();
 	void Execute();
 	bool IsFinished();
