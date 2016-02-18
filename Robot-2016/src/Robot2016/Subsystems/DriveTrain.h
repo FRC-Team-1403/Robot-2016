@@ -12,6 +12,18 @@ class DriveTrain: public Subsystem
 private:
 	// It's desirable that everything possible under private except
 	// for methods that implement subsystem capabilities
+
+	std::shared_ptr<cougar::CougarDrive> driveT;
+	std::shared_ptr<Encoder> driveTrainRightEncoder;
+	std::shared_ptr<Encoder> driveTrainLeftEncoder;
+	std::shared_ptr<Gyro> driveTrainGyro;
+
+	double time;
+	double distance;
+	double vel;
+	double acc;
+	double angle;
+
 public:
 	DriveTrain();
 	void InitDefaultCommand();
@@ -29,17 +41,6 @@ public:
 	double getGyroAngleInRadians();
 	void resetGyro();
 	void resetEncoders();
-
-	std::shared_ptr<cougar::CougarDrive> driveT;
-	std::shared_ptr<Encoder> driveTrainRightEncoder;
-	std::shared_ptr<Encoder> driveTrainLeftEncoder;
-	std::shared_ptr<Gyro> driveTrainGyro;
-
-	double time;
-	double distance;
-	double vel;
-	double acc;
-	double angle;
 };
 
 #endif

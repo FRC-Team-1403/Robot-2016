@@ -4,7 +4,7 @@
 
 int Robot::buffer;
 std::shared_ptr<OI> Robot::oi;
-std::shared_ptr<cougar::Path> Robot::path;
+std::shared_ptr<cougar::Path> Robot::lowBarPath;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 bool Robot::enabled;
 bool Robot::autonomous;
@@ -45,17 +45,11 @@ bool Robot::isTest() {
 
 void Robot::RobotInit()
 {
-
-	buffer = 3;
-	cougar::CougarDebug::startMethod("Robot::RobotInit");
-
-
-
-	cougar::CougarDebug::debugPrinter("Calling init methods started");
-	initModes();
 	cougar::CougarDebug::init();
+	cougar::CougarDebug::startMethod("Robot::RobotInit");
+	buffer = 3;
+	initModes();
 	RobotMap::init();
-	cougar::CougarDebug::debugPrinter("Calling init methods finished");
 
 	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization started");
 	oi.reset(new OI());
@@ -64,28 +58,30 @@ void Robot::RobotInit()
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
-	chooser->AddDefault("Default Auto", new AutonomousDrive());
+	chooser->AddDefault("Default Auto", new LowBarAutonomous_Drive());
 	SmartDashboard::PutData("Auto Modes", chooser);
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
 
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization started");
 	std::shared_ptr<cougar::TrajectoryGenerator::Config> config(new cougar::TrajectoryGenerator::Config());
-	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 1");
 	//TODO find these values
 	const double kWheelbaseWidth = 22.25/12;
-	config->dt = 0.02; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
-	config->max_acc = 40.0;
-	config->max_jerk = 60.0;
-	config->max_vel = 7.8;
-	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 2");
-	const std::string path_name = "TEST";
-	std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, M_PI/12)));
-	p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 0, M_PI/6)));
-	cougar::CougarDebug::debugPrinter("Motion mapping initialization checkpoint 3");
-	path = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
+
+	// Low Bar
+	{
+		config->dt = 0.02; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
+		config->max_acc = 30.0;
+		config->max_jerk = 40.0;
+		config->max_vel = 7.8;
+		const std::string path_name = "LowBarPath";
+		std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, M_PI/12)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 0, M_PI/6)));
+		lowBarPath = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
+	}
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");
+
 	cougar::CougarDebug::endMethod("Robot::RobotInit");
 }
 

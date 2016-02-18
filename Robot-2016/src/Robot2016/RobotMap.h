@@ -34,6 +34,11 @@ public:
 	static std::shared_ptr<Encoder> driveTrainRightEncoder;
 	static std::shared_ptr<Encoder> driveTrainLeftEncoder;
 	static std::shared_ptr<Gyro> driveTrainGyro;
+
+	static std::shared_ptr<cougar::CougarSpeedController> shooterRollerTop;
+	static std::shared_ptr<cougar::CougarSpeedController> shooterRollerBottom;
+
+	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;
 };
 
 #endif

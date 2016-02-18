@@ -5,6 +5,11 @@ std::shared_ptr<Encoder> RobotMap::driveTrainRightEncoder;
 std::shared_ptr<Encoder> RobotMap::driveTrainLeftEncoder;
 std::shared_ptr<Gyro> RobotMap::driveTrainGyro;
 
+std::shared_ptr<cougar::CougarSpeedController> RobotMap::shooterRollerTop;
+std::shared_ptr<cougar::CougarSpeedController> RobotMap::shooterRollerBottom;
+
+std::shared_ptr<cougar::CougarSpeedController> RobotMap::intakeRoller;
+
 
 void RobotMap::init(){
 //	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "RobotMap::init running");
@@ -31,10 +36,15 @@ void RobotMap::init(){
 	drive.reset(new cougar::CougarDrive(0, 1, 12, 2, "Drive"));
 	driveTrainRightEncoder.reset(new Encoder(0, 1));
 	driveTrainLeftEncoder.reset(new Encoder(2, 3));
-
+	driveTrainGyro.reset(new cougar::CougarGyro(0));
 	driveTrainLeftEncoder->SetDistancePerPulse(1.0/170.0);
 	driveTrainRightEncoder->SetDistancePerPulse(1.0/170.0);//23.8/85 to account for wierdness
 
-	driveTrainGyro.reset(new cougar::CougarGyro(0));
+	// TODO replace with actual ports
+
+	shooterRollerTop.reset(new CANTalon(2), 100, "Top Shooter Roller");
+	shooterRollerBottom.reset(new CANTalon(3), 101, "Bottom Shooter Roller");
+
+	intakeRoller.reset(new Victor(24), 102, "Intake Roller");
 
 }
