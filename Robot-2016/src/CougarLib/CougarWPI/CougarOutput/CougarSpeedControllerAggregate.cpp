@@ -73,7 +73,6 @@ void CougarSpeedControllerAggregate::Set(float speed, uint8_t syncGroup/* = 0*/)
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->Set(speed);
 	}
-	CougarDebug::debugPrinter(CougarDebug::UNIMPORTANT, "CougarSpeedControllerAggregate %s set to speed %f", this->GetCName(), speed);
 }
 
 void CougarSpeedControllerAggregate::StopMotor() {

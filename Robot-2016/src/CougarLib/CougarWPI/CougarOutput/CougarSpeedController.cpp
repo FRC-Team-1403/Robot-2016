@@ -59,7 +59,6 @@ float CougarSpeedController::Sign() const {
 
 void CougarSpeedController::Set(float speed, uint8_t syncGroup/* = 0*/) {
 	this->controller_->Set(speed);
-	CougarDebug::debugPrinter(CougarDebug::UNIMPORTANT, "SpeedController %s set to speed %f", this->GetCName(), speed);
 }
 
 void CougarSpeedController::StopMotor() {

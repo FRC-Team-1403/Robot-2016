@@ -45,9 +45,11 @@ bool Robot::isTest() {
 
 void Robot::RobotInit()
 {
+
+	buffer = 3;
 	cougar::CougarDebug::startMethod("Robot::RobotInit");
 
-	buffer = 2;
+
 
 	cougar::CougarDebug::debugPrinter("Calling init methods started");
 	initModes();
@@ -55,16 +57,16 @@ void Robot::RobotInit()
 	RobotMap::init();
 	cougar::CougarDebug::debugPrinter("Calling init methods finished");
 
+	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization started");
+	oi.reset(new OI());
+	driveTrain.reset(new DriveTrain());
+	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
+
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
 	chooser->AddDefault("Default Auto", new AutonomousDrive());
 	SmartDashboard::PutData("Auto Modes", chooser);
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
-
-	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization started");
-	oi.reset(new OI());
-	driveTrain.reset(new DriveTrain());
-	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
 
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization started");
 	std::shared_ptr<cougar::TrajectoryGenerator::Config> config(new cougar::TrajectoryGenerator::Config());
@@ -96,10 +98,12 @@ void Robot::DisabledInit()
 {
 	update();
 	cougar::CougarDebug::startMethod("Robot::DisabledInit");
+	std::cout << buffer << std::endl;
 	buffer--;
 	if (buffer == 0) {
 		cougar::CougarDebug::end();
 		buffer = 1;
+		cougar::CougarDebug::init();
 	}
 	cougar::CougarDebug::endMethod("Robot::DisabledInit");
 }
@@ -161,15 +165,16 @@ void Robot::TeleopPeriodic()
 {
 	Scheduler::GetInstance()->Run();
 	update();
-	/*
-	SmartDashboard::PutNumber("Joystick value", oi->GetJoystick()->GetStickLeftAxisY());
+
+	SmartDashboard::PutNumber("Joystick value", oi->GetDriverJoystick()->GetStickLeftAxisY());
 	SmartDashboard::PutNumber("Position", driveTrain->getDistance());
 	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
 	SmartDashboard::PutNumber("Acceleration", driveTrain->getAcceleration());
 	SmartDashboard::PutNumber("Jerk", driveTrain->getJerk());
 	SmartDashboard::PutNumber("Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Angular Velocity", driveTrain->getAngularVelocity());
-	*/
+	SmartDashboard::PutNumber("Encoder Uno", driveTrain->getLeftEncoderDistance());
+	SmartDashboard::PutNumber("Encoder Dos", driveTrain->getRightEncoderDistance());
 
 
 	//SmartDashboard::PutNumber("Talon value", ((CANTalon&)exampleSubsystem->getMotor())->Get());

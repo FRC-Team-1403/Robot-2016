@@ -36,7 +36,7 @@ void CougarDebug::init() {
 		system(create_file_command.c_str());
 		std::string change_permissions_command = "chmod 777 " + filename;
 		system(change_permissions_command.c_str());
-		logFile = fopen(filename.c_str(), "rw");
+		logFile = fopen(filename.c_str(), "w");
 	}
 	std::cout << "CougarDebug::init finished\n";
 }
@@ -45,7 +45,7 @@ void CougarDebug::end() {
 	std::cout << "CougarDebug::end starting\n";
 	if (WRITE_TO_FILE) {
 		fclose(logFile);
-		delete logFile;
+		//delete logFile;
 	}
 	std::cout << "CougarDebug::end finished\n";
 }
