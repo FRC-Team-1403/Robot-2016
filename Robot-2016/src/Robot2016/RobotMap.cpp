@@ -42,9 +42,9 @@ void RobotMap::init(){
 
 	// TODO replace with actual ports
 
-	shooterRollerTop.reset(new CANTalon(2), 100, "Top Shooter Roller");
-	shooterRollerBottom.reset(new CANTalon(3), 101, "Bottom Shooter Roller");
+	shooterRollerTop.reset(new cougar::CougarSpeedController(std::shared_ptr<SpeedController>(new CANTalon(2)), 100, "Top Shooter Roller"));
+	shooterRollerBottom.reset(new cougar::CougarSpeedController(std::shared_ptr<SpeedController>(new CANTalon(3)), 101, "Bottom Shooter Roller"));
 
-	intakeRoller.reset(new Victor(24), 102, "Intake Roller");
+	intakeRoller.reset(new cougar::CougarSpeedController(24, 102, "Intake Roller"));
 
 }
