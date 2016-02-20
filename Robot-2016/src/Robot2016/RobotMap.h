@@ -30,15 +30,22 @@ class RobotMap {
 public:
 	static void init();
 
+	//drive train
 	static std::shared_ptr<cougar::CougarDrive> drive;
 	static std::shared_ptr<Encoder> driveTrainRightEncoder;
 	static std::shared_ptr<Encoder> driveTrainLeftEncoder;
 	static std::shared_ptr<Gyro> driveTrainGyro;
+	static std::shared_ptr<ADXL362> driveTrainAccelerometer;
 
+	//shooter
 	static std::shared_ptr<cougar::CougarSpeedController> shooterRollerTop;
 	static std::shared_ptr<cougar::CougarSpeedController> shooterRollerBottom;
+	static std::shared_ptr<cougar::CougarSpeedController> shooterAngleMotor;
+	static std::shared_ptr<AnalogPotentiometer> shooterPotentiometer;
 
+	//intake
 	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;
+	static std::shared_ptr<DigitalInput> shooterBallSwitch;
 };
 
 #endif

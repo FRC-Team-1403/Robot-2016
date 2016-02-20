@@ -4,6 +4,7 @@ std::shared_ptr<cougar::CougarDrive> RobotMap::drive;
 std::shared_ptr<Encoder> RobotMap::driveTrainRightEncoder;
 std::shared_ptr<Encoder> RobotMap::driveTrainLeftEncoder;
 std::shared_ptr<Gyro> RobotMap::driveTrainGyro;
+std::shared_ptr<ADXL362> RobotMap::driveTrainAccelerometer;
 
 std::shared_ptr<cougar::CougarSpeedController> RobotMap::shooterRollerTop;
 std::shared_ptr<cougar::CougarSpeedController> RobotMap::shooterRollerBottom;
@@ -38,7 +39,8 @@ void RobotMap::init(){
 	driveTrainLeftEncoder.reset(new Encoder(2, 3));
 	driveTrainGyro.reset(new cougar::CougarGyro(0));
 	driveTrainLeftEncoder->SetDistancePerPulse(1.0/170.0);
-	driveTrainRightEncoder->SetDistancePerPulse(1.0/170.0);//23.8/85 to account for wierdness
+	driveTrainRightEncoder->SetDistancePerPulse(1.0/170.0);//23.8/85 to account for weirdness
+	driveTrainAccelerometer.reset(new ADXL362(ADXL362::kRange_16G));
 
 	// TODO replace with actual ports
 
