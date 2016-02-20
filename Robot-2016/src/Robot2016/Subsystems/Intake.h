@@ -13,6 +13,8 @@ private:
 	// for methods that implement subsystem capabilities
 
 	std::shared_ptr<cougar::CougarSpeedController> roller;
+	std::shared_ptr<DigitalInput> ballSwitch;
+	std::shared_ptr<Ultrasonic> ultrasonic;
 public:
 	Intake();
 	void InitDefaultCommand();

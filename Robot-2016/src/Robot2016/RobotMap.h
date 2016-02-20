@@ -38,14 +38,15 @@ public:
 	static std::shared_ptr<ADXL362> driveTrainAccelerometer;
 
 	//shooter
-	static std::shared_ptr<cougar::CougarSpeedController> shooterRollerTop;
-	static std::shared_ptr<cougar::CougarSpeedController> shooterRollerBottom;
-	static std::shared_ptr<cougar::CougarSpeedController> shooterAngleMotor;
+	static std::shared_ptr<CANTalon> shooterRollerTop;
+	static std::shared_ptr<CANTalon> shooterRollerBottom;
+	static std::shared_ptr<CANTalon> shooterAngleMotor;
 	static std::shared_ptr<AnalogPotentiometer> shooterPotentiometer;
 
 	//intake
 	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;
-	static std::shared_ptr<DigitalInput> shooterBallSwitch;
+	static std::shared_ptr<DigitalInput> intakeBallSwitch;
+	static std::shared_ptr<Ultrasonic> intakeUltrasonic;
 };
 
 #endif

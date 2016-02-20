@@ -5,6 +5,8 @@ Intake::Intake() :
 		Subsystem("ExampleSubsystem")
 {
 	this->roller = RobotMap::intakeRoller;
+	this->ballSwitch = RobotMap::intakeBallSwitch;
+	this->ultrasonic = RobotMap::intakeUltrasonic;
 }
 
 void Intake::InitDefaultCommand()

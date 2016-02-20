@@ -6,6 +6,8 @@ Shooter::Shooter() :
 {
 	bottomRoller = RobotMap::shooterRollerBottom;
 	topRoller = RobotMap::shooterRollerTop;
+	angleMotor = RobotMap::shooterAngleMotor;
+	potentiometer = RobotMap::shooterPotentiometer;
 
 	//These are used by the calculate method. Their values will change.
 	goal_pos = 0; //this will be set by the command that calculates the angle using the projectile motion algorithms.
