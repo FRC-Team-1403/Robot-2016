@@ -6,6 +6,8 @@
 #include <memory>
 #include "OI.h"
 #include "Subsystems/DriveTrain.h"
+#include "Subsystems/Shooter.h"
+#include "Subsystems/Intake.h"
 #include "../CougarLib/CougarDebug.h"
 #include "../CougarLib/TrajectoryLib/PathGenerator.h"
 #include "../CougarLib/TrajectoryLib/Path.h"
@@ -19,7 +21,11 @@ public:
 	SendableChooser *chooser;
 	static std::shared_ptr<OI> oi;
 	LiveWindow *lw = LiveWindow::GetInstance();
+
 	static std::shared_ptr<DriveTrain> driveTrain;
+	static std::shared_ptr<Shooter> shooter;
+	static std::shared_ptr<Intake> intake;
+
 	static std::shared_ptr<cougar::Path> lowBarPath;
 	static int buffer;
 	static bool enabled;

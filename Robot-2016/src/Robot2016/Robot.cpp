@@ -6,6 +6,8 @@ int Robot::buffer;
 std::shared_ptr<OI> Robot::oi;
 std::shared_ptr<cougar::Path> Robot::lowBarPath;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
+std::shared_ptr<Shooter> Robot::shooter;
+std::shared_ptr<Intake> Robot::intake;
 bool Robot::enabled;
 bool Robot::autonomous;
 bool Robot::teleop;
@@ -54,6 +56,8 @@ void Robot::RobotInit()
 	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization started");
 	oi.reset(new OI());
 	driveTrain.reset(new DriveTrain());
+	shooter.reset(new Shooter());
+	intake.reset(new Intake());
 	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
