@@ -21,7 +21,8 @@ std::shared_ptr<CANTalon> RobotMap::shooterAngleMotor;
 std::shared_ptr<cougar::CougarSpeedController> RobotMap::intakeRoller;
 std::shared_ptr<DigitalInput> RobotMap::intakeBallSwitch;
 std::shared_ptr<Ultrasonic> RobotMap::intakeUltrasonic;
-
+std::shared_ptr<Solenoid> RobotMap::intakeAngleAirCyclinder;
+std::shared_ptr<Solenoid> RobotMap::intakeLiftAirCyclinder;
 
 void RobotMap::init(){
 //	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "RobotMap::init running");

@@ -7,6 +7,8 @@ Intake::Intake() :
 	this->roller = RobotMap::intakeRoller;
 	this->ballSwitch = RobotMap::intakeBallSwitch;
 	this->ultrasonic = RobotMap::intakeUltrasonic;
+	this->angleAirCyclinder = RobotMap::intakeAngleAirCyclinder;
+	this->liftAirCyclinder = RobotMap::intakeLiftAirCyclinder;
 }
 
 void Intake::InitDefaultCommand()

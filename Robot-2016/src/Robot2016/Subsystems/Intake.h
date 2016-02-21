@@ -15,6 +15,8 @@ private:
 	std::shared_ptr<cougar::CougarSpeedController> roller;
 	std::shared_ptr<DigitalInput> ballSwitch;
 	std::shared_ptr<Ultrasonic> ultrasonic;
+	std::shared_ptr<Solenoid> angleAirCyclinder;
+	std::shared_ptr<Solenoid> liftAirCyclinder;
 public:
 	Intake();
 	void InitDefaultCommand();
