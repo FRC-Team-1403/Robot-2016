@@ -1,6 +1,6 @@
 #include "Shooter.h"
 #include "../RobotMap.h"
-#include "Commands/AimWithJoystick.h"
+#include "../Commands/AimWithJoystick.h"
 
 Shooter::Shooter() :
 		Subsystem("ExampleSubsystem")

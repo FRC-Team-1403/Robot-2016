@@ -4,6 +4,7 @@
 #include "WPILib.h"
 #include <memory>
 #include "../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
+#include "../CougarLib/CougarWPI/CougarHID/CougarButton.h"
 #include "../CougarLib/CougarDebug.h"
 
 class OI
@@ -12,11 +13,11 @@ private:
 	std::shared_ptr<cougar::CougarJoystick> driverJoy;
 	std::shared_ptr<cougar::CougarJoystick> operatorJoy;
 
-	std::shared_ptr<JoystickButton> operatorButtonY;
+	std::shared_ptr<cougar::CougarButton> operatorButtonY;
 
 public:
-	std::shared_ptr<cougar::CougarJoystick> GetDriverJoystick() { return this-> driverJoy; }
-	std::shared_ptr<cougar::CougarJoystick> GetOperatorJoystick() { return this->operatorJoy; }
+	std::shared_ptr<cougar::CougarJoystick> GetDriverJoystick();
+	std::shared_ptr<cougar::CougarJoystick> GetOperatorJoystick();
 	OI();
 
 };

@@ -17,6 +17,7 @@ private:
 	std::shared_ptr<Ultrasonic> ultrasonic;
 	std::shared_ptr<Solenoid> angleAirCyclinder;
 	std::shared_ptr<Solenoid> liftAirCyclinder;
+	std::shared_ptr<Compressor> compressor;
 public:
 	Intake();
 	void InitDefaultCommand();

@@ -49,6 +49,7 @@ public:
 	static std::shared_ptr<Ultrasonic> intakeUltrasonic;
 	static std::shared_ptr<Solenoid> intakeAngleAirCyclinder;
 	static std::shared_ptr<Solenoid> intakeLiftAirCyclinder;
+	static std::shared_ptr<Compressor> compressor;
 
 };
 

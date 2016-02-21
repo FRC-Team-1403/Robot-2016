@@ -9,6 +9,7 @@ Intake::Intake() :
 	this->ultrasonic = RobotMap::intakeUltrasonic;
 	this->angleAirCyclinder = RobotMap::intakeAngleAirCyclinder;
 	this->liftAirCyclinder = RobotMap::intakeLiftAirCyclinder;
+	this->compressor = RobotMap::compressor;
 }
 
 void Intake::InitDefaultCommand()

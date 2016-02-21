@@ -6,6 +6,7 @@ std::shared_ptr<Encoder> RobotMap::driveTrainRightEncoder;
 std::shared_ptr<Encoder> RobotMap::driveTrainLeftEncoder;
 std::shared_ptr<Gyro> RobotMap::driveTrainGyro;
 std::shared_ptr<ADXL362> RobotMap::driveTrainAccelerometer;
+std::shared_ptr<Compressor> RobotMap::compressor;
 
 //shooter
 std::shared_ptr<CANTalon> RobotMap::shooterRollerTop;
@@ -47,19 +48,19 @@ void RobotMap::init(){
 	driveTrainLeftTalon.reset(new Victor(1));
 	*/
 	//drive train
-	drive.reset(new cougar::CougarDrive(0, 1, 12, 2, "Drive"));
-	driveTrainRightEncoder.reset(new Encoder(0, 1));
-	driveTrainLeftEncoder.reset(new Encoder(2, 3));
-	driveTrainGyro.reset(new cougar::CougarGyro(0));
+	drive.reset(new cougar::CougarDrive(2, 3, 0, 1, 2, 3, 0, 1, "Drive")); //PWMs and PDPs
+	driveTrainRightEncoder.reset(new Encoder(2, 3)); //Digital
+	driveTrainLeftEncoder.reset(new Encoder(0, 1)); //Digital
+	driveTrainGyro.reset(new cougar::CougarGyro(0)); //Analog
 	driveTrainLeftEncoder->SetDistancePerPulse(1.0/170.0);
 	driveTrainRightEncoder->SetDistancePerPulse(1.0/170.0);//23.8/85 to account for weirdness
-	driveTrainAccelerometer.reset(new ADXL362(ADXL362::kRange_16G));
+	driveTrainAccelerometer.reset(new ADXL362(ADXL362::kRange_16G)); //SPI
 
 	// TODO replace with actual ports
 	//shooter
-	shooterRollerTop.reset(new CANTalon(2));
-	shooterRollerBottom.reset(new CANTalon(3));
-	shooterAngleMotor.reset(new CANTalon(4));
+	shooterRollerTop.reset(new CANTalon(2)); //CAN
+	shooterRollerBottom.reset(new CANTalon(3)); //CAN
+	shooterAngleMotor.reset(new CANTalon(4)); //CAN
 	//shooterPotentiometer.reset(new AnalogPotentiometer(2));
 
 	//these are with cougar speed controllers
@@ -67,8 +68,11 @@ void RobotMap::init(){
 	//shooterRollerBottom.reset(new cougar::CougarSpeedController(std::shared_ptr<SpeedController>(new CANTalon(3)), 101, "Bottom Shooter Roller"));
 
 	//intake
-	intakeRoller.reset(new cougar::CougarSpeedController(24, 102, "Intake Roller"));
-	intakeBallSwitch.reset(new DigitalInput(1));
-	intakeUltrasonic.reset(new Ultrasonic(7, 8, Ultrasonic::kInches));
+	intakeRoller.reset(new cougar::CougarSpeedController(24, 102, "Intake Roller")); //PWM
+	intakeBallSwitch.reset(new DigitalInput(4)); //Digital
+	intakeUltrasonic.reset(new Ultrasonic(7, 8, Ultrasonic::kInches)); //Digital
+	intakeAngleAirCyclinder.reset(new Solenoid(8)); //PWM
+	intakeLiftAirCyclinder.reset(new Solenoid(9)); //PWM
+	compressor.reset(new Compressor(0)); //PWM
 
 }

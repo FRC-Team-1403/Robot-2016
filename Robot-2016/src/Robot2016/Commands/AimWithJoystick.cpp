@@ -1,7 +1,7 @@
-#include "MoveShooter.h"
+#include "AimWithJoystick.h"
 #include "../Robot.h"
 
-MoveShooter::MoveShooter()
+AimWithJoystick::AimWithJoystick()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -9,32 +9,32 @@ MoveShooter::MoveShooter()
 }
 
 // Called just before this Command runs the first time
-void MoveShooter::Initialize()
+void AimWithJoystick::Initialize()
 {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void MoveShooter::Execute()
+void AimWithJoystick::Execute()
 {
-	Robot::shooter->setAngleMotor(Robot::oi->operatorJoy->GetRawAxis(1));
+	Robot::shooter->setAngleMotor(Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool MoveShooter::IsFinished()
+bool AimWithJoystick::IsFinished()
 {
 	return false;
 }
 
 // Called once after isFinished returns true
-void MoveShooter::End()
+void AimWithJoystick::End()
 {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void MoveShooter::Interrupted()
+void AimWithJoystick::Interrupted()
 {
 
 }
