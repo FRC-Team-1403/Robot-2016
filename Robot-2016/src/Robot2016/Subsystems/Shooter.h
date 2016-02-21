@@ -14,7 +14,7 @@ private:
 	std::shared_ptr<CANTalon> bottomRoller;
 	std::shared_ptr<CANTalon> topRoller;
 	std::shared_ptr<CANTalon> angleMotor;
-	std::shared_ptr<AnalogPotentiometer> potentiometer;
+	//std::shared_ptr<AnalogPotentiometer> potentiometer; the potentiometer is connected directly to the CANTalon
 
 	//The following variables are used for the 1D motion mapping of the shooter angle.
 	double timeElapsed, goal_pos, setpoint_pos, setpoint_vel, setpoint_acc, config_max_vel, config_max_acc, next_state_pos,
@@ -24,6 +24,13 @@ private:
 public:
 	Shooter();
 	void InitDefaultCommand();
+
+	//methods for retrieving private values
+	double getPotentiometer();
+	double getGoalPos();
+	void setGoalPos(double goal);
+	void setAngleMotor(double velocity);
+
 	double calculate(double position);
 };
 

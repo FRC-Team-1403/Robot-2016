@@ -41,7 +41,7 @@ public:
 	static std::shared_ptr<CANTalon> shooterRollerTop;
 	static std::shared_ptr<CANTalon> shooterRollerBottom;
 	static std::shared_ptr<CANTalon> shooterAngleMotor;
-	static std::shared_ptr<AnalogPotentiometer> shooterPotentiometer;
+	//static std::shared_ptr<AnalogPotentiometer> shooterPotentiometer;
 
 	//intake
 	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;

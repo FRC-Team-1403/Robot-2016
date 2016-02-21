@@ -11,7 +11,7 @@ std::shared_ptr<ADXL362> RobotMap::driveTrainAccelerometer;
 std::shared_ptr<CANTalon> RobotMap::shooterRollerTop;
 std::shared_ptr<CANTalon> RobotMap::shooterRollerBottom;
 std::shared_ptr<CANTalon> RobotMap::shooterAngleMotor;
-std::shared_ptr<AnalogPotentiometer> RobotMap::shooterPotentiometer;
+//std::shared_ptr<AnalogPotentiometer> RobotMap::shooterPotentiometer;
 
 //as cougar speed controllers
 //std::shared_ptr<cougar::CougarSpeedController> RobotMap::shooterRollerTop;
@@ -59,7 +59,7 @@ void RobotMap::init(){
 	shooterRollerTop.reset(new CANTalon(2));
 	shooterRollerBottom.reset(new CANTalon(3));
 	shooterAngleMotor.reset(new CANTalon(4));
-	shooterPotentiometer.reset(new AnalogPotentiometer(2));
+	//shooterPotentiometer.reset(new AnalogPotentiometer(2));
 
 	//these are with cougar speed controllers
 	//shooterRollerTop.reset(new cougar::CougarSpeedController(std::shared_ptr<SpeedController>(new CANTalon(2)), 100, "Top Shooter Roller"));

@@ -12,6 +12,8 @@ private:
 	std::shared_ptr<cougar::CougarJoystick> driverJoy;
 	std::shared_ptr<cougar::CougarJoystick> operatorJoy;
 
+	std::shared_ptr<JoystickButton> operatorButtonY;
+
 public:
 	std::shared_ptr<cougar::CougarJoystick> GetDriverJoystick() { return this-> driverJoy; }
 	std::shared_ptr<cougar::CougarJoystick> GetOperatorJoystick() { return this->operatorJoy; }

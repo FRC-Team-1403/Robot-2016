@@ -1,5 +1,6 @@
 #include "Shooter.h"
 #include "../RobotMap.h"
+#include "Commands/AimWithJoystick.h"
 
 Shooter::Shooter() :
 		Subsystem("ExampleSubsystem")
@@ -7,7 +8,7 @@ Shooter::Shooter() :
 	bottomRoller = RobotMap::shooterRollerBottom;
 	topRoller = RobotMap::shooterRollerTop;
 	angleMotor = RobotMap::shooterAngleMotor;
-	potentiometer = RobotMap::shooterPotentiometer;
+	//potentiometer = RobotMap::shooterPotentiometer;
 
 	//These are used by the calculate method. Their values will change.
 	goal_pos = 0; //this will be set by the command that calculates the angle using the projectile motion algorithms.
@@ -35,9 +36,24 @@ void Shooter::InitDefaultCommand()
 {
 	// Set the default command for a subsystem here.
 	//SetDefaultCommand(new MySpecialCommand());
+	SetDefaultCommand(new AimWithJoystick());
 }
 
+double Shooter::getPotentiometer() {
+	return angleMotor->GetEncPosition();
+}
 
+double Shooter::getGoalPos() {
+	return goal_pos;
+}
+
+void Shooter::setGoalPos(double goal) {
+	goal_pos = goal;
+}
+
+void Shooter::setAngleMotor(double velocity) {
+	angleMotor->Set(velocity);
+}
 
 //This method is used for the 1D motion mapping of the shooter.
 double Shooter::calculate (double position){ //position is the encoder output; program returns motor value from -1 to 1
