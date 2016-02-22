@@ -31,9 +31,6 @@ void AimWithJoystick::Execute()
 	else if(Robot::oi->GetOperatorJoystick()->GetRawButton(3)) {
 		Robot::shooter->setAngleMotor(.5 * Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 	}
-	else {
-		Robot::shooter->setAngleMotor(Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
-	}
 
 }
 

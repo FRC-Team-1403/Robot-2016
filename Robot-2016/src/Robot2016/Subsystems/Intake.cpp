@@ -18,5 +18,13 @@ void Intake::InitDefaultCommand()
 	//SetDefaultCommand(new MySpecialCommand());
 }
 
+void Intake::setAngleAirCyclinder(bool position) {
+	angleAirCyclinder->Set(position);
+}
+
+void Intake::setLiftAirCyclinder(bool position) {
+	liftAirCyclinder->Set(position);
+}
+
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

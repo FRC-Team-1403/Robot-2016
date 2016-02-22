@@ -21,6 +21,8 @@ private:
 public:
 	Intake();
 	void InitDefaultCommand();
+	void setAngleAirCyclinder(bool position);
+	void setLiftAirCyclinder(bool position);
 };
 
 #endif
