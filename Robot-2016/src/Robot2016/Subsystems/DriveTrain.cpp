@@ -23,7 +23,7 @@ void DriveTrain::InitDefaultCommand()
 }
 
 void DriveTrain::drive() {
-	this->driveT->ArcadeDrive(Robot::oi->GetDriverJoystick(), cougar::CougarDrive::LEFT, true);
+	this->driveT->TankDrive(Robot::oi->GetDriverJoystick(), true, true);
 }
 
 double DriveTrain::getDistance() {

@@ -12,6 +12,8 @@ std::shared_ptr<Compressor> RobotMap::compressor;
 std::shared_ptr<CANTalon> RobotMap::shooterRollerTop;
 std::shared_ptr<CANTalon> RobotMap::shooterRollerBottom;
 std::shared_ptr<CANTalon> RobotMap::shooterAngleMotor;
+std::shared_ptr<Servo> RobotMap::cameraServo;
+//std::shared_ptr<NetworkTable> RobotMap::cameraTable;
 //std::shared_ptr<AnalogPotentiometer> RobotMap::shooterPotentiometer;
 
 //as cougar speed controllers
@@ -61,6 +63,8 @@ void RobotMap::init(){
 	shooterRollerTop.reset(new CANTalon(2)); //CAN
 	shooterRollerBottom.reset(new CANTalon(3)); //CAN
 	shooterAngleMotor.reset(new CANTalon(4)); //CAN
+	cameraServo.reset(new Servo(9)); //PWM
+	//cameraTable.reset(new NetworkTable("path", 4));
 	//shooterPotentiometer.reset(new AnalogPotentiometer(2));
 
 	//these are with cougar speed controllers

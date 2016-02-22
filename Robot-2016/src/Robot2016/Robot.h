@@ -8,6 +8,7 @@
 #include "Subsystems/DriveTrain.h"
 #include "Subsystems/Shooter.h"
 #include "Subsystems/Intake.h"
+#include "Subsystems/Camera.h"
 #include "../CougarLib/CougarDebug.h"
 #include "../CougarLib/TrajectoryLib/PathGenerator.h"
 #include "../CougarLib/TrajectoryLib/Path.h"
@@ -25,6 +26,7 @@ public:
 	static std::shared_ptr<DriveTrain> driveTrain;
 	static std::shared_ptr<Shooter> shooter;
 	static std::shared_ptr<Intake> intake;
+	static std::shared_ptr<Camera> camera;
 
 	static std::shared_ptr<cougar::Path> lowBarPath;
 	static int buffer;

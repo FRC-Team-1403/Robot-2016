@@ -8,6 +8,7 @@ Shooter::Shooter() :
 	bottomRoller = RobotMap::shooterRollerBottom;
 	topRoller = RobotMap::shooterRollerTop;
 	angleMotor = RobotMap::shooterAngleMotor;
+	cameraTable = NetworkTable::GetTable("SmartDashboard");
 	//potentiometer = RobotMap::shooterPotentiometer;
 
 	//These are used by the calculate method. Their values will change.
@@ -53,6 +54,14 @@ void Shooter::setGoalPos(double goal) {
 
 void Shooter::setAngleMotor(double velocity) {
 	angleMotor->Set(velocity);
+}
+
+double Shooter::getCameraCenterX() {
+	return cameraTable->GetNumber("centerX");
+}
+
+double Shooter::getCameraCenterY() {
+	return cameraTable->GetNumber("centerY");
 }
 
 //This method is used for the 1D motion mapping of the shooter.

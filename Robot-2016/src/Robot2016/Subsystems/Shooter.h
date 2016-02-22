@@ -14,6 +14,8 @@ private:
 	std::shared_ptr<CANTalon> bottomRoller;
 	std::shared_ptr<CANTalon> topRoller;
 	std::shared_ptr<CANTalon> angleMotor;
+	std::shared_ptr<NetworkTable> cameraTable;
+
 	//std::shared_ptr<AnalogPotentiometer> potentiometer; the potentiometer is connected directly to the CANTalon
 
 	//The following variables are used for the 1D motion mapping of the shooter angle.
@@ -30,6 +32,10 @@ public:
 	double getGoalPos();
 	void setGoalPos(double goal);
 	void setAngleMotor(double velocity);
+
+	//std::shared_ptr<NetworkTable> getCameraTable();
+	double getCameraCenterX();
+	double getCameraCenterY();
 
 	double calculate(double position);
 };

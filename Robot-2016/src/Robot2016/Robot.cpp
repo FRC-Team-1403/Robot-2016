@@ -8,6 +8,8 @@ std::shared_ptr<cougar::Path> Robot::lowBarPath;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 std::shared_ptr<Shooter> Robot::shooter;
 std::shared_ptr<Intake> Robot::intake;
+std::shared_ptr<Camera> Robot::camera;
+
 bool Robot::enabled;
 bool Robot::autonomous;
 bool Robot::teleop;
@@ -58,6 +60,7 @@ void Robot::RobotInit()
 	driveTrain.reset(new DriveTrain());
 	shooter.reset(new Shooter());
 	intake.reset(new Intake());
+	camera.reset(new Camera());
 	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
@@ -158,6 +161,18 @@ void Robot::TeleopInit()
 	// this line or comment it out.
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
+
+	//drive train
+	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());
+	SmartDashboard::PutNumber("Drive Train Right Encoder", driveTrain->getRightEncoderDistance());
+	SmartDashboard::PutNumber("Drive Train Gyro", driveTrain->getGyroAngleInRadians());
+	//needs accelerometer
+
+	//shooter
+	SmartDashboard::PutNumber("Shooter Angle", shooter->getPotentiometer());
+
+
+
 	cougar::CougarDebug::endMethod("Robot::TInit");
 }
 
@@ -175,6 +190,11 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Angular Velocity", driveTrain->getAngularVelocity());
 	SmartDashboard::PutNumber("Encoder Uno", driveTrain->getLeftEncoderDistance());
 	SmartDashboard::PutNumber("Encoder Dos", driveTrain->getRightEncoderDistance());
+
+
+	SmartDashboard::PutNumber("Goal Center X", shooter->getCameraCenterX());
+	SmartDashboard::PutNumber("Goal Center Y", shooter->getCameraCenterY());
+
 
 
 	//SmartDashboard::PutNumber("Talon value", ((CANTalon&)exampleSubsystem->getMotor())->Get());
