@@ -77,7 +77,7 @@ bool CougarJoystick::GetRawButton(uint32_t port) {
 }
 
 float CougarJoystick::GetStickLeftAxisX() {
-	if (!GetButtonX()) {
+	if (GetButtonX()) {
 		return this->joystick_->GetRawAxis(0);
 	} else {
 		return Smoothing::get(this->joystick_->GetRawAxis(0));
@@ -85,7 +85,7 @@ float CougarJoystick::GetStickLeftAxisX() {
 }
 
 float CougarJoystick::GetStickLeftAxisY() {
-	if (!GetButtonX()) {
+	if (GetButtonX()) {
 		return this->joystick_->GetRawAxis(1);
 	}
 	else {
@@ -94,7 +94,7 @@ float CougarJoystick::GetStickLeftAxisY() {
 }
 
 float CougarJoystick::GetStickRightAxisX() {
-	if (!GetButtonX()) {
+	if (GetButtonX()) {
 		return this->joystick_->GetRawAxis(4);
 	} else {
 		return Smoothing::get(this->joystick_->GetRawAxis(4));
@@ -102,7 +102,7 @@ float CougarJoystick::GetStickRightAxisX() {
 }
 
 float CougarJoystick::GetStickRightAxisY() {
-	if (!GetButtonX()) {
+	if (GetButtonX()) {
 		return this->joystick_->GetRawAxis(5);
 	} else {
 		return Smoothing::get(this->joystick_->GetRawAxis(5));

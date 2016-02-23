@@ -3,14 +3,15 @@
 #include "../Commands/AimWithJoystick.h"
 
 Shooter::Shooter() :
-		Subsystem("ExampleSubsystem")
+		Subsystem("Shooter")
 {
 	bottomRoller = RobotMap::shooterRollerBottom;
 	topRoller = RobotMap::shooterRollerTop;
 	angleMotor = RobotMap::shooterAngleMotor;
-	cameraTable = NetworkTable::GetTable("SmartDashboard");
+	//cameraTable = NetworkTable::GetTable("SmartDashboard");
 	//potentiometer = RobotMap::shooterPotentiometer;
 
+	/*
 	//These are used by the calculate method. Their values will change.
 	goal_pos = 0; //this will be set by the command that calculates the angle using the projectile motion algorithms.
 	setpoint_pos = 0;
@@ -31,6 +32,8 @@ Shooter::Shooter() :
 	kd_ = 0;
 	kv_ = 0;
 	ka_ = 0;
+
+	*/
 }
 
 void Shooter::InitDefaultCommand()
@@ -40,10 +43,20 @@ void Shooter::InitDefaultCommand()
 	SetDefaultCommand(new AimWithJoystick());
 }
 
+
 double Shooter::getPotentiometer() {
 	return angleMotor->GetEncPosition();
 }
 
+
+void Shooter::setTopRoller(double velocity) {
+	this->topRoller->Set(velocity);
+}
+void Shooter::setBottomRoller(double velocity) {
+	this->bottomRoller->Set(velocity);
+}
+
+/*
 double Shooter::getGoalPos() {
 	return goal_pos;
 }
@@ -52,10 +65,13 @@ void Shooter::setGoalPos(double goal) {
 	goal_pos = goal;
 }
 
+*/
+
 void Shooter::setAngleMotor(double velocity) {
 	angleMotor->Set(velocity);
 }
 
+/*
 double Shooter::getCameraCenterX() {
 	return cameraTable->GetNumber("centerX");
 }
@@ -63,7 +79,10 @@ double Shooter::getCameraCenterX() {
 double Shooter::getCameraCenterY() {
 	return cameraTable->GetNumber("centerY");
 }
+*/
 
+
+/*
 //This method is used for the 1D motion mapping of the shooter.
 double Shooter::calculate (double position){ //position is the encoder output; program returns motor value from -1 to 1
 		timeElapsed = Timer::GetFPGATimestamp(); //sets timeElapsed to current time. The Timer should start at the beginning of any command using this method.
@@ -182,5 +201,6 @@ double Shooter::calculate (double position){ //position is the encoder output; p
 		return output;
 	}
 
+*/
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

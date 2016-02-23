@@ -72,7 +72,7 @@ public:
 private:
 	// Prevent this class from being instantiated
 	explicit CougarDebug();
-	virtual ~CougarDebug() = default;
+	virtual ~CougarDebug() {}
 
 	static FILE *logFile;
 	static std::map<int, std::string> debugLevels;

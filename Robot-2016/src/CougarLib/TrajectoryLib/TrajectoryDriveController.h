@@ -25,7 +25,7 @@ class TrajectoryDriveController : public CougarController {
 public:
 	explicit TrajectoryDriveController();
 
-	virtual ~TrajectoryDriveController() = default;
+	virtual ~TrajectoryDriveController() {}
 
 	std::shared_ptr<Trajectory> trajectory;
 	std::shared_ptr<TrajectoryFollower> followerLeft;

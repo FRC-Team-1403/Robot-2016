@@ -33,18 +33,16 @@ bool CougarButton::getWasReleased() {
 	return wasReleased;
 }
 
-bool CougarButton::get() {
+bool CougarButton::Get() {
 	update();
 	return isDown;
 }
 
 void CougarButton::update() {
-	CougarDebug::startMethod("CougarButton::update");
 	bool pressed = stick->GetRawButton(buttonPort);
 	wasPressed = pressed && !isDown;
 	wasReleased = !pressed && isDown;
 	isDown = pressed;
-	CougarDebug::endMethod("CougarButton::update");
 }
 
 } /* namespace cougar */

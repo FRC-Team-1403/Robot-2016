@@ -24,7 +24,7 @@ public:
 
 	virtual bool getWasPressed();
 	virtual bool getWasReleased();
-	virtual bool get();
+	virtual bool Get() override;
 	virtual void update();
 
 private:

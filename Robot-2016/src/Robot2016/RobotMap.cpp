@@ -12,7 +12,7 @@ std::shared_ptr<Compressor> RobotMap::compressor;
 std::shared_ptr<CANTalon> RobotMap::shooterRollerTop;
 std::shared_ptr<CANTalon> RobotMap::shooterRollerBottom;
 std::shared_ptr<CANTalon> RobotMap::shooterAngleMotor;
-std::shared_ptr<Servo> RobotMap::cameraServo;
+//std::shared_ptr<Servo> RobotMap::cameraServo;
 //std::shared_ptr<NetworkTable> RobotMap::cameraTable;
 //std::shared_ptr<AnalogPotentiometer> RobotMap::shooterPotentiometer;
 
@@ -23,9 +23,9 @@ std::shared_ptr<Servo> RobotMap::cameraServo;
 //intake
 std::shared_ptr<cougar::CougarSpeedController> RobotMap::intakeRoller;
 std::shared_ptr<DigitalInput> RobotMap::intakeBallSwitch;
-std::shared_ptr<Ultrasonic> RobotMap::intakeUltrasonic;
-std::shared_ptr<Solenoid> RobotMap::intakeAngleAirCyclinder;
-std::shared_ptr<Solenoid> RobotMap::intakeLiftAirCyclinder;
+//std::shared_ptr<Ultrasonic> RobotMap::intakeUltrasonic;
+std::shared_ptr<DoubleSolenoid> RobotMap::intakeAngleAirCyclinder;
+std::shared_ptr<DoubleSolenoid> RobotMap::intakeLiftAirCyclinder;
 
 void RobotMap::init(){
 //	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "RobotMap::init running");
@@ -54,16 +54,16 @@ void RobotMap::init(){
 	driveTrainRightEncoder.reset(new Encoder(2, 3)); //Digital
 	driveTrainLeftEncoder.reset(new Encoder(0, 1)); //Digital
 	driveTrainGyro.reset(new cougar::CougarGyro(0)); //Analog
-	driveTrainLeftEncoder->SetDistancePerPulse(1.0/170.0);
-	driveTrainRightEncoder->SetDistancePerPulse(1.0/170.0);//23.8/85 to account for weirdness
+	driveTrainLeftEncoder->SetDistancePerPulse(1);
+	driveTrainRightEncoder->SetDistancePerPulse(1);//23.8/85 to account for weirdness
 	driveTrainAccelerometer.reset(new ADXL362(ADXL362::kRange_16G)); //SPI
 
 	// TODO replace with actual ports
 	//shooter
-	shooterRollerTop.reset(new CANTalon(2)); //CAN
-	shooterRollerBottom.reset(new CANTalon(3)); //CAN
-	shooterAngleMotor.reset(new CANTalon(4)); //CAN
-	cameraServo.reset(new Servo(9)); //PWM
+	shooterRollerTop.reset(new CANTalon(5)); //CAN
+	shooterRollerBottom.reset(new CANTalon(4)); //CAN
+	shooterAngleMotor.reset(new CANTalon(3)); //CAN
+	//cameraServo.reset(new Servo(9)); //PWM
 	//cameraTable.reset(new NetworkTable("path", 4));
 	//shooterPotentiometer.reset(new AnalogPotentiometer(2));
 
@@ -72,11 +72,11 @@ void RobotMap::init(){
 	//shooterRollerBottom.reset(new cougar::CougarSpeedController(std::shared_ptr<SpeedController>(new CANTalon(3)), 101, "Bottom Shooter Roller"));
 
 	//intake
-	intakeRoller.reset(new cougar::CougarSpeedController(24, 102, "Intake Roller")); //PWM
+	intakeRoller.reset(new cougar::CougarSpeedController(4, 102, "Intake Roller")); //PWM
 	intakeBallSwitch.reset(new DigitalInput(4)); //Digital
-	intakeUltrasonic.reset(new Ultrasonic(7, 8, Ultrasonic::kInches)); //Digital
-	intakeAngleAirCyclinder.reset(new Solenoid(8)); //PWM
-	intakeLiftAirCyclinder.reset(new Solenoid(9)); //PWM
-	compressor.reset(new Compressor(0)); //PWM
+	//intakeUltrasonic.reset(new Ultrasonic(7, 8, Ultrasonic::kInches)); //Digital
+	intakeAngleAirCyclinder.reset(new DoubleSolenoid(5, 1)); //PWM
+	intakeLiftAirCyclinder.reset(new DoubleSolenoid(4, 2)); //PWM
+	compressor.reset(new Compressor()); //PWM
 
 }

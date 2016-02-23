@@ -3,12 +3,12 @@
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
 int Robot::buffer;
-std::shared_ptr<OI> Robot::oi;
+std::unique_ptr<OI> Robot::oi;
 std::shared_ptr<cougar::Path> Robot::lowBarPath;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 std::shared_ptr<Shooter> Robot::shooter;
 std::shared_ptr<Intake> Robot::intake;
-std::shared_ptr<Camera> Robot::camera;
+//std::shared_ptr<Camera> Robot::camera;
 
 bool Robot::enabled;
 bool Robot::autonomous;
@@ -60,8 +60,10 @@ void Robot::RobotInit()
 	driveTrain.reset(new DriveTrain());
 	shooter.reset(new Shooter());
 	intake.reset(new Intake());
-	camera.reset(new Camera());
+	//camera.reset(new Camera());
 	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
+
+	//intake->compressor->Start();
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
@@ -169,7 +171,7 @@ void Robot::TeleopInit()
 	//needs accelerometer
 
 	//shooter
-	SmartDashboard::PutNumber("Shooter Angle", shooter->getPotentiometer());
+	//SmartDashboard::PutNumber("Shooter Angle", shooter->getPotentiometer());
 
 
 
@@ -182,18 +184,18 @@ void Robot::TeleopPeriodic()
 	update();
 
 	SmartDashboard::PutNumber("Joystick value", oi->GetDriverJoystick()->GetStickLeftAxisY());
-	SmartDashboard::PutNumber("Position", driveTrain->getDistance());
+	//SmartDashboard::PutNumber("Position", driveTrain->getDistance());
 	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
 	SmartDashboard::PutNumber("Acceleration", driveTrain->getAcceleration());
-	SmartDashboard::PutNumber("Jerk", driveTrain->getJerk());
+	SmartDashboard::PutNumber("Compressor", intake->compressor->GetPressureSwitchValue());
 	SmartDashboard::PutNumber("Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Angular Velocity", driveTrain->getAngularVelocity());
-	SmartDashboard::PutNumber("Encoder Uno", driveTrain->getLeftEncoderDistance());
-	SmartDashboard::PutNumber("Encoder Dos", driveTrain->getRightEncoderDistance());
+	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());
+	SmartDashboard::PutNumber("Drive Train Right Encoder", driveTrain->getRightEncoderDistance());
+	SmartDashboard::PutNumber("POT", shooter->angleMotor->GetAnalogInRaw());
 
-
-	SmartDashboard::PutNumber("Goal Center X", shooter->getCameraCenterX());
-	SmartDashboard::PutNumber("Goal Center Y", shooter->getCameraCenterY());
+	//SmartDashboard::PutNumber("Goal Center X", shooter->getCameraCenterX());
+	//SmartDashboard::PutNumber("Goal Center Y", shooter->getCameraCenterY());
 
 
 

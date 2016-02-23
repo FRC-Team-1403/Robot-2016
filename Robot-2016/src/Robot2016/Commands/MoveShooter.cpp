@@ -11,22 +11,22 @@ MoveShooter::MoveShooter()
 // Called just before this Command runs the first time
 void MoveShooter::Initialize()
 {
-	Robot::shooter->setGoalPos(0); //Set it to the angle that the algorithm calculates.
+	//Robot::shooter->setGoalPos(0); //Set it to the angle that the algorithm calculates.
 }
 
 // Called repeatedly when this Command is scheduled to run
 void MoveShooter::Execute()
 {
-	Robot::shooter->setAngleMotor(Robot::shooter->calculate(Robot::shooter->getPotentiometer()));
+	//Robot::shooter->setAngleMotor(Robot::shooter->calculate(Robot::shooter->getPotentiometer()));
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool MoveShooter::IsFinished()
 {
-	if (Robot::shooter->getPotentiometer() == Robot::shooter->getGoalPos()) {
+	//if (Robot::shooter->getPotentiometer() == Robot::shooter->getGoalPos()) {
 		return true;
-	}
-	return false;
+	//}
+	//return false;
 }
 
 // Called once after isFinished returns true

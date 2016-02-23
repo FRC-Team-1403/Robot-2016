@@ -17,23 +17,23 @@ void AimWithJoystick::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void AimWithJoystick::Execute()
 {
-	Robot::shooter->setAngleMotor(Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
+	//Robot::shooter->setAngleMotor(Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 
-	if(Robot::oi->GetOperatorJoystick()->GetRawButton(0)) {
+	if(Robot::oi->GetOperatorJoystick()->GetRawButton(1)) {
 		Robot::shooter->setAngleMotor(.05 * Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 	}
-	else if(Robot::oi->GetOperatorJoystick()->GetRawButton(1)) {
+	else if(Robot::oi->GetOperatorJoystick()->GetRawButton(2)) {
 		Robot::shooter->setAngleMotor(.1 * Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 	}
-	else if(Robot::oi->GetOperatorJoystick()->GetRawButton(2)) {
+	else if(Robot::oi->GetOperatorJoystick()->GetRawButton(3)) {
 		Robot::shooter->setAngleMotor(.2 * Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 	}
-	else if(Robot::oi->GetOperatorJoystick()->GetRawButton(3)) {
+	else {
 		Robot::shooter->setAngleMotor(.5 * Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 	}
-	else {
-		Robot::shooter->setAngleMotor(Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
-	}
+
+	Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
+	Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY() * -1);
 
 }
 
