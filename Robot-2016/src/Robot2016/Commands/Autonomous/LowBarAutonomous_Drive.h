@@ -6,8 +6,8 @@
 #include <iostream>
 #include <memory>
 #include <cmath>
-#include "../../CougarLib/TrajectoryLib/TrajectoryDriveController.h"
-#include "../../CougarLib/TrajectoryLib/TrajectoryGenerator.h"
+#include "../../../CougarLib/TrajectoryLib/TrajectoryDriveController.h"
+#include "../../../CougarLib/TrajectoryLib/TrajectoryGenerator.h"
 
 class LowBarAutonomous_Drive: public Command
 {

@@ -6,32 +6,40 @@ Intake::Intake() :
 {
 	this->roller = RobotMap::intakeRoller;
 	this->ballSwitch = RobotMap::intakeBallSwitch;
-	//this->ultrasonic = RobotMap::intakeUltrasonic;
-	this->angleAirCylinder = RobotMap::intakeAngleAirCylinder;
-	this->liftAirCylinder = RobotMap::intakeLiftAirCylinder;
-	this->compressor = RobotMap::compressor;
-	compressor->SetClosedLoopControl(true);
-	compressor->Start();
+	this->rollersAirCylinder = RobotMap::intakeAngleAirCylinder;
+	this->triggerAirCylinder = RobotMap::intakeLiftAirCylinder;
+	this->limitSwitch = RobotMap::intakeLimitSwitch;
+	//this->compressor = RobotMap::compressor;
+	//compressor->SetClosedLoopControl(true);
+	//compressor->Start();
 }
 
 void Intake::InitDefaultCommand()
 {
 }
 
-void Intake::setAngleAirCylinder(enum DoubleSolenoid::Value position) {
-	angleAirCylinder->Set(position);
+void Intake::liftRollersAirCylinder() {
+	rollersAirCylinder->Set(DoubleSolenoid::kForward);
 }
 
-void Intake::setLiftAirCylinder(enum DoubleSolenoid::Value position) {
-	liftAirCylinder->Set(position);
+void Intake::dropRollersAirCylinder() {
+	rollersAirCylinder->Set(DoubleSolenoid::kReverse);
 }
 
-enum DoubleSolenoid::Value Intake::getAngleAirCylinderValue() {
-	return angleAirCylinder->Get();
+void Intake::liftTriggerAirCylinder() {
+	triggerAirCylinder->Set(DoubleSolenoid::kForward);
 }
 
-enum DoubleSolenoid::Value Intake::getLiftAirCylinderValue() {
-	return liftAirCylinder->Get();
+void Intake::dropTriggerAirCylinder() {
+	triggerAirCylinder->Set(DoubleSolenoid::kReverse);
+}
+
+enum DoubleSolenoid::Value Intake::getRollersAirCylinderValue() {
+	return rollersAirCylinder->Get();
+}
+
+enum DoubleSolenoid::Value Intake::getTriggerAirCylinderValue() {
+	return triggerAirCylinder->Get();
 }
 
 void Intake::setRoller(double value) {
@@ -39,5 +47,10 @@ void Intake::setRoller(double value) {
 }
 
 bool Intake::getPressureSwitchValue() {
-	return compressor->GetPressureSwitchValue();
+	//return compressor->GetPressureSwitchValue();
+	return false;
+}
+
+bool Intake::getLimitSwitchValue() {
+	return limitSwitch->Get();
 }

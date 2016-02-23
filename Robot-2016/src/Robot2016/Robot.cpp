@@ -3,12 +3,11 @@
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
 int Robot::buffer;
-std::unique_ptr<OI> Robot::oi;
+std::shared_ptr<OI> Robot::oi;
 std::shared_ptr<cougar::Path> Robot::lowBarPath;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 std::shared_ptr<Shooter> Robot::shooter;
 std::shared_ptr<Intake> Robot::intake;
-//std::shared_ptr<Camera> Robot::camera;
 
 bool Robot::enabled;
 bool Robot::autonomous;
@@ -49,9 +48,9 @@ bool Robot::isTest() {
 
 void Robot::RobotInit()
 {
+	buffer = 3;
 	cougar::CougarDebug::init();
 	cougar::CougarDebug::startMethod("Robot::RobotInit");
-	buffer = 3;
 	initModes();
 	RobotMap::init();
 
@@ -60,10 +59,8 @@ void Robot::RobotInit()
 	driveTrain.reset(new DriveTrain());
 	shooter.reset(new Shooter());
 	intake.reset(new Intake());
-	//camera.reset(new Camera());
 	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
 
-	//intake->compressor->Start();
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
@@ -94,11 +91,6 @@ void Robot::RobotInit()
 	cougar::CougarDebug::endMethod("Robot::RobotInit");
 }
 
-/**
- * This function is called once each time the robot enters Disabled mode.
- * You can use it to reset any subsystem information you want to clear when
- * the robot is disabled.
- */
 void Robot::DisabledInit()
 {
 	update();
@@ -119,25 +111,10 @@ void Robot::DisabledPeriodic()
 	update();
 }
 
-/**
- * This autonomous (along with the chooser code above) shows how to select between different autonomous modes
- * using the dashboard. The sendable chooser code works with the Java SmartDashboard. If you prefer the LabVIEW
- * Dashboard, remove all of the chooser code and uncomment the GetString code to get the auto name from the text box
- * below the Gyro
- *
- * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
- * or additional comparisons to the if-else structure below with additional strings & commands.
- */
 void Robot::AutonomousInit()
 {
 	update();
 	cougar::CougarDebug::startMethod("Robot::AutonomousInit");
-	/* std::string autoSelected = SmartDashboard::GetString("Auto Selector", "Default");
-	if(autoSelected == "My Auto") {
-		autonomousCommand.reset(new MyAutoCommand());
-	} else {
-		autonomousCommand.reset(new ExampleCommand());
-	} */
 
 	autonomousCommand.reset((Command *)chooser->GetSelected());
 
@@ -164,18 +141,7 @@ void Robot::TeleopInit()
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
 
-	//drive train
-	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());
-	SmartDashboard::PutNumber("Drive Train Right Encoder", driveTrain->getRightEncoderDistance());
-	SmartDashboard::PutNumber("Drive Train Gyro", driveTrain->getGyroAngleInRadians());
-	//needs accelerometer
-
-	//shooter
-	//SmartDashboard::PutNumber("Shooter Angle", shooter->getPotentiometer());
-
-
-
-	cougar::CougarDebug::endMethod("Robot::TInit");
+	cougar::CougarDebug::endMethod("Robot::TeleopInit");
 }
 
 void Robot::TeleopPeriodic()
@@ -185,21 +151,22 @@ void Robot::TeleopPeriodic()
 
 	SmartDashboard::PutNumber("Joystick value", oi->GetDriverJoystick()->GetStickLeftAxisY());
 	//SmartDashboard::PutNumber("Position", driveTrain->getDistance());
-	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
-	SmartDashboard::PutNumber("Acceleration", driveTrain->getAcceleration());
+	//SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
+	//SmartDashboard::PutNumber("Acceleration", driveTrain->getAcceleration());
 	SmartDashboard::PutNumber("Compressor", intake->getPressureSwitchValue());
 	SmartDashboard::PutNumber("Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Angular Velocity", driveTrain->getAngularVelocity());
 	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());
 	SmartDashboard::PutNumber("Drive Train Right Encoder", driveTrain->getRightEncoderDistance());
-	SmartDashboard::PutNumber("POT", shooter->angleMotor->GetAnalogInRaw());
-
-	//SmartDashboard::PutNumber("Goal Center X", shooter->getCameraCenterX());
-	//SmartDashboard::PutNumber("Goal Center Y", shooter->getCameraCenterY());
-
-
-
-	//SmartDashboard::PutNumber("Talon value", ((CANTalon&)exampleSubsystem->getMotor())->Get());
+	SmartDashboard::PutNumber("POT distance", shooter->getAngleMotorDistance());
+	SmartDashboard::PutNumber("POT velocity", shooter->getAngleMotorVelocity());
+	SmartDashboard::PutNumber("Top Roller position", shooter->getTopRollerDistance());
+	SmartDashboard::PutNumber("Bottom Roller position", shooter->getTopRollerDistance());
+	SmartDashboard::PutNumber("Top Roller velocity", shooter->getTopRollerVelocity());
+	SmartDashboard::PutNumber("Bottom Roller velocity", shooter->getTopRollerVelocity());
+	SmartDashboard::PutNumber("Intake limit switch", intake->getLimitSwitchValue());
+	SmartDashboard::PutNumber("Roller Solenoid", intake->getRollersAirCylinderValue());
+	SmartDashboard::PutNumber("Trigger Solenoid", intake->getTriggerAirCylinderValue());
 }
 
 void Robot::TestPeriodic()

@@ -9,7 +9,7 @@
 
 namespace cougar {
 
-FILE *CougarDebug::logFile;
+std::shared_ptr<FILE> CougarDebug::logFile;
 std::map<int, std::string> CougarDebug::debugLevels;
 int CougarDebug::indentation = 0;
 bool CougarDebug::didInit = false;
@@ -36,7 +36,7 @@ void CougarDebug::init() {
 		system(create_file_command.c_str());
 		std::string change_permissions_command = "chmod 777 " + filename;
 		system(change_permissions_command.c_str());
-		logFile = fopen(filename.c_str(), "w");
+		logFile.reset(fopen(filename.c_str(), "w"));
 	}
 	std::cout << "CougarDebug::init finished\n";
 }
@@ -44,7 +44,7 @@ void CougarDebug::init() {
 void CougarDebug::end() {
 	std::cout << "CougarDebug::end starting\n";
 	if (WRITE_TO_FILE) {
-		fclose(logFile);
+		fclose(logFile.get());
 		//delete logFile;
 	}
 	std::cout << "CougarDebug::end finished\n";
@@ -77,7 +77,7 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 		if (WRITE_TO_RIOLOG)
 			vprintf(message, args);
 		if (WRITE_TO_FILE)
-			vfprintf(logFile, message, args);
+			vfprintf(logFile.get(), message, args);
 		va_end(args);
 	}
 }
@@ -109,7 +109,7 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 		if (WRITE_TO_RIOLOG)
 			vprintf(message, args);
 		if (WRITE_TO_FILE)
-			vfprintf(logFile, message, args);
+			vfprintf(logFile.get(), message, args);
 		va_end(args);
 	}
 }
@@ -149,5 +149,7 @@ void CougarDebug::endMethod(const char *name) {
 	unindent();
 	debugPrinter((std::string(name) + std::string(" finished")).c_str());
 }
+
+
 
 } // namespace cougar

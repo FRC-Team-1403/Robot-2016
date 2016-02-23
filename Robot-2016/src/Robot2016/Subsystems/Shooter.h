@@ -7,11 +7,12 @@
 
 class Shooter: public Subsystem
 {
-public:
+private:
 	std::shared_ptr<CANTalon> bottomRoller;
 	std::shared_ptr<CANTalon> topRoller;
 	std::shared_ptr<CANTalon> angleMotor;
 
+public:
 	Shooter();
 	void InitDefaultCommand();
 
@@ -19,6 +20,12 @@ public:
 	void setAngleMotor(double velocity);
 	void setTopRoller(double velocity);
 	void setBottomRoller(double velocity);
+	int getAngleMotorDistance();
+	int getAngleMotorVelocity();
+	int getTopRollerDistance();
+	int getBottomRollerDistance();
+	int getTopRollerVelocity();
+	int getBottomRollerVelocity();
 };
 
 #endif

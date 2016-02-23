@@ -9,23 +9,6 @@
 #include "../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
- 
-// For example to map the left and right motors, you could define the
-// following variables to use with your drivetrain subsystem.
-//const int LEFTMOTOR = 1;
-//const int RIGHTMOTOR = 2;
-
-// If you are using multiple modules, make sure to define both the port
-// number and the module. For example you with a rangefinder:
-//const int RANGE_FINDER_PORT = 1;
-//const int RANGE_FINDER_MODULE = 1;
-
 class RobotMap {
 public:
 	static void init();
@@ -41,17 +24,14 @@ public:
 	static std::shared_ptr<CANTalon> shooterRollerTop;
 	static std::shared_ptr<CANTalon> shooterRollerBottom;
 	static std::shared_ptr<CANTalon> shooterAngleMotor;
-	//static std::shared_ptr<Servo> cameraServo;
-	//static std::shared_ptr<NetworkTable> cameraTable;
-	//static std::shared_ptr<AnalogPotentiometer> shooterPotentiometer;
 
 	//intake
 	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;
 	static std::shared_ptr<DigitalInput> intakeBallSwitch;
-	//static std::shared_ptr<Ultrasonic> intakeUltrasonic;
 	static std::shared_ptr<DoubleSolenoid> intakeAngleAirCylinder;
 	static std::shared_ptr<DoubleSolenoid> intakeLiftAirCylinder;
-	static std::shared_ptr<Compressor> compressor;
+	static std::shared_ptr<DigitalInput> intakeLimitSwitch;
+	//static std::shared_ptr<Compressor> compressor;
 
 };
 

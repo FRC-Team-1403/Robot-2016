@@ -1,7 +1,7 @@
-#include "RollersIn.h"
-#include "../Robot.h"
+#include "DropRollers.h"
+#include "../../Robot.h"
 
-RollersIn::RollersIn()
+DropRollers::DropRollers()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -9,32 +9,32 @@ RollersIn::RollersIn()
 }
 
 // Called just before this Command runs the first time
-void RollersIn::Initialize()
+void DropRollers::Initialize()
 {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void RollersIn::Execute()
+void DropRollers::Execute()
 {
-	Robot::intake->setRoller(1);
+	Robot::intake->dropRollersAirCylinder();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool RollersIn::IsFinished()
+bool DropRollers::IsFinished()
 {
-	return false;
+	return Robot::intake->getRollersAirCylinderValue() == DoubleSolenoid::kReverse;
 }
 
 // Called once after isFinished returns true
-void RollersIn::End()
+void DropRollers::End()
 {
-	Robot::intake->setRoller(0);
+
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void RollersIn::Interrupted()
+void DropRollers::Interrupted()
 {
-	End();
+
 }

@@ -9,7 +9,8 @@
 #define SRC_COUGARLIB_COUGARDEBUG_H_
 
 #include <WPILib.h>
-#include <stdio.h>
+#include <cstdio>
+#include <iostream>
 #include <stdarg.h>
 #include <string>
 #include <map>
@@ -20,7 +21,7 @@ namespace cougar {
 
 class CougarDebug {
 public:
-	// Used to initialize and end CougarDebug (obviously)
+	// Used to initialize/end CougarDebug (obviously)
 	// Used kind of like a constructor and destructor.
 	// If logging to a file, init will cause logging to
 	// move to a new file and end will close the current file.
@@ -74,7 +75,7 @@ private:
 	explicit CougarDebug();
 	virtual ~CougarDebug() {}
 
-	static FILE *logFile;
+	static std::shared_ptr<FILE> logFile;
 	static std::map<int, std::string> debugLevels;
 	static int indentation;
 	static bool didInit;
