@@ -17,13 +17,13 @@ void LiftRollers::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void LiftRollers::Execute()
 {
-	Robot::intake->liftAirCyclinder->Set(DoubleSolenoid::kForward);
+	Robot::intake->setLiftAirCylinder(DoubleSolenoid::kForward);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool LiftRollers::IsFinished()
 {
-	return Robot::intake->liftAirCyclinder->Get() == DoubleSolenoid::kForward;
+	return Robot::intake->getLiftAirCylinderValue() == DoubleSolenoid::kForward;
 }
 
 // Called once after isFinished returns true

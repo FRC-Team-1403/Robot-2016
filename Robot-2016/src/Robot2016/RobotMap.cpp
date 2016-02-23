@@ -24,8 +24,8 @@ std::shared_ptr<CANTalon> RobotMap::shooterAngleMotor;
 std::shared_ptr<cougar::CougarSpeedController> RobotMap::intakeRoller;
 std::shared_ptr<DigitalInput> RobotMap::intakeBallSwitch;
 //std::shared_ptr<Ultrasonic> RobotMap::intakeUltrasonic;
-std::shared_ptr<DoubleSolenoid> RobotMap::intakeAngleAirCyclinder;
-std::shared_ptr<DoubleSolenoid> RobotMap::intakeLiftAirCyclinder;
+std::shared_ptr<DoubleSolenoid> RobotMap::intakeAngleAirCylinder;
+std::shared_ptr<DoubleSolenoid> RobotMap::intakeLiftAirCylinder;
 
 void RobotMap::init(){
 //	cougar::CougarDebug::debugPrinter(cougar::CougarDebug::MESSAGE, "RobotMap::init running");
@@ -75,8 +75,8 @@ void RobotMap::init(){
 	intakeRoller.reset(new cougar::CougarSpeedController(4, 102, "Intake Roller")); //PWM
 	intakeBallSwitch.reset(new DigitalInput(4)); //Digital
 	//intakeUltrasonic.reset(new Ultrasonic(7, 8, Ultrasonic::kInches)); //Digital
-	intakeAngleAirCyclinder.reset(new DoubleSolenoid(5, 1)); //PWM
-	intakeLiftAirCyclinder.reset(new DoubleSolenoid(4, 2)); //PWM
+	intakeAngleAirCylinder.reset(new DoubleSolenoid(5, 1)); //PWM
+	intakeLiftAirCylinder.reset(new DoubleSolenoid(4, 2)); //PWM
 	compressor.reset(new Compressor()); //PWM
 
 }

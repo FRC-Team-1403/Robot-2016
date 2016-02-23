@@ -1,15 +1,14 @@
 #include "Intake.h"
 #include "../RobotMap.h"
-#include "../Commands/ControlIntake.h"
 
 Intake::Intake() :
-		Subsystem("ExampleSubsystem")
+		Subsystem("Intake")
 {
 	this->roller = RobotMap::intakeRoller;
 	this->ballSwitch = RobotMap::intakeBallSwitch;
 	//this->ultrasonic = RobotMap::intakeUltrasonic;
-	this->angleAirCyclinder = RobotMap::intakeAngleAirCyclinder;
-	this->liftAirCyclinder = RobotMap::intakeLiftAirCyclinder;
+	this->angleAirCylinder = RobotMap::intakeAngleAirCylinder;
+	this->liftAirCylinder = RobotMap::intakeLiftAirCylinder;
 	this->compressor = RobotMap::compressor;
 	compressor->SetClosedLoopControl(true);
 	compressor->Start();
@@ -17,18 +16,28 @@ Intake::Intake() :
 
 void Intake::InitDefaultCommand()
 {
-	// Set the default command for a subsystem here.
-	//SetDefaultCommand(new MySpecialCommand());
-	//SetDefaultCommand(new ControlIntake());
 }
 
-void Intake::setAngleAirCyclinder(bool position) {
-	angleAirCyclinder->Set(position);
+void Intake::setAngleAirCylinder(enum DoubleSolenoid::Value position) {
+	angleAirCylinder->Set(position);
 }
 
-void Intake::setLiftAirCyclinder(bool position) {
-	liftAirCyclinder->Set(position);
+void Intake::setLiftAirCylinder(enum DoubleSolenoid::Value position) {
+	liftAirCylinder->Set(position);
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+enum DoubleSolenoid::Value Intake::getAngleAirCylinderValue() {
+	return angleAirCylinder->Get();
+}
+
+enum DoubleSolenoid::Value Intake::getLiftAirCylinderValue() {
+	return liftAirCylinder->Get();
+}
+
+void Intake::setRoller(double value) {
+	roller->Set(value);
+}
+
+bool Intake::getPressureSwitchValue() {
+	return compressor->GetPressureSwitchValue();
+}

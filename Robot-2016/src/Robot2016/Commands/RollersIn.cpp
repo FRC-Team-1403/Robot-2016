@@ -17,7 +17,7 @@ void RollersIn::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void RollersIn::Execute()
 {
-	Robot::intake->roller->Set(1);
+	Robot::intake->setRoller(1);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -29,7 +29,7 @@ bool RollersIn::IsFinished()
 // Called once after isFinished returns true
 void RollersIn::End()
 {
-	Robot::intake->roller->Set(0);
+	Robot::intake->setRoller(0);
 }
 
 // Called when another command which requires one or more of the same

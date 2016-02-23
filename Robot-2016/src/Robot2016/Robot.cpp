@@ -187,7 +187,7 @@ void Robot::TeleopPeriodic()
 	//SmartDashboard::PutNumber("Position", driveTrain->getDistance());
 	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
 	SmartDashboard::PutNumber("Acceleration", driveTrain->getAcceleration());
-	SmartDashboard::PutNumber("Compressor", intake->compressor->GetPressureSwitchValue());
+	SmartDashboard::PutNumber("Compressor", intake->getPressureSwitchValue());
 	SmartDashboard::PutNumber("Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Angular Velocity", driveTrain->getAngularVelocity());
 	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());

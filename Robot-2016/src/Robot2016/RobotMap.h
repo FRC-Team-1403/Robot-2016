@@ -49,8 +49,8 @@ public:
 	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;
 	static std::shared_ptr<DigitalInput> intakeBallSwitch;
 	//static std::shared_ptr<Ultrasonic> intakeUltrasonic;
-	static std::shared_ptr<DoubleSolenoid> intakeAngleAirCyclinder;
-	static std::shared_ptr<DoubleSolenoid> intakeLiftAirCyclinder;
+	static std::shared_ptr<DoubleSolenoid> intakeAngleAirCylinder;
+	static std::shared_ptr<DoubleSolenoid> intakeLiftAirCylinder;
 	static std::shared_ptr<Compressor> compressor;
 
 };

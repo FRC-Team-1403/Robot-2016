@@ -31,7 +31,7 @@ void LowBarAutonomous_Drive::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool LowBarAutonomous_Drive::IsFinished()
 {
-	return false; // Autonomous commands should never end on their own
+	return driveController->onTarget() || Timer::GetFPGATimestamp() - start_time > 20;
 }
 
 // Called once after isFinished returns true
@@ -47,5 +47,7 @@ void LowBarAutonomous_Drive::End()
 // subsystems is scheduled to run
 void LowBarAutonomous_Drive::Interrupted()
 {
+	cougar::CougarDebug::startMethod("LowBarAutonomous_Drive::Interrupted");
 	End();
+	cougar::CougarDebug::endMethod("LowBarAutonomous_Drive::Interrupted");
 }

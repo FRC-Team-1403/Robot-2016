@@ -7,21 +7,22 @@
 
 class Intake: public Subsystem
 {
-public:
-	// It's desirable that everything possible under private except
-	// for methods that implement subsystem capabilities
-
+private:
 	std::shared_ptr<cougar::CougarSpeedController> roller;
 	std::shared_ptr<DigitalInput> ballSwitch;
-	//std::shared_ptr<Ultrasonic> ultrasonic;
-	std::shared_ptr<DoubleSolenoid> angleAirCyclinder;
-	std::shared_ptr<DoubleSolenoid> liftAirCyclinder;
+	std::shared_ptr<DoubleSolenoid> angleAirCylinder;
+	std::shared_ptr<DoubleSolenoid> liftAirCylinder;
 	std::shared_ptr<Compressor> compressor;
 
+public:
 	Intake();
 	void InitDefaultCommand();
-	void setAngleAirCyclinder(bool position);
-	void setLiftAirCyclinder(bool position);
+	void setAngleAirCylinder(enum DoubleSolenoid::Value position);
+	void setLiftAirCylinder(enum DoubleSolenoid::Value position);
+	enum DoubleSolenoid::Value getAngleAirCylinderValue();
+	enum DoubleSolenoid::Value getLiftAirCylinderValue();
+	void setRoller(double value);
+	bool getPressureSwitchValue();
 };
 
 #endif

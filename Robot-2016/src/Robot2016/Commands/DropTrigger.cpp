@@ -17,13 +17,13 @@ void DropTrigger::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void DropTrigger::Execute()
 {
-	Robot::intake->angleAirCyclinder->Set(DoubleSolenoid::kReverse);
+	Robot::intake->setAngleAirCylinder(DoubleSolenoid::kReverse);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool DropTrigger::IsFinished()
 {
-	return Robot::intake->angleAirCyclinder->Get() == DoubleSolenoid::kReverse;
+	return Robot::intake->getAngleAirCylinderValue() == DoubleSolenoid::kReverse;
 }
 
 // Called once after isFinished returns true

@@ -17,13 +17,13 @@ void DropRollers::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void DropRollers::Execute()
 {
-	Robot::intake->liftAirCyclinder->Set(DoubleSolenoid::kReverse);
+	Robot::intake->setLiftAirCylinder(DoubleSolenoid::kReverse);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool DropRollers::IsFinished()
 {
-	return Robot::intake->liftAirCyclinder->Get() == DoubleSolenoid::kReverse;
+	return Robot::intake->getLiftAirCylinderValue() == DoubleSolenoid::kReverse;
 }
 
 // Called once after isFinished returns true

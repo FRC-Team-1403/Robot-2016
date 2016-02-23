@@ -4,7 +4,7 @@
 #include "../Commands/DriveWithJoystick.h"
 
 DriveTrain::DriveTrain() :
-		Subsystem("ExampleSubsystem")
+		Subsystem("DriveTrain")
 {
 	this->driveT = RobotMap::drive;
 	this->driveTrainLeftEncoder = RobotMap::driveTrainLeftEncoder;
@@ -62,7 +62,6 @@ void DriveTrain::setLeftRightPower(double leftPower, double rightPower) {
 
 void DriveTrain::stop() {
 	setLeftRightPower(0, 0);
-	//this->driveT->Stop();
 }
 
  double DriveTrain::getRightEncoderDistance() {
@@ -84,4 +83,4 @@ void DriveTrain::stop() {
  void DriveTrain::resetEncoders() {
 	 this->driveTrainLeftEncoder->Reset();
 	 this->driveTrainRightEncoder->Reset();
- }
+}
