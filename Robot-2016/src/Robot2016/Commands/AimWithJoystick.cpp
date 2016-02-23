@@ -28,9 +28,12 @@ void AimWithJoystick::Execute()
 	else if(Robot::oi->GetOperatorJoystick()->GetRawButton(3)) {
 		Robot::shooter->setAngleMotor(.2 * Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 	}
+<<<<<<< HEAD
 	else {
 		Robot::shooter->setAngleMotor(.5 * Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
 	}
+=======
+>>>>>>> origin/master
 
 	Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
 	Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY() * -1);
