@@ -1,7 +1,7 @@
 #include "DriveTrain.h"
 #include "../RobotMap.h"
 #include "../Robot.h"
-#include "../Commands/DriveWithJoystick.h"
+#include "../Commands/DriveTrain/DriveWithJoystick.h"
 
 DriveTrain::DriveTrain() :
 		Subsystem("DriveTrain")

@@ -1,11 +1,10 @@
 #include "OI.h"
-#include "Commands/MoveShooter.h"
-#include "Commands/DropRollers.h"
-#include "Commands/LiftRollers.h"
-#include "Commands/DropTrigger.h"
-#include "Commands/LiftTrigger.h"
-#include "Commands/RollersIn.h"
-#include "Commands/RollersOut.h"
+#include "Commands/Intake/DropRollers.h"
+#include "Commands/Intake/LiftRollers.h"
+#include "Commands/Intake/DropTrigger.h"
+#include "Commands/Intake/LiftTrigger.h"
+#include "Commands/Intake/RollersIn.h"
+#include "Commands/Intake/RollersOut.h"
 
 
 OI::OI()

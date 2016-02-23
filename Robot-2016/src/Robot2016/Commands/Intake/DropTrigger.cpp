@@ -1,7 +1,7 @@
-#include "LiftTrigger.h"
-#include "../Robot.h"
+#include "DropTrigger.h"
+#include "../../Robot.h"
 
-LiftTrigger::LiftTrigger()
+DropTrigger::DropTrigger()
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -9,32 +9,32 @@ LiftTrigger::LiftTrigger()
 }
 
 // Called just before this Command runs the first time
-void LiftTrigger::Initialize()
+void DropTrigger::Initialize()
 {
 
 }
 
 // Called repeatedly when this Command is scheduled to run
-void LiftTrigger::Execute()
+void DropTrigger::Execute()
 {
-	Robot::intake->setAngleAirCylinder(DoubleSolenoid::kForward);
+	Robot::intake->setAngleAirCylinder(DoubleSolenoid::kReverse);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool LiftTrigger::IsFinished()
+bool DropTrigger::IsFinished()
 {
-	return Robot::intake->getAngleAirCylinderValue() == DoubleSolenoid::kForward;
+	return Robot::intake->getAngleAirCylinderValue() == DoubleSolenoid::kReverse;
 }
 
 // Called once after isFinished returns true
-void LiftTrigger::End()
+void DropTrigger::End()
 {
 
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void LiftTrigger::Interrupted()
+void DropTrigger::Interrupted()
 {
 
 }
