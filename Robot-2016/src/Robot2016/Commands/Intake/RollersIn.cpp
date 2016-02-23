@@ -23,7 +23,7 @@ void RollersIn::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool RollersIn::IsFinished()
 {
-	return false;
+	return Robot::intake->getLimitSwitchValue();
 }
 
 // Called once after isFinished returns true

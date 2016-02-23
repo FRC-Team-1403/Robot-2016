@@ -10,19 +10,23 @@ class Intake: public Subsystem
 private:
 	std::shared_ptr<cougar::CougarSpeedController> roller;
 	std::shared_ptr<DigitalInput> ballSwitch;
-	std::shared_ptr<DoubleSolenoid> angleAirCylinder;
-	std::shared_ptr<DoubleSolenoid> liftAirCylinder;
-	std::shared_ptr<Compressor> compressor;
+	std::shared_ptr<DoubleSolenoid> rollersAirCylinder;
+	std::shared_ptr<DoubleSolenoid> triggerAirCylinder;
+	std::shared_ptr<DigitalInput> limitSwitch;
+	//std::shared_ptr<Compressor> compressor;
 
 public:
 	Intake();
 	void InitDefaultCommand();
-	void setAngleAirCylinder(enum DoubleSolenoid::Value position);
-	void setLiftAirCylinder(enum DoubleSolenoid::Value position);
-	enum DoubleSolenoid::Value getAngleAirCylinderValue();
-	enum DoubleSolenoid::Value getLiftAirCylinderValue();
+	void liftRollersAirCylinder();
+	void dropRollersAirCylinder();
+	void liftTriggerAirCylinder();
+	void dropTriggerAirCylinder();
+	enum DoubleSolenoid::Value getTriggerAirCylinderValue();
+	enum DoubleSolenoid::Value getRollersAirCylinderValue();
 	void setRoller(double value);
 	bool getPressureSwitchValue();
+	bool getLimitSwitchValue();
 };
 
 #endif

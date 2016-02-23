@@ -17,13 +17,13 @@ void LiftTrigger::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void LiftTrigger::Execute()
 {
-	Robot::intake->setAngleAirCylinder(DoubleSolenoid::kForward);
+	Robot::intake->liftTriggerAirCylinder();
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool LiftTrigger::IsFinished()
 {
-	return Robot::intake->getAngleAirCylinderValue() == DoubleSolenoid::kForward;
+	return Robot::intake->getTriggerAirCylinderValue() == DoubleSolenoid::kForward;
 }
 
 // Called once after isFinished returns true
