@@ -9,7 +9,7 @@
 #define SRC_COUGARLIB_COUGARDEBUG_H_
 
 #include <WPILib.h>
-#include <cstdio>
+#include <stdio.h>
 #include <iostream>
 #include <stdarg.h>
 #include <string>
@@ -75,7 +75,7 @@ private:
 	explicit CougarDebug();
 	virtual ~CougarDebug() {}
 
-	static std::shared_ptr<FILE> logFile;
+	static FILE *logFile;
 	static std::map<int, std::string> debugLevels;
 	static int indentation;
 	static bool didInit;

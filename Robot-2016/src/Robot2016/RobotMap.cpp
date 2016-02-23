@@ -40,7 +40,6 @@ void RobotMap::init(){
 
 	//intake
 	intakeRoller.reset(new cougar::CougarSpeedController(4, 102, "Intake Roller")); //PWM
-	intakeBallSwitch.reset(new DigitalInput(4)); //Digital
 	intakeAngleAirCylinder.reset(new DoubleSolenoid(5, 1)); //PWM
 	intakeLiftAirCylinder.reset(new DoubleSolenoid(4, 2)); //PWM
 	intakeLimitSwitch.reset(new DigitalInput(4));

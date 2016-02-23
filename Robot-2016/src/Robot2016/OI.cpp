@@ -13,22 +13,22 @@ OI::OI()
 	this->driverJoy.reset(new cougar::CougarJoystick(0));
 	this->operatorJoy.reset(new cougar::CougarJoystick(1));
 
-	operatorButtonA.reset(new cougar::CougarButton(driverJoy, 1));
+	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
 	operatorButtonA->WhenPressed(new DropRollers());
 
-	operatorButtonB.reset(new cougar::CougarButton(driverJoy, 2));
+	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
 	operatorButtonB->WhenPressed(new LiftRollers());
 
-	operatorButtonX.reset(new cougar::CougarButton(driverJoy, 3));
+	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));
 	operatorButtonX->WhenPressed(new DropTrigger());
 
-	operatorButtonY.reset(new cougar::CougarButton(driverJoy, 4));
+	operatorButtonY.reset(new cougar::CougarButton(operatorJoy, 4));
 	operatorButtonY->WhenPressed(new LiftTrigger());
 
-	operatorButtonLB.reset(new cougar::CougarButton(driverJoy, 5));
+	operatorButtonLB.reset(new cougar::CougarButton(operatorJoy, 5));
 	operatorButtonLB->WhileHeld(new RollersOut());
 
-	operatorButtonRB.reset(new cougar::CougarButton(driverJoy, 6));
+	operatorButtonRB.reset(new cougar::CougarButton(operatorJoy, 6));
 	operatorButtonRB->WhileHeld(new RollersIn());
 
 	cougar::CougarDebug::endMethod("OI::OI");
