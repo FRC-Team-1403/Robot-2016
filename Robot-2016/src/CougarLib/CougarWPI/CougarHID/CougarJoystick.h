@@ -17,7 +17,7 @@ namespace cougar {
 
 class CougarJoystick {
 public:
-	explicit CougarJoystick(uint32_t port);
+	explicit CougarJoystick(uint32_t port, bool ignoreModsExceptSmoothing = false);
 	virtual ~CougarJoystick();
 
 	virtual void setSmoothingMode(int32_t mode);
@@ -76,6 +76,7 @@ protected:
 
 	uint32_t port;
 	std::shared_ptr<Joystick> joystick_;
+	bool ignoreMods;
 	static const bool SMOOTHING = true;
 	static int SMOOTHING_MODE;
 	static constexpr double FACTOR = 1.0;

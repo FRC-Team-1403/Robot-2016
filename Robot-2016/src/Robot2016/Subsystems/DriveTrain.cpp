@@ -23,11 +23,14 @@ void DriveTrain::InitDefaultCommand()
 }
 
 void DriveTrain::drive() {
-	this->driveT->TankDrive(Robot::oi->GetDriverJoystick(), true, true);
+	if (Robot::oi->GetDriverJoystick()->GetButtonStart()) {
+		this->driveT->Drive(Robot::oi->GetDriverJoystick()->GetStickLeftAxisY() * -1, 0);
+	}
+	this->driveT->TankDrive(Robot::oi->GetDriverJoystick(), true, false);
 }
 
 double DriveTrain::getDistance() {
-	return (this->getLeftEncoderDistance() * -1 + this->getRightEncoderDistance()) / 2.0;
+	return (this->getLeftEncoderDistance() + this->getRightEncoderDistance()) / 2.0;
 }
 double DriveTrain::getVelocity() {
 	return (this->driveTrainLeftEncoder->GetRate() * -1 + this->driveTrainRightEncoder->GetRate()) / 2.0;
