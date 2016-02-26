@@ -5,6 +5,7 @@
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
 #include "Shooter/SetShooter.h"
+#include "StopAllOperator.h"
 
 
 IntakeBall::IntakeBall()
@@ -40,5 +41,5 @@ IntakeBall::IntakeBall()
 	AddParallel(new LiftTrigger());
 	AddSequential(new SetShooter(CARRYING_POS));
 
-
+	AddSequential(new StopAllOperator());
 }

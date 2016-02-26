@@ -2,4 +2,4 @@
 *.xml
 *.DS_Store
 .settings/*
-.metadata/*
+../.metadata/*

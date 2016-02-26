@@ -1,4 +1,4 @@
-#include <Robot2016/Commands/StopAllOperator.h>
+#include "Commands/StopAllOperator.h"
 #include "OI.h"
 #include "Commands/Intake/DropRollers.h"
 #include "Commands/Intake/LiftRollers.h"
@@ -18,7 +18,7 @@ OI::OI()
 	operatorButtonA->WhenPressed(new DropRollers());
 
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
-	operatorButtonB->WhenPressed(new StopAll());
+	operatorButtonB->WhenPressed(new StopAllOperator());
 	// TODO make a button to lift rollers
 
 	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));
