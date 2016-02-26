@@ -3,6 +3,8 @@
 
 #include "Commands/CommandGroup.h"
 #include "WPILib.h"
+#include "../../CougarLib/CougarDebug.h"
+
 
 class IntakeBall: public CommandGroup
 {

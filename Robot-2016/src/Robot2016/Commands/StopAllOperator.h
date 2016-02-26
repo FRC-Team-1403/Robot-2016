@@ -3,6 +3,7 @@
 
 #include "Commands/Command.h"
 #include "WPILib.h"
+#include "../../CougarLib/CougarDebug.h"
 
 class StopAllOperator: public Command
 {

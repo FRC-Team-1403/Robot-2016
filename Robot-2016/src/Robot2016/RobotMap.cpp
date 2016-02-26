@@ -35,14 +35,18 @@ void RobotMap::init(){
 
 	// TODO fix
 
+	float ROLLER_ENCODER_TICKS_PER_REV = 256.0;
+
 	shooterRollerTop.reset(new CANTalon(5));
 	shooterRollerTop->SetFeedbackDevice(CANTalon::QuadEncoder);
+	shooterRollerTop->ConfigEncoderCodesPerRev(ROLLER_ENCODER_TICKS_PER_REV);
 	shooterRollerTop->SetSensorDirection(false);
 	//shooterRollerTop->SetControlMode(CANSpeedController::kSpeed);
 	shooterRollerTop->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
 
 	shooterRollerBottom.reset(new CANTalon(4));
 	shooterRollerBottom->SetFeedbackDevice(CANTalon::QuadEncoder);
+	shooterRollerBottom->ConfigEncoderCodesPerRev(ROLLER_ENCODER_TICKS_PER_REV);
 	shooterRollerBottom->SetSensorDirection(false);
 	//shooterRollerBottom->SetControlMode(CANSpeedController::kSpeed);
 	shooterRollerBottom->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);

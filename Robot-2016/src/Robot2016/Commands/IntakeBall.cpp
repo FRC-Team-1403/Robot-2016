@@ -27,7 +27,9 @@ IntakeBall::IntakeBall()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	const float INTAKE_POS = -15;
+	cougar::CougarDebug::startMethod("IntakeBall::IntakeBall");
+
+	const float INTAKE_POS = 0;
 	const float CARRYING_POS = 0;
 
 	AddSequential(new LiftTrigger());
@@ -42,4 +44,6 @@ IntakeBall::IntakeBall()
 	AddSequential(new SetShooter(CARRYING_POS));
 
 	AddSequential(new StopAllOperator());
+
+	cougar::CougarDebug::endMethod("IntakeBall::IntakeBall");
 }
