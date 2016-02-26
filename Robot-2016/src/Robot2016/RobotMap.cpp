@@ -17,8 +17,6 @@ std::shared_ptr<cougar::CougarSpeedController> RobotMap::intakeRoller;
 std::shared_ptr<DigitalInput> RobotMap::intakeBallSwitch;
 std::shared_ptr<DoubleSolenoid> RobotMap::intakeAngleAirCylinder;
 std::shared_ptr<DoubleSolenoid> RobotMap::intakeLiftAirCylinder;
-std::shared_ptr<DigitalInput> RobotMap::intakeLimitSwitch;
-//std::shared_ptr<Compressor> RobotMap::compressor;
 
 void RobotMap::init(){
 	LiveWindow *lw = LiveWindow::GetInstance();
@@ -28,21 +26,40 @@ void RobotMap::init(){
 	driveTrainRightEncoder.reset(new Encoder(2, 3)); //Digital
 	driveTrainLeftEncoder.reset(new Encoder(0, 1)); //Digital
 	driveTrainGyro.reset(new cougar::CougarGyro(0)); //Analog
-	driveTrainLeftEncoder->SetDistancePerPulse(3.0/358.0);
-	driveTrainRightEncoder->SetDistancePerPulse(3.0/358.0);//23.8/85 to account for weirdness
+	const float TICKS_PER_FOOT = 3.0/358.0;
+	driveTrainLeftEncoder->SetDistancePerPulse(TICKS_PER_FOOT);
+	driveTrainRightEncoder->SetDistancePerPulse(TICKS_PER_FOOT);
 	driveTrainAccelerometer.reset(new ADXL362(ADXL362::kRange_16G)); //SPI
 
-	// TODO replace with actual ports
 	//shooter
-	shooterRollerTop.reset(new CANTalon(5)); //CAN
-	shooterRollerBottom.reset(new CANTalon(4)); //CAN
-	shooterAngleMotor.reset(new CANTalon(3)); //CAN
+
+	// TODO fix
+
+	shooterRollerTop.reset(new CANTalon(5));
+	shooterRollerTop->SetFeedbackDevice(CANTalon::QuadEncoder);
+	shooterRollerTop->SetSensorDirection(false);
+	//shooterRollerTop->SetControlMode(CANSpeedController::kSpeed);
+	shooterRollerTop->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
+
+	shooterRollerBottom.reset(new CANTalon(4));
+	shooterRollerBottom->SetFeedbackDevice(CANTalon::QuadEncoder);
+	shooterRollerBottom->SetSensorDirection(false);
+	//shooterRollerBottom->SetControlMode(CANSpeedController::kSpeed);
+	shooterRollerBottom->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
+
+	shooterAngleMotor.reset(new CANTalon(3));
+	shooterAngleMotor->SetFeedbackDevice(CANTalon::AnalogPot);
+	shooterAngleMotor->SetSensorDirection(false);
+	shooterAngleMotor->ConfigPotentiometerTurns(1);
+	//shooterAngleMotor->ConfigLimitMode(CANSpeedController::kLimitMode_SoftPositionLimits);
+	//shooterAngleMotor->ConfigForwardLimit(1);
+	//shooterAngleMotor->ConfigReverseLimit(0);
+	//shooterAngleMotor->SetControlMode(CANSpeedController::kPosition);
+	shooterAngleMotor->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Brake);
 
 	//intake
 	intakeRoller.reset(new cougar::CougarSpeedController(4, 102, "Intake Roller")); //PWM
 	intakeAngleAirCylinder.reset(new DoubleSolenoid(5, 1)); //PWM
 	intakeLiftAirCylinder.reset(new DoubleSolenoid(4, 2)); //PWM
-	intakeLimitSwitch.reset(new DigitalInput(4));
-	//compressor.reset(new Compressor()); //PWM
-
+	intakeBallSwitch.reset(new DigitalInput(4));
 }

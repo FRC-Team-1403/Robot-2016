@@ -9,7 +9,7 @@
 #define SRC_COUGARLIB_COUGARDRIVE_H_
 
 #include <memory>
-#include "WPILib.h"
+#include <WPILib.h>
 #include "CougarSpeedController.h"
 #include "CougarSpeedControllerAggregate.h"
 #include "../CougarHID/CougarJoystick.h"
@@ -21,13 +21,13 @@ namespace cougar {
 class CougarDrive {
 public:
 	CougarDrive(uint32_t leftPort, uint32_t rightPort,
-			uint32_t leftPDPSlot, uint32_t rightPDPSlot, std::string name);
+			uint32_t leftPDPSlot, uint32_t rightPDPSlot, std::string name, bool reversed = false);
 	CougarDrive(uint32_t leftPort1, uint32_t leftPort2,
 			uint32_t rightPort1, uint32_t rightPort2,
 			uint32_t leftPDPSlot1, uint32_t leftPDPSlot2,
 			uint32_t rightPDPSlot1, uint32_t rightPDPSlot2,
-			std::string name);
-	CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name);
+			std::string name, bool reversed = false);
+	CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name, bool reversed = false);
 
 	// TODO implement these constructors
 	/*
@@ -39,8 +39,9 @@ public:
 
 	virtual void Drive(float outputMagnitude, float curve) const;
 	virtual void TankDrive(float leftPower, float rightPower, bool squaredInputs = false);
-	virtual void TankDrive(std::shared_ptr<CougarJoystick> joystick, bool reversed = false, bool squaredInputs = false);
-	virtual void ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick = LEFT /*LEFT or RIGHT */, bool disableCurve = false, bool reversed = false, bool squaredInputs = false);
+	virtual void TankDrive(std::shared_ptr<CougarJoystick> joystick, bool squaredInputs = false);
+	virtual void ArcadeDrive(float magnitude, float curve, bool squaredInputs = false);
+	virtual void ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick = LEFT /*LEFT or RIGHT */, bool squaredInputs = false);
 	// I will implement more drive methods, e.g. mecanum, holonomic, if we decide to use them
 	// But for right now, we rarely use anything else and I'm lazy
 
@@ -63,10 +64,10 @@ public:
 	};
 protected:
 	virtual std::shared_ptr<RobotDrive> GetDrive();
-	virtual float speedFactor(std::shared_ptr<CougarJoystick> joystick);
 
 	std::shared_ptr<RobotDrive> drive_;
 	std::string name_;
+	int8_t reverse_;
 };
 
 } /* namespace cougar */

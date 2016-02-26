@@ -11,19 +11,19 @@ namespace cougar {
 
 int CougarJoystick::SMOOTHING_MODE;
 
-CougarJoystick::CougarJoystick(uint32_t port, bool ignoreModsMinusSmoothing) {
+CougarJoystick::CougarJoystick(uint32_t port, int smoothingMode, bool ignoreModsMinusSmoothing) {
 	CougarDebug::startMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 	std::shared_ptr<Joystick> tmpJoystick(new Joystick(port));
-	this->setSmoothingMode(Smoothing::TRIPLE_SINE);
+	this->setSmoothingMode(smoothingMode);
 	this->joystick_ = tmpJoystick;
-	this->port = port;
-	this->ignoreMods = ignoreModsMinusSmoothing;
+	this->port_ = port;
+	this->ignoreMods_ = ignoreModsMinusSmoothing;
 	CougarDebug::endMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 }
 
 CougarJoystick::~CougarJoystick() {
-	CougarDebug::startMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
-	CougarDebug::endMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
+	CougarDebug::startMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port_) + std::string("]")).c_str());
+	CougarDebug::endMethod((std::string("CougarJoystick::~CougarJoystick [port ") + std::to_string(port_) + std::string("]")).c_str());
 }
 
 void CougarJoystick::setSmoothingMode(int32_t mode) {
@@ -78,40 +78,32 @@ bool CougarJoystick::GetRawButton(uint32_t port) {
 }
 
 float CougarJoystick::GetStickLeftAxisX() {
-	if (GetButtonBack()) {
-		return this->joystick_->GetRawAxis(0);
-	} else {
-		return Smoothing::get(this->joystick_->GetRawAxis(0));
-	}
+	return this->getAxis(0);
 }
 
 float CougarJoystick::GetStickLeftAxisY() {
-	if (GetButtonBack()) {
-		return this->joystick_->GetRawAxis(1);
-	}
-	else {
-		return Smoothing::get(this->joystick_->GetRawAxis(1));
-	}
+	return this->getAxis(1);
 }
 
 float CougarJoystick::GetStickRightAxisX() {
-	if (GetButtonBack()) {
-		return this->joystick_->GetRawAxis(4);
-	} else {
-		return Smoothing::get(this->joystick_->GetRawAxis(4));
-	}
+	return this->getAxis(4);
 }
 
 float CougarJoystick::GetStickRightAxisY() {
-	if (GetButtonBack()) {
-		return this->joystick_->GetRawAxis(5);
-	} else {
-		return Smoothing::get(this->joystick_->GetRawAxis(5));
-	}
+	return this->getAxis(5);
 }
 
 float CougarJoystick::GetRawAxis(uint32_t axis) {
 	return this->joystick_->GetRawAxis(axis);
+}
+
+float CougarJoystick::getAxis(uint32_t axis) {
+	float val = Smoothing::get(this->GetRawAxis(axis));
+	if (!this->ignoreMods_) { return val; }
+
+	if (this->GetButtonLT()) { val *= SCALING_FACTOR; }
+	if (this->GetButtonRT()) { val *= -1; }
+	return val;
 }
 
 } /* namespace cougar */

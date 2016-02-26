@@ -17,7 +17,7 @@ namespace cougar {
 
 class CougarJoystick {
 public:
-	explicit CougarJoystick(uint32_t port, bool ignoreModsExceptSmoothing = false);
+	explicit CougarJoystick(uint32_t port, int smoothingMode = Smoothing::TRIPLE_SINE, bool ignoreModsExceptSmoothing = false);
 	virtual ~CougarJoystick();
 
 	virtual void setSmoothingMode(int32_t mode);
@@ -64,22 +64,20 @@ public:
 			return vel;
 		}
 		static float scale(float a) {
-			float val = a * (M_PI / 2) * FACTOR;
-			if (abs(val) > LIMIT) {
-				val = LIMIT * (val / abs(val));
-			}
-			return val;
+			return a * (M_PI / 2);
 		}
 	};
 
 protected:
 
-	uint32_t port;
+	float getAxis(uint32_t axis);
+
+	uint32_t port_;
 	std::shared_ptr<Joystick> joystick_;
-	bool ignoreMods;
+	bool ignoreMods_;
 	static const bool SMOOTHING = true;
 	static int SMOOTHING_MODE;
-	static constexpr double FACTOR = 1.0;
+	static constexpr double SCALING_FACTOR = 0.75;
 	static constexpr double LIMIT = 1;
 };
 

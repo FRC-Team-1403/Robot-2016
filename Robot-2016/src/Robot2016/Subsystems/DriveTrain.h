@@ -22,8 +22,8 @@ private:
 public:
 	DriveTrain();
 	void InitDefaultCommand();
-	void drive();
 
+	void drive();
 	double getDistance();
 	double getVelocity();
 	double getAcceleration();

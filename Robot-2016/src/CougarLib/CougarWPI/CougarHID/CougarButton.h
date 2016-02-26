@@ -28,8 +28,8 @@ public:
 	virtual void update();
 
 private:
-	bool wasPressed, wasReleased, isDown;
-	std::shared_ptr<CougarJoystick> stick;
+	bool wasPressed_, wasReleased_, isDown_;
+	std::shared_ptr<CougarJoystick> stick_;
 };
 
 } /* namespace cougar */
