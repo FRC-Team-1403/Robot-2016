@@ -8,6 +8,7 @@
 #include "../CougarLib/CougarDebug.h"
 #include "../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
+#include "../CougarLib/CougarConstants.h"
 
 class RobotMap {
 public:

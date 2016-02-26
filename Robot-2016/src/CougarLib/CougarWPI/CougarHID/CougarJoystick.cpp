@@ -99,7 +99,7 @@ float CougarJoystick::GetRawAxis(uint32_t axis) {
 
 float CougarJoystick::getAxis(uint32_t axis) {
 	float val = Smoothing::get(this->GetRawAxis(axis));
-	if (!this->ignoreMods_) { return val; }
+	if (this->ignoreMods_) { return val; }
 
 	if (this->GetButtonLT()) { val *= SCALING_FACTOR; }
 	if (this->GetButtonRT()) { val *= -1; }

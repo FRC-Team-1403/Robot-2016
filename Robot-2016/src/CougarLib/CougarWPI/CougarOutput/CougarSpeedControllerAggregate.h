@@ -47,7 +47,6 @@ protected:
 	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers_;
 	std::string name_;
 	bool inverted_;
-
 };
 
 } /* namespace cougar */

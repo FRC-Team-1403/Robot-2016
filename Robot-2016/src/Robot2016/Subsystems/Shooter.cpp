@@ -16,9 +16,9 @@ void Shooter::InitDefaultCommand()
 }
 
 void Shooter::stop() {
-	this->angleMotor->Set(0);
-	this->topRoller->Set(0);
-	this->bottomRoller->Set(0);
+	this->angleMotor->StopMotor();
+	this->topRoller->StopMotor();
+	this->bottomRoller->StopMotor();
 }
 
 double Shooter::getPotentiometer() {
@@ -32,8 +32,8 @@ void Shooter::setBottomRoller(double velocity) {
 	this->bottomRoller->Set(velocity);
 }
 
-void Shooter::setAngleMotor(double velocity) {
-	angleMotor->Set(velocity);
+void Shooter::setAngleMotor(double position) {
+	angleMotor->Set(position);
 }
 int Shooter::getAngleMotorDistance() {
 	return this->angleMotor->GetAnalogIn();

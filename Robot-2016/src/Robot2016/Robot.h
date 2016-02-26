@@ -45,6 +45,7 @@ public:
 	virtual void TeleopInit();
 	virtual void TeleopPeriodic();
 	virtual void TestPeriodic();
+
 private:
 	static void initModes();
 	static void setMode(bool e, bool a, bool t1, bool t2);
