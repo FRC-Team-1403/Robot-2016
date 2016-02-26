@@ -28,8 +28,8 @@ void RobotMap::init(){
 	driveTrainRightEncoder.reset(new Encoder(2, 3)); //Digital
 	driveTrainLeftEncoder.reset(new Encoder(0, 1)); //Digital
 	driveTrainGyro.reset(new cougar::CougarGyro(0)); //Analog
-	driveTrainLeftEncoder->SetDistancePerPulse(1);
-	driveTrainRightEncoder->SetDistancePerPulse(1);//23.8/85 to account for weirdness
+	driveTrainLeftEncoder->SetDistancePerPulse(3.0/358.0);
+	driveTrainRightEncoder->SetDistancePerPulse(3.0/358.0);//23.8/85 to account for weirdness
 	driveTrainAccelerometer.reset(new ADXL362(ADXL362::kRange_16G)); //SPI
 
 	// TODO replace with actual ports
@@ -40,7 +40,6 @@ void RobotMap::init(){
 
 	//intake
 	intakeRoller.reset(new cougar::CougarSpeedController(4, 102, "Intake Roller")); //PWM
-	intakeBallSwitch.reset(new DigitalInput(4)); //Digital
 	intakeAngleAirCylinder.reset(new DoubleSolenoid(5, 1)); //PWM
 	intakeLiftAirCylinder.reset(new DoubleSolenoid(4, 2)); //PWM
 	intakeLimitSwitch.reset(new DigitalInput(4));

@@ -65,7 +65,7 @@ void CougarDrive::TankDrive(std::shared_ptr<CougarJoystick> joystick, bool rever
 	int reverse = reversed ? -1 : 1;
 	this->drive_->TankDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickRightAxisY() * this->speedFactor(joystick) * reverse, squaredInputs);
 }
-void CougarDrive::ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool reversed, bool squaredInputs /* = true */) {
+void CougarDrive::ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool disableCurve, bool reversed, bool squaredInputs /* = true */) {
 	int reverse = reversed ? -1 : 1;
 	if (stick == LEFT) {
 		this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickLeftAxisX() * this->speedFactor(joystick) * reverse, squaredInputs);
@@ -132,8 +132,8 @@ std::shared_ptr<RobotDrive> CougarDrive::GetDrive() {
 }
 
 float CougarDrive::speedFactor(std::shared_ptr<CougarJoystick> joystick) {
-	const float SPEED_FACTOR = 0.5;
-	return joystick->GetButtonY() ? SPEED_FACTOR : 1;
+	const float SPEED_FACTOR = 0.75;
+	return joystick->GetButtonLT() ? (joystick->GetButtonStart() ? -1 * SPEED_FACTOR : SPEED_FACTOR) : 1;
 }
 
 } /* namespace cougar */

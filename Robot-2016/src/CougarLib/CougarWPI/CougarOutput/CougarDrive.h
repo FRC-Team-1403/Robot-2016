@@ -40,7 +40,7 @@ public:
 	virtual void Drive(float outputMagnitude, float curve) const;
 	virtual void TankDrive(float leftPower, float rightPower, bool squaredInputs = false);
 	virtual void TankDrive(std::shared_ptr<CougarJoystick> joystick, bool reversed = false, bool squaredInputs = false);
-	virtual void ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool reversed = false, bool squaredInputs = false);
+	virtual void ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick = LEFT /*LEFT or RIGHT */, bool disableCurve = false, bool reversed = false, bool squaredInputs = false);
 	// I will implement more drive methods, e.g. mecanum, holonomic, if we decide to use them
 	// But for right now, we rarely use anything else and I'm lazy
 

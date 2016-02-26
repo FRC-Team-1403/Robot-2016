@@ -17,10 +17,10 @@ void AimWithJoystick::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void AimWithJoystick::Execute()
 {
-	Robot::shooter->setAngleMotor(.5 * Robot::oi->GetOperatorJoystick()->GetRawAxis(1));
+	Robot::shooter->setAngleMotor(.5 * Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
 
-	//Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
-	//Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY() * -1);
+	Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
+	Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
 
 }
 

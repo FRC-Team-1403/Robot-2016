@@ -71,14 +71,14 @@ void Robot::RobotInit()
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization started");
 	std::shared_ptr<cougar::TrajectoryGenerator::Config> config(new cougar::TrajectoryGenerator::Config());
 	//TODO find these values
-	const double kWheelbaseWidth = 22.25/12;
+	const double kWheelbaseWidth = 23.5/12;
 
 	// Low Bar
 	{
 		config->dt = 0.02; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
 		config->max_acc = 30.0;
 		config->max_jerk = 40.0;
-		config->max_vel = 7.8;
+		config->max_vel = 9.0;
 		const std::string path_name = "LowBarPath";
 		std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
@@ -150,9 +150,9 @@ void Robot::TeleopPeriodic()
 	update();
 
 	SmartDashboard::PutNumber("Joystick value", oi->GetDriverJoystick()->GetStickLeftAxisY());
-	//SmartDashboard::PutNumber("Position", driveTrain->getDistance());
-	//SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
-	//SmartDashboard::PutNumber("Acceleration", driveTrain->getAcceleration());
+	SmartDashboard::PutNumber("Position", driveTrain->getDistance());
+	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
+	SmartDashboard::PutNumber("Acceleration", driveTrain->getAcceleration());
 	SmartDashboard::PutNumber("Compressor", intake->getPressureSwitchValue());
 	SmartDashboard::PutNumber("Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Angular Velocity", driveTrain->getAngularVelocity());
