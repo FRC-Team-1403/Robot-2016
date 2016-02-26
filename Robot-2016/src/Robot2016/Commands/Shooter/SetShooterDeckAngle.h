@@ -1,14 +1,14 @@
-#ifndef SetShooter_H
-#define SetShooter_H
+#ifndef SetShooterDeckAngle_H
+#define SetShooterDeckAngle_H
 
 #include "Commands/Command.h"
 #include "WPILib.h"
 #include <cmath>
 #include "../../../CougarLib/CougarDebug.h"
 
-class SetShooter: public Command {
+class SetShooterDeckAngle: public Command {
 public:
-	SetShooter(float angle);
+	SetShooterDeckAngle(float angle);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

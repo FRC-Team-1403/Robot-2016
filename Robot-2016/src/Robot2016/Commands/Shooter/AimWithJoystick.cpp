@@ -3,15 +3,19 @@
 
 AimWithJoystick::AimWithJoystick()
 {
-	// Use Requires() here to declare subsystem dependencies
-	// eg. Requires(chassis);
+	cougar::CougarDebug::startMethod("AimWithJoystick::AimWithJoystick");
 	Requires(Robot::shooter.get());
+	cougar::CougarDebug::endMethod("AimWithJoystick::AimWithJoystick");
 }
 
 // Called just before this Command runs the first time
 void AimWithJoystick::Initialize()
 {
-
+	cougar::CougarDebug::startMethod("AimWithJoystick::Initialize");
+	Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPercentVbus);
+	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kPercentVbus);
+	Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kPercentVbus);
+	cougar::CougarDebug::endMethod("AimWithJoystick::Initialize");
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -33,12 +37,18 @@ bool AimWithJoystick::IsFinished()
 // Called once after isFinished returns true
 void AimWithJoystick::End()
 {
-
+	cougar::CougarDebug::startMethod("AimWithJoystick::End");
+	Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPosition);
+	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kSpeed);
+	Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kSpeed);
+	cougar::CougarDebug::endMethod("AimWithJoystick::End");
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void AimWithJoystick::Interrupted()
 {
-
+	cougar::CougarDebug::startMethod("AimWithJoystick::Interrupted");
+	End();
+	cougar::CougarDebug::endMethod("AimWithJoystick::Interrupted");
 }

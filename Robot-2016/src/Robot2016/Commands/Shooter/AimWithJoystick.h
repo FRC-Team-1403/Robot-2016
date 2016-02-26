@@ -3,6 +3,7 @@
 
 #include "WPILib.h"
 #include "Commands/Command.h"
+#include "../../../CougarLib/CougarDebug.h"
 
 
 class AimWithJoystick: public Command
