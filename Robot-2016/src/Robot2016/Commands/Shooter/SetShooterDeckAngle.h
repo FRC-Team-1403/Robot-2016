@@ -5,6 +5,7 @@
 #include "WPILib.h"
 #include <cmath>
 #include "../../../CougarLib/CougarDebug.h"
+#include "../../../CougarLib/CougarConstants.h"
 
 class SetShooterDeckAngle: public Command {
 public:
@@ -16,9 +17,6 @@ public:
 	void Interrupted();
 
 	int angle_;
-
-	const static int ZERO_VALUE = 0;
-	const static int TICKS_PER_DEGREE = 0;
 };
 
 #endif

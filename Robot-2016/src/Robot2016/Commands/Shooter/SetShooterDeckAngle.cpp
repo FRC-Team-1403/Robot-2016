@@ -20,7 +20,7 @@ void SetShooterDeckAngle::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void SetShooterDeckAngle::Execute()
 {
-	Robot::shooter->setAngleMotor(this->angle_ * TICKS_PER_DEGREE + ZERO_VALUE);
+	Robot::shooter->setAngleMotor(this->angle_ * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO);
 }
 
 // Make this return true when this Command no longer needs to run execute()

@@ -3,6 +3,9 @@
 
 #include "Commands/Command.h"
 #include "WPILib.h"
+#include "../../../CougarLib/CougarConstants.h"
+#include "../../../CougarLib/CougarDebug.h"
+#include <cmath>
 
 class PowerUpRollers: public Command
 {

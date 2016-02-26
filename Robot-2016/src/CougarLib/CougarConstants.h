@@ -8,6 +8,8 @@
 #ifndef SRC_COUGARLIB_COUGARCONSTANTS_H_
 #define SRC_COUGARLIB_COUGARCONSTANTS_H_
 
+#include <cmath>
+
 namespace cougar {
 
 class CougarConstants {
@@ -54,7 +56,7 @@ public:
 /**********************************Values**********************************/
 
 	// Drive Train
-	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = 3.0/358.0;
+	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = ((8 * M_PI) / 12) * 256;
 
 	// Shooter
 	static const bool SHOOTER_ROLLER_TOP_CANTALON_REVERSE_SENSOR = false;
@@ -65,7 +67,14 @@ public:
 	static const int SHOOTER_DECK_ANGLE_FORWARD_LIMIT = 1;
 	static const int SHOOTER_DECK_ANGLE_REVERSE_LIMIT = 0;
 
+	static const int SHOOTER_DECK_ANGLE_ZERO = 0;
+	static const int SHOOTER_DECK_TICKS_PER_DEGREE = 1;
+
+	static const int SHOOTER_ROLLER_MAX_SPEED = 1;
+
 	static constexpr float SHOOTER_ROLLER_ENCODER_TICKS_PER_REV = 256.0;
+
+
 private:
 	CougarConstants();
 	virtual ~CougarConstants() = default;
