@@ -16,6 +16,7 @@ public:
 	Shooter();
 	void InitDefaultCommand();
 
+	void stop();
 	double getPotentiometer();
 	void setAngleMotor(double velocity);
 	void setTopRoller(double velocity);

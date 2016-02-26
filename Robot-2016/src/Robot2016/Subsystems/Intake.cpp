@@ -8,14 +8,15 @@ Intake::Intake() :
 	this->ballSwitch = RobotMap::intakeBallSwitch;
 	this->rollersAirCylinder = RobotMap::intakeAngleAirCylinder;
 	this->triggerAirCylinder = RobotMap::intakeLiftAirCylinder;
-	this->limitSwitch = RobotMap::intakeLimitSwitch;
-	//this->compressor = RobotMap::compressor;
-	//compressor->SetClosedLoopControl(true);
-	//compressor->Start();
+	this->ballSwitch = RobotMap::intakeBallSwitch;
 }
 
 void Intake::InitDefaultCommand()
 {
+}
+
+void Intake::stop() {
+	this->roller->Set(0);
 }
 
 void Intake::liftRollersAirCylinder() {
@@ -51,6 +52,6 @@ bool Intake::getPressureSwitchValue() {
 	return false;
 }
 
-bool Intake::getLimitSwitchValue() {
-	return limitSwitch->Get();
+bool Intake::getBallSwitchValue() {
+	return ballSwitch->Get();
 }

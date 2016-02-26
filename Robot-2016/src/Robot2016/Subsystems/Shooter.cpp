@@ -15,6 +15,12 @@ void Shooter::InitDefaultCommand()
 	SetDefaultCommand(new AimWithJoystick());
 }
 
+void Shooter::stop() {
+	this->angleMotor->Set(0);
+	this->topRoller->Set(0);
+	this->bottomRoller->Set(0);
+}
+
 double Shooter::getPotentiometer() {
 	return angleMotor->GetEncPosition();
 }

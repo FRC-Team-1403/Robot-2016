@@ -95,8 +95,8 @@ double TrajectoryDriveController::getGoal() {
 }
 
 void TrajectoryDriveController::init() {
-	followerLeft->configure(1, 0, 0.15, 1.0/9.0, 1.0/30.0);
-	followerRight->configure(1, 0, 0.15, 1.0/9.0, 1.0/30.0);
+	followerLeft->configure(0.3, 0, 0.05, 1.0/9.0, 1.0/30.0);
+	followerRight->configure(0.3, 0, 0.05, 1.0/9.0, 1.0/30.0);
 }
 
 } /* namespace cougar */

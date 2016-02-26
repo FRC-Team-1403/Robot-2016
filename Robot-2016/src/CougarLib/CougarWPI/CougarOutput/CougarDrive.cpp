@@ -13,13 +13,14 @@
 namespace cougar {
 
 CougarDrive::CougarDrive(uint32_t leftPort, uint32_t rightPort,
-		uint32_t leftPDPSlot, uint32_t rightPDPSlot, std::string name) {
+		uint32_t leftPDPSlot, uint32_t rightPDPSlot, std::string name, bool reversed) {
 	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<SpeedController> tmpLeft(new CougarSpeedController(leftPort, leftPDPSlot, name + "Left"));
 	std::shared_ptr<SpeedController> tmpRight(new CougarSpeedController(rightPort, rightPDPSlot, name + "Right"));
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(tmpLeft, tmpRight));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
+	this->reverse_ = reversed ? -1 : 1;
 	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
 }
 
@@ -27,7 +28,7 @@ CougarDrive::CougarDrive(uint32_t leftPort1, uint32_t leftPort2,
 		uint32_t rightPort1, uint32_t rightPort2,
 		uint32_t leftPDPSlot1, uint32_t leftPDPSlot2,
 		uint32_t rightPDPSlot1, uint32_t rightPDPSlot2,
-		std::string name) {
+		std::string name, bool reversed) {
 	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<SpeedController> tmpLeft(new CougarSpeedControllerAggregate(leftPort1, leftPort2,
 			leftPDPSlot1, leftPDPSlot2, name + "Left"));
@@ -36,15 +37,17 @@ CougarDrive::CougarDrive(uint32_t leftPort1, uint32_t leftPort2,
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(tmpLeft, tmpRight));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
+	this->reverse_ = reversed ? -1 : 1;
 	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
 }
 
 
-CougarDrive::CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name) {
+CougarDrive::CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name, bool reversed) {
 	CougarDebug::startMethod("CougarDrive::CougarDrive " + name);
 	std::shared_ptr<RobotDrive> tmpDrive(new RobotDrive(left, right));
 	this->drive_ = tmpDrive;
 	this->name_ = name;
+	this->reverse_ = reversed ? -1 : 1;
 	CougarDebug::endMethod("CougarDrive::CougarDrive " + this->GetName());
 }
 
@@ -54,23 +57,26 @@ CougarDrive::~CougarDrive() {
 }
 
 void CougarDrive::Drive(float outputMagnitude, float curve) const {
-	this->drive_->Drive(outputMagnitude, curve);
+	this->drive_->Drive(outputMagnitude * reverse_, curve);
 }
 
 void CougarDrive::TankDrive(float leftPower, float rightPower, bool squaredInputs /* = false */) {
-	this->drive_->TankDrive(leftPower, rightPower, squaredInputs);
+	this->drive_->TankDrive(leftPower * reverse_, rightPower * reverse_, squaredInputs);
 }
 
-void CougarDrive::TankDrive(std::shared_ptr<CougarJoystick> joystick, bool reversed,  bool squaredInputs /* = true */) {
-	int reverse = reversed ? -1 : 1;
-	this->drive_->TankDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickRightAxisY() * this->speedFactor(joystick) * reverse, squaredInputs);
+void CougarDrive::TankDrive(std::shared_ptr<CougarJoystick> joystick, bool squaredInputs /* = false */) {
+	this->drive_->TankDrive(joystick->GetStickLeftAxisY() * reverse_, joystick->GetStickRightAxisY() * reverse_, squaredInputs);
 }
-void CougarDrive::ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool disableCurve, bool reversed, bool squaredInputs /* = true */) {
-	int reverse = reversed ? -1 : 1;
+
+void CougarDrive::ArcadeDrive(float magnitude, float curve, bool squaredInputs) {
+	this->drive_->ArcadeDrive(magnitude, curve, squaredInputs);
+}
+
+void CougarDrive::ArcadeDrive(std::shared_ptr<CougarJoystick> joystick, int stick /* LEFT or RIGHT */ , bool squaredInputs /* = true */) {
 	if (stick == LEFT) {
-		this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickLeftAxisX() * this->speedFactor(joystick) * reverse, squaredInputs);
+		this->drive_->ArcadeDrive(joystick->GetStickLeftAxisY() * reverse_, joystick->GetStickLeftAxisX() * reverse_, squaredInputs);
 	} else if (stick == RIGHT) {
-		this->drive_->ArcadeDrive(joystick->GetStickRightAxisY() * this->speedFactor(joystick) * reverse, joystick->GetStickRightAxisX() * this->speedFactor(joystick) * reverse, squaredInputs);
+		this->drive_->ArcadeDrive(joystick->GetStickRightAxisY()* reverse_, joystick->GetStickRightAxisX() * reverse_, squaredInputs);
 	} else {
 		CougarDebug::debugPrinter(CougarDebug::DEBUG_LEVEL::ISSUE, "An invalid analog stick has been specified...\n\n");
 	}
@@ -129,11 +135,6 @@ const char *CougarDrive::GetCName() const {
 
 std::shared_ptr<RobotDrive> CougarDrive::GetDrive() {
 	return this->drive_;
-}
-
-float CougarDrive::speedFactor(std::shared_ptr<CougarJoystick> joystick) {
-	const float SPEED_FACTOR = 0.75;
-	return joystick->GetButtonLT() ? (joystick->GetButtonStart() ? -1 * SPEED_FACTOR : SPEED_FACTOR) : 1;
 }
 
 } /* namespace cougar */

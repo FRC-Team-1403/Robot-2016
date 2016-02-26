@@ -30,9 +30,6 @@ public:
 	static std::shared_ptr<DigitalInput> intakeBallSwitch;
 	static std::shared_ptr<DoubleSolenoid> intakeAngleAirCylinder;
 	static std::shared_ptr<DoubleSolenoid> intakeLiftAirCylinder;
-	static std::shared_ptr<DigitalInput> intakeLimitSwitch;
-	//static std::shared_ptr<Compressor> compressor;
-
 };
 
 #endif

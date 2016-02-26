@@ -5,7 +5,7 @@
  *      Author: Thejas
  */
 
-#include <CougarLib/CougarController.h>
+#include "CougarController.h"
 
 namespace cougar {
 
@@ -15,8 +15,8 @@ CougarController::CougarController() {
 }
 
 CougarController::~CougarController() {
-	//CougarDebug::startMethod("CougarController::~CougarController");
-	//CougarDebug::endMethod("CougarController::~CougarController");
+	CougarDebug::startMethod("CougarController::~CougarController");
+	CougarDebug::endMethod("CougarController::~CougarController");
 }
 
 void CougarController::enable() {

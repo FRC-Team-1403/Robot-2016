@@ -12,12 +12,12 @@ private:
 	std::shared_ptr<DigitalInput> ballSwitch;
 	std::shared_ptr<DoubleSolenoid> rollersAirCylinder;
 	std::shared_ptr<DoubleSolenoid> triggerAirCylinder;
-	std::shared_ptr<DigitalInput> limitSwitch;
-	//std::shared_ptr<Compressor> compressor;
 
 public:
 	Intake();
 	void InitDefaultCommand();
+
+	void stop();
 	void liftRollersAirCylinder();
 	void dropRollersAirCylinder();
 	void liftTriggerAirCylinder();
@@ -26,7 +26,7 @@ public:
 	enum DoubleSolenoid::Value getRollersAirCylinderValue();
 	void setRoller(double value);
 	bool getPressureSwitchValue();
-	bool getLimitSwitchValue();
+	bool getBallSwitchValue();
 };
 
 #endif
