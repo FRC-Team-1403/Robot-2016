@@ -20,36 +20,31 @@ void Intake::stop() {
 }
 
 void Intake::liftRollersAirCylinder() {
-	rollersAirCylinder->Set(DoubleSolenoid::kForward);
-}
-
-void Intake::dropRollersAirCylinder() {
 	rollersAirCylinder->Set(DoubleSolenoid::kReverse);
 }
 
+void Intake::dropRollersAirCylinder() {
+	rollersAirCylinder->Set(DoubleSolenoid::kForward);
+}
+
 void Intake::liftTriggerAirCylinder() {
-	triggerAirCylinder->Set(DoubleSolenoid::kForward);
+	triggerAirCylinder->Set(false);
 }
 
 void Intake::dropTriggerAirCylinder() {
-	triggerAirCylinder->Set(DoubleSolenoid::kReverse);
+	triggerAirCylinder->Set(true);
 }
 
 enum DoubleSolenoid::Value Intake::getRollersAirCylinderValue() {
 	return rollersAirCylinder->Get();
 }
 
-enum DoubleSolenoid::Value Intake::getTriggerAirCylinderValue() {
+bool Intake::getTriggerAirCylinderValue() {
 	return triggerAirCylinder->Get();
 }
 
 void Intake::setRoller(double value) {
 	roller->Set(value);
-}
-
-bool Intake::getPressureSwitchValue() {
-	//return compressor->GetPressureSwitchValue();
-	return false;
 }
 
 bool Intake::getBallSwitchValue() {

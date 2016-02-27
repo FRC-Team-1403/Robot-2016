@@ -23,7 +23,7 @@ void LiftTrigger::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool LiftTrigger::IsFinished()
 {
-	return Robot::intake->getTriggerAirCylinderValue() == DoubleSolenoid::kForward;
+	return Robot::intake->getTriggerAirCylinderValue() == false;
 }
 
 // Called once after isFinished returns true

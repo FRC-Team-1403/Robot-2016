@@ -3,17 +3,36 @@
 
 #include "WPILib.h"
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
+#include "../../CougarLib/CougarConstants.h"
 #include <memory>
 
 class Shooter: public Subsystem
 {
 public:
+
+	//projectile motion constants
+	double x, y, d, vi, angle, k, s, h, a, e;
+	//x = horizontal distance from shooter to goal
+	//y = vertical distance from shooter to goal
+	//d = diagonal distance from camera to goal
+	//vi = initial velocity of ball
+	//angle = angle the shooter must be set to
+	//k = horizontal distance from shooter to camera
+	//s = spin constant
+	//h = height of shooter from ground
+	//a = vertical acceleration of ball
+	int i;
+	//i = pseudo loop counter for CalculateAngle command
+
+	bool autonomousMode; //true: default command is CalculateAngle, false: default command is AimWithJoystick
+
 	Shooter();
 	void InitDefaultCommand();
 
 	void stop();
 	double getPotentiometer();
 	void setAngleMotor(double position);
+	void setCameraServo(double position);
 	void setTopRoller(double velocity);
 	void setBottomRoller(double velocity);
 	int getAngleMotorDistance();
@@ -23,9 +42,26 @@ public:
 	int getTopRollerVelocity();
 	int getBottomRollerVelocity();
 
+	//for projectile motion
+	double calculateAngle();
+	void setAngle(double value);
+	double getAngle();
+	double getDistance();
+	int getI();
+	void setI(int value);
+	/*int getE();
+	int getY();
+	int getVI();
+	int getX();*/
+	std::shared_ptr<NetworkTable> table;
+
+	bool getStopFlyWheels();
+
 	std::shared_ptr<CANTalon> bottomRoller;
 	std::shared_ptr<CANTalon> topRoller;
 	std::shared_ptr<CANTalon> angleMotor;
+	std::shared_ptr<Servo> cameraServo;
+
 
 };
 

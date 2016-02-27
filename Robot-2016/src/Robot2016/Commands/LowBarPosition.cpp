@@ -1,5 +1,5 @@
 #include "Shooter/SetShooterDeckAngle.h"
-#include "IntakeBall.h"
+#include "LowBarPosition.h"
 #include "Intake/DropRollers.h"
 #include "Intake/RollersIn.h"
 #include "Intake/RollersInTimed.h"
@@ -8,7 +8,7 @@
 #include "StopAllOperator.h"
 
 
-IntakeBall::IntakeBall()
+LowBarPosition::LowBarPosition()
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -27,23 +27,11 @@ IntakeBall::IntakeBall()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	cougar::CougarDebug::startMethod("IntakeBall::IntakeBall");
+	cougar::CougarDebug::startMethod("LowBarPosition::LowBarPosition");
 
-	const float INTAKE_POS = -15;
 	const float CARRYING_POS = 0;
 
-	AddSequential(new LiftTrigger());
 
-	AddParallel(new DropRollers());
-	AddParallel(new SetShooterDeckAngle(INTAKE_POS));
-	AddSequential(new DropTrigger());
 
-	AddSequential(new RollersIn());
-
-	AddParallel(new LiftTrigger());
-	AddSequential(new SetShooterDeckAngle(CARRYING_POS));
-
-	AddSequential(new StopAllOperator());
-
-	cougar::CougarDebug::endMethod("IntakeBall::IntakeBall");
+	cougar::CougarDebug::endMethod("LowBarPosition::LowBarPosition");
 }

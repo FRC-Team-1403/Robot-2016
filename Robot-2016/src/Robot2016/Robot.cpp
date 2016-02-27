@@ -8,6 +8,7 @@ std::shared_ptr<cougar::Path> Robot::lowBarPath;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 std::shared_ptr<Shooter> Robot::shooter;
 std::shared_ptr<Intake> Robot::intake;
+std::shared_ptr<NetworkTable> table;
 
 bool Robot::enabled;
 bool Robot::autonomous;
@@ -129,6 +130,7 @@ void Robot::AutonomousPeriodic()
 	Scheduler::GetInstance()->Run();
 	update();
 
+
 }
 
 void Robot::TeleopInit()
@@ -142,6 +144,8 @@ void Robot::TeleopInit()
 	if (autonomousCommand != NULL)
 		autonomousCommand->Cancel();
 
+	table = NetworkTable::GetTable("SmartDashboard");
+
 	cougar::CougarDebug::endMethod("Robot::TeleopInit");
 }
 
@@ -149,6 +153,27 @@ void Robot::TeleopPeriodic()
 {
 	Scheduler::GetInstance()->Run();
 	update();
+
+
+	auto a = table->GetNumberArray("distance",0);
+	for(int x:a)
+	SmartDashboard::PutNumber("distance", a[x]);
+	auto b = table->GetNumberArray("azim"
+			"uth",0);
+	for(int x:b)
+	SmartDashboard::PutNumber("azimuth", a[x]);
+
+
+	SmartDashboard::PutNumber("Driver Left X", oi->GetDriverJoystick()->GetStickLeftAxisX());
+	SmartDashboard::PutNumber("Driver Left Y", oi->GetDriverJoystick()->GetStickLeftAxisY());
+	SmartDashboard::PutNumber("Driver Right X", oi->GetDriverJoystick()->GetStickRightAxisX());
+	SmartDashboard::PutNumber("Driver Right Y", oi->GetDriverJoystick()->GetStickRightAxisY());
+
+	SmartDashboard::PutNumber("Operator Left X", oi->GetOperatorJoystick()->GetStickLeftAxisX());
+	SmartDashboard::PutNumber("Operator Left Y", oi->GetOperatorJoystick()->GetStickLeftAxisY());
+	SmartDashboard::PutNumber("Operator Right X", oi->GetOperatorJoystick()->GetStickRightAxisX());
+	SmartDashboard::PutNumber("Operator Right Y", oi->GetOperatorJoystick()->GetStickRightAxisY());
+
 
 	SmartDashboard::PutNumber("Position", driveTrain->getDistance());
 	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());

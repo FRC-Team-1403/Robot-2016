@@ -39,6 +39,7 @@ public:
 	static const uint8_t SHOOTER_ROLLER_TOP_CANTALON_PORT = 5;
 	static const uint8_t SHOOTER_ROLLER_BOTTOM_CANTALON_PORT = 4;
 	static const uint8_t SHOOTER_DECK_ANGLE_CANTALON_PORT = 3;
+	static const uint8_t SHOOTER_CAMERA_SERVO_PORT = 5;
 
 	// Intake
 	static const uint8_t INTAKE_ROLLER_VICTOR_PORT = 4;
@@ -47,8 +48,7 @@ public:
 	static const uint8_t INTAKE_ANGLE_DOUBLESOLENOID_FORWARD_CHANNEL = 5;
 	static const uint8_t INTAKE_ANGLE_DOUBLESOLENOID_REVERSE_CHANNEL = 1;
 
-	static const uint8_t INTAKE_TRIGGER_DOUBLESOLENOID_FORWARD_CHANNEL = 4;
-	static const uint8_t INTAKE_TRIGGER_DOUBLESOLENOID_REVERSE_CHANNEL = 2;
+	static const uint8_t INTAKE_TRIGGER_SOLENOID_CHANNEL = 4;
 
 	static const uint8_t INTAKE_BALL_LIMIT_SWITCH_DIGITAL_INPUT_PORT = 4;
 
@@ -56,24 +56,32 @@ public:
 /**********************************Values**********************************/
 
 	// Drive Train
-	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = ((8 * M_PI) / 12) * 256;
+	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = ((8 * M_PI) / 12) / 256;
 
 	// Shooter
-	static const bool SHOOTER_ROLLER_TOP_CANTALON_REVERSE_SENSOR = false;
-	static const bool SHOOTER_ROLLER_BOTTOM_CANTALON_REVERSE_SENSOR = false;
+	static const bool SHOOTER_ROLLER_TOP_CANTALON_REVERSE_SENSOR = true;
+	static const bool SHOOTER_ROLLER_BOTTOM_CANTALON_REVERSE_SENSOR = true;
 	static const bool SHOOTER_DECK_ANGLE_CANTALON_REVERSE_SENSOR = false;
 
 	static const int SHOOTER_DECK_ANGLE_POTENTIOMETER_TURNS = 1;
-	static const int SHOOTER_DECK_ANGLE_FORWARD_LIMIT = 1;
-	static const int SHOOTER_DECK_ANGLE_REVERSE_LIMIT = 0;
+	static const int SHOOTER_DECK_ANGLE_FORWARD_LIMIT = 351;
+	static const int SHOOTER_DECK_ANGLE_REVERSE_LIMIT = 604;
 
-	static const int SHOOTER_DECK_ANGLE_ZERO = 0;
-	static const int SHOOTER_DECK_TICKS_PER_DEGREE = 1;
+	static const int SHOOTER_DECK_ANGLE_ZERO = 572;
+	static const int SHOOTER_DECK_TICKS_PER_DEGREE = 5;
 
-	static const int SHOOTER_ROLLER_MAX_SPEED = 1;
+	static const int SHOOTER_ROLLER_MAX_SPEED = 4500;
 
-	static constexpr float SHOOTER_ROLLER_ENCODER_TICKS_PER_REV = 256.0;
+	static constexpr float SHOOTER_ROLLER_ENCODER_TICKS_PER_REV = 512.0 / 5.0;
 
+	//Projectile Motion x, vi, y, a
+	static constexpr float ACCEPTABLE_ERROR_IN_ANGLE = .1;
+	static constexpr float HEIGHT_OF_SHOOTER = 2.0/3.0; //h 8 inches
+	static constexpr float VERTICAL_DISTANCE_FROM_TOWER = 97.0/12.0 - HEIGHT_OF_SHOOTER; //y
+	static constexpr float DISTANCE_FROM_CAMERA = 14.0/12.0; //14 inches
+	static constexpr float SPIN_CONSTANT = 0; //s, test for this
+	static constexpr float VERTICAL_ACCELERATION = 32.174 + SPIN_CONSTANT; //a
+	static constexpr float INITIAL_VELOCITY = 41.86; //vi
 
 private:
 	CougarConstants();

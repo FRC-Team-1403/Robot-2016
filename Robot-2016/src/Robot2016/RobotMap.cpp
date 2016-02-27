@@ -11,12 +11,13 @@ std::shared_ptr<ADXL362> RobotMap::driveTrainAccelerometer;
 std::shared_ptr<CANTalon> RobotMap::shooterRollerTop;
 std::shared_ptr<CANTalon> RobotMap::shooterRollerBottom;
 std::shared_ptr<CANTalon> RobotMap::shooterAngleMotor;
+std::shared_ptr<Servo> RobotMap::shooterCameraServo;
 
 //Intake
 std::shared_ptr<cougar::CougarSpeedController> RobotMap::intakeRoller;
 std::shared_ptr<DigitalInput> RobotMap::intakeBallSwitch;
 std::shared_ptr<DoubleSolenoid> RobotMap::intakeAngleAirCylinder;
-std::shared_ptr<DoubleSolenoid> RobotMap::intakeLiftAirCylinder;
+std::shared_ptr<Solenoid> RobotMap::intakeLiftAirCylinder;
 
 void RobotMap::init(){
 	LiveWindow *lw = LiveWindow::GetInstance();
@@ -38,7 +39,7 @@ void RobotMap::init(){
 				cougar::CougarConstants::DRIVETRAIN_VICTOR_PDP_SLOT_RIGHT_2,
 
 				// Name
-				"Drive"));
+				"Drive", true));
 
 	// Left Encoder
 	driveTrainLeftEncoder.reset(new Encoder(
@@ -100,6 +101,10 @@ void RobotMap::init(){
 	shooterAngleMotor->SetControlMode(CANSpeedController::kPosition);
 	shooterAngleMotor->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Brake);
 
+	// Camera
+	shooterCameraServo.reset(new Servo(
+				cougar::CougarConstants::SHOOTER_CAMERA_SERVO_PORT));
+
 /**********************************Intake**********************************/
 
 	// Roller
@@ -112,9 +117,8 @@ void RobotMap::init(){
 				cougar::CougarConstants::INTAKE_ANGLE_DOUBLESOLENOID_FORWARD_CHANNEL,
 				cougar::CougarConstants::INTAKE_ANGLE_DOUBLESOLENOID_REVERSE_CHANNEL));
 
-	intakeLiftAirCylinder.reset(new DoubleSolenoid(
-				cougar::CougarConstants::INTAKE_TRIGGER_DOUBLESOLENOID_FORWARD_CHANNEL,
-				cougar::CougarConstants::INTAKE_TRIGGER_DOUBLESOLENOID_REVERSE_CHANNEL)); //PWM
+	intakeLiftAirCylinder.reset(new Solenoid(
+				cougar::CougarConstants::INTAKE_TRIGGER_SOLENOID_CHANNEL)); //PWM
 
 	intakeBallSwitch.reset(new DigitalInput(
 				cougar::CougarConstants::INTAKE_BALL_LIMIT_SWITCH_DIGITAL_INPUT_PORT));

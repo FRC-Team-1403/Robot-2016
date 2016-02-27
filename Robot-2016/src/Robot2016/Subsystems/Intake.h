@@ -11,7 +11,7 @@ private:
 	std::shared_ptr<cougar::CougarSpeedController> roller;
 	std::shared_ptr<DigitalInput> ballSwitch;
 	std::shared_ptr<DoubleSolenoid> rollersAirCylinder;
-	std::shared_ptr<DoubleSolenoid> triggerAirCylinder;
+	std::shared_ptr<Solenoid> triggerAirCylinder;
 
 public:
 	Intake();
@@ -22,10 +22,9 @@ public:
 	void dropRollersAirCylinder();
 	void liftTriggerAirCylinder();
 	void dropTriggerAirCylinder();
-	enum DoubleSolenoid::Value getTriggerAirCylinderValue();
+	bool getTriggerAirCylinderValue();
 	enum DoubleSolenoid::Value getRollersAirCylinderValue();
 	void setRoller(double value);
-	bool getPressureSwitchValue();
 	bool getBallSwitchValue();
 };
 

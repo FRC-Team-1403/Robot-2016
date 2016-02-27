@@ -23,7 +23,7 @@ void DropTrigger::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool DropTrigger::IsFinished()
 {
-	return Robot::intake->getTriggerAirCylinderValue() == DoubleSolenoid::kReverse;
+	return Robot::intake->getTriggerAirCylinderValue() == true;
 }
 
 // Called once after isFinished returns true
