@@ -6,6 +6,7 @@
 #include "Commands/Intake/LiftTrigger.h"
 #include "Commands/Intake/RollersIn.h"
 #include "Commands/Intake/RollersOut.h"
+#include "Commands/Shooter/SetShooterDeckAngle.h"
 
 #include "Commands/IntakeBall.h"
 
@@ -17,12 +18,12 @@ OI::OI()
 	this->operatorJoy.reset(new cougar::CougarJoystick(1, true));
 
 	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
-	operatorButtonA->WhenPressed(new DropRollers());
-	//operatorButtonA->WhenPressed(new IntakeBall());
+	//operatorButtonA->WhenPressed(new DropRollers());
+	operatorButtonA->WhenPressed(new IntakeBall());
 
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
-	operatorButtonB->WhenPressed(new LiftRollers());
-	//operatorButtonB->WhenPressed(new StopAllOperator());
+	//operatorButtonB->WhenPressed(new LiftRollers());
+	operatorButtonB->WhenPressed(new StopAllOperator());
 	// TODO make a button to lift rollers
 
 	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));
@@ -32,7 +33,9 @@ OI::OI()
 	operatorButtonY->WhenPressed(new LiftTrigger());
 
 	operatorButtonLB.reset(new cougar::CougarButton(operatorJoy, 5));
-	operatorButtonLB->WhileHeld(new RollersOut());
+	//operatorButtonLB->WhileHeld(new RollersOut());
+	operatorButtonLB->WhenPressed(new SetShooterDeckAngle(0));
+
 
 	operatorButtonRB.reset(new cougar::CougarButton(operatorJoy, 6));
 	operatorButtonRB->WhileHeld(new RollersIn());

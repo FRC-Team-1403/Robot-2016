@@ -29,7 +29,7 @@ IntakeBall::IntakeBall()
 
 	cougar::CougarDebug::startMethod("IntakeBall::IntakeBall");
 
-	const float INTAKE_POS = 0;
+	const float INTAKE_POS = -15;
 	const float CARRYING_POS = 0;
 
 	AddSequential(new LiftTrigger());

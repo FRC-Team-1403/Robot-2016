@@ -25,12 +25,13 @@ public:
 	static std::shared_ptr<CANTalon> shooterRollerTop;
 	static std::shared_ptr<CANTalon> shooterRollerBottom;
 	static std::shared_ptr<CANTalon> shooterAngleMotor;
+	static std::shared_ptr<Servo> shooterCameraServo;
 
 	//intake
 	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;
 	static std::shared_ptr<DigitalInput> intakeBallSwitch;
 	static std::shared_ptr<DoubleSolenoid> intakeAngleAirCylinder;
-	static std::shared_ptr<DoubleSolenoid> intakeLiftAirCylinder;
+	static std::shared_ptr<Solenoid> intakeLiftAirCylinder;
 };
 
 #endif
