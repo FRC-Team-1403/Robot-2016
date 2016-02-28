@@ -3,6 +3,7 @@
 
 #include "WPILib.h"
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
+#include "../../CougarLib/CougarWPI/CougarOutput/CougarCANTalon.h"
 #include "../../CougarLib/CougarConstants.h"
 #include <memory>
 
@@ -57,9 +58,9 @@ public:
 
 	bool getStopFlyWheels();
 
-	std::shared_ptr<CANTalon> bottomRoller;
-	std::shared_ptr<CANTalon> topRoller;
-	std::shared_ptr<CANTalon> angleMotor;
+	std::shared_ptr<cougar::CougarCANTalon> bottomRoller;
+	std::shared_ptr<cougar::CougarCANTalon> topRoller;
+	std::shared_ptr<cougar::CougarCANTalon> angleMotor;
 	std::shared_ptr<Servo> cameraServo;
 
 

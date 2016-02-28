@@ -25,9 +25,11 @@ void Shooter::stop() {
 }
 double getAngle(){
 	//return table->GetNumber("azimuth", 0);
+	return 0;
 }
 double getDistance(){
 	//return table->GetNumber("distance",0);
+	return 0;
 }
 double Shooter::getPotentiometer() {
 	return angleMotor->GetEncPosition();

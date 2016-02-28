@@ -4,6 +4,7 @@
 #include <memory>
 #include "WPILib.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
+#include "../CougarLib/CougarWPI/CougarOutput/CougarCANTalon.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarSpeedControllerAggregate.h"
 #include "../CougarLib/CougarDebug.h"
 #include "../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
@@ -22,9 +23,9 @@ public:
 	static std::shared_ptr<ADXL362> driveTrainAccelerometer;
 
 	//shooter
-	static std::shared_ptr<CANTalon> shooterRollerTop;
-	static std::shared_ptr<CANTalon> shooterRollerBottom;
-	static std::shared_ptr<CANTalon> shooterAngleMotor;
+	static std::shared_ptr<cougar::CougarCANTalon> shooterRollerTop;
+	static std::shared_ptr<cougar::CougarCANTalon> shooterRollerBottom;
+	static std::shared_ptr<cougar::CougarCANTalon> shooterAngleMotor;
 	static std::shared_ptr<Servo> shooterCameraServo;
 
 	//intake

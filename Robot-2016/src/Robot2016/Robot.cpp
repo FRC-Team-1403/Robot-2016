@@ -154,7 +154,6 @@ void Robot::TeleopPeriodic()
 	Scheduler::GetInstance()->Run();
 	update();
 
-
 	auto a = table->GetNumberArray("distance",0);
 	for(int x:a)
 	SmartDashboard::PutNumber("distance", a[x]);
@@ -175,12 +174,13 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Operator Right Y", oi->GetOperatorJoystick()->GetStickRightAxisY());
 
 
-	SmartDashboard::PutNumber("Position", driveTrain->getDistance());
-	SmartDashboard::PutNumber("Velocity", driveTrain->getVelocity());
-	SmartDashboard::PutNumber("Acceleration", driveTrain->getAcceleration());
-	SmartDashboard::PutNumber("Angle", driveTrain->getGyroAngleInRadians());
+	SmartDashboard::PutNumber("Drive Position", driveTrain->getDistance());
+	SmartDashboard::PutNumber("Drive Velocity", driveTrain->getVelocity());
+	SmartDashboard::PutNumber("Drive Acceleration", driveTrain->getAcceleration());
+	SmartDashboard::PutNumber("Drive Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());
 	SmartDashboard::PutNumber("Drive Train Right Encoder", driveTrain->getRightEncoderDistance());
+
 	SmartDashboard::PutNumber("POT distance", shooter->getAngleMotorDistance());
 	SmartDashboard::PutNumber("POT velocity", shooter->getAngleMotorVelocity());
 	SmartDashboard::PutNumber("Top Roller position", shooter->getTopRollerDistance());
