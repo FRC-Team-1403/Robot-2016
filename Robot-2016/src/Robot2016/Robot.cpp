@@ -190,6 +190,10 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Intake limit switch", intake->getBallSwitchValue());
 	SmartDashboard::PutNumber("Roller Solenoid", intake->getRollersAirCylinderValue());
 	SmartDashboard::PutNumber("Trigger Solenoid", intake->getTriggerAirCylinderValue());
+
+	SmartDashboard::PutNumber("Angle Motor", shooter->angleMotor->Get());
+	SmartDashboard::PutNumber("Top Roller", shooter->topRoller->Get());
+	SmartDashboard::PutNumber("Bottom Roller", shooter->bottomRoller->Get());
 }
 
 void Robot::TestPeriodic()

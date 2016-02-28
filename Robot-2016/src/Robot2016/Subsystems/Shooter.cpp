@@ -19,9 +19,13 @@ void Shooter::InitDefaultCommand()
 }
 
 void Shooter::stop() {
-	this->angleMotor->StopMotor();
-	this->topRoller->StopMotor();
-	this->bottomRoller->StopMotor();
+	this->angleMotor->Disable();
+	this->topRoller->Disable();
+	this->bottomRoller->Disable();
+
+	this->angleMotor->Enable();
+	this->topRoller->Enable();
+	this->bottomRoller->Enable();
 }
 double getAngle(){
 	//return table->GetNumber("azimuth", 0);

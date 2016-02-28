@@ -26,6 +26,9 @@ void SetShooterDeckAngle::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool SetShooterDeckAngle::IsFinished()
 {
+	std::cout << "Setpoint: " << Robot::shooter->angleMotor->GetSetpoint() << "\n";
+	std::cout << "Position: " << Robot::shooter->angleMotor->GetPosition() << "\n";
+	std::cout << "Speed: " << Robot::shooter->angleMotor->GetAnalogInVel() << "\n";
 	return std::abs(Robot::shooter->angleMotor->GetSetpoint() - Robot::shooter->angleMotor->GetPosition()) < 10;
 }
 
