@@ -19,15 +19,21 @@ void Shooter::InitDefaultCommand()
 }
 
 void Shooter::stop() {
-	this->angleMotor->StopMotor();
-	this->topRoller->StopMotor();
-	this->bottomRoller->StopMotor();
+	this->angleMotor->Disable();
+	this->topRoller->Disable();
+	this->bottomRoller->Disable();
+
+	this->angleMotor->Enable();
+	this->topRoller->Enable();
+	this->bottomRoller->Enable();
 }
 double getAngle(){
 	//return table->GetNumber("azimuth", 0);
+	return 0;
 }
 double getDistance(){
 	//return table->GetNumber("distance",0);
+	return 0;
 }
 double Shooter::getPotentiometer() {
 	return angleMotor->GetEncPosition();

@@ -20,6 +20,7 @@ void PowerUpRollers::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void PowerUpRollers::Execute()
 {
+
 	Robot::shooter->setTopRoller((this->bottomRollerPower_ / 100.0) * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
 	Robot::shooter->setBottomRoller((this->bottomRollerPower_ / 100.0) * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
 }
@@ -27,6 +28,11 @@ void PowerUpRollers::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool PowerUpRollers::IsFinished()
 {
+	std::cout << "Setpoint top: " << Robot::shooter->topRoller->GetSetpoint() << "\n";
+	std::cout << "Setpoint bottom: " << Robot::shooter->bottomRoller->GetSetpoint() << "\n";
+	std::cout << "Speed top: " << Robot::shooter->topRoller->GetSpeed() << "\n";
+	std::cout << "Speed bottom: " << Robot::shooter->bottomRoller->GetSpeed() << "\n";
+
 	return std::abs(Robot::shooter->topRoller->GetSetpoint() - Robot::shooter->topRoller->GetSpeed()) < 10 &&
 		   std::abs(Robot::shooter->bottomRoller->GetSetpoint() - Robot::shooter->bottomRoller->GetSpeed()) < 10;
 }

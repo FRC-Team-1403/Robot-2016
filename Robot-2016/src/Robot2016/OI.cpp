@@ -7,6 +7,7 @@
 #include "Commands/Intake/RollersIn.h"
 #include "Commands/Intake/RollersOut.h"
 #include "Commands/Shooter/SetShooterDeckAngle.h"
+#include "Commands/Shooter/PowerUpRollers.h"
 
 #include "Commands/IntakeBall.h"
 
@@ -19,7 +20,8 @@ OI::OI()
 
 	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
 	//operatorButtonA->WhenPressed(new DropRollers());
-	operatorButtonA->WhenPressed(new IntakeBall());
+	//operatorButtonA->WhenPressed(new IntakeBall());
+	operatorButtonA->WhenPressed(new PowerUpRollers(50, 50));
 
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
 	//operatorButtonB->WhenPressed(new LiftRollers());

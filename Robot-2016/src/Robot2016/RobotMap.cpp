@@ -8,9 +8,9 @@ std::shared_ptr<Gyro> RobotMap::driveTrainGyro;
 std::shared_ptr<ADXL362> RobotMap::driveTrainAccelerometer;
 
 //Shooter
-std::shared_ptr<CANTalon> RobotMap::shooterRollerTop;
-std::shared_ptr<CANTalon> RobotMap::shooterRollerBottom;
-std::shared_ptr<CANTalon> RobotMap::shooterAngleMotor;
+std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterRollerTop;
+std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterRollerBottom;
+std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterAngleMotor;
 std::shared_ptr<Servo> RobotMap::shooterCameraServo;
 
 //Intake
@@ -64,9 +64,9 @@ void RobotMap::init(){
 /**********************************Shooter**********************************/
 
 	// Top Roller
-	shooterRollerTop.reset(new CANTalon(
+	shooterRollerTop.reset(new cougar::CougarCANTalon(
 				cougar::CougarConstants::SHOOTER_ROLLER_TOP_CANTALON_PORT));
-	shooterRollerTop->SetFeedbackDevice(CANTalon::QuadEncoder);
+	shooterRollerTop->SetFeedbackDevice(cougar::CougarCANTalon::QuadEncoder);
 	shooterRollerTop->ConfigEncoderCodesPerRev(
 				cougar::CougarConstants::SHOOTER_ROLLER_ENCODER_TICKS_PER_REV);
 	shooterRollerTop->SetSensorDirection(
@@ -75,9 +75,9 @@ void RobotMap::init(){
 	shooterRollerTop->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
 
 	// Bottom Roller
-	shooterRollerBottom.reset(new CANTalon(
+	shooterRollerBottom.reset(new cougar::CougarCANTalon(
 				cougar::CougarConstants::SHOOTER_ROLLER_BOTTOM_CANTALON_PORT));
-	shooterRollerBottom->SetFeedbackDevice(CANTalon::QuadEncoder);
+	shooterRollerBottom->SetFeedbackDevice(cougar::CougarCANTalon::QuadEncoder);
 	shooterRollerBottom->ConfigEncoderCodesPerRev(
 				cougar::CougarConstants::SHOOTER_ROLLER_ENCODER_TICKS_PER_REV);
 	shooterRollerBottom->SetSensorDirection(
@@ -86,9 +86,9 @@ void RobotMap::init(){
 	shooterRollerBottom->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
 
 	// Shooter Deck
-	shooterAngleMotor.reset(new CANTalon(
+	shooterAngleMotor.reset(new cougar::CougarCANTalon(
 				cougar::CougarConstants::SHOOTER_DECK_ANGLE_CANTALON_PORT));
-	shooterAngleMotor->SetFeedbackDevice(CANTalon::AnalogPot);
+	shooterAngleMotor->SetFeedbackDevice(cougar::CougarCANTalon::AnalogPot);
 	shooterAngleMotor->SetSensorDirection(
 				cougar::CougarConstants::SHOOTER_DECK_ANGLE_CANTALON_REVERSE_SENSOR);
 	//shooterAngleMotor->ConfigPotentiometerTurns(
