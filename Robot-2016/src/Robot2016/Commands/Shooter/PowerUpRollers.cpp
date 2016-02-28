@@ -14,6 +14,9 @@ PowerUpRollers::PowerUpRollers(float topRollerPower, float bottomRollerPower)
 void PowerUpRollers::Initialize()
 {
 	cougar::CougarDebug::startMethod("PowerUpRollers::Initialize");
+	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kPercentVbus);
+		Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kPercentVbus);
+
 	cougar::CougarDebug::endMethod("PowerUpRollers::Initialize");
 }
 
@@ -21,8 +24,8 @@ void PowerUpRollers::Initialize()
 void PowerUpRollers::Execute()
 {
 
-	Robot::shooter->setTopRoller((this->bottomRollerPower_ / 100.0) * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
-	Robot::shooter->setBottomRoller((this->bottomRollerPower_ / 100.0) * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
+	Robot::shooter->setTopRoller((this->bottomRollerPower_ / 100.0));// * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
+	Robot::shooter->setBottomRoller((this->bottomRollerPower_ / 100.0));// * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -43,6 +46,8 @@ void PowerUpRollers::End()
 	cougar::CougarDebug::startMethod("PowerUpRollers::End");
 	Robot::shooter->topRoller->StopMotor();
 	Robot::shooter->bottomRoller->StopMotor();
+	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kSpeed);
+	Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kSpeed);
 	cougar::CougarDebug::endMethod("PowerUpRollers::End");
 }
 

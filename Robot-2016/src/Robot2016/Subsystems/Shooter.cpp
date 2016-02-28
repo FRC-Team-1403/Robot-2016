@@ -47,6 +47,7 @@ void Shooter::setBottomRoller(double velocity) {
 }
 
 void Shooter::setAngleMotor(double position) {
+	cougar::CougarDebug::debugPrinter("Shooter setanglemotor " + std::to_string(position));
 	angleMotor->Set(position);
 }
 
