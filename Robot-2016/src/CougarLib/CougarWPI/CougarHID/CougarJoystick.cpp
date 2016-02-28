@@ -99,6 +99,13 @@ float CougarJoystick::GetRawAxis(uint32_t axis) {
 
 float CougarJoystick::getAxis(uint32_t axis) {
 	float val = Smoothing::get(this->GetRawAxis(axis));
+
+	/*
+	 * Handles small deadzone issues with the joysticks
+	 * that get amplified by the smoothing algorithm.
+	 */
+	if (std::abs(val) < 0.05) { return 0; }
+
 	if (this->ignoreMods_) { return val; }
 
 	if (this->GetButtonLT()) { val *= SCALING_FACTOR; }
