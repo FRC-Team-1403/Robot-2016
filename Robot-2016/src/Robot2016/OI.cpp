@@ -19,13 +19,13 @@ OI::OI()
 	this->operatorJoy.reset(new cougar::CougarJoystick(1, true));
 
 	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
-	//operatorButtonA->WhenPressed(new DropRollers());
+	operatorButtonA->WhenPressed(new DropRollers());
 	//operatorButtonA->WhenPressed(new IntakeBall());
-	operatorButtonA->WhenPressed(new PowerUpRollers(50, 50));
+	//operatorButtonA->WhenPressed(new PowerUpRollers(100, 100));
 
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
-	//operatorButtonB->WhenPressed(new LiftRollers());
-	operatorButtonB->WhenPressed(new StopAllOperator());
+	operatorButtonB->WhenPressed(new LiftRollers());
+	//operatorButtonB->WhenPressed(new StopAllOperator());
 	// TODO make a button to lift rollers
 
 	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));
@@ -35,8 +35,8 @@ OI::OI()
 	operatorButtonY->WhenPressed(new LiftTrigger());
 
 	operatorButtonLB.reset(new cougar::CougarButton(operatorJoy, 5));
-	//operatorButtonLB->WhileHeld(new RollersOut());
-	operatorButtonLB->WhenPressed(new SetShooterDeckAngle(0));
+	operatorButtonLB->WhileHeld(new RollersOut());
+	//operatorButtonLB->WhenPressed(new SetShooterDeckAngle(0));
 
 
 	operatorButtonRB.reset(new cougar::CougarButton(operatorJoy, 6));

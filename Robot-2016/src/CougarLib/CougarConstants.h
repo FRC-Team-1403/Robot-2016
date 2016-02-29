@@ -64,8 +64,8 @@ public:
 	static const bool SHOOTER_DECK_ANGLE_CANTALON_REVERSE_SENSOR = false;
 
 	static const int SHOOTER_DECK_ANGLE_POTENTIOMETER_TURNS = 1;
-	static const int SHOOTER_DECK_ANGLE_FORWARD_LIMIT = 351;
-	static const int SHOOTER_DECK_ANGLE_REVERSE_LIMIT = 604;
+	static const int SHOOTER_DECK_ANGLE_FORWARD_LIMIT = 604;
+	static const int SHOOTER_DECK_ANGLE_REVERSE_LIMIT = 351;
 
 	static const int SHOOTER_DECK_ANGLE_ZERO = 572;
 	static const int SHOOTER_DECK_TICKS_PER_DEGREE = 5;

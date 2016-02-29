@@ -181,7 +181,7 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());
 	SmartDashboard::PutNumber("Drive Train Right Encoder", driveTrain->getRightEncoderDistance());
 
-	SmartDashboard::PutNumber("POT distance", shooter->getAngleMotorDistance());
+	SmartDashboard::PutNumber("POT distance", (shooter->getAngleMotorDistance() - cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO) / cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE);
 	SmartDashboard::PutNumber("POT velocity", shooter->getAngleMotorVelocity());
 	SmartDashboard::PutNumber("Top Roller position", shooter->getTopRollerDistance());
 	SmartDashboard::PutNumber("Bottom Roller position", shooter->getTopRollerDistance());

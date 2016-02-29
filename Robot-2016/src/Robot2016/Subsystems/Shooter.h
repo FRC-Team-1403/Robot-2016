@@ -5,6 +5,7 @@
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarCANTalon.h"
 #include "../../CougarLib/CougarConstants.h"
+#include "../../CougarLib/CougarDebug.h"
 #include <memory>
 
 class Shooter: public Subsystem
