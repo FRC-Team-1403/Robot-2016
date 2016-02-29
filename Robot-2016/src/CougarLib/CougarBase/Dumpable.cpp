@@ -9,6 +9,10 @@
 
 namespace cougar {
 
+Dumpable::Dumpable(std::string name) : Printable(name){
+
+}
+
 Dumpable::~Dumpable() {
 	// TODO Auto-generated destructor stub
 }

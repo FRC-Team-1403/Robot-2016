@@ -12,12 +12,13 @@
 #include <memory>
 #include "WPILib.h"
 #include "../../CougarDebug.h"
+#include "../../CougarBase/Debuggable.h"
 #include <vector>
 #include <string>
 
 namespace cougar {
 
-class CougarSpeedController : public SpeedController {
+class CougarSpeedController : public SpeedController, public Debuggable {
 public:
 	CougarSpeedController(uint32_t port, uint32_t pdpSlot, std::string name, bool inverted = false); // Creates a Victor by default
 	CougarSpeedController(std::shared_ptr<SpeedController> controller, uint32_t pdpSlot, std::string name, bool inverted = false);
@@ -40,11 +41,13 @@ public:
 	virtual const char *GetCName() const;
 	virtual uint32_t GetPDPSlot() const;
 
+	virtual std::string toString() override;
+	virtual std::string dumpState() override;
 protected:
 	virtual std::shared_ptr<SpeedController> GetController() const;
 
 	std::shared_ptr<SpeedController> controller_;
-	std::string name_;
+	uint32_t port_;
 	uint32_t pdpSlot_;
 	bool inverted_;
 };

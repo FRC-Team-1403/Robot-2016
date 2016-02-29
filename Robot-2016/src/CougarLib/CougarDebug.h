@@ -5,9 +5,9 @@
  *      Author: Thejas
  *
  *  The things in this class should really be
- *  "...Log", not "...Debug", but it's
- *  too late to change that without breaking
- *  everything and making my life harder.
+ *  "...Log" or "...Logging", not "...Debug",
+ *  but it's too late to change that without
+ *  breaking everything and making my life harder.
  */
 
 #ifndef SRC_COUGARLIB_COUGARDEBUG_H_

@@ -19,6 +19,7 @@ namespace cougar {
 
 class Dumpable : public Printable {
 public:
+	Dumpable(std::string name);
 	virtual ~Dumpable() = 0;
 
 #	if REQUIRE_CHILD_IMPLEMENTATION_DUMPABLE

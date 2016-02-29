@@ -9,11 +9,15 @@
 
 namespace cougar {
 
+Printable::Printable(std::string name) {
+	this->name_ = name;
+}
+
 Printable::~Printable() {
 }
 
 std::string Printable::toString() {
-
+	return this->name_;
 }
 
 } /* namespace cougar */

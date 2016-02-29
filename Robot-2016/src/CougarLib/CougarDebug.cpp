@@ -63,7 +63,9 @@ void CougarDebug::end() {
 	std::cout << "CougarDebug::end starting\n";
 	if (WRITE_TO_FILE) {
 		fclose(logFile);
-		//delete logFile;
+	}
+	if (STATE_DUMPING) {
+		fclose(dumpFile);
 	}
 	std::cout << "CougarDebug::end finished\n";
 }

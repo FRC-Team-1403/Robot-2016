@@ -3,6 +3,7 @@
  *
  *  Created on: Feb 29, 2016
  *      Author: Thejas
+ *
  */
 
 #ifndef SRC_COUGARLIB_COUGARBASE_STATEMANAGER_H_
@@ -11,6 +12,7 @@
 #include "WPILib.h"
 #include <memory>
 #include <vector>
+#include <mutex>
 #include "Dumpable.h"
 
 namespace cougar {
@@ -31,6 +33,7 @@ private:
 		virtual std::string dump();
 
 		std::shared_ptr<std::vector<std::shared_ptr<Dumpable>>> objectsToDump_;
+		std::mutex mutex_;
 	};
 
 	StateManager();

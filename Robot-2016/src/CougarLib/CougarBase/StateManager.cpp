@@ -37,15 +37,28 @@ void StateManager::StateDumper::addObjectToDump(std::shared_ptr<Dumpable> obj) {
 }
 
 std::string StateManager::StateDumper::dump() {
-	// Thread safety is hard, so i'll just make a copy of the objects to be dumped.
-	// This will prevent the list from being changed underneath us.
-	std::vector<std::shared_ptr<Dumpable>> tmpObjectsToDump = *this->objectsToDump_;
+	// I don't know if we need this. We may
+	// be okay without thread locking.
+	//std::lock_guard<std::mutex> guard(mutex_);
 
 	std::string dumpTime = std::to_string(Timer::GetFPGATimestamp());
 	std::string textToDump = "State dump at " + dumpTime + "\n";
-	for (std::shared_ptr<Dumpable> obj : tmpObjectsToDump) {
-		obj->dumpState();
+	for (int i = 0; i < static_cast<int>(this->objectsToDump_->size()); i++) {
+		std::shared_ptr<Dumpable> obj = this->objectsToDump_->at(i);
+
+		// If no other references to this object exist, ditch it
+		if (obj.use_count() == 1) {
+			this->objectsToDump_->erase(this->objectsToDump_->begin() + i);
+			i--;
+		} else {
+			textToDump += obj->dumpState();
+			if (textToDump.back() != '\n') {
+				textToDump += "\n";
+			}
+		}
 	}
+
+	return textToDump;
 }
 
 } /* namespace cougar */

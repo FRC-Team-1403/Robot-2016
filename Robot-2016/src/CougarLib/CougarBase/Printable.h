@@ -18,6 +18,7 @@ namespace cougar {
 
 class Printable {
 public:
+	Printable(std::string name);
 	virtual ~Printable() = 0;
 
 #	if REQUIRE_CHILD_IMPLEMENTATION_PRINTABLE
