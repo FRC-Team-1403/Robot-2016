@@ -17,6 +17,7 @@
 #include <stdexcept>
 #include <chrono>
 #include <thread>
+#include "CougarBase/StateManager.h"
 
 namespace cougar {
 
@@ -79,9 +80,12 @@ private:
 	static void writeToFile(int8_t level, std::string message);
 	static void writeToRiolog(int8_t level, std::string message);
 
+	// This MUST be running in a separate thread,
+	// or it will lock up the whole program.
 	static void continuouslyDumpStates();
 
 	static FILE *logFile;
+	static FILE *dumpFile;
 	static std::map<int, std::string> debugLevels;
 	static int indentation;
 	static bool didInit;

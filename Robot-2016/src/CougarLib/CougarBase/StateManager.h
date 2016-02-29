@@ -18,6 +18,8 @@ namespace cougar {
 class StateManager {
 public:
 	static void addObject(std::shared_ptr<Dumpable> obj);
+	static void dump();
+
 private:
 
 	class StateDumper {

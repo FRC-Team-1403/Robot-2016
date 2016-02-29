@@ -10,6 +10,7 @@
 namespace cougar {
 
 FILE *CougarDebug::logFile;
+FILE *CougarDebug::dumpFile;
 std::map<int, std::string> CougarDebug::debugLevels;
 int CougarDebug::indentation = 0;
 bool CougarDebug::didInit = false;
@@ -38,6 +39,22 @@ void CougarDebug::init() {
 		system(change_permissions_command.c_str());
 		logFile = fopen(filename.c_str(), "w");
 	}
+
+	if (STATE_DUMPING) {
+		system("mkdir -p /home/lvuser/dump_files");
+		uint64_t milliseconds_since_epoch =
+			std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+		std::string filename = "/home/lvuser/dump_files/dump_" + std::to_string(milliseconds_since_epoch) + ".txt";
+		std::string create_file_command = "touch " + filename;
+		system(create_file_command.c_str());
+		std::string change_permissions_command = "chmod 777 " + filename;
+		system(change_permissions_command.c_str());
+		dumpFile = fopen(filename.c_str(), "w");
+
+		std::thread stateDumper(continuouslyDumpStates);
+		stateDumper.detach();
+	}
+
 	std::cout << "CougarDebug::init finished\n";
 }
 
@@ -153,7 +170,8 @@ void CougarDebug::writeToRiolog(int8_t level, std::string message) {
 
 void CougarDebug::continuouslyDumpStates() {
 	while (STATE_DUMPING) {
-
+		StateManager::dump();
+		std::this_thread::sleep_for(std::chrono::milliseconds(DUMP_INTERVAL_IN_MILLISECONDS));
 	}
 }
 
