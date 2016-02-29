@@ -51,67 +51,30 @@ void CougarDebug::end() {
 }
 
 void CougarDebug::debugPrinter(int level, const char *message, ...) {
-	if (level >= DEBUG) {
-		std::string tabs = "";
-		for (int i = 0; i < indentation; i++) {
-			tabs += "  ";
-		}
-		try {
-			message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
-		} catch (const std::out_of_range& err) {
-			if (level < UNIMPORTANT || level > FATAL_ERROR) {
-				debugPrinter(MESSAGE, "Invalid debug level passed");
-			} else if (debugLevels.empty()) {
-				if (didInit) {
-					std::cout << "CougarDebug::init did not run correctly. Rerunning now...\n";
-				} else {
-					std::cout << "CougarDebug::init was not run. Running now...\n";
-				}
-				init();
-			}
-			message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
-		}
+	va_list args;
+	va_start(args, message);
 
-		va_list args;
-		va_start(args, message);
-		if (WRITE_TO_RIOLOG)
-			vprintf(message, args);
-		if (WRITE_TO_FILE)
-			vfprintf(logFile, message, args);
-		va_end(args);
-	}
+	char buf[strlen(message) * 2];
+	vsprintf(buf, message, args);
+	std::string strMessage = std::string(buf);
+
+	std::thread loggingThread(log, level, strMessage);
+	loggingThread.detach();
+	va_end(args);
 }
 
 void CougarDebug::debugPrinter(const char *message, ...) {
 	int level = UNIMPORTANT;
-	if (level >= DEBUG) {
-		std::string tabs = "";
-		for (int i = 0; i < indentation; i++) {
-			tabs += "  ";
-		}
-		try {
-			message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message)/* + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();
-		} catch (const std::out_of_range& err) {
-			if (level < UNIMPORTANT || level > FATAL_ERROR) {
-				debugPrinter(MESSAGE, "Invalid debug level passed");
-			} else if (debugLevels.empty()) {
-				if (didInit) {
-					std::cout << "CougarDebug::init did not run correctly. Rerunning now...\n";
-				} else {
-					std::cout << "CougarDebug::init was not run. Running now...\n";
-				}
-				init();
-			}
-			message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message)/* + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp())*/ + std::string("\n")).c_str();
-		}
-		va_list args;
-		va_start(args, message);
-		if (WRITE_TO_RIOLOG)
-			vprintf(message, args);
-		if (WRITE_TO_FILE)
-			vfprintf(logFile, message, args);
-		va_end(args);
-	}
+	va_list args;
+	va_start(args, message);
+
+	char buf[strlen(message) * 2];
+	vsprintf(buf, message, args);
+	std::string strMessage = std::string(buf);
+
+	std::thread loggingThread(log, level, strMessage);
+	loggingThread.detach();
+	va_end(args);
 }
 
 void CougarDebug::debugPrinter(int level, std::string message) {
@@ -150,6 +113,48 @@ void CougarDebug::endMethod(const char *name) {
 	debugPrinter((std::string(name) + std::string(" finished")).c_str());
 }
 
+void CougarDebug::log(uint8_t level, std::string message) {
+	std::string tabs = "";
+	for (int i = 0; i < indentation; i++) {
+		tabs += "  ";
+	}
+	try {
+		message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
+	} catch (const std::out_of_range& err) {
+		if (level < UNIMPORTANT || level > FATAL_ERROR) {
+			debugPrinter(MESSAGE, "Invalid debug level passed");
+		} else if (debugLevels.empty()) {
+			if (didInit) {
+				std::cout << "CougarDebug::init did not run correctly. Rerunning now...\n";
+			} else {
+				std::cout << "CougarDebug::init was not run. Running now...\n";
+			}
+			init();
+		}
+		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
+	}
+	writeToFile(level, message);
+	writeToRiolog(level, message);
+}
 
+void CougarDebug::writeToFile(int8_t level, std::string message) {
+	if (WRITE_TO_FILE && level > FILE_DEBUG_LEVEL) {
+		std::thread fileWriter(fprintf, logFile, message.c_str());
+		fileWriter.detach();
+	}
+}
+
+void CougarDebug::writeToRiolog(int8_t level, std::string message) {
+	if (WRITE_TO_RIOLOG && level > RIOLOG_DEBUG_LEVEL) {
+		std::thread riologWriter(printf, "%s", message.c_str());
+		riologWriter.detach();
+	}
+}
+
+void CougarDebug::continuouslyDumpStates() {
+	while (STATE_DUMPING) {
+
+	}
+}
 
 } // namespace cougar

@@ -16,6 +16,7 @@
 #include <map>
 #include <stdexcept>
 #include <chrono>
+#include <thread>
 
 namespace cougar {
 
@@ -68,12 +69,17 @@ public:
 		ISSUE = 2,
 		FATAL_ERROR = 3
 	};
-	static const int DEBUG = UNIMPORTANT;
 
 private:
 	// Prevent this class from being instantiated
 	explicit CougarDebug();
 	virtual ~CougarDebug() {}
+
+	static void log(uint8_t level, std::string message);
+	static void writeToFile(int8_t level, std::string message);
+	static void writeToRiolog(int8_t level, std::string message);
+
+	static void continuouslyDumpStates();
 
 	static FILE *logFile;
 	static std::map<int, std::string> debugLevels;
@@ -82,6 +88,13 @@ private:
 	static bool doIndent;
 	static const bool WRITE_TO_RIOLOG = true;
 	static const bool WRITE_TO_FILE = true;
+	static const bool STATE_DUMPING = true;
+
+	static const int DUMP_INTERVAL_IN_MILLISECONDS = 5000;
+
+	static const int RIOLOG_DEBUG_LEVEL = MESSAGE;
+	static const int FILE_DEBUG_LEVEL = UNIMPORTANT;
+
 };
 
 } /* namespace cougar */
