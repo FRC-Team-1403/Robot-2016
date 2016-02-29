@@ -12,4 +12,8 @@ namespace cougar {
 Printable::~Printable() {
 }
 
+std::string Printable::toString() {
+
+}
+
 } /* namespace cougar */

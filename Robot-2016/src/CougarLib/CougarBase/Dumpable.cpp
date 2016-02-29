@@ -13,4 +13,8 @@ Dumpable::~Dumpable() {
 	// TODO Auto-generated destructor stub
 }
 
+std::string Dumpable::dumpState() {
+	return this->toString();
+}
+
 } /* namespace cougar */

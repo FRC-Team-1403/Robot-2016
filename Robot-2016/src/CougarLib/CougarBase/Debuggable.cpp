@@ -9,7 +9,7 @@
 
 namespace cougar {
 
-Debuggable::Debuggable() {
+Debuggable::Debuggable(std::string name) {
 	StateManager::addObject(std::shared_ptr<Dumpable>(this));
 }
 

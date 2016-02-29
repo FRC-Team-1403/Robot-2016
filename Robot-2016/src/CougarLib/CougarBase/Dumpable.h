@@ -11,12 +11,21 @@
 #include "Printable.h"
 #include <string>
 
+#ifndef REQUIRE_CHILD_IMPLEMENTATION_DUMPABLE
+#	define REQUIRE_CHILD_IMPLEMENTATION_DUMPABLE true
+#endif
+
 namespace cougar {
 
-class Dumpable : Printable {
+class Dumpable : public Printable {
 public:
-	virtual std::string dumpState() = 0;
 	virtual ~Dumpable() = 0;
+
+#	if REQUIRE_CHILD_IMPLEMENTATION_DUMPABLE
+		virtual std::string dumpState() = 0;
+#	else
+		virtual std::string dumpState();
+#	endif
 };
 
 } /* namespace cougar */

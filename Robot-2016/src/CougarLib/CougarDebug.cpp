@@ -38,6 +38,7 @@ void CougarDebug::init() {
 		std::string change_permissions_command = "chmod 777 " + filename;
 		system(change_permissions_command.c_str());
 		logFile = fopen(filename.c_str(), "w");
+		fprintf(logFile, (std::string("Writing to file with logging level ") + debugLevels.at(static_cast<int>(FILE_DEBUG_LEVEL)) + "\n\n").c_str());
 	}
 
 	if (STATE_DUMPING) {
@@ -73,9 +74,8 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 
 	char buf[strlen(message) * 2];
 	vsprintf(buf, message, args);
-	std::string strMessage = std::string(buf);
 
-	std::thread loggingThread(log, level, strMessage);
+	std::thread loggingThread(log, level, std::string(buf));
 	loggingThread.detach();
 	va_end(args);
 }
@@ -87,9 +87,8 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 
 	char buf[strlen(message) * 2];
 	vsprintf(buf, message, args);
-	std::string strMessage = std::string(buf);
 
-	std::thread loggingThread(log, level, strMessage);
+	std::thread loggingThread(log, level, std::string(buf));
 	loggingThread.detach();
 	va_end(args);
 }
@@ -171,7 +170,7 @@ void CougarDebug::writeToRiolog(int8_t level, std::string message) {
 void CougarDebug::continuouslyDumpStates() {
 	while (STATE_DUMPING) {
 		StateManager::dump();
-		std::this_thread::sleep_for(std::chrono::milliseconds(DUMP_INTERVAL_IN_MILLISECONDS));
+		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(DUMP_INTERVAL_IN_MILLISECONDS)));
 	}
 }
 

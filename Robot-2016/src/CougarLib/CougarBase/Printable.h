@@ -10,12 +10,24 @@
 
 #include <string>
 
+#ifndef REQUIRE_CHILD_IMPLEMENTATION_PRINTABLE
+#	define REQUIRE_CHILD_IMPLEMENTATION_PRINTABLE true
+#endif
+
 namespace cougar {
 
 class Printable {
 public:
-	virtual std::string toString() = 0;
 	virtual ~Printable() = 0;
+
+#	if REQUIRE_CHILD_IMPLEMENTATION_PRINTABLE
+		virtual std::string toString() = 0;
+#	else
+		virtual std::string toString();
+#	endif
+
+protected:
+	std::string name_;
 };
 
 } /* namespace cougar */

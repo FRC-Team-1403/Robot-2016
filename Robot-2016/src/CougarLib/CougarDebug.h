@@ -3,6 +3,11 @@
  *
  *  Created on: Jan 12, 2016
  *      Author: Thejas
+ *
+ *  The things in this class should really be
+ *  "...Log", not "...Debug", but it's
+ *  too late to change that without breaking
+ *  everything and making my life harder.
  */
 
 #ifndef SRC_COUGARLIB_COUGARDEBUG_H_
@@ -63,7 +68,6 @@ public:
 	// Messages marked with a debug level higher than
 	// or equal to current debug level will be shown.
 	// If DEBUG is lower, messages become more verbose.
-	// TODO implement different debug levels for riolog and file
 	enum DEBUG_LEVEL {
 		UNIMPORTANT = 0,
 		MESSAGE = 1,
@@ -98,7 +102,6 @@ private:
 
 	static const int RIOLOG_DEBUG_LEVEL = MESSAGE;
 	static const int FILE_DEBUG_LEVEL = UNIMPORTANT;
-
 };
 
 } /* namespace cougar */
