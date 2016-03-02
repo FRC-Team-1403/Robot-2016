@@ -19,13 +19,9 @@ void Shooter::InitDefaultCommand()
 }
 
 void Shooter::stop() {
-	this->angleMotor->Disable();
-	this->topRoller->Disable();
-	this->bottomRoller->Disable();
-
-	this->angleMotor->Enable();
-	this->topRoller->Enable();
-	this->bottomRoller->Enable();
+	this->angleMotor->StopMotor();
+	this->topRoller->StopMotor();
+	this->bottomRoller->StopMotor();
 }
 double getAngle(){
 	//return table->GetNumber("azimuth", 0);
@@ -79,6 +75,15 @@ int Shooter::getBottomRollerVelocity() {
 	return this->bottomRoller->GetEncVel();
 }
 
+float Shooter::potToAngle(float pot) {
+	return (pot - cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO) / cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE;
+}
+
+float Shooter::angleToPot(float angle) {
+	return angle * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO;
+}
+
+/*
 int Shooter::getI() {
 	return i;
 }
@@ -86,3 +91,4 @@ int Shooter::getI() {
 void Shooter::setI(int value) {
 	i = value;
 }
+*/

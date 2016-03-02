@@ -16,7 +16,7 @@ void Intake::InitDefaultCommand()
 }
 
 void Intake::stop() {
-	this->roller->Set(0);
+	this->roller->StopMotor();
 }
 
 void Intake::liftRollersAirCylinder() {

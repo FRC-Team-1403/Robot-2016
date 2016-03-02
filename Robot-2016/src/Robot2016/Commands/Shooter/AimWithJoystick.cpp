@@ -45,9 +45,6 @@ bool AimWithJoystick::IsFinished()
 void AimWithJoystick::End()
 {
 	cougar::CougarDebug::startMethod("AimWithJoystick::End");
-	Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPosition);
-	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kSpeed);
-	Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kSpeed);
 	cougar::CougarDebug::endMethod("AimWithJoystick::End");
 }
 
