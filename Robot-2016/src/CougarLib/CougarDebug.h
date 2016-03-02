@@ -100,7 +100,7 @@ private:
 
 	static const int DUMP_INTERVAL_IN_MILLISECONDS = 5000;
 
-	static const int RIOLOG_DEBUG_LEVEL = MESSAGE;
+	static const int RIOLOG_DEBUG_LEVEL = UNIMPORTANT;
 	static const int FILE_DEBUG_LEVEL = UNIMPORTANT;
 };
 

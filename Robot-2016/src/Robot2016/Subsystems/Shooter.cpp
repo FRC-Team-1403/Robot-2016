@@ -10,7 +10,6 @@ Shooter::Shooter() :
 	angleMotor = RobotMap::shooterAngleMotor;
 	cameraServo = RobotMap::shooterCameraServo;
 	table = NetworkTable::GetTable("SmartDashboard");
-	i = 0;
 }
 
 void Shooter::InitDefaultCommand()
@@ -27,14 +26,17 @@ void Shooter::stop() {
 	this->topRoller->Enable();
 	this->bottomRoller->Enable();
 }
+
 double getAngle(){
 	//return table->GetNumber("azimuth", 0);
 	return 0;
 }
+
 double getDistance(){
 	//return table->GetNumber("distance",0);
 	return 0;
 }
+
 double Shooter::getPotentiometer() {
 	return angleMotor->GetEncPosition();
 }
@@ -63,26 +65,10 @@ int Shooter::getAngleMotorVelocity() {
 	return this->angleMotor->GetAnalogInVel();
 }
 
-int Shooter::getTopRollerDistance() {
-	return this->topRoller->GetEncPosition();
-}
-
-int Shooter::getBottomRollerDistance() {
-	return this->bottomRoller->GetEncPosition();
-}
-
 int Shooter::getTopRollerVelocity() {
 	return this->topRoller->GetEncVel();
 }
 
 int Shooter::getBottomRollerVelocity() {
 	return this->bottomRoller->GetEncVel();
-}
-
-int Shooter::getI() {
-	return i;
-}
-
-void Shooter::setI(int value) {
-	i = value;
 }

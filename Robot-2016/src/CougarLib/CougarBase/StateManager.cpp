@@ -39,6 +39,7 @@ void StateManager::StateDumper::addObjectToDump(std::shared_ptr<Dumpable> obj) {
 std::string StateManager::StateDumper::dump() {
 	// I don't know if we need this. We may
 	// be okay without thread locking.
+	// TODO test
 	//std::lock_guard<std::mutex> guard(mutex_);
 
 	std::string dumpTime = std::to_string(Timer::GetFPGATimestamp());

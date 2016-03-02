@@ -156,14 +156,14 @@ void CougarDebug::log(uint8_t level, std::string message) {
 }
 
 void CougarDebug::writeToFile(int8_t level, std::string message) {
-	if (WRITE_TO_FILE && level > FILE_DEBUG_LEVEL) {
+	if (WRITE_TO_FILE && level >= FILE_DEBUG_LEVEL) {
 		std::thread fileWriter(fprintf, logFile, message.c_str());
 		fileWriter.detach();
 	}
 }
 
 void CougarDebug::writeToRiolog(int8_t level, std::string message) {
-	if (WRITE_TO_RIOLOG && level > RIOLOG_DEBUG_LEVEL) {
+	if (WRITE_TO_RIOLOG && level >= RIOLOG_DEBUG_LEVEL) {
 		std::thread riologWriter(printf, "%s", message.c_str());
 		riologWriter.detach();
 	}

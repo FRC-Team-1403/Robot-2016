@@ -20,11 +20,11 @@ void Intake::stop() {
 }
 
 void Intake::liftRollersAirCylinder() {
-	rollersAirCylinder->Set(DoubleSolenoid::kReverse);
+	rollersAirCylinder->Set(cougar::CougarDoubleSolenoid::kReverse);
 }
 
 void Intake::dropRollersAirCylinder() {
-	rollersAirCylinder->Set(DoubleSolenoid::kForward);
+	rollersAirCylinder->Set(cougar::CougarDoubleSolenoid::kForward);
 }
 
 void Intake::liftTriggerAirCylinder() {
@@ -35,7 +35,7 @@ void Intake::dropTriggerAirCylinder() {
 	triggerAirCylinder->Set(true);
 }
 
-enum DoubleSolenoid::Value Intake::getRollersAirCylinderValue() {
+enum cougar::CougarDoubleSolenoid::Value Intake::getRollersAirCylinderValue() {
 	return rollersAirCylinder->Get();
 }
 

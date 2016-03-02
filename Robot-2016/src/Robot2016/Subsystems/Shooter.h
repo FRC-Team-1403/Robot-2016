@@ -12,6 +12,12 @@ class Shooter: public Subsystem
 {
 public:
 
+	enum AngleControlModes {
+		BANG_BANG,
+		PID_FEEDFORWARD
+	};
+
+
 	//projectile motion constants
 	double x, y, d, vi, angle, k, s, h, a, e;
 	//x = horizontal distance from shooter to goal
@@ -49,13 +55,6 @@ public:
 	void setAngle(double value);
 	double getAngle();
 	double getDistance();
-	int getI();
-	void setI(int value);
-	/*int getE();
-	int getY();
-	int getVI();
-	int getX();*/
-	std::shared_ptr<NetworkTable> table;
 
 	bool getStopFlyWheels();
 
@@ -63,7 +62,6 @@ public:
 	std::shared_ptr<cougar::CougarCANTalon> topRoller;
 	std::shared_ptr<cougar::CougarCANTalon> angleMotor;
 	std::shared_ptr<Servo> cameraServo;
-
 
 };
 

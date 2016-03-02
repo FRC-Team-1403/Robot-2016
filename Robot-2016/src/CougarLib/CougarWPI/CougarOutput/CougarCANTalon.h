@@ -4,7 +4,7 @@
  *	Created on: Feb 27, 2016
  *			Author: Thejas
  *
-*	Currently just a copy of CANTalon with some logging added in.
+ *	Currently just a copy of CANTalon with some logging added in.
  *	Might do something more interesting with it if I have time.
  */
 
@@ -12,10 +12,10 @@
 #define SRC_COUGARLIB_COUGARWPI_COUGAROUTPUT_COUGARCANTALON_H_
 
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) FIRST 2014-2016. All Rights Reserved.												*/
-/* Open Source Software - may be modified and shared by FRC teams. The code	 */
+/* Copyright (c) FIRST 2014-2016. All Rights Reserved.						  */
+/* Open Source Software - may be modified and shared by FRC teams. The code	  */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.																															 */
+/* the project.																  */
 /*----------------------------------------------------------------------------*/
 
 #include "WPILib.h"
@@ -30,8 +30,10 @@
 #include "tables/ITable.h"
 
 #include "../../CougarDebug.h"
+#include "../../CougarBase/Debuggable.h"
 
 #include <memory>
+#include <string>
 
 namespace cougar {
 
@@ -40,12 +42,13 @@ namespace cougar {
  */
 
 class CougarCANTalon : public MotorSafety,
-								 public CANSpeedController,
-								 public ErrorBase,
-								 public LiveWindowSendable,
-								 public ITableListener,
-								 public PIDSource,
-								 public PIDInterface {
+					   public CANSpeedController,
+					   public ErrorBase,
+					   public LiveWindowSendable,
+			  		   public ITableListener,
+					   public PIDSource,
+					   public PIDInterface,
+					   public Debuggable {
  public:
 	enum FeedbackDevice {
 		QuadEncoder = 0,
@@ -217,8 +220,8 @@ class CougarCANTalon : public MotorSafety,
 		 */
 		SetValueMotionProfile outputEnable;
 	};
-	explicit CougarCANTalon(int deviceNumber);
-	explicit CougarCANTalon(int deviceNumber, int controlPeriodMs);
+	explicit CougarCANTalon(int deviceNumber, std::string name);
+	explicit CougarCANTalon(int deviceNumber, int controlPeriodMs, std::string name);
 	DEFAULT_MOVE_CONSTRUCTOR(CougarCANTalon);
 	virtual ~CougarCANTalon();
 
@@ -436,6 +439,9 @@ class CougarCANTalon : public MotorSafety,
 	// SpeedController overrides
 	virtual void SetInverted(bool isInverted) override;
 	virtual bool GetInverted() const override;
+
+	virtual std::string toString() override;
+	virtual std::string dumpState() override;
 
  private:
 	// Values for various modes as is sent in the CAN packets for the Talon.

@@ -2,6 +2,7 @@
 #define DropRollers_H
 
 #include "Commands/Command.h"
+#include "../../../CougarLib/CougarWPI/CougarOutput/CougarDoubleSolenoid.h"
 #include "WPILib.h"
 
 class DropRollers: public Command

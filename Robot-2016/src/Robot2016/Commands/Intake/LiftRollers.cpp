@@ -23,7 +23,7 @@ void LiftRollers::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool LiftRollers::IsFinished()
 {
-	return Robot::intake->getRollersAirCylinderValue() == DoubleSolenoid::kReverse;
+	return Robot::intake->getRollersAirCylinderValue() == cougar::CougarDoubleSolenoid::kReverse;
 }
 
 // Called once after isFinished returns true

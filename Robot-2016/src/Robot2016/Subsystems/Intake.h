@@ -3,6 +3,9 @@
 
 #include "WPILib.h"
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
+#include "../../CougarLib/CougarWPI/CougarOutput/CougarSolenoid.h"
+#include "../../CougarLib/CougarWPI/CougarOutput/CougarDoubleSolenoid.h"
+
 #include <memory>
 
 class Intake: public Subsystem
@@ -10,8 +13,8 @@ class Intake: public Subsystem
 private:
 	std::shared_ptr<cougar::CougarSpeedController> roller;
 	std::shared_ptr<DigitalInput> ballSwitch;
-	std::shared_ptr<DoubleSolenoid> rollersAirCylinder;
-	std::shared_ptr<Solenoid> triggerAirCylinder;
+	std::shared_ptr<cougar::CougarDoubleSolenoid> rollersAirCylinder;
+	std::shared_ptr<cougar::CougarSolenoid> triggerAirCylinder;
 
 public:
 	Intake();
@@ -23,7 +26,7 @@ public:
 	void liftTriggerAirCylinder();
 	void dropTriggerAirCylinder();
 	bool getTriggerAirCylinderValue();
-	enum DoubleSolenoid::Value getRollersAirCylinderValue();
+	enum cougar::CougarDoubleSolenoid::Value getRollersAirCylinderValue();
 	void setRoller(double value);
 	bool getBallSwitchValue();
 };

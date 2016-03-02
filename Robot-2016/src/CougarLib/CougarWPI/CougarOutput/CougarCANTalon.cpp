@@ -8,10 +8,10 @@
 #include "CougarCANTalon.h"
 
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) FIRST 2014-2016. All Rights Reserved.												*/
-/* Open Source Software - may be modified and shared by FRC teams. The code	 */
+/* Copyright (c) FIRST 2014-2016. All Rights Reserved.						  */
+/* Open Source Software - may be modified and shared by FRC teams. The code	  */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.																															 */
+/* the project.										   						  */
 /*----------------------------------------------------------------------------*/
 
 #include "CougarCANTalon.h"
@@ -43,8 +43,8 @@ const double kMinutesPer100msUnit = 1.0/600.0;
  * Constructor for the CougarCANTalon device.
  * @param deviceNumber The CAN ID of the Talon SRX
  */
-CougarCANTalon::CougarCANTalon(int deviceNumber)
-		: m_deviceNumber(deviceNumber),
+CougarCANTalon::CougarCANTalon(int deviceNumber, std::string name)
+		: Debuggable(name), m_deviceNumber(deviceNumber),
 			m_impl(new CanTalonSRX(deviceNumber)),
 			m_safetyHelper(new MotorSafetyHelper(this)) {
 	CougarDebug::startMethod("CougarCANTalon::CougarCANTalon[device number: " + std::to_string(deviceNumber) + "]");
@@ -60,8 +60,8 @@ CougarCANTalon::CougarCANTalon(int deviceNumber)
  * @param controlPeriodMs The period in ms to send the CAN control frame.
  *												Period is bounded to [1ms,95ms].
  */
-CougarCANTalon::CougarCANTalon(int deviceNumber, int controlPeriodMs)
-		: m_deviceNumber(deviceNumber),
+CougarCANTalon::CougarCANTalon(int deviceNumber, int controlPeriodMs, std::string name)
+		: Debuggable(name), m_deviceNumber(deviceNumber),
 			m_impl(new CanTalonSRX(deviceNumber,controlPeriodMs)),
 			m_safetyHelper(new MotorSafetyHelper(this)) {
 	CougarDebug::startMethod("CougarCANTalon::CougarCANTalon[device number: " + std::to_string(deviceNumber) + "]");
@@ -423,7 +423,7 @@ double CougarCANTalon::GetI() const {
  */
 double CougarCANTalon::GetD() const {
 	CanTalonSRX::param_t param = m_profile ? CanTalonSRX::eProfileParamSlot1_D
-																				 : CanTalonSRX::eProfileParamSlot0_D;
+										   : CanTalonSRX::eProfileParamSlot0_D;
 	// Update the info in m_impl.
 	CTR_Code status = m_impl->RequestParam(param);
 	if (status != CTR_OKAY) {
@@ -444,7 +444,7 @@ double CougarCANTalon::GetD() const {
  */
 double CougarCANTalon::GetF() const {
 	CanTalonSRX::param_t param = m_profile ? CanTalonSRX::eProfileParamSlot1_F
-																				 : CanTalonSRX::eProfileParamSlot0_F;
+										   : CanTalonSRX::eProfileParamSlot0_F;
 	// Update the info in m_impl.
 	CTR_Code status = m_impl->RequestParam(param);
 	if (status != CTR_OKAY) {
@@ -464,8 +464,8 @@ double CougarCANTalon::GetF() const {
  */
 int CougarCANTalon::GetIzone() const {
 	CanTalonSRX::param_t param = m_profile
-																	 ? CanTalonSRX::eProfileParamSlot1_IZone
-																	 : CanTalonSRX::eProfileParamSlot0_IZone;
+								 ? CanTalonSRX::eProfileParamSlot1_IZone
+								 : CanTalonSRX::eProfileParamSlot0_IZone;
 	// Update the info in m_impl.
 	CTR_Code status = m_impl->RequestParam(param);
 	if (status != CTR_OKAY) {
@@ -1851,10 +1851,10 @@ void CougarCANTalon::GetMotionProfileStatus(MotionProfileStatus & motionProfileS
 	motionProfileStatus.topBufferRem = topBufferRem;
 	motionProfileStatus.topBufferCnt = topBufferCnt;
 	motionProfileStatus.btmBufferCnt = btmBufferCnt;
-	motionProfileStatus.hasUnderrun =							(flags & CanTalonSRX::kMotionProfileFlag_HasUnderrun)		 ? true :false;
-	motionProfileStatus.isUnderrun	=							(flags & CanTalonSRX::kMotionProfileFlag_IsUnderrun)			? true :false;
-	motionProfileStatus.activePointValid =				 (flags & CanTalonSRX::kMotionProfileFlag_ActTraj_IsValid) ? true :false;
-	motionProfileStatus.activePoint.isLastPoint =	(flags & CanTalonSRX::kMotionProfileFlag_ActTraj_IsLast)	? true :false;
+	motionProfileStatus.hasUnderrun = (flags & CanTalonSRX::kMotionProfileFlag_HasUnderrun) ? true :false;
+	motionProfileStatus.isUnderrun = (flags & CanTalonSRX::kMotionProfileFlag_IsUnderrun) ? true :false;
+	motionProfileStatus.activePointValid = (flags & CanTalonSRX::kMotionProfileFlag_ActTraj_IsValid) ? true :false;
+	motionProfileStatus.activePoint.isLastPoint = (flags & CanTalonSRX::kMotionProfileFlag_ActTraj_IsLast) ? true :false;
 	motionProfileStatus.activePoint.velocityOnly = (flags & CanTalonSRX::kMotionProfileFlag_ActTraj_VelOnly) ? true :false;
 	motionProfileStatus.activePoint.position = ScaleNativeUnitsToRotations(m_feedbackDevice, targPos);
 	motionProfileStatus.activePoint.velocity = ScaleNativeUnitsToRpm(m_feedbackDevice, targVel);
@@ -1920,7 +1920,7 @@ void CougarCANTalon::StopMotor() {
 }
 
 void CougarCANTalon::ValueChanged(ITable* source, llvm::StringRef key,
-														std::shared_ptr<nt::Value> value, bool isNew) {
+								  std::shared_ptr<nt::Value> value, bool isNew) {
 	if(key == "Mode" && value->IsDouble()) SetControlMode(static_cast<CANSpeedController::ControlMode>(value->GetDouble()));
 	if(key == "p" && value->IsDouble()) SetP(value->GetDouble());
 	if(key == "i" && value->IsDouble()) SetI(value->GetDouble());
@@ -1976,6 +1976,15 @@ void CougarCANTalon::InitTable(std::shared_ptr<ITable> subTable) {
 }
 
 std::shared_ptr<ITable> CougarCANTalon::GetTable() const { return m_table; }
+
+std::string CougarCANTalon::toString()  {
+	std::string str = "CougarCANTalon " + this->name_ + "\n";
+	return str;
+}
+
+std::string CougarCANTalon::dumpState()  {
+	return this->toString();
+}
 
 } // namespace cougar
 

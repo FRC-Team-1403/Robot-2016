@@ -10,7 +10,7 @@
 namespace cougar {
 
 CougarSpeedController::CougarSpeedController(uint32_t port, uint32_t pdpSlot,
-		std::string name, bool inverted /* = false */) : Debuggable(name) {
+		std::string name, bool inverted /* = false */, bool willDump /* = true */) : Debuggable(name, willDump) {
 	CougarDebug::startMethod("CougarSpeedController::CougarSpeedController " + name);
 	this->controller_.reset(new Victor(port));
 	this->port_ = port;
@@ -20,7 +20,7 @@ CougarSpeedController::CougarSpeedController(uint32_t port, uint32_t pdpSlot,
 }
 
 CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> controller, uint32_t pdpSlot,
-		std::string name, bool inverted /* = false */) : Debuggable(name) {
+		std::string name, bool inverted /* = false */, bool willDump /* = true */) : Debuggable(name, willDump) {
 	CougarDebug::startMethod("CougarSpeedController::CougarSpeedController " + name);
 	this->controller_ = controller;
 	this->port_ = -1;
@@ -29,11 +29,11 @@ CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> co
 	CougarDebug::endMethod("CougarSpeedController::CougarSpeedController " + this->GetName());
 }
 
-CougarSpeedController::CougarSpeedController(std::shared_ptr<CougarSpeedController> controller) :
-		CougarSpeedController(controller->GetController(), controller->GetPDPSlot(), controller->GetName(), controller->GetInverted()){}
+CougarSpeedController::CougarSpeedController(std::shared_ptr<CougarSpeedController> controller, bool willDump /* = true */) :
+		CougarSpeedController(controller->GetController(), controller->GetPDPSlot(), controller->GetName(), controller->GetInverted(), willDump){}
 
-CougarSpeedController::CougarSpeedController(const CougarSpeedController &controller) :
-		CougarSpeedController(controller.GetController(), controller.GetPDPSlot(), controller.GetName(), controller.GetInverted()){}
+CougarSpeedController::CougarSpeedController(const CougarSpeedController &controller, bool willDump /* = true */) :
+		CougarSpeedController(controller.GetController(), controller.GetPDPSlot(), controller.GetName(), controller.GetInverted(), willDump){}
 
 CougarSpeedController::~CougarSpeedController() {
 	CougarDebug::startMethod("CougarSpeedController::~CougarSpeedController " + this->GetName());

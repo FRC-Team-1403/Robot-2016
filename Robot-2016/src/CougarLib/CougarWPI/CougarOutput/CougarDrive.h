@@ -14,11 +14,11 @@
 #include "CougarSpeedControllerAggregate.h"
 #include "../CougarHID/CougarJoystick.h"
 #include "../../CougarDebug.h"
+#include "../../CougarBase/Debuggable.h"
 
 namespace cougar {
 
-
-class CougarDrive {
+class CougarDrive : public Debuggable {
 public:
 	CougarDrive(uint32_t leftPort, uint32_t rightPort,
 			uint32_t leftPDPSlot, uint32_t rightPDPSlot, std::string name, bool reversed = false);
@@ -58,6 +58,9 @@ public:
 	virtual std::string GetName() const;
 	virtual const char *GetCName() const;
 
+	virtual std::string toString() override;
+	virtual std::string dumpState() override;
+
 	enum ANALOG_STICKS {
 		LEFT,
 		RIGHT
@@ -66,7 +69,6 @@ protected:
 	virtual std::shared_ptr<RobotDrive> GetDrive();
 
 	std::shared_ptr<RobotDrive> drive_;
-	std::string name_;
 	int8_t reverse_;
 };
 

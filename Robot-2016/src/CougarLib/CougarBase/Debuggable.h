@@ -15,7 +15,7 @@ namespace cougar {
 
 class Debuggable : public Dumpable {
 public:
-	Debuggable(std::string name);
+	Debuggable(std::string name, bool willDump = true);
 	virtual ~Debuggable() = 0;
 };
 
