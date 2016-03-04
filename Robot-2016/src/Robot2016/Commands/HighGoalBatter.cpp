@@ -29,13 +29,5 @@ HighGoalBatter::HighGoalBatter()
 
 	AddSequential(new SetShooterDeckAngle(ANGLE));
 
-	AddSequential(new PowerUpRollers(100, 100));
-
-	AddSequential(new DropTrigger());
-
-	AddSequential(new LiftTrigger());
-
-	AddSequential(new CougarWait(0.5));
-
 	AddSequential(new StopAllOperator());
 }
