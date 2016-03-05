@@ -1,14 +1,14 @@
-#ifndef StopAllOperator_H
-#define StopAllOperator_H
+#ifndef StopAllDriver_H
+#define StopAllDriver_H
 
 #include "Commands/Command.h"
 #include "WPILib.h"
 #include "../../CougarLib/CougarDebug.h"
 
-class StopAllOperator: public Command
+class StopAllDriver: public Command
 {
 public:
-	StopAllOperator();
+	StopAllDriver();
 	void Initialize();
 	void Execute();
 	bool IsFinished();

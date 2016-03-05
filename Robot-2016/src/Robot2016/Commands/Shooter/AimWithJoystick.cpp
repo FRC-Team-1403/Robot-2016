@@ -12,9 +12,9 @@ AimWithJoystick::AimWithJoystick()
 void AimWithJoystick::Initialize()
 {
 	cougar::CougarDebug::startMethod("AimWithJoystick::Initialize");
-	Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPercentVbus);
-	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kPercentVbus);
-	Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kPercentVbus);
+	//Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPercentVbus);
+	//Robot::shooter->topRoller->SetControlMode(CANSpeedController::kPercentVbus);
+	//Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kPercentVbus);
 	cougar::CougarDebug::endMethod("AimWithJoystick::Initialize");
 }
 
@@ -25,14 +25,15 @@ void AimWithJoystick::Execute()
 		Robot::shooter->angleMotor->Set(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
 		//std::cout << "Set: " << Robot::oi->GetOperatorJoystick()->GetStickRightAxisY() << "\n";
 		//std::cout << "Actual: " << Robot::shooter->angleMotor->Get() << "\n";
+		Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
+		Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
+
 		Robot::shooter->setCameraServo(1);
 	} else {
-		Robot::shooter->angleMotor->StopMotor();
+		//Robot::shooter->angleMotor->StopMotor();
 		Robot::shooter->setCameraServo(1);
 	}
 
-	Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
-	Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
 
 }
 

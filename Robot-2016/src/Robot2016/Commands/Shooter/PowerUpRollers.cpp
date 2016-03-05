@@ -1,12 +1,14 @@
 #include "PowerUpRollers.h"
 #include "../../Robot.h"
 
-PowerUpRollers::PowerUpRollers(float topRollerPower, float bottomRollerPower)
+PowerUpRollers::PowerUpRollers(float topRollerPower, float bottomRollerPower, float time)
 {
 	cougar::CougarDebug::startMethod("PowerUpRollers::PowerUpRollers");
 	Requires(Robot::shooter.get());
 	this->topRollerPower_ = topRollerPower;
 	this->bottomRollerPower_ = bottomRollerPower;
+	this->init_time_ = 0;
+	this->time_ = time;
 	cougar::CougarDebug::endMethod("PowerUpRollers::PowerUpRollers");
 }
 
@@ -14,6 +16,7 @@ PowerUpRollers::PowerUpRollers(float topRollerPower, float bottomRollerPower)
 void PowerUpRollers::Initialize()
 {
 	cougar::CougarDebug::startMethod("PowerUpRollers::Initialize");
+	this->init_time_ = Timer::GetFPGATimestamp();
 
 	cougar::CougarDebug::endMethod("PowerUpRollers::Initialize");
 }
@@ -21,9 +24,10 @@ void PowerUpRollers::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void PowerUpRollers::Execute()
 {
-
-	Robot::shooter->setTopRoller((this->bottomRollerPower_ / 100.0));// * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
-	Robot::shooter->setBottomRoller((this->bottomRollerPower_ / 100.0));// * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
+	std::cout << "Bottom power: " << this->bottomRollerPower_ << "\n";
+	std::cout << "Top power: " << this->topRollerPower_ << "\n";
+	Robot::shooter->setTopRoller((this->topRollerPower_));// * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
+	Robot::shooter->setBottomRoller((this->bottomRollerPower_));// * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -38,15 +42,15 @@ bool PowerUpRollers::IsFinished()
 	return std::abs(Robot::shooter->topRoller->GetSetpoint() - Robot::shooter->topRoller->GetSpeed()) < 10 &&
 		   std::abs(Robot::shooter->bottomRoller->GetSetpoint() - Robot::shooter->bottomRoller->GetSpeed()) < 10;
 	*/
-	return false;
+	return Timer::GetFPGATimestamp() - init_time_ >= time_;
 }
 
 // Called once after isFinished returns true
 void PowerUpRollers::End()
 {
 	cougar::CougarDebug::startMethod("PowerUpRollers::End");
-	Robot::shooter->topRoller->StopMotor();
-	Robot::shooter->bottomRoller->StopMotor();
+	//Robot::shooter->topRoller->StopMotor();
+	//Robot::shooter->bottomRoller->StopMotor();
 	//Robot::shooter->topRoller->SetControlMode(CANSpeedController::kSpeed);
 	//Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kSpeed);
 	cougar::CougarDebug::endMethod("PowerUpRollers::End");

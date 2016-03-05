@@ -1,12 +1,9 @@
-#include "Fire.h"
-#include "Shooter/SetShooterDeckAngle.h"
-#include "Shooter/PowerUpRollers.h"
-#include "Intake/LiftTrigger.h"
-#include "Intake/DropTrigger.h"
-#include "StopAllOperator.h"
+#include "DriveBackwardAutonomous.h"
+#include "DriveTrain/Drive.h"
 #include "CougarWait.h"
+#include "StopAllDriver.h"
 
-Fire::Fire()
+DriveBackwardAutonomous::DriveBackwardAutonomous()
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -25,15 +22,7 @@ Fire::Fire()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-
-	AddSequential(new DropTrigger());
-
-	AddSequential(new PowerUpRollers(1, 1, 2));
-	//AddSequential(new CougarWait(0.5));
-
-	AddParallel(new PowerUpRollers(1, 1, 1));
-	AddSequential(new LiftTrigger());
-
-
-	AddSequential(new StopAllOperator());
+	AddSequential(new Drive(-1, -1, 3));
+	//AddSequential(new CougarWait(3));
+	AddSequential(new StopAllDriver());
 }

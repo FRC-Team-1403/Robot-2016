@@ -8,6 +8,8 @@ class Fire: public CommandGroup
 {
 public:
 	Fire();
+
+
 };
 
 #endif

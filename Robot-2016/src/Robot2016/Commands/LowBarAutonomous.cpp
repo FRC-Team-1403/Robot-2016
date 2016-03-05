@@ -1,12 +1,13 @@
+#include "LowBarAutonomous.h"
+#include "Autonomous/LowBarAutonomous_Drive.h"
+#include "LowBarPosition.h"
+#include "HighGoalBatter.h"
+#include "TravelPosition.h"
 #include "Fire.h"
-#include "Shooter/SetShooterDeckAngle.h"
-#include "Shooter/PowerUpRollers.h"
-#include "Intake/LiftTrigger.h"
-#include "Intake/DropTrigger.h"
 #include "StopAllOperator.h"
-#include "CougarWait.h"
+#include "StopAllDriver.h"
 
-Fire::Fire()
+LowBarAutonomous::LowBarAutonomous()
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -25,15 +26,11 @@ Fire::Fire()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-
-	AddSequential(new DropTrigger());
-
-	AddSequential(new PowerUpRollers(1, 1, 2));
-	//AddSequential(new CougarWait(0.5));
-
-	AddParallel(new PowerUpRollers(1, 1, 1));
-	AddSequential(new LiftTrigger());
-
-
+	AddSequential(new LowBarPosition());
+	AddSequential(new LowBarAutonomous_Drive());
+	AddSequential(new TravelPosition());
+	AddSequential(new HighGoalBatter());
+	AddSequential(new Fire());
+	AddSequential(new StopAllDriver());
 	AddSequential(new StopAllOperator());
 }

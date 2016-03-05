@@ -65,7 +65,10 @@ void Robot::RobotInit()
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
-	chooser->AddDefault("Default Auto", new LowBarAutonomous_Drive());
+	chooser->AddDefault("Low Bar High Goal Autonomous", new LowBarAutonomous());
+	chooser->AddObject("Drive Forward Autonomous", new DriveForwardAutonomous());
+	chooser->AddObject("Drive Backward Autonomous", new DriveBackwardAutonomous());
+	chooser->AddObject("Do Nothing Autonomous", new DoNothingAutonomous());
 	SmartDashboard::PutData("Auto Modes", chooser);
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
 

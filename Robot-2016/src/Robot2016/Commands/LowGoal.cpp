@@ -28,12 +28,11 @@ LowGoal::LowGoal()
 	// arm.
 
 	AddParallel(new DropRollers());
-	AddSequential(new SetShooterDeckAngle(0));
+	AddSequential(new SetShooterDeckAngle(10));
 
 	AddSequential(new DropTrigger());
 
-	AddParallel(new RollersOutTimed(2));
-	AddSequential(new LiftTrigger());
+	AddSequential(new RollersOutTimed(2));
 
 	AddParallel(new LiftRollers());
 	AddParallel(new LiftTrigger());

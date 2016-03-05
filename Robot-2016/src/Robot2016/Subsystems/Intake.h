@@ -7,13 +7,12 @@
 
 class Intake: public Subsystem
 {
-private:
+public:
 	std::shared_ptr<cougar::CougarSpeedController> roller;
 	std::shared_ptr<DigitalInput> ballSwitch;
 	std::shared_ptr<DoubleSolenoid> rollersAirCylinder;
 	std::shared_ptr<Solenoid> triggerAirCylinder;
 
-public:
 	Intake();
 	void InitDefaultCommand();
 

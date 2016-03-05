@@ -31,7 +31,7 @@ bool RollersIn::IsFinished()
 void RollersIn::End()
 {
 	cougar::CougarDebug::startMethod("RollersIn::End");
-	Robot::intake->setRoller(0);
+	Robot::intake->roller->StopMotor();
 	cougar::CougarDebug::endMethod("RollersIn::End");
 }
 

@@ -22,10 +22,14 @@ void SetShooterDeckAngle::Execute()
 {
 	//Robot::shooter->setAngleMotor(this->angle_ * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO);
 	if (Robot::shooter->getAngleMotorDistance() > this->angle_) {
+		std::cout << "Greater\n";
 		Robot::shooter->angleMotor->Set(-0.25);
 	} else if (Robot::shooter->getAngleMotorDistance() < this->angle_) {
+		std::cout << "Smaller\n";
 		Robot::shooter->angleMotor->Set(0.25);
 	}
+
+	std::cout << "Actual set" << Robot::shooter->angleMotor->Get();
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -38,7 +42,8 @@ bool SetShooterDeckAngle::IsFinished()
 	return std::abs(Robot::shooter->angleMotor->GetSetpoint() - Robot::shooter->angleMotor->GetPosition()) < 10;
 	*/
 
-	return std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_ < 10);
+	std::cout << "\n\n\nIDK" <<Robot::shooter->getAngleMotorDistance() - this->angle_ << "\n\n\n";
+	return std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_) < 5;
 }
 
 // Called once after isFinished returns true

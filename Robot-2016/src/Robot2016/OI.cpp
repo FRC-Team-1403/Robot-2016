@@ -13,7 +13,8 @@
 #include "Commands/HighGoalBatter.h"
 #include "Commands/Fire.h"
 #include "Commands/LowBarPosition.h"
-#include "LowGoal.h"
+#include "Commands/LowGoal.h"
+#include "Commands/TravelPosition.h"
 
 OI::OI()
 {
@@ -28,7 +29,7 @@ OI::OI()
 
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
 	//operatorButtonB->WhenPressed(new LiftRollers());
-	operatorButtonB->WhenPressed(new StopAllOperator());
+	operatorButtonB->WhileHeld(new StopAllOperator());
 	// TODO make a button to lift rollers
 
 	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));
@@ -42,7 +43,7 @@ OI::OI()
 	//operatorButtonLB->WhenPressed(new SetShooterDeckAngle(0));
 
 	operatorButtonRB.reset(new cougar::CougarButton(operatorJoy, 6));
-	operatorButtonRB->WhileHeld(new LiftRollers());
+	operatorButtonRB->WhileHeld(new TravelPosition());
 
 	operatorButtonStart.reset(new cougar::CougarButton(operatorJoy, 8));
 	operatorButtonStart->WhenPressed(new LowBarPosition());

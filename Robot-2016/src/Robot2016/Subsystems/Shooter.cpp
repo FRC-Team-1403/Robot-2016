@@ -9,7 +9,7 @@ Shooter::Shooter() :
 	topRoller = RobotMap::shooterRollerTop;
 	angleMotor = RobotMap::shooterAngleMotor;
 	cameraServo = RobotMap::shooterCameraServo;
-	table = NetworkTable::GetTable("SmartDashboard");
+	//table = NetworkTable::GetTable("SmartDashboard");
 	i = 0;
 }
 

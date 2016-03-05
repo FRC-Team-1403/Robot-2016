@@ -8,6 +8,7 @@ StopAllOperator::StopAllOperator()
 	cougar::CougarDebug::startMethod("StopAllOperator::StopAllOperator");
 	Requires(Robot::intake.get());
 	Requires(Robot::shooter.get());
+	didGo = false;
 	cougar::CougarDebug::startMethod("StopAllOperator::StopAllOperator");
 }
 
@@ -15,6 +16,7 @@ StopAllOperator::StopAllOperator()
 void StopAllOperator::Initialize()
 {
 	cougar::CougarDebug::startMethod("StopAllOperator::Initialize");
+	didGo = false;
 	cougar::CougarDebug::endMethod("StopAllOperator::Initialize");
 }
 
@@ -23,12 +25,13 @@ void StopAllOperator::Execute()
 {
 	Robot::intake->stop();
 	Robot::shooter->stop();
+	didGo = true;
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool StopAllOperator::IsFinished()
 {
-	return true;
+	return didGo;
 }
 
 // Called once after isFinished returns true
