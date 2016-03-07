@@ -24,8 +24,6 @@ void PowerUpRollers::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void PowerUpRollers::Execute()
 {
-	std::cout << "Bottom power: " << this->bottomRollerPower_ << "\n";
-	std::cout << "Top power: " << this->topRollerPower_ << "\n";
 	Robot::shooter->setTopRoller((this->topRollerPower_));// * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
 	Robot::shooter->setBottomRoller((this->bottomRollerPower_));// * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
 }

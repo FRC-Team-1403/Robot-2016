@@ -26,11 +26,11 @@ LowBarAutonomous::LowBarAutonomous()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddSequential(new LowBarPosition());
+	//AddSequential(new LowBarPosition());
 	AddSequential(new LowBarAutonomous_Drive());
-	AddSequential(new TravelPosition());
-	AddSequential(new HighGoalBatter());
-	AddSequential(new Fire());
-	AddSequential(new StopAllDriver());
-	AddSequential(new StopAllOperator());
+	//AddSequential(new TravelPosition());
+	//AddSequential(new HighGoalBatter());
+	//AddSequential(new Fire());
+	//AddSequential(new StopAllDriver());
+	//AddSequential(new StopAllOperator());
 }

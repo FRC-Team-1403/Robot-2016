@@ -65,9 +65,9 @@ void Robot::RobotInit()
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
-	chooser->AddDefault("Low Bar High Goal Autonomous", new LowBarAutonomous());
-	chooser->AddObject("Drive Forward Autonomous", new DriveForwardAutonomous());
-	chooser->AddObject("Drive Backward Autonomous", new DriveBackwardAutonomous());
+	//chooser->AddDefault("Low Bar High Goal Autonomous", new LowBarAutonomous());
+	//chooser->AddObject("Breaker Forward Autonomous", new DriveForwardAutonomous());
+	chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous());
 	chooser->AddObject("Do Nothing Autonomous", new DoNothingAutonomous());
 	SmartDashboard::PutData("Auto Modes", chooser);
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
@@ -87,8 +87,8 @@ void Robot::RobotInit()
 		const std::string path_name = "LowBarPath";
 		std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, M_PI/12)));
-		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 0, M_PI/6)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, 0)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 0, 0)));
 		lowBarPath = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	}
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");

@@ -38,7 +38,7 @@ IntakeBall::IntakeBall()
 	AddParallel(new SetShooterDeckAngle(INTAKE_POS));
 	AddSequential(new DropTrigger());
 
-	AddSequential(new RollersInTimed(30));
+	AddSequential(new RollersInTimed(3));
 
 	AddParallel(new LiftTrigger());
 	AddSequential(new SetShooterDeckAngle(CARRYING_POS));

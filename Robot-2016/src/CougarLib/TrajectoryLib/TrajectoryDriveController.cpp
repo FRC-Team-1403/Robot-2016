@@ -62,8 +62,8 @@ void TrajectoryDriveController::update() {
 	if (onTarget()) {
 		Robot::driveTrain->setLeftRightPower(0.0, 0.0);
 	} else	{
-		double distanceL = direction * Robot::driveTrain->getLeftEncoderDistance();
-		double distanceR = direction * Robot::driveTrain->getRightEncoderDistance();
+		double distanceR = direction * Robot::driveTrain->getLeftEncoderDistance();
+		double distanceL = direction * Robot::driveTrain->getRightEncoderDistance();
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Distance Left: %f\tDistance Right: %f", distanceL, distanceR);
 
 		double speedLeft = direction * followerLeft->calculate(distanceL);
@@ -75,14 +75,14 @@ void TrajectoryDriveController::update() {
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Goal Heading: %f\tObserved Heading: %f", goalHeading, observedHeading);
 
 		double angleDiffRads = CougarMath::getDifferenceInAngleRadians(observedHeading, goalHeading);
-		double angleDiff = (angleDiffRads * 180) / M_PI;
+		//double angleDiff = (angleDiffRads * 180) / M_PI;
 
-		double turn = kTurn * angleDiff;
+		double turn = kTurn * angleDiffRads;
 
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Angle Difference: %f\tTurn: %f", angleDiff, turn);
+		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Angle Difference: %f\tTurn: %f", angleDiffRads, turn);
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Is Finished: %d", this->onTarget());
 
-		Robot::driveTrain->setLeftRightPower(speedLeft + turn, speedRight - turn);
+		Robot::driveTrain->setLeftRightPower(speedRight + turn, speedLeft - turn);
 	}
 }
 

@@ -22,7 +22,7 @@ DriveBackwardAutonomous::DriveBackwardAutonomous()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddSequential(new Drive(-1, -1, 3));
+	AddSequential(new Drive(-1, -1, 3.5));
 	//AddSequential(new CougarWait(3));
 	AddSequential(new StopAllDriver());
 }
