@@ -31,6 +31,11 @@ LowBarPosition::LowBarPosition()
 
 	const float CARRYING_POS = 0;
 
+	AddParallel(new DropRollers());
+	AddParallel(new SetShooterDeckAngle(0));
+	AddSequential(new LiftTrigger());
+
+	AddSequential(new StopAllOperator());
 
 
 	cougar::CougarDebug::endMethod("LowBarPosition::LowBarPosition");

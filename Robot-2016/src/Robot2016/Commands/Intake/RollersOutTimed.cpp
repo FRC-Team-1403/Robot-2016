@@ -19,7 +19,7 @@ void RollersOutTimed::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void RollersOutTimed::Execute()
 {
-	Robot::intake->setRoller(-1);
+	Robot::intake->setRoller(1);
 }
 
 // Make this return true when this Command no longer needs to run execute()

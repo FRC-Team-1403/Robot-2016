@@ -67,7 +67,7 @@ public:
 	static const int SHOOTER_DECK_ANGLE_FORWARD_LIMIT = 604;
 	static const int SHOOTER_DECK_ANGLE_REVERSE_LIMIT = 351;
 
-	static const int SHOOTER_DECK_ANGLE_ZERO = 572;
+	static const int SHOOTER_DECK_ANGLE_ZERO = 549;
 	static const int SHOOTER_DECK_TICKS_PER_DEGREE = 5;
 
 	static const int SHOOTER_ROLLER_MAX_SPEED = 4500;

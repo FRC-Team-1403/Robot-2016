@@ -14,6 +14,8 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+
+	bool didGo;
 };
 
 #endif

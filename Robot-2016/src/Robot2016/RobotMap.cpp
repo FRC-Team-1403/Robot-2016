@@ -77,7 +77,7 @@ void RobotMap::init(){
 				cougar::CougarConstants::SHOOTER_ROLLER_ENCODER_TICKS_PER_REV);
 	shooterRollerTop->SetSensorDirection(
 				cougar::CougarConstants::SHOOTER_ROLLER_TOP_CANTALON_REVERSE_SENSOR);
-	shooterRollerTop->SetControlMode(CANSpeedController::kSpeed);
+	shooterRollerTop->SetControlMode(CANSpeedController::kPercentVbus);
 	shooterRollerTop->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
 
 	// Bottom Roller
@@ -89,7 +89,7 @@ void RobotMap::init(){
 				cougar::CougarConstants::SHOOTER_ROLLER_ENCODER_TICKS_PER_REV);
 	shooterRollerBottom->SetSensorDirection(
 				cougar::CougarConstants::SHOOTER_ROLLER_BOTTOM_CANTALON_REVERSE_SENSOR);
-	shooterRollerBottom->SetControlMode(CANSpeedController::kSpeed);
+	shooterRollerBottom->SetControlMode(CANSpeedController::kPercentVbus);
 	shooterRollerBottom->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
 
 	// Shooter Deck
@@ -106,7 +106,7 @@ void RobotMap::init(){
 	//			cougar::CougarConstants::SHOOTER_DECK_ANGLE_FORWARD_LIMIT);
 	//shooterAngleMotor->ConfigReverseLimit(
 	//			cougar::CougarConstants::SHOOTER_DECK_ANGLE_REVERSE_LIMIT);
-	shooterAngleMotor->SetControlMode(CANSpeedController::kPosition);
+	shooterAngleMotor->SetControlMode(CANSpeedController::kPercentVbus);
 	shooterAngleMotor->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Brake);
 
 	// Camera

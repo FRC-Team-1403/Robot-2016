@@ -1,14 +1,14 @@
-#include "LowGoal.h"
-#include "Intake/RollersOutTimed.h"
-#include "CougarWait.h"
 #include "Shooter/SetShooterDeckAngle.h"
+#include "TravelPosition.h"
+#include "Intake/LiftRollers.h"
+#include "Intake/RollersIn.h"
+#include "Intake/RollersInTimed.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
-#include "Intake/LiftRollers.h"
-#include "Intake/DropRollers.h"
 #include "StopAllOperator.h"
 
-LowGoal::LowGoal()
+
+TravelPosition::TravelPosition()
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -27,15 +27,16 @@ LowGoal::LowGoal()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddParallel(new DropRollers());
-	AddSequential(new SetShooterDeckAngle(10));
+	cougar::CougarDebug::startMethod("TravelPosition::TravelPosition");
 
-	AddSequential(new DropTrigger());
-
-	AddSequential(new RollersOutTimed(2));
+	const float CARRYING_POS = 0;
 
 	AddParallel(new LiftRollers());
-	AddParallel(new LiftTrigger());
+	AddParallel(new SetShooterDeckAngle(0));
+	AddSequential(new LiftTrigger());
 
 	AddSequential(new StopAllOperator());
+
+
+	cougar::CougarDebug::endMethod("TravelPosition::TravelPosition");
 }

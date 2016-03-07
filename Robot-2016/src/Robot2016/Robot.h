@@ -1,7 +1,10 @@
 #ifndef SRC_ROBOT_H_
 #define SRC_ROBOT_H_
 
-#include "Commands/Autonomous/LowBarAutonomous_Drive.h"
+#include "Commands/LowBarAutonomous.h"
+#include "Commands/DriveForwardAutonomous.h"
+#include "Commands/DriveBackwardAutonomous.h"
+#include "Commands/DoNothingAutonomous.h"
 #include "WPILib.h"
 #include <memory>
 #include "OI.h"
