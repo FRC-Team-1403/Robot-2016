@@ -25,17 +25,9 @@ HighGoalBatter::HighGoalBatter()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	const float ANGLE = -10;
+	const float ANGLE = -30;
 
 	AddSequential(new SetShooterDeckAngle(ANGLE));
-
-	AddSequential(new PowerUpRollers(100, 100));
-
-	AddSequential(new DropTrigger());
-
-	AddSequential(new LiftTrigger());
-
-	AddSequential(new CougarWait(0.5));
 
 	AddSequential(new StopAllOperator());
 }

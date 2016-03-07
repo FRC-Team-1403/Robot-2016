@@ -44,6 +44,10 @@ public:
 	int getTopRollerVelocity();
 	int getBottomRollerVelocity();
 
+	float potToAngle(float pot);
+	float angleToPot(float angle);
+
+	/*
 	//for projectile motion
 	double calculateAngle();
 	void setAngle(double value);
@@ -51,11 +55,11 @@ public:
 	double getDistance();
 	int getI();
 	void setI(int value);
-	/*int getE();
+	int getE();
 	int getY();
 	int getVI();
-	int getX();*/
-	std::shared_ptr<NetworkTable> table;
+	int getX();
+	std::shared_ptr<NetworkTable> table;*/
 
 	bool getStopFlyWheels();
 

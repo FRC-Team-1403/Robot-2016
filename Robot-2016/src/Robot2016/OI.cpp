@@ -10,7 +10,11 @@
 #include "Commands/Shooter/PowerUpRollers.h"
 
 #include "Commands/IntakeBall.h"
-
+#include "Commands/HighGoalBatter.h"
+#include "Commands/Fire.h"
+#include "Commands/LowBarPosition.h"
+#include "Commands/LowGoal.h"
+#include "Commands/TravelPosition.h"
 
 OI::OI()
 {
@@ -19,28 +23,33 @@ OI::OI()
 	this->operatorJoy.reset(new cougar::CougarJoystick(1, true));
 
 	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
-	operatorButtonA->WhenPressed(new DropRollers());
-	//operatorButtonA->WhenPressed(new IntakeBall());
+	//operatorButtonA->WhenPressed(new DropRollers());
+	operatorButtonA->WhenPressed(new IntakeBall());
 	//operatorButtonA->WhenPressed(new PowerUpRollers(100, 100));
 
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
-	operatorButtonB->WhenPressed(new LiftRollers());
-	//operatorButtonB->WhenPressed(new StopAllOperator());
+	//operatorButtonB->WhenPressed(new LiftRollers());
+	operatorButtonB->WhileHeld(new StopAllOperator());
 	// TODO make a button to lift rollers
 
 	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));
-	operatorButtonX->WhenPressed(new DropTrigger());
+	operatorButtonX->WhenPressed(new HighGoalBatter());
 
 	operatorButtonY.reset(new cougar::CougarButton(operatorJoy, 4));
-	operatorButtonY->WhenPressed(new LiftTrigger());
+	operatorButtonY->WhenPressed(new Fire());
 
 	operatorButtonLB.reset(new cougar::CougarButton(operatorJoy, 5));
 	operatorButtonLB->WhileHeld(new RollersOut());
 	//operatorButtonLB->WhenPressed(new SetShooterDeckAngle(0));
 
-
 	operatorButtonRB.reset(new cougar::CougarButton(operatorJoy, 6));
-	operatorButtonRB->WhileHeld(new RollersIn());
+	operatorButtonRB->WhileHeld(new TravelPosition());
+
+	operatorButtonStart.reset(new cougar::CougarButton(operatorJoy, 8));
+	operatorButtonStart->WhenPressed(new LowBarPosition());
+
+	operatorButtonBack.reset(new cougar::CougarButton(operatorJoy, 7));
+	operatorButtonBack->WhenPressed(new LowGoal());
 
 	cougar::CougarDebug::endMethod("OI::OI");
 }

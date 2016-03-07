@@ -10,7 +10,7 @@
 class PowerUpRollers: public Command
 {
 public:
-	PowerUpRollers(float topRollerPower, float bottomRollerPower);
+	PowerUpRollers(float topRollerPower, float bottomRollerPower, float time);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
@@ -18,6 +18,8 @@ public:
 	void Interrupted();
 
 	float topRollerPower_, bottomRollerPower_;
+	float init_time_;
+	float time_;
 };
 
 #endif

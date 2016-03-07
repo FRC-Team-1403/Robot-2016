@@ -19,13 +19,13 @@ void RollersInTimed::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void RollersInTimed::Execute()
 {
-	Robot::intake->setRoller(1);
+	Robot::intake->setRoller(-1);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool RollersInTimed::IsFinished()
 {
-	return this->start_time_ > 0 && Timer::GetFPGATimestamp() - start_time_ >= time_;
+	return (this->start_time_ > 0 && Timer::GetFPGATimestamp() - start_time_ >= time_) || !Robot::intake->getBallSwitchValue();
 }
 
 // Called once after isFinished returns true

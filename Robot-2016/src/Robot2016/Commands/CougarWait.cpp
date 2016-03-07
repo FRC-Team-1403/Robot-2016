@@ -24,6 +24,8 @@ void CougarWait::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool CougarWait::IsFinished()
 {
+	std::cout << "Actual: " << Timer::GetFPGATimestamp() - init_time_ << "\n";
+	std::cout << "Goal: " << time_ << "\n";
 	return Timer::GetFPGATimestamp() - init_time_ >= time_;
 }
 
@@ -37,5 +39,5 @@ void CougarWait::End()
 // subsystems is scheduled to run
 void CougarWait::Interrupted()
 {
-
+	End();
 }

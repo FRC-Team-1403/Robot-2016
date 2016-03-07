@@ -1,14 +1,9 @@
-#include "LowGoal.h"
-#include "Intake/RollersOutTimed.h"
+#include "DriveForwardAutonomous.h"
+#include "DriveTrain/Drive.h"
 #include "CougarWait.h"
-#include "Shooter/SetShooterDeckAngle.h"
-#include "Intake/LiftTrigger.h"
-#include "Intake/DropTrigger.h"
-#include "Intake/LiftRollers.h"
-#include "Intake/DropRollers.h"
-#include "StopAllOperator.h"
+#include "StopAllDriver.h"
 
-LowGoal::LowGoal()
+DriveForwardAutonomous::DriveForwardAutonomous()
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -27,15 +22,7 @@ LowGoal::LowGoal()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddParallel(new DropRollers());
-	AddSequential(new SetShooterDeckAngle(10));
-
-	AddSequential(new DropTrigger());
-
-	AddSequential(new RollersOutTimed(2));
-
-	AddParallel(new LiftRollers());
-	AddParallel(new LiftTrigger());
-
-	AddSequential(new StopAllOperator());
+	AddSequential(new Drive(1, 1, 3.5));
+	//AddSequential(new CougarWait(3));
+	AddSequential(new StopAllDriver());
 }

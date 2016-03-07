@@ -1,14 +1,12 @@
+#include "Fire.h"
 #include "Shooter/SetShooterDeckAngle.h"
-#include "IntakeBall.h"
-#include "Intake/DropRollers.h"
-#include "Intake/RollersIn.h"
-#include "Intake/RollersInTimed.h"
+#include "Shooter/PowerUpRollers.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
 #include "StopAllOperator.h"
+#include "CougarWait.h"
 
-
-IntakeBall::IntakeBall()
+Fire::Fire()
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -27,23 +25,15 @@ IntakeBall::IntakeBall()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	cougar::CougarDebug::startMethod("IntakeBall::IntakeBall");
 
-	const float INTAKE_POS = -15;
-	const float CARRYING_POS = 0;
-
-	AddSequential(new LiftTrigger());
-
-	AddParallel(new DropRollers());
-	AddParallel(new SetShooterDeckAngle(INTAKE_POS));
 	AddSequential(new DropTrigger());
 
-	AddSequential(new RollersInTimed(3));
+	AddSequential(new PowerUpRollers(1, 1, 2));
+	//AddSequential(new CougarWait(0.5));
 
-	AddParallel(new LiftTrigger());
-	AddSequential(new SetShooterDeckAngle(CARRYING_POS));
+	AddParallel(new PowerUpRollers(1, 1, 1));
+	AddSequential(new LiftTrigger());
+
 
 	AddSequential(new StopAllOperator());
-
-	cougar::CougarDebug::endMethod("IntakeBall::IntakeBall");
 }

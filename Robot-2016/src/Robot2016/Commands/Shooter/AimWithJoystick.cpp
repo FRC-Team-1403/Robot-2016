@@ -12,26 +12,28 @@ AimWithJoystick::AimWithJoystick()
 void AimWithJoystick::Initialize()
 {
 	cougar::CougarDebug::startMethod("AimWithJoystick::Initialize");
-	Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPercentVbus);
-	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kPercentVbus);
-	Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kPercentVbus);
+	//Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPercentVbus);
+	//Robot::shooter->topRoller->SetControlMode(CANSpeedController::kPercentVbus);
+	//Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kPercentVbus);
 	cougar::CougarDebug::endMethod("AimWithJoystick::Initialize");
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AimWithJoystick::Execute()
 {
-	//if (Robot::oi->GetOperatorJoystick()->GetButtonBack()) {
-	//	Robot::shooter->setCameraServo(.5 * Robot::oi->GetOperatorJoystick()->GetStickRightAxisY() + 0.5);
-	//} else {
+	if (Robot::oi->GetOperatorJoystick()->GetButtonRT()) {
 		Robot::shooter->angleMotor->Set(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
-		std::cout << "Set: " << Robot::oi->GetOperatorJoystick()->GetStickRightAxisY() << "\n";
-		std::cout << "Actual: " << Robot::shooter->angleMotor->Get() << "\n";
-		Robot::shooter->setCameraServo(1);
-	//}
+		//std::cout << "Set: " << Robot::oi->GetOperatorJoystick()->GetStickRightAxisY() << "\n";
+		//std::cout << "Actual: " << Robot::shooter->angleMotor->Get() << "\n";
+		Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
+		Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
 
-	Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
-	Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
+		Robot::shooter->setCameraServo(1);
+	} else {
+		//Robot::shooter->angleMotor->StopMotor();
+		Robot::shooter->setCameraServo(1);
+	}
+
 
 }
 
@@ -45,9 +47,6 @@ bool AimWithJoystick::IsFinished()
 void AimWithJoystick::End()
 {
 	cougar::CougarDebug::startMethod("AimWithJoystick::End");
-	Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPosition);
-	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kSpeed);
-	Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kSpeed);
 	cougar::CougarDebug::endMethod("AimWithJoystick::End");
 }
 

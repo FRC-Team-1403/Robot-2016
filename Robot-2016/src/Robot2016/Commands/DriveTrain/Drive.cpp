@@ -1,42 +1,45 @@
-#include "RollersOutTimed.h"
+#include "Drive.h"
 #include "../../Robot.h"
 
-RollersOutTimed::RollersOutTimed(float time)
+Drive::Drive(float left, float right, float time)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
-	Requires(Robot::intake.get());
-	this->start_time_ = -1;
+	Requires(Robot::driveTrain.get());
+	this->init_time_ = 0;
 	this->time_ = time;
+	this->left_ = left;
+	this->right_ = right;
 }
 
 // Called just before this Command runs the first time
-void RollersOutTimed::Initialize()
+void Drive::Initialize()
 {
-	this->start_time_ = Timer::GetFPGATimestamp();
+	this->init_time_ = Timer::GetFPGATimestamp();
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void RollersOutTimed::Execute()
+void Drive::Execute()
 {
-	Robot::intake->setRoller(1);
+	Robot::driveTrain->setLeftRightPower(left_, right_);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool RollersOutTimed::IsFinished()
+bool Drive::IsFinished()
 {
-	return this->start_time_ > 0 && Timer::GetFPGATimestamp() - start_time_ >= time_;
+	return Timer::GetFPGATimestamp() - init_time_ >= time_;
 }
 
 // Called once after isFinished returns true
-void RollersOutTimed::End()
+void Drive::End()
 {
-	Robot::intake->setRoller(0);
+	Robot::driveTrain->stop();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void RollersOutTimed::Interrupted()
+void Drive::Interrupted()
 {
 	End();
 }

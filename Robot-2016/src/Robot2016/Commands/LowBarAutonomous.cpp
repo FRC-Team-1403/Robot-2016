@@ -1,14 +1,13 @@
-#include "LowGoal.h"
-#include "Intake/RollersOutTimed.h"
-#include "CougarWait.h"
-#include "Shooter/SetShooterDeckAngle.h"
-#include "Intake/LiftTrigger.h"
-#include "Intake/DropTrigger.h"
-#include "Intake/LiftRollers.h"
-#include "Intake/DropRollers.h"
+#include "LowBarAutonomous.h"
+#include "Autonomous/LowBarAutonomous_Drive.h"
+#include "LowBarPosition.h"
+#include "HighGoalBatter.h"
+#include "TravelPosition.h"
+#include "Fire.h"
 #include "StopAllOperator.h"
+#include "StopAllDriver.h"
 
-LowGoal::LowGoal()
+LowBarAutonomous::LowBarAutonomous()
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -27,15 +26,11 @@ LowGoal::LowGoal()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddParallel(new DropRollers());
-	AddSequential(new SetShooterDeckAngle(10));
-
-	AddSequential(new DropTrigger());
-
-	AddSequential(new RollersOutTimed(2));
-
-	AddParallel(new LiftRollers());
-	AddParallel(new LiftTrigger());
-
-	AddSequential(new StopAllOperator());
+	//AddSequential(new LowBarPosition());
+	AddSequential(new LowBarAutonomous_Drive());
+	//AddSequential(new TravelPosition());
+	//AddSequential(new HighGoalBatter());
+	//AddSequential(new Fire());
+	//AddSequential(new StopAllDriver());
+	//AddSequential(new StopAllOperator());
 }
