@@ -82,8 +82,7 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 	va_start(args, message);
 
 	char buf[strlen(message) * 2];
-	// LOL SO UNSAFE
-	vsprintf(buf, message, args);
+	vsnprintf(buf, strlen(message), message, args);
 
 	log(level, std::string(buf));
 
@@ -96,8 +95,7 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 	va_start(args, message);
 
 	char buf[strlen(message) * 2];
-	//LOL SO UNSAVE v2
-	vsprintf(buf, message, args);
+	vsnprintf(buf, strlen(message), message, args);
 
 	log(level, std::string(buf));
 
