@@ -70,6 +70,8 @@ protected:
 
 	std::shared_ptr<RobotDrive> drive_;
 	int8_t reverse_;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarDrive);
 };
 
 } /* namespace cougar */

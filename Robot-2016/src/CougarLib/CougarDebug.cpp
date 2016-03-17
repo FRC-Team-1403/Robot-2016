@@ -12,6 +12,9 @@ namespace cougar {
 FILE *CougarDebug::logFile;
 FILE *CougarDebug::dumpFile;
 std::map<int, std::string> CougarDebug::debugLevels;
+std::deque<std::tuple<uint8_t, std::string>> CougarDebug::printQueue;
+std::mutex CougarDebug::loggingPrinterMutex_;
+
 int CougarDebug::indentation = 0;
 bool CougarDebug::didInit = false;
 bool CougarDebug::doIndent = true;
@@ -39,7 +42,11 @@ void CougarDebug::init() {
 		system(change_permissions_command.c_str());
 		logFile = fopen(filename.c_str(), "w");
 		fprintf(logFile, (std::string("Writing to file with logging level ") + debugLevels.at(static_cast<int>(FILE_DEBUG_LEVEL)) + "\n\n").c_str());
+
 	}
+
+	std::thread loggingPrinter(throttledLoggingPrinter);
+	loggingPrinter.detach();
 
 	if (STATE_DUMPING) {
 		system("mkdir -p /home/lvuser/dump_files");
@@ -75,10 +82,11 @@ void CougarDebug::debugPrinter(int level, const char *message, ...) {
 	va_start(args, message);
 
 	char buf[strlen(message) * 2];
+	// LOL SO UNSAFE
 	vsprintf(buf, message, args);
 
-	std::thread loggingThread(log, level, std::string(buf));
-	loggingThread.detach();
+	log(level, std::string(buf));
+
 	va_end(args);
 }
 
@@ -88,10 +96,11 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 	va_start(args, message);
 
 	char buf[strlen(message) * 2];
+	//LOL SO UNSAVE v2
 	vsprintf(buf, message, args);
 
-	std::thread loggingThread(log, level, std::string(buf));
-	loggingThread.detach();
+	log(level, std::string(buf));
+
 	va_end(args);
 }
 
@@ -151,27 +160,46 @@ void CougarDebug::log(uint8_t level, std::string message) {
 		}
 		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
 	}
+	printQueue.push_back(std::make_tuple(level, message));
+}
+
+void CougarDebug::print(uint8_t level, std::string message) {
 	writeToFile(level, message);
 	writeToRiolog(level, message);
 }
 
-void CougarDebug::writeToFile(int8_t level, std::string message) {
-	if (WRITE_TO_FILE && level >= FILE_DEBUG_LEVEL) {
-		std::thread fileWriter(fprintf, logFile, message.c_str());
-		fileWriter.detach();
+void CougarDebug::writeToFile(uint8_t level, std::string message) {
+	if (WRITE_TO_FILE && level >= static_cast<uint8_t>(FILE_DEBUG_LEVEL)) {
+		fprintf(logFile, message.c_str());
 	}
 }
 
-void CougarDebug::writeToRiolog(int8_t level, std::string message) {
-	if (WRITE_TO_RIOLOG && level >= RIOLOG_DEBUG_LEVEL) {
-		std::thread riologWriter(printf, "%s", message.c_str());
-		riologWriter.detach();
+void CougarDebug::writeToRiolog(uint8_t level, std::string message) {
+	if (WRITE_TO_RIOLOG && level >= static_cast<uint8_t>(RIOLOG_DEBUG_LEVEL)) {
+		printf("%s", message.c_str());
+	}
+}
+
+void CougarDebug::throttledLoggingPrinter() {
+	// Because this runs forever, we need unique_lock
+	// so we can unlock the print queue between runs.
+	std::unique_lock<std::mutex> printQueueLock(loggingPrinterMutex_, std::defer_lock);
+	while(WRITE_TO_FILE || WRITE_TO_RIOLOG) {
+		printQueueLock.lock();
+		std::vector<std::tuple<uint8_t, std::string>> tmpPrintQueue;
+		std::copy(printQueue.begin(), printQueue.end(), std::back_inserter(tmpPrintQueue));
+		printQueue.clear(); // Empty print queue
+		printQueueLock.unlock();
+		for (std::tuple<uint8_t, std::string> pair : tmpPrintQueue) {
+			writeToRiolog(std::get<uint8_t>(pair), std::get<std::string>(pair));
+		}
+		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(LOGGING_PRINTER_INTERVAL_IN_MILLISECONDS)));
 	}
 }
 
 void CougarDebug::continuouslyDumpStates() {
 	while (STATE_DUMPING) {
-		StateManager::dump();
+		printf("%s", StateManager::dump().c_str());
 		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(DUMP_INTERVAL_IN_MILLISECONDS)));
 	}
 }

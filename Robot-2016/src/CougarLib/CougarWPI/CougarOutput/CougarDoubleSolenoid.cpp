@@ -41,9 +41,9 @@ CougarDoubleSolenoid::CougarDoubleSolenoid(uint32_t forwardChannel, uint32_t rev
 CougarDoubleSolenoid::CougarDoubleSolenoid(uint8_t moduleNumber, uint32_t forwardChannel,
 										   uint32_t reverseChannel, std::string name)
 		: SolenoidBase(moduleNumber),
-			m_forwardChannel(forwardChannel),
-			m_reverseChannel(reverseChannel),
-		  Debuggable(name) {
+		  Debuggable(name),
+		  m_forwardChannel(forwardChannel),
+		  m_reverseChannel(reverseChannel) {
 	std::stringstream buf;
 	if (!CheckSolenoidModule(m_moduleNumber)) {
 		buf << "Solenoid Module " << m_moduleNumber;

@@ -552,6 +552,8 @@ class CougarCANTalon : public MotorSafety,
 	bool m_isInverted;
 
 	HasBeenMoved m_hasBeenMoved;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarCANTalon);
 };
 
 } // namespace cougar

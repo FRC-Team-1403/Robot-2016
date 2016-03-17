@@ -13,14 +13,16 @@
 #include <memory>
 #include <vector>
 #include <mutex>
+#include <map>
 #include "Dumpable.h"
+#include "CougarSubsystem.h"
 
 namespace cougar {
 
 class StateManager {
 public:
-	static void addObject(std::shared_ptr<Dumpable> obj);
-	static void dump();
+	static void addObject(std::string subsystem, std::shared_ptr<Dumpable> obj);
+	static std::string dump();
 
 private:
 
@@ -29,11 +31,11 @@ private:
 		StateDumper();
 		virtual ~StateDumper();
 
-		virtual void addObjectToDump(std::shared_ptr<Dumpable> obj);
+		virtual void addObjectToDump(std::string subsystem, std::shared_ptr<Dumpable> obj);
 		virtual std::string dump();
 
-		std::shared_ptr<std::vector<std::shared_ptr<Dumpable>>> objectsToDump_;
-		std::mutex mutex_;
+		std::map<std::string, std::vector<std::shared_ptr<Dumpable>>> objectsToDump_;
+		std::mutex stateManagerMutex_;
 	};
 
 	StateManager();

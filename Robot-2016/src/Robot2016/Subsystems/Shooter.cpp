@@ -3,13 +3,13 @@
 #include "../Commands/Shooter/AimWithJoystick.h"
 
 Shooter::Shooter() :
-		Subsystem("Shooter")
+		cougar::CougarSubsystem("Shooter")
 {
 	bottomRoller = RobotMap::shooterRollerBottom;
 	topRoller = RobotMap::shooterRollerTop;
 	angleMotor = RobotMap::shooterAngleMotor;
 	cameraServo = RobotMap::shooterCameraServo;
-	table = NetworkTable::GetTable("SmartDashboard");
+	//table = NetworkTable::GetTable("SmartDashboard");
 }
 
 void Shooter::InitDefaultCommand()
@@ -71,4 +71,12 @@ int Shooter::getTopRollerVelocity() {
 
 int Shooter::getBottomRollerVelocity() {
 	return this->bottomRoller->GetEncVel();
+}
+
+float Shooter::potToAngle(float pot) {
+	return (pot - cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO) / cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE;
+}
+
+float Shooter::angleToPot(float angle) {
+	return angle * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO;
 }

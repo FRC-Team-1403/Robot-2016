@@ -13,8 +13,8 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(uint32_t port1, u
 		uint32_t PDPSlot1, uint32_t PDPSlot2, std::string name, bool inverted /* = false */) : Debuggable (name) {
 	CougarDebug::startMethod("CougarSpeedControllerAggregate::CougarSpeedControllerAggregate " + name);
 	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> tmpControllers(new std::vector<std::shared_ptr<CougarSpeedController>>);
-	tmpControllers->push_back(std::shared_ptr<CougarSpeedController>(new CougarSpeedController(port1, PDPSlot1, name + "1", inverted, false)));
-	tmpControllers->push_back(std::shared_ptr<CougarSpeedController>(new CougarSpeedController(port2, PDPSlot2, name + "2", inverted, false)));
+	tmpControllers->push_back(std::shared_ptr<CougarSpeedController>(new CougarSpeedController(port1, PDPSlot1, name + "1", inverted)));
+	tmpControllers->push_back(std::shared_ptr<CougarSpeedController>(new CougarSpeedController(port2, PDPSlot2, name + "2", inverted)));
 	this->controllers_ = tmpControllers;
 	this->inverted_ = inverted;
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::CougarSpeedControllerAggregate " + this->GetName());

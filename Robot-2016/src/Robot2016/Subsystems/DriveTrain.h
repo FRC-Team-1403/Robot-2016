@@ -4,8 +4,10 @@
 #include "WPILib.h"
 #include <cmath>
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
+#include "../../CougarLib/CougarBase/CougarSubsystem.h"
 
-class DriveTrain: public Subsystem
+
+class DriveTrain: public cougar::CougarSubsystem
 {
 private:
 	std::shared_ptr<cougar::CougarDrive> driveT;

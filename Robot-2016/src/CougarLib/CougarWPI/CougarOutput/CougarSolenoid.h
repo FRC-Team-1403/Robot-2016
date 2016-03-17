@@ -70,6 +70,8 @@ public:
 private:
 	uint32_t m_channel;	///< The channel on the module to control.
 	std::shared_ptr<ITable> m_table;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarSolenoid);
 };
 } /* namespace cougar */
 

@@ -14,6 +14,18 @@
 #	define REQUIRE_CHILD_IMPLEMENTATION_PRINTABLE true
 #endif
 
+#ifndef DISALLOW_COPY_AND_ASSIGN
+// Declares private copy constructor and assignment operator in order to
+// supress the default implementations of these that the compiler will generate.
+// The net effect of this is that someone atetmpting to call them (by accident)
+// will cause a linker error due to the unresolevd implementation since they
+// are never implemented.
+#define DISALLOW_COPY_AND_ASSIGN(TYPE) \
+	private:                           \
+		TYPE(const TYPE&);             \
+		TYPE& operator=(const TYPE&)
+#endif
+
 namespace cougar {
 
 class Printable {

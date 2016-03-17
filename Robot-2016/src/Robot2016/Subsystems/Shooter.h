@@ -6,9 +6,11 @@
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarCANTalon.h"
 #include "../../CougarLib/CougarConstants.h"
 #include "../../CougarLib/CougarDebug.h"
+#include "../../CougarLib/CougarBase/CougarSubsystem.h"
+
 #include <memory>
 
-class Shooter: public Subsystem
+class Shooter: public cougar::CougarSubsystem
 {
 public:
 
@@ -49,6 +51,9 @@ public:
 	int getBottomRollerDistance();
 	int getTopRollerVelocity();
 	int getBottomRollerVelocity();
+
+	float potToAngle(float pot);
+	float angleToPot(float angle);
 
 	//for projectile motion
 	double calculateAngle();

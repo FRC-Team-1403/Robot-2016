@@ -5,10 +5,12 @@
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarSpeedController.h"
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarSolenoid.h"
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarDoubleSolenoid.h"
+#include "../../CougarLib/CougarBase/CougarSubsystem.h"
+
 
 #include <memory>
 
-class Intake: public Subsystem
+class Intake: public cougar::CougarSubsystem
 {
 public:
 	std::shared_ptr<cougar::CougarSpeedController> roller;

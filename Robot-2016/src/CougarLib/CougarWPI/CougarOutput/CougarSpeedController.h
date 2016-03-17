@@ -20,10 +20,10 @@ namespace cougar {
 
 class CougarSpeedController : public SpeedController, public Debuggable {
 public:
-	CougarSpeedController(uint32_t port, uint32_t pdpSlot, std::string name, bool inverted = false, bool willDump = true); // Creates a Victor by default
-	CougarSpeedController(std::shared_ptr<SpeedController> controller, uint32_t pdpSlot, std::string name, bool inverted = false, bool willDump = true);
-	explicit CougarSpeedController(std::shared_ptr<CougarSpeedController> controller, bool willDump = true);
-	explicit CougarSpeedController(const CougarSpeedController &controller, bool willDump = true);
+	CougarSpeedController(uint32_t port, uint32_t pdpSlot, std::string name, bool inverted = false); // Creates a Victor by default
+	CougarSpeedController(std::shared_ptr<SpeedController> controller, uint32_t pdpSlot, std::string name, bool inverted = false);
+	explicit CougarSpeedController(std::shared_ptr<CougarSpeedController> controller);
+	explicit CougarSpeedController(const CougarSpeedController &controller);
 	virtual ~CougarSpeedController();
 
 	virtual void SetInverted(bool inverted) override;

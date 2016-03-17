@@ -13,7 +13,7 @@
 #ifndef SRC_COUGARLIB_COUGARDEBUG_H_
 #define SRC_COUGARLIB_COUGARDEBUG_H_
 
-#include <WPILib.h>
+#include "WPILib.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdarg.h>
@@ -22,6 +22,9 @@
 #include <stdexcept>
 #include <chrono>
 #include <thread>
+#include <deque>
+#include <tuple>
+#include <mutex>
 #include "CougarBase/StateManager.h"
 
 namespace cougar {
@@ -81,16 +84,21 @@ private:
 	virtual ~CougarDebug() {}
 
 	static void log(uint8_t level, std::string message);
-	static void writeToFile(int8_t level, std::string message);
-	static void writeToRiolog(int8_t level, std::string message);
+	static void print(uint8_t level, std::string message);
+	static void writeToFile(uint8_t level, std::string message);
+	static void writeToRiolog(uint8_t level, std::string message);
 
-	// This MUST be running in a separate thread,
-	// or it will lock up the whole program.
+	// These MUST each be running in separate threads,
+	// or they will lock up the whole program.
+	static void throttledLoggingPrinter();
 	static void continuouslyDumpStates();
 
 	static FILE *logFile;
 	static FILE *dumpFile;
 	static std::map<int, std::string> debugLevels;
+	static std::deque<std::tuple<uint8_t, std::string>> printQueue;
+	static std::mutex loggingPrinterMutex_;
+
 	static int indentation;
 	static bool didInit;
 	static bool doIndent;
@@ -98,6 +106,7 @@ private:
 	static const bool WRITE_TO_FILE = true;
 	static const bool STATE_DUMPING = true;
 
+	static const int LOGGING_PRINTER_INTERVAL_IN_MILLISECONDS = 250;
 	static const int DUMP_INTERVAL_IN_MILLISECONDS = 5000;
 
 	static const int RIOLOG_DEBUG_LEVEL = UNIMPORTANT;

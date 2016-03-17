@@ -2,7 +2,7 @@
 #include "../RobotMap.h"
 
 Intake::Intake() :
-		Subsystem("Intake")
+		cougar::CougarSubsystem("Intake")
 {
 	this->roller = RobotMap::intakeRoller;
 	this->ballSwitch = RobotMap::intakeBallSwitch;

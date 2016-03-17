@@ -4,10 +4,12 @@
 #include "../Commands/DriveTrain/DriveWithJoystick.h"
 
 DriveTrain::DriveTrain() :
-		Subsystem("DriveTrain")
+		cougar::CougarSubsystem("DriveTrain")
 {
 	this->driveT = RobotMap::drive;
+	this->addObject(driveT);
 	this->driveTrainLeftEncoder = RobotMap::driveTrainLeftEncoder;
+	//this->addObject(driveTrainLeftEncoder);
 	this->driveTrainRightEncoder = RobotMap::driveTrainRightEncoder;
 	this->driveTrainGyro = RobotMap::driveTrainGyro;
 	this->time = Timer::GetFPGATimestamp();
