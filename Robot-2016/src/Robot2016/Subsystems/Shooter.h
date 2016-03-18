@@ -66,7 +66,7 @@ public:
 	std::shared_ptr<cougar::CougarCANTalon> bottomRoller;
 	std::shared_ptr<cougar::CougarCANTalon> topRoller;
 	std::shared_ptr<cougar::CougarCANTalon> angleMotor;
-	std::shared_ptr<Servo> cameraServo;
+	std::shared_ptr<cougar::CougarSpeedController> cameraServo;
 
 };
 

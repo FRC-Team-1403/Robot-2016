@@ -2,20 +2,20 @@
 
 //Drive Train
 std::shared_ptr<cougar::CougarDrive> RobotMap::drive;
-std::shared_ptr<Encoder> RobotMap::driveTrainRightEncoder;
-std::shared_ptr<Encoder> RobotMap::driveTrainLeftEncoder;
-std::shared_ptr<Gyro> RobotMap::driveTrainGyro;
+std::shared_ptr<cougar::CougarEncoder> RobotMap::driveTrainRightEncoder;
+std::shared_ptr<cougar::CougarEncoder> RobotMap::driveTrainLeftEncoder;
+std::shared_ptr<cougar::CougarGyro> RobotMap::driveTrainGyro;
 std::shared_ptr<ADXL362> RobotMap::driveTrainAccelerometer;
 
 //Shooter
 std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterRollerTop;
 std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterRollerBottom;
 std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterAngleMotor;
-std::shared_ptr<Servo> RobotMap::shooterCameraServo;
+std::shared_ptr<cougar::CougarSpeedController> RobotMap::shooterCameraServo;
 
 //Intake
 std::shared_ptr<cougar::CougarSpeedController> RobotMap::intakeRoller;
-std::shared_ptr<DigitalInput> RobotMap::intakeBallSwitch;
+std::shared_ptr<cougar::CougarDigitalInput> RobotMap::intakeBallSwitch;
 std::shared_ptr<cougar::CougarDoubleSolenoid> RobotMap::intakeAngleAirCylinder;
 std::shared_ptr<cougar::CougarSolenoid> RobotMap::intakeLiftAirCylinder;
 
@@ -44,20 +44,22 @@ void RobotMap::init(){
 				"Drive", true));
 
 	// Left Encoder
-	driveTrainLeftEncoder.reset(new Encoder(
+	driveTrainLeftEncoder.reset(new cougar::CougarEncoder(
 				cougar::CougarConstants::DRIVETRAIN_ENCODER_LEFT_ACHANNEL,
-				cougar::CougarConstants::DRIVETRAIN_ENCODER_LEFT_BCHANNEL));
+				cougar::CougarConstants::DRIVETRAIN_ENCODER_LEFT_BCHANNEL,
+				"Drive Train Left Encoder"));
 	driveTrainLeftEncoder->SetDistancePerPulse(cougar::CougarConstants::DRIVE_ENCODER_TICKS_PER_FOOT);
 
 	// Right Encoder
-	driveTrainRightEncoder.reset(new Encoder(
+	driveTrainRightEncoder.reset(new cougar::CougarEncoder(
 				cougar::CougarConstants::DRIVETRAIN_ENCODER_RIGHT_ACHANNEL,
-				cougar::CougarConstants::DRIVETRAIN_ENCODER_RIGHT_BCHANNEL));
+				cougar::CougarConstants::DRIVETRAIN_ENCODER_RIGHT_BCHANNEL,
+				"Drive Train Right Encoder"));
 	driveTrainRightEncoder->SetDistancePerPulse(cougar::CougarConstants::DRIVE_ENCODER_TICKS_PER_FOOT);
 
 	// Gyroscope
 	driveTrainGyro.reset(new cougar::CougarGyro(
-				cougar::CougarConstants::DRIVETRAIN_GYRO_CHANNEL));
+				cougar::CougarConstants::DRIVETRAIN_GYRO_CHANNEL, "Drive Train Gyro"));
 
 	// SPI Accelerometer
 	driveTrainAccelerometer.reset(new ADXL362(ADXL362::kRange_16G)); //SPI
@@ -110,8 +112,9 @@ void RobotMap::init(){
 	shooterAngleMotor->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Brake);
 
 	// Camera
-	shooterCameraServo.reset(new Servo(
-				cougar::CougarConstants::SHOOTER_CAMERA_SERVO_PORT));
+	//TODO fix
+	//shooterCameraServo.reset(new cougar::CougarSpeedController(std::make_shared<SpeedController>(new Servo(
+	//			cougar::CougarConstants::SHOOTER_CAMERA_SERVO_PORT)), 1234, "Shooter Camera Servo"));
 
 	cougar::CougarDebug::debugPrinter("Finished Shooter initialization");
 
@@ -134,8 +137,9 @@ void RobotMap::init(){
 				cougar::CougarConstants::INTAKE_TRIGGER_SOLENOID_CHANNEL,
 				"Intake Trigger Air Cylinder"));
 
-	intakeBallSwitch.reset(new DigitalInput(
-				cougar::CougarConstants::INTAKE_BALL_LIMIT_SWITCH_DIGITAL_INPUT_PORT));
+	intakeBallSwitch.reset(new cougar::CougarDigitalInput(
+				cougar::CougarConstants::INTAKE_BALL_LIMIT_SWITCH_DIGITAL_INPUT_PORT,
+				"Intake Ball Switch"));
 
 	cougar::CougarDebug::debugPrinter("Finished Intake initialization");
 

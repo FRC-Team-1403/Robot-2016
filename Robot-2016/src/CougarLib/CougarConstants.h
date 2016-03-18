@@ -56,6 +56,17 @@ public:
 /**********************************Values**********************************/
 
 	// Drive Train
+	enum DRIVE_STATES {
+		DIRECT_DRIVE,
+		FPID_DRIVE,
+	};
+	static const int DEFAULT_DRIVE_STATE = DIRECT_DRIVE;
+
+	enum JOYSTICK_DRIVE_MODES {
+		ARCADE_DRIVE,
+		TANK_DRIVE
+	};
+	static const int JOYSTICK_DRIVE_STATE = TANK_DRIVE;
 	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = ((8 * M_PI) / 12) / 256;
 
 	// Shooter

@@ -77,6 +77,17 @@ bool CougarJoystick::GetRawButton(uint32_t port) {
 	return this->joystick_->GetRawButton(port);
 }
 
+bool CougarJoystick::IsZeroAxis(uint32_t axis) {
+	return std::abs(this->GetRawAxis(axis)) <= 0.075;
+}
+
+bool CougarJoystick::AreZeroSticks() {
+	return  this->IsZeroAxis(0) &&
+			this->IsZeroAxis(1) &&
+			this->IsZeroAxis(4) &&
+			this->IsZeroAxis(5);
+}
+
 float CougarJoystick::GetStickLeftAxisX() {
 	return this->getAxis(0);
 }
@@ -104,7 +115,7 @@ float CougarJoystick::getAxis(uint32_t axis) {
 	 * Handles small deadzone issues with the joysticks
 	 * that get amplified by the smoothing algorithm.
 	 */
-	if (std::abs(val) < 0.05) { return 0; }
+	if (this->IsZeroAxis(axis)) { return 0; }
 
 	if (this->ignoreMods_) { return val; }
 

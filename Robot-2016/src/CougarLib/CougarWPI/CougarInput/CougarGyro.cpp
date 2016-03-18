@@ -28,8 +28,8 @@ constexpr float CougarGyro::kDefaultVoltsPerDegreePerSecond;
  * @param channel The analog channel the gyro is connected to. Gyros
 											can only be used on on-board Analog Inputs 0-1.
  */
-CougarGyro::CougarGyro(int32_t channel) :
-		CougarGyro(std::make_shared<AnalogInput>(channel)) {
+CougarGyro::CougarGyro(int32_t channel, std::string name) :
+		CougarGyro(std::make_shared<AnalogInput>(channel), name) {
 	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 
@@ -44,9 +44,9 @@ CougarGyro::CougarGyro(int32_t channel) :
  * @param channel A pointer to the AnalogInput object that the gyro is connected
  * to.
  */
-CougarGyro::CougarGyro(AnalogInput *channel)
+CougarGyro::CougarGyro(AnalogInput *channel, std::string name)
 		: CougarGyro(
-					std::shared_ptr<AnalogInput>(channel, NullDeleter<AnalogInput>())) {
+					std::shared_ptr<AnalogInput>(channel, NullDeleter<AnalogInput>()), name) {
 	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 }
@@ -59,8 +59,8 @@ CougarGyro::CougarGyro(AnalogInput *channel)
  * @param channel A pointer to the AnalogInput object that the gyro is
  * connected to.
  */
-CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel)
-		: m_analog(channel) {
+CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, std::string name)
+		: Debuggable(name), m_analog(channel), m_channel(channel->GetChannel()) {
 	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 	if (channel == nullptr) {
 		wpi_setWPIError(NullParameter);
@@ -80,7 +80,7 @@ CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel)
  * @param center Preset uncalibrated value to use as the accumulator center value.
  * @param offset Preset uncalibrated value to use as the gyro offset.
  */
-CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset) {
+CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset, std::string name) : Debuggable(name), m_channel(channel) {
 	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 	m_analog = std::make_shared<AnalogInput>(channel);
 	InitGyro();
@@ -99,7 +99,7 @@ CougarGyro::CougarGyro(int32_t channel, uint32_t center, float offset) {
  * @param channel A pointer to the AnalogInput object that the gyro is
  * connected to.
  */
-CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, float offset) : m_analog(channel) {
+CougarGyro::CougarGyro(std::shared_ptr<AnalogInput> channel, uint32_t center, float offset, std::string name) : Debuggable(name), m_analog(channel), m_channel(channel->GetChannel()) {
 	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel->GetChannel()) + std::string("]")).c_str());
 	if (channel == nullptr) {
 		wpi_setWPIError(NullParameter);
@@ -280,6 +280,21 @@ void CougarGyro::SetDeadband(float volts) {
 	m_analog->SetAccumulatorDeadband(deadband);
 	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "CougarGyro deadband set to %f volts", volts);
 	CougarDebug::endMethod("CougarGyro::SetDeadband");
+}
+
+std::string CougarGyro::toString() {
+	std::string str = "CougarGyro " + this->name_ + "\n";
+	str += "Channel: " + std::to_string(this->m_channel);
+	return str;
+}
+
+std::string CougarGyro::dumpState() {
+	std::string str = this->toString();
+	str += "Angle: " + std::to_string(this->GetAngle());
+	str += "Rate: " + std::to_string(this->GetRate());
+	str += "Center: " + std::to_string(this->GetCenter());
+	str += "Offset: " + std::to_string(this->GetOffset());
+	return str;
 }
 
 } /* namespace cougar */

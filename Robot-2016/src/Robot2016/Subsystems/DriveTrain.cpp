@@ -9,9 +9,11 @@ DriveTrain::DriveTrain() :
 	this->driveT = RobotMap::drive;
 	this->addObject(driveT);
 	this->driveTrainLeftEncoder = RobotMap::driveTrainLeftEncoder;
-	//this->addObject(driveTrainLeftEncoder);
+	this->addObject(this->driveTrainLeftEncoder);
 	this->driveTrainRightEncoder = RobotMap::driveTrainRightEncoder;
+	this->addObject(this->driveTrainRightEncoder);
 	this->driveTrainGyro = RobotMap::driveTrainGyro;
+	this->addObject(this->driveTrainGyro);
 	this->time = Timer::GetFPGATimestamp();
 	this->angle = this->getGyroAngleInRadians();
 	this->distance = getDistance();

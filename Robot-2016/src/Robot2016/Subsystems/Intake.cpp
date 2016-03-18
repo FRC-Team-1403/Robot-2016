@@ -5,9 +5,13 @@ Intake::Intake() :
 		cougar::CougarSubsystem("Intake")
 {
 	this->roller = RobotMap::intakeRoller;
+	this->addObject(roller);
 	this->ballSwitch = RobotMap::intakeBallSwitch;
+	this->addObject(this->ballSwitch);
 	this->rollersAirCylinder = RobotMap::intakeAngleAirCylinder;
+	this->addObject(rollersAirCylinder);
 	this->triggerAirCylinder = RobotMap::intakeLiftAirCylinder;
+	this->addObject(triggerAirCylinder);
 	this->ballSwitch = RobotMap::intakeBallSwitch;
 }
 

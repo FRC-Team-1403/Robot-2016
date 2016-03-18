@@ -6,9 +6,13 @@ Shooter::Shooter() :
 		cougar::CougarSubsystem("Shooter")
 {
 	bottomRoller = RobotMap::shooterRollerBottom;
+	this->addObject(bottomRoller);
 	topRoller = RobotMap::shooterRollerTop;
+	this->addObject(topRoller);
 	angleMotor = RobotMap::shooterAngleMotor;
+	this->addObject(angleMotor);
 	cameraServo = RobotMap::shooterCameraServo;
+	this->addObject(cameraServo);
 	//table = NetworkTable::GetTable("SmartDashboard");
 }
 

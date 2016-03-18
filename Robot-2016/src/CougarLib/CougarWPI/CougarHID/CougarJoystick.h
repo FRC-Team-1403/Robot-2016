@@ -33,6 +33,8 @@ public:
 	virtual bool GetButtonStart();
 	virtual bool GetButtonBack();
 	virtual bool GetRawButton(uint32_t port);
+	virtual bool IsZeroAxis(uint32_t axis);
+	virtual bool AreZeroSticks();
 
 	virtual float GetStickLeftAxisX();
 	virtual float GetStickLeftAxisY();
