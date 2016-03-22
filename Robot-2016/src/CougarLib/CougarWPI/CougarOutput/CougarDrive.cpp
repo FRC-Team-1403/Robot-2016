@@ -95,8 +95,8 @@ void CougarDrive::LockDrive(std::shared_ptr<CougarEncoder> leftEncoder, std::sha
 }
 
 void CougarDrive::AutomaticDrive(std::shared_ptr<CougarJoystick> joystick, std::shared_ptr<CougarEncoder> leftEncoder, std::shared_ptr<CougarEncoder> rightEncoder) {
+	//	this->LockDrive(leftEncoder, rightEncoder);
 	if (joystick->AreZeroSticks()) {
-		this->LockDrive(leftEncoder, rightEncoder);
 	} else if (joystick->GetButtonStart()) {
 		this->configFPID();
 		this->leftController.goal_pos = leftEncoder->GetDistance();

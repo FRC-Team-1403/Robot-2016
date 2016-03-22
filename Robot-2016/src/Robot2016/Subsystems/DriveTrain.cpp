@@ -27,10 +27,7 @@ void DriveTrain::InitDefaultCommand()
 }
 
 void DriveTrain::drive() {
-	if (Robot::oi->GetDriverJoystick()->GetButtonStart()) {
-		this->driveT->ArcadeDrive(Robot::oi->GetDriverJoystick()->GetStickLeftAxisX(), 0);
-	}
-	this->driveT->TankDrive(Robot::oi->GetDriverJoystick());
+	this->driveT->AutomaticDrive(Robot::oi->GetDriverJoystick(), this->driveTrainLeftEncoder, this->driveTrainRightEncoder);
 }
 
 double DriveTrain::getDistance() {

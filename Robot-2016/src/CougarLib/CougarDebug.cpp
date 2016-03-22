@@ -59,8 +59,8 @@ void CougarDebug::init() {
 		system(change_permissions_command.c_str());
 		dumpFile = fopen(filename.c_str(), "w");
 
-		std::thread stateDumper(continuouslyDumpStates);
-		stateDumper.detach();
+		//std::thread stateDumper(continuouslyDumpStates);
+		//stateDumper.detach();
 	}
 
 	std::cout << "CougarDebug::init finished\n";
