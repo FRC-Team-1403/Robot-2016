@@ -104,7 +104,7 @@ private:
 	static bool doIndent;
 	static const bool WRITE_TO_RIOLOG = true;
 	static const bool WRITE_TO_FILE = true;
-	static const bool STATE_DUMPING_TO_RIOLOG = true;
+	static const bool STATE_DUMPING_TO_RIOLOG = false;
 	static const bool STATE_DUMPING_TO_FILE = true;
 
 	static const int LOGGING_PRINTER_INTERVAL_IN_MILLISECONDS = 250;

@@ -24,19 +24,19 @@ void Intake::stop() {
 }
 
 void Intake::liftRollersAirCylinder() {
-	rollersAirCylinder->Set(cougar::CougarDoubleSolenoid::kReverse);
+	rollersAirCylinder->DoubleSolenoid::Set(cougar::CougarDoubleSolenoid::kReverse);
 }
 
 void Intake::dropRollersAirCylinder() {
-	rollersAirCylinder->Set(cougar::CougarDoubleSolenoid::kForward);
+	rollersAirCylinder->DoubleSolenoid::Set(cougar::CougarDoubleSolenoid::kForward);
 }
 
 void Intake::liftTriggerAirCylinder() {
-	triggerAirCylinder->Set(false);
+	triggerAirCylinder->Solenoid::Set(false);
 }
 
 void Intake::dropTriggerAirCylinder() {
-	triggerAirCylinder->Set(true);
+	triggerAirCylinder->Solenoid::Set(true);
 }
 
 enum cougar::CougarDoubleSolenoid::Value Intake::getRollersAirCylinderValue() {
