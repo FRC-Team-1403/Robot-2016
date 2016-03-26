@@ -103,11 +103,11 @@ void RobotMap::init(){
 				cougar::CougarConstants::SHOOTER_DECK_ANGLE_CANTALON_REVERSE_SENSOR);
 	shooterAngleMotor->ConfigPotentiometerTurns(
 				cougar::CougarConstants::SHOOTER_DECK_ANGLE_POTENTIOMETER_TURNS);
-	shooterAngleMotor->ConfigLimitMode(CANSpeedController::kLimitMode_SoftPositionLimits);
+	/*shooterAngleMotor->ConfigLimitMode(CANSpeedController::kLimitMode_SoftPositionLimits);
 	shooterAngleMotor->ConfigForwardLimit(
 				cougar::CougarConstants::SHOOTER_DECK_ANGLE_FORWARD_LIMIT);
 	shooterAngleMotor->ConfigReverseLimit(
-				cougar::CougarConstants::SHOOTER_DECK_ANGLE_REVERSE_LIMIT);
+				cougar::CougarConstants::SHOOTER_DECK_ANGLE_REVERSE_LIMIT);*/
 	shooterAngleMotor->SetControlMode(CANSpeedController::kPosition);
 	shooterAngleMotor->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Brake);
 

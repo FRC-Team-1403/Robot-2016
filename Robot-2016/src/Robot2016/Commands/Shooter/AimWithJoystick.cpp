@@ -31,7 +31,8 @@ void AimWithJoystick::Execute()
 
 		Robot::shooter->setCameraServo(1);
 	} else {
-		Robot::shooter->setCameraServo(1);
+		//Robot::shooter->cameraServo->Set(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
+		Robot::shooter->setCameraServo(0.750);
 	}
 }
 

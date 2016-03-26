@@ -195,6 +195,9 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Angle Motor", shooter->angleMotor->Get());
 	SmartDashboard::PutNumber("Top Roller", shooter->topRoller->Get());
 	SmartDashboard::PutNumber("Bottom Roller", shooter->bottomRoller->Get());
+
+
+	SmartDashboard::PutNumber("Servo", shooter->cameraServo->Get());
 }
 
 void Robot::TestPeriodic()
