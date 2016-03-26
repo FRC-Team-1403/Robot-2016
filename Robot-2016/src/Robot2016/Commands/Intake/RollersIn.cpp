@@ -3,7 +3,7 @@
 #include "../../../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
 
 RollersIn::RollersIn() :
-	cougar::CougarCommand("RollersIn", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+	cougar::CougarCommand("RollersIn", Robot::oi->GetOperatorJoystick())
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);

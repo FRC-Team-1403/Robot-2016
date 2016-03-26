@@ -4,7 +4,7 @@
 
 
 PowerUpRollers::PowerUpRollers(float topRollerPower, float bottomRollerPower, float time) :
-	cougar::CougarCommand("PowerUpRollers", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+	cougar::CougarCommand("PowerUpRollers", Robot::oi->GetOperatorJoystick())
 {
 	cougar::CougarDebug::startMethod("PowerUpRollers::PowerUpRollers");
 	Requires(Robot::shooter.get());

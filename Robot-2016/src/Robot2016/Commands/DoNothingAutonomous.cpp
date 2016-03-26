@@ -1,6 +1,8 @@
 #include "DoNothingAutonomous.h"
+#include "../Robot.h"
 
-DoNothingAutonomous::DoNothingAutonomous()
+DoNothingAutonomous::DoNothingAutonomous() :
+cougar::CougarCommand("DoNothingAutonomous", Robot::oi->GetOperatorJoystick())
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);

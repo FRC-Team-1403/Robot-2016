@@ -2,7 +2,7 @@
 #include "../../Robot.h"
 
 Drive::Drive(float left, float right, float time) :
-	cougar::CougarCommand("Drive", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+	cougar::CougarCommand("Drive", Robot::oi->GetOperatorJoystick())
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);

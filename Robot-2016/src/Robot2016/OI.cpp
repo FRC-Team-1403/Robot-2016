@@ -25,7 +25,7 @@ OI::OI()
 	//operatorButtonA->WhenPressed(new DropRollers());
 	operatorButtonA->WhenPressed(new IntakeBall());
 	//operatorButtonA->WhenPressed(new PowerUpRollers(100, 100));
-
+/*
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
 	//operatorButtonB->WhenPressed(new LiftRollers());
 	//operatorButtonB->WhileHeld(new StopAllOperator());
@@ -49,7 +49,7 @@ OI::OI()
 
 	operatorButtonBack.reset(new cougar::CougarButton(operatorJoy, 7));
 	operatorButtonBack->WhenPressed(new LowGoal());
-
+*/
 	cougar::CougarDebug::endMethod("OI::OI");
 }
 

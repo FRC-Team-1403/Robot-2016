@@ -4,7 +4,7 @@
 
 
 RollersOut::RollersOut() :
-	cougar::CougarCommand("RollersOut", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+	cougar::CougarCommand("RollersOut", Robot::oi->GetOperatorJoystick())
 {
 	Requires(Robot::intake.get());
 }

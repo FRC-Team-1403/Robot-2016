@@ -2,7 +2,7 @@
 #include "../../Robot.h"
 
 LowBarAutonomous_Drive::LowBarAutonomous_Drive() :
-	cougar::CougarCommand("LowBarAutonomous_Drive", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+	cougar::CougarCommand("LowBarAutonomous_Drive", Robot::oi->GetOperatorJoystick())
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);

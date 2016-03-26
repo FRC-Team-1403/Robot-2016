@@ -4,7 +4,7 @@
 
 
 LiftTrigger::LiftTrigger() :
-	cougar::CougarCommand("LiftTrigger", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+	cougar::CougarCommand("LiftTrigger", Robot::oi->GetOperatorJoystick())
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);

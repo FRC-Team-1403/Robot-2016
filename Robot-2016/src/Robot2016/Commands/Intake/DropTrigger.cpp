@@ -4,7 +4,7 @@
 
 
 DropTrigger::DropTrigger() :
-	cougar::CougarCommand("DropTrigger", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+	cougar::CougarCommand("DropTrigger", Robot::oi->GetOperatorJoystick())
 
 {
 	// Use Requires() here to declare subsystem dependencies

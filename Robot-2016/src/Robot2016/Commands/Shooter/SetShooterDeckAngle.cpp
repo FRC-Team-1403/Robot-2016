@@ -4,7 +4,7 @@
 
 
 SetShooterDeckAngle::SetShooterDeckAngle(float angle) :
-	cougar::CougarCommand("SetShooterDeckAngle", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+	cougar::CougarCommand("SetShooterDeckAngle", Robot::oi->GetOperatorJoystick())
 {
 	cougar::CougarDebug::startMethod("SetShooterDeckAngle::SetShooterDeckAngle");
 	Requires(Robot::shooter.get());

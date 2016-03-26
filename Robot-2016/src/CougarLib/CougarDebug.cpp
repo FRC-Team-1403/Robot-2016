@@ -123,22 +123,22 @@ void CougarDebug::unindent(int amount) {
 
 void CougarDebug::startMethod(std::string name) {
 	indent();
-	debugPrinter(name + std::string(" started"));
+	debugPrinter(name + std::string(" started "));
 }
 
 void CougarDebug::startMethod(const char *name) {
 	indent();
-	debugPrinter((std::string(name) + std::string(" started")).c_str());
+	debugPrinter((std::string(name) + std::string(" started ")).c_str());
 }
 
 void CougarDebug::endMethod(std::string name) {
 	unindent();
-	debugPrinter(name + " finished");
+	debugPrinter(name + " finished ");
 }
 
 void CougarDebug::endMethod(const char *name) {
 	unindent();
-	debugPrinter((std::string(name) + std::string(" finished")).c_str());
+	debugPrinter((std::string(name) + std::string(" finished ")).c_str());
 }
 
 void CougarDebug::log(uint8_t level, std::string message) {

@@ -156,7 +156,7 @@ void Robot::TeleopPeriodic()
 {
 	Scheduler::GetInstance()->Run();
 	update();
-
+/*
 	auto a = table->GetNumberArray("distance",0);
 	for(int x:a)
 	SmartDashboard::PutNumber("distance", a[x]);
@@ -165,7 +165,7 @@ void Robot::TeleopPeriodic()
 	for(int x:b)
 	SmartDashboard::PutNumber("azimuth", a[x]);
 
-
+*/
 	SmartDashboard::PutNumber("Driver Left X", oi->GetDriverJoystick()->GetStickLeftAxisX());
 	SmartDashboard::PutNumber("Driver Left Y", oi->GetDriverJoystick()->GetStickLeftAxisY());
 	SmartDashboard::PutNumber("Driver Right X", oi->GetDriverJoystick()->GetStickRightAxisX());

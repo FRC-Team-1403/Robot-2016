@@ -16,14 +16,11 @@ namespace cougar {
 class CougarCommand : public Command {
 public:
 
-	typedef bool (CougarJoystick::*JoyInterruptFn)();
-
-	CougarCommand(std::string name, std::shared_ptr<CougarJoystick> joy, JoyInterruptFn interruptFn, double timeout = -1.0);
+	CougarCommand(std::string name, std::shared_ptr<CougarJoystick> joy, double timeout = -1.0);
 	virtual ~CougarCommand();
 
 protected:
 	std::shared_ptr<CougarJoystick> joy_;
-	JoyInterruptFn interruptFn_;
 
 	virtual void stopAll() = 0;
 

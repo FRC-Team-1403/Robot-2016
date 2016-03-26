@@ -6,7 +6,7 @@
 #include "../../CougarLib/CougarBase/CougarCommand.h"
 
 
-class DoNothingAutonomous: public Command
+class DoNothingAutonomous: public cougar::CougarCommand
 {
 public:
 	DoNothingAutonomous();
@@ -15,6 +15,8 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+
+	virtual void stopAll() override {}
 };
 
 #endif
