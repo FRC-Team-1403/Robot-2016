@@ -77,6 +77,18 @@ bool CougarJoystick::GetRawButton(uint32_t port) {
 	return this->joystick_->GetRawButton(port);
 }
 
+bool CougarJoystick::GetButtonLeftStick() {
+	return this->GetRawButton(9);
+}
+
+bool CougarJoystick::GetButtonRightStick() {
+	return this->GetRawButton(10);
+}
+
+bool CougarJoystick::GetButtonBothSticks() {
+	return this->GetButtonRightStick() && this->GetButtonLeftStick();
+}
+
 bool CougarJoystick::IsZeroAxis(uint32_t axis) {
 	return std::abs(this->GetRawAxis(axis)) <= 0.075;
 }

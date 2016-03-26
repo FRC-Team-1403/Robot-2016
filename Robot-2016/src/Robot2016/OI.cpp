@@ -1,4 +1,3 @@
-#include "Commands/StopAllOperator.h"
 #include "OI.h"
 #include "Commands/Intake/DropRollers.h"
 #include "Commands/Intake/LiftRollers.h"
@@ -29,7 +28,7 @@ OI::OI()
 
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
 	//operatorButtonB->WhenPressed(new LiftRollers());
-	operatorButtonB->WhileHeld(new StopAllOperator());
+	//operatorButtonB->WhileHeld(new StopAllOperator());
 	// TODO make a button to lift rollers
 
 	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));

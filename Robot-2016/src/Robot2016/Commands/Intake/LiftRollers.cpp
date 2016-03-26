@@ -1,7 +1,11 @@
 #include "LiftRollers.h"
 #include "../../Robot.h"
+#include "../../../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
 
-LiftRollers::LiftRollers()
+
+LiftRollers::LiftRollers() :
+	cougar::CougarCommand("LiftRollers", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
+
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -29,12 +33,16 @@ bool LiftRollers::IsFinished()
 // Called once after isFinished returns true
 void LiftRollers::End()
 {
-
+	stopAll();
 }
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void LiftRollers::Interrupted()
 {
+
+}
+
+void LiftRollers::stopAll() {
 
 }

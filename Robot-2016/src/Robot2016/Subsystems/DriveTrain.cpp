@@ -27,6 +27,7 @@ void DriveTrain::InitDefaultCommand()
 }
 
 void DriveTrain::drive() {
+	//this->driveT->TankDrive(Robot::oi->GetDriverJoystick());
 	this->driveT->AutomaticDrive(Robot::oi->GetDriverJoystick(), this->driveTrainLeftEncoder, this->driveTrainRightEncoder);
 }
 

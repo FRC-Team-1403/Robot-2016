@@ -3,8 +3,6 @@
 #include "Shooter/PowerUpRollers.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
-#include "StopAllOperator.h"
-#include "CougarWait.h"
 
 HighGoalBatter::HighGoalBatter()
 {
@@ -28,6 +26,4 @@ HighGoalBatter::HighGoalBatter()
 	const float ANGLE = -30;
 
 	AddSequential(new SetShooterDeckAngle(ANGLE));
-
-	AddSequential(new StopAllOperator());
 }

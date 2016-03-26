@@ -1,12 +1,10 @@
 #include "LowGoal.h"
-#include "Intake/RollersOutTimed.h"
-#include "CougarWait.h"
 #include "Shooter/SetShooterDeckAngle.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
 #include "Intake/LiftRollers.h"
 #include "Intake/DropRollers.h"
-#include "StopAllOperator.h"
+#include "Intake/RollersOut.h"
 
 LowGoal::LowGoal()
 {
@@ -32,10 +30,8 @@ LowGoal::LowGoal()
 
 	AddSequential(new DropTrigger());
 
-	AddSequential(new RollersOutTimed(2));
+	AddSequential(new RollersOut(), 2);
 
 	AddParallel(new LiftRollers());
 	AddParallel(new LiftTrigger());
-
-	AddSequential(new StopAllOperator());
 }

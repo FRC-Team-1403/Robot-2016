@@ -81,7 +81,7 @@ public:
 	static const int SHOOTER_DECK_ANGLE_ZERO = 549;
 	static const int SHOOTER_DECK_TICKS_PER_DEGREE = 5;
 
-	static const int SHOOTER_ROLLER_MAX_SPEED = 4500;
+	static const int SHOOTER_ROLLER_MAX_SPEED = 4000;
 
 	static constexpr float SHOOTER_ROLLER_ENCODER_TICKS_PER_REV = 512.0 / 5.0;
 

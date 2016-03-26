@@ -6,8 +6,10 @@
 #include <cmath>
 #include "../../../CougarLib/CougarDebug.h"
 #include "../../../CougarLib/CougarConstants.h"
+#include "../../../CougarLib/CougarBase/CougarCommand.h"
 
-class SetShooterDeckAngle: public Command {
+
+class SetShooterDeckAngle: public cougar::CougarCommand {
 public:
 	SetShooterDeckAngle(float angle);
 	void Initialize();
@@ -15,6 +17,7 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	virtual void stopAll() override;
 
 	int angle_;
 };

@@ -3,6 +3,8 @@
 
 #include "Commands/Command.h"
 #include "WPILib.h"
+#include "../../CougarLib/CougarBase/CougarCommand.h"
+
 
 class DoNothingAutonomous: public Command
 {

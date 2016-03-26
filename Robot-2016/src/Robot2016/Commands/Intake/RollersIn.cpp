@@ -1,7 +1,9 @@
 #include "RollersIn.h"
 #include "../../Robot.h"
+#include "../../../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
 
-RollersIn::RollersIn()
+RollersIn::RollersIn() :
+	cougar::CougarCommand("RollersIn", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -31,7 +33,7 @@ bool RollersIn::IsFinished()
 void RollersIn::End()
 {
 	cougar::CougarDebug::startMethod("RollersIn::End");
-	Robot::intake->roller->StopMotor();
+	stopAll();
 	cougar::CougarDebug::endMethod("RollersIn::End");
 }
 
@@ -42,4 +44,8 @@ void RollersIn::Interrupted()
 	cougar::CougarDebug::startMethod("RollersIn::Interrupted");
 	End();
 	cougar::CougarDebug::endMethod("RollersIn::Interrupted");
+}
+
+void RollersIn::stopAll() {
+	Robot::intake->roller->StopMotor();
 }

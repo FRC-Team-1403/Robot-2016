@@ -1,7 +1,8 @@
 #include "LowBarAutonomous_Drive.h"
 #include "../../Robot.h"
 
-LowBarAutonomous_Drive::LowBarAutonomous_Drive()
+LowBarAutonomous_Drive::LowBarAutonomous_Drive() :
+	cougar::CougarCommand("LowBarAutonomous_Drive", Robot::oi->GetOperatorJoystick(), &cougar::CougarJoystick::GetButtonBothSticks)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -38,8 +39,7 @@ bool LowBarAutonomous_Drive::IsFinished()
 void LowBarAutonomous_Drive::End()
 {
 	cougar::CougarDebug::startMethod("LowBarAutonomous_Drive::End");
-	Robot::driveTrain->stop();
-	driveController->disable();
+	stopAll();
 	cougar::CougarDebug::endMethod("LowBarAutonomous_Drive::End");
 }
 
@@ -50,4 +50,9 @@ void LowBarAutonomous_Drive::Interrupted()
 	cougar::CougarDebug::startMethod("LowBarAutonomous_Drive::Interrupted");
 	End();
 	cougar::CougarDebug::endMethod("LowBarAutonomous_Drive::Interrupted");
+}
+
+void LowBarAutonomous_Drive::stopAll() {
+	Robot::driveTrain->stop();
+	driveController->disable();
 }

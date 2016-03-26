@@ -2,10 +2,8 @@
 #include "IntakeBall.h"
 #include "Intake/DropRollers.h"
 #include "Intake/RollersIn.h"
-#include "Intake/RollersInTimed.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
-#include "StopAllOperator.h"
 
 
 IntakeBall::IntakeBall()
@@ -38,12 +36,11 @@ IntakeBall::IntakeBall()
 	AddParallel(new SetShooterDeckAngle(INTAKE_POS));
 	AddSequential(new DropTrigger());
 
-	AddSequential(new RollersInTimed(3));
+	AddSequential(new RollersIn());
 
 	AddParallel(new LiftTrigger());
 	AddSequential(new SetShooterDeckAngle(CARRYING_POS));
 
-	AddSequential(new StopAllOperator());
 
 	cougar::CougarDebug::endMethod("IntakeBall::IntakeBall");
 }

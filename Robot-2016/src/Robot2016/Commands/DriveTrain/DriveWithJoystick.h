@@ -3,8 +3,9 @@
 
 #include "WPILib.h"
 #include "Commands/Command.h"
+#include "CougarLib/CougarBase/CougarCommand.h"
 
-class DriveWithJoystick: public Command
+class DriveWithJoystick: public cougar::CougarCommand
 {
 public:
 	DriveWithJoystick();
@@ -13,6 +14,7 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	virtual void stopAll() override;
 };
 
 #endif

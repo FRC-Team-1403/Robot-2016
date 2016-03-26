@@ -3,8 +3,6 @@
 #include "Shooter/PowerUpRollers.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
-#include "StopAllOperator.h"
-#include "CougarWait.h"
 
 Fire::Fire()
 {
@@ -29,11 +27,4 @@ Fire::Fire()
 	AddSequential(new DropTrigger());
 
 	AddSequential(new PowerUpRollers(1, 1, 2));
-	//AddSequential(new CougarWait(0.5));
-
-	AddParallel(new PowerUpRollers(1, 1, 1));
-	AddSequential(new LiftTrigger());
-
-
-	AddSequential(new StopAllOperator());
 }

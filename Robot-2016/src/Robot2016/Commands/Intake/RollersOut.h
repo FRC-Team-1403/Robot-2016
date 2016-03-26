@@ -4,8 +4,10 @@
 #include "Commands/Command.h"
 #include "WPILib.h"
 #include "../../../CougarLib/CougarDebug.h"
+#include "../../../CougarLib/CougarBase/CougarCommand.h"
 
-class RollersOut: public Command
+
+class RollersOut : public cougar::CougarCommand
 {
 public:
 	RollersOut();
@@ -14,6 +16,7 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	virtual void stopAll() override;
 };
 
 #endif

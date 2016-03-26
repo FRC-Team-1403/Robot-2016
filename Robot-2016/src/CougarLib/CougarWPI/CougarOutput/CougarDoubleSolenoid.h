@@ -13,16 +13,7 @@
 
 #include "WPILib.h"
 
-#include "SolenoidBase.h"
-#include "LiveWindow/LiveWindowSendable.h"
-#include "tables/ITableListener.h"
-#include <memory>
-
 #include "../../CougarBase/Debuggable.h"
-
-#ifndef UINT32_MAX
-#	define UINT32_MAX  (0xffffffff)
-#endif
 
 namespace cougar {
 
@@ -40,43 +31,23 @@ namespace cougar {
  * The CougarDoubleSolenoid class is typically used for pneumatics solenoids that
  * have two positions controlled by two separate channels.
  */
-class CougarDoubleSolenoid : public SolenoidBase,
-					   public LiveWindowSendable,
-					   public ITableListener,
+class CougarDoubleSolenoid : public DoubleSolenoid,
 					   public Debuggable {
 public:
-	enum Value { kOff, kForward, kReverse };
 
-	explicit CougarDoubleSolenoid(uint32_t forwardChannel, uint32_t reverseChannel, std::string name);
+	CougarDoubleSolenoid(uint32_t forwardChannel, uint32_t reverseChannel, std::string name);
 	CougarDoubleSolenoid(uint8_t moduleNumber, uint32_t forwardChannel,
 								 uint32_t reverseChannel, std::string name);
 	virtual ~CougarDoubleSolenoid();
-	virtual void Set(Value value);
-	virtual Value Get() const;
-	bool IsFwdSolenoidBlackListed() const;
-	bool IsRevSolenoidBlackListed() const;
-
-	void ValueChanged(ITable* source, llvm::StringRef key,
-										std::shared_ptr<nt::Value> value, bool isNew);
-	void UpdateTable();
-	void StartLiveWindowMode();
-	void StopLiveWindowMode();
-	std::string GetSmartDashboardType() const;
-	void InitTable(std::shared_ptr<ITable> subTable);
-	std::shared_ptr<ITable> GetTable() const;
 
 	std::string toStringState();
-
 	virtual std::string toString() override;
 	virtual std::string dumpState() override;
 
 private:
+	// LOL variable shadowing
 	uint32_t m_forwardChannel;	///< The forward channel on the module to control.
 	uint32_t m_reverseChannel;	///< The reverse channel on the module to control.
-	uint8_t m_forwardMask;			///< The mask for the forward channel.
-	uint8_t m_reverseMask;			///< The mask for the reverse channel.
-
-	std::shared_ptr<ITable> m_table;
 
 	DISALLOW_COPY_AND_ASSIGN(CougarDoubleSolenoid);
 };

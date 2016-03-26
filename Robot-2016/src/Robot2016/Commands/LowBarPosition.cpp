@@ -2,10 +2,8 @@
 #include "LowBarPosition.h"
 #include "Intake/DropRollers.h"
 #include "Intake/RollersIn.h"
-#include "Intake/RollersInTimed.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
-#include "StopAllOperator.h"
 
 
 LowBarPosition::LowBarPosition()
@@ -32,11 +30,8 @@ LowBarPosition::LowBarPosition()
 	const float CARRYING_POS = 0;
 
 	AddParallel(new DropRollers());
-	AddParallel(new SetShooterDeckAngle(0));
+	AddParallel(new SetShooterDeckAngle(CARRYING_POS));
 	AddSequential(new LiftTrigger());
-
-	AddSequential(new StopAllOperator());
-
 
 	cougar::CougarDebug::endMethod("LowBarPosition::LowBarPosition");
 }

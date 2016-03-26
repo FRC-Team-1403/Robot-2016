@@ -11,7 +11,7 @@ std::shared_ptr<ADXL362> RobotMap::driveTrainAccelerometer;
 std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterRollerTop;
 std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterRollerBottom;
 std::shared_ptr<cougar::CougarCANTalon> RobotMap::shooterAngleMotor;
-std::shared_ptr<cougar::CougarSpeedController> RobotMap::shooterCameraServo;
+std::shared_ptr<Servo> RobotMap::shooterCameraServo;
 
 //Intake
 std::shared_ptr<cougar::CougarSpeedController> RobotMap::intakeRoller;
@@ -79,7 +79,7 @@ void RobotMap::init(){
 				cougar::CougarConstants::SHOOTER_ROLLER_ENCODER_TICKS_PER_REV);
 	shooterRollerTop->SetSensorDirection(
 				cougar::CougarConstants::SHOOTER_ROLLER_TOP_CANTALON_REVERSE_SENSOR);
-	shooterRollerTop->SetControlMode(CANSpeedController::kPercentVbus);
+	shooterRollerTop->SetControlMode(CANSpeedController::kSpeed);
 	shooterRollerTop->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
 
 	// Bottom Roller
@@ -91,7 +91,7 @@ void RobotMap::init(){
 				cougar::CougarConstants::SHOOTER_ROLLER_ENCODER_TICKS_PER_REV);
 	shooterRollerBottom->SetSensorDirection(
 				cougar::CougarConstants::SHOOTER_ROLLER_BOTTOM_CANTALON_REVERSE_SENSOR);
-	shooterRollerBottom->SetControlMode(CANSpeedController::kPercentVbus);
+	shooterRollerBottom->SetControlMode(CANSpeedController::kSpeed);
 	shooterRollerBottom->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Coast);
 
 	// Shooter Deck
@@ -101,14 +101,14 @@ void RobotMap::init(){
 	shooterAngleMotor->SetFeedbackDevice(cougar::CougarCANTalon::AnalogPot);
 	shooterAngleMotor->SetSensorDirection(
 				cougar::CougarConstants::SHOOTER_DECK_ANGLE_CANTALON_REVERSE_SENSOR);
-	//shooterAngleMotor->ConfigPotentiometerTurns(
-	//			cougar::CougarConstants::SHOOTER_DECK_ANGLE_POTENTIOMETER_TURNS);
-	//shooterAngleMotor->ConfigLimitMode(CANSpeedController::kLimitMode_SoftPositionLimits);
-	//shooterAngleMotor->ConfigForwardLimit(
-	//			cougar::CougarConstants::SHOOTER_DECK_ANGLE_FORWARD_LIMIT);
-	//shooterAngleMotor->ConfigReverseLimit(
-	//			cougar::CougarConstants::SHOOTER_DECK_ANGLE_REVERSE_LIMIT);
-	shooterAngleMotor->SetControlMode(CANSpeedController::kPercentVbus);
+	shooterAngleMotor->ConfigPotentiometerTurns(
+				cougar::CougarConstants::SHOOTER_DECK_ANGLE_POTENTIOMETER_TURNS);
+	shooterAngleMotor->ConfigLimitMode(CANSpeedController::kLimitMode_SoftPositionLimits);
+	shooterAngleMotor->ConfigForwardLimit(
+				cougar::CougarConstants::SHOOTER_DECK_ANGLE_FORWARD_LIMIT);
+	shooterAngleMotor->ConfigReverseLimit(
+				cougar::CougarConstants::SHOOTER_DECK_ANGLE_REVERSE_LIMIT);
+	shooterAngleMotor->SetControlMode(CANSpeedController::kPosition);
 	shooterAngleMotor->ConfigNeutralMode(CANSpeedController::NeutralMode::kNeutralMode_Brake);
 
 	// Camera
@@ -116,6 +116,7 @@ void RobotMap::init(){
 	//shooterCameraServo.reset(new cougar::CougarSpeedController(std::make_shared<SpeedController>(new Servo(
 	//			cougar::CougarConstants::SHOOTER_CAMERA_SERVO_PORT)), 1234, "Shooter Camera Servo"));
 
+	shooterCameraServo.reset(new Servo(cougar::CougarConstants::SHOOTER_CAMERA_SERVO_PORT));
 	cougar::CougarDebug::debugPrinter("Finished Shooter initialization");
 
 /**********************************Intake**********************************/

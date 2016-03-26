@@ -29,7 +29,6 @@ void CougarDebug::init() {
 	debugLevels[1] = "MESSAGE";
 	debugLevels[2] = "ISSUE";
 	debugLevels[3] = "FATAL_ERROR";
-	didInit = true;
 
 	if (WRITE_TO_FILE) {
 		system("mkdir -p /home/lvuser/log_files");
@@ -45,10 +44,7 @@ void CougarDebug::init() {
 
 	}
 
-	std::thread loggingPrinter(throttledLoggingPrinter);
-	loggingPrinter.detach();
-
-	if (STATE_DUMPING) {
+	if (STATE_DUMPING_TO_FILE) {
 		system("mkdir -p /home/lvuser/dump_files");
 		uint64_t milliseconds_since_epoch =
 			std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
@@ -58,10 +54,17 @@ void CougarDebug::init() {
 		std::string change_permissions_command = "chmod 777 " + filename;
 		system(change_permissions_command.c_str());
 		dumpFile = fopen(filename.c_str(), "w");
-
-		//std::thread stateDumper(continuouslyDumpStates);
-		//stateDumper.detach();
 	}
+
+	if (!didInit) {
+		std::thread loggingPrinter(throttledLoggingPrinter);
+		loggingPrinter.detach();
+
+		std::thread stateDumper(continuouslyDumpStates);
+		stateDumper.detach();
+	}
+
+	didInit = true;
 
 	std::cout << "CougarDebug::init finished\n";
 }
@@ -71,7 +74,7 @@ void CougarDebug::end() {
 	if (WRITE_TO_FILE) {
 		fclose(logFile);
 	}
-	if (STATE_DUMPING) {
+	if (STATE_DUMPING_TO_FILE) {
 		fclose(dumpFile);
 	}
 	std::cout << "CougarDebug::end finished\n";
@@ -190,14 +193,20 @@ void CougarDebug::throttledLoggingPrinter() {
 		printQueueLock.unlock();
 		for (std::tuple<uint8_t, std::string> pair : tmpPrintQueue) {
 			writeToRiolog(std::get<uint8_t>(pair), std::get<std::string>(pair));
+			writeToFile(std::get<uint8_t>(pair), std::get<std::string>(pair));
 		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(LOGGING_PRINTER_INTERVAL_IN_MILLISECONDS)));
 	}
 }
 
 void CougarDebug::continuouslyDumpStates() {
-	while (STATE_DUMPING) {
-		printf("%s", StateManager::dump().c_str());
+	while (STATE_DUMPING_TO_RIOLOG || STATE_DUMPING_TO_FILE) {
+		if (STATE_DUMPING_TO_RIOLOG) {
+			printf("%s", StateManager::dump().c_str());
+		}
+		if (STATE_DUMPING_TO_FILE) {
+			fprintf(dumpFile, StateManager::dump().c_str());
+		}
 		std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(DUMP_INTERVAL_IN_MILLISECONDS)));
 	}
 }

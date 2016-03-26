@@ -284,16 +284,16 @@ void CougarGyro::SetDeadband(float volts) {
 
 std::string CougarGyro::toString() {
 	std::string str = "CougarGyro " + this->name_ + "\n";
-	str += "Channel: " + std::to_string(this->m_channel);
+	str += "Channel: " + std::to_string(this->m_channel) + "\n";
 	return str;
 }
 
 std::string CougarGyro::dumpState() {
 	std::string str = this->toString();
-	str += "Angle: " + std::to_string(this->GetAngle());
-	str += "Rate: " + std::to_string(this->GetRate());
-	str += "Center: " + std::to_string(this->GetCenter());
-	str += "Offset: " + std::to_string(this->GetOffset());
+	str += "Angle: " + std::to_string(this->GetAngle()) + "\n";
+	str += "Rate: " + std::to_string(this->GetRate()) + "\n";
+	str += "Center: " + std::to_string(this->GetCenter()) + "\n";
+	str += "Offset: " + std::to_string(this->GetOffset()) + "\n";
 	return str;
 }
 

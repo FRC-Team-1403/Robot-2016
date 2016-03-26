@@ -3,8 +3,9 @@
 
 #include "WPILib.h"
 #include "Commands/Command.h"
+#include "CougarLib/CougarBase/CougarCommand.h"
 
-class Drive: public Command
+class Drive: public cougar::CougarCommand
 {
 public:
 	Drive(float left, float right, float time);
@@ -13,6 +14,7 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	virtual void stopAll() override;
 
 	float init_time_;
 	float time_;

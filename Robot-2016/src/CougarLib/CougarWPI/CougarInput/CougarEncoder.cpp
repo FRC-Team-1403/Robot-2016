@@ -39,8 +39,8 @@ std::string CougarEncoder::toString() {
 
 std::string CougarEncoder::dumpState() {
 	std::string str = this->toString();
-	str += "Distance: " + std::to_string(this->GetDistance());
-	str += "Rate: " + std::to_string(this->GetRate());
+	str += "Distance: " + std::to_string(this->GetDistance()) + "\n";
+	str += "Rate: " + std::to_string(this->GetRate()) + "\n";
 	return str;
 }
 

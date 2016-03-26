@@ -1,7 +1,5 @@
 #include "DriveForwardAutonomous.h"
 #include "DriveTrain/Drive.h"
-#include "CougarWait.h"
-#include "StopAllDriver.h"
 
 DriveForwardAutonomous::DriveForwardAutonomous()
 {
@@ -24,5 +22,4 @@ DriveForwardAutonomous::DriveForwardAutonomous()
 
 	AddSequential(new Drive(1, 1, 3.5));
 	//AddSequential(new CougarWait(3));
-	AddSequential(new StopAllDriver());
 }

@@ -4,9 +4,11 @@
 #include "WPILib.h"
 #include "Commands/Command.h"
 #include "../../../CougarLib/CougarDebug.h"
+#include "../../../CougarLib/CougarBase/CougarCommand.h"
 
 
-class AimWithJoystick: public Command
+
+class AimWithJoystick: public cougar::CougarCommand
 {
 public:
 	AimWithJoystick();
@@ -15,6 +17,7 @@ public:
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	virtual void stopAll() override;
 };
 
 #endif

@@ -12,7 +12,7 @@ Shooter::Shooter() :
 	angleMotor = RobotMap::shooterAngleMotor;
 	this->addObject(angleMotor);
 	cameraServo = RobotMap::shooterCameraServo;
-	this->addObject(cameraServo);
+	//this->addObject(cameraServo);
 	//table = NetworkTable::GetTable("SmartDashboard");
 }
 

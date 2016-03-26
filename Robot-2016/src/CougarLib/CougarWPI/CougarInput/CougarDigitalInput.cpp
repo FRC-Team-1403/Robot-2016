@@ -20,13 +20,13 @@ CougarDigitalInput::~CougarDigitalInput() {
 
 std::string CougarDigitalInput::toString() {
 	std::string str = "CougarDigitalInput " + this->name_ + "\n";
-	str += "Channel: " + std::to_string(this->GetChannel());
+	str += "Channel: " + std::to_string(this->GetChannel()) + "\n";
 	return str;
 }
 
 std::string CougarDigitalInput::dumpState() {
 	std::string str = this->toString();
-	str += "Value: " + std::to_string(this->Get());
+	str += "Value: " + std::to_string(this->Get()) + "\n";
 	return str;
 }
 

@@ -2,10 +2,8 @@
 #include "TravelPosition.h"
 #include "Intake/LiftRollers.h"
 #include "Intake/RollersIn.h"
-#include "Intake/RollersInTimed.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
-#include "StopAllOperator.h"
 
 
 TravelPosition::TravelPosition()
@@ -34,8 +32,6 @@ TravelPosition::TravelPosition()
 	AddParallel(new LiftRollers());
 	AddParallel(new SetShooterDeckAngle(0));
 	AddSequential(new LiftTrigger());
-
-	AddSequential(new StopAllOperator());
 
 
 	cougar::CougarDebug::endMethod("TravelPosition::TravelPosition");

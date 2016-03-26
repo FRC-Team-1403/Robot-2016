@@ -43,33 +43,19 @@ namespace cougar {
  * used
  * for any device within the current spec of the PCM.
  */
-class CougarSolenoid : public SolenoidBase,
-					   public LiveWindowSendable,
-					   public ITableListener,
+class CougarSolenoid : public Solenoid,
 					   public Debuggable {
 public:
-	explicit CougarSolenoid(uint32_t channel, std::string name);
+	CougarSolenoid(uint32_t channel, std::string name);
 	CougarSolenoid(uint8_t moduleNumber, uint32_t channel, std::string name);
 	virtual ~CougarSolenoid();
-	virtual void Set(bool on);
-	virtual bool Get() const;
-	bool IsBlackListed() const;
-
-	void ValueChanged(ITable* source, llvm::StringRef key,
-										std::shared_ptr<nt::Value> value, bool isNew);
-	void UpdateTable();
-	void StartLiveWindowMode();
-	void StopLiveWindowMode();
-	std::string GetSmartDashboardType() const;
-	void InitTable(std::shared_ptr<ITable> subTable);
-	std::shared_ptr<ITable> GetTable() const;
 
 	virtual std::string toString() override;
 	virtual std::string dumpState() override;
 
 private:
+	// LOL variable shadowing
 	uint32_t m_channel;	///< The channel on the module to control.
-	std::shared_ptr<ITable> m_table;
 
 	DISALLOW_COPY_AND_ASSIGN(CougarSolenoid);
 };

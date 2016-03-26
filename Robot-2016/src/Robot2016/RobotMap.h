@@ -30,7 +30,7 @@ public:
 	static std::shared_ptr<cougar::CougarCANTalon> shooterRollerTop;
 	static std::shared_ptr<cougar::CougarCANTalon> shooterRollerBottom;
 	static std::shared_ptr<cougar::CougarCANTalon> shooterAngleMotor;
-	static std::shared_ptr<cougar::CougarSpeedController> shooterCameraServo;
+	static std::shared_ptr<Servo> shooterCameraServo;
 
 	//intake
 	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;

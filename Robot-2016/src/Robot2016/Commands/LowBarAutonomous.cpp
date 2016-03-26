@@ -4,8 +4,6 @@
 #include "HighGoalBatter.h"
 #include "TravelPosition.h"
 #include "Fire.h"
-#include "StopAllOperator.h"
-#include "StopAllDriver.h"
 
 LowBarAutonomous::LowBarAutonomous()
 {

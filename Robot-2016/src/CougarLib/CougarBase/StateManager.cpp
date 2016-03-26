@@ -45,7 +45,7 @@ std::string StateManager::StateDumper::dump() {
 	std::lock_guard<std::mutex> guard(stateManagerMutex_);
 
 	std::string dumpTime = std::to_string(Timer::GetFPGATimestamp());
-	std::string textToDump = "State dump at " + dumpTime + "\n";
+	std::string textToDump = "\n\n***********************\nState dump at " + dumpTime + "\n";
 
 	/*
 	for (int i = 0; i < static_cast<int>(this->objectsToDump_.size()); i++) {
@@ -72,6 +72,7 @@ std::string StateManager::StateDumper::dump() {
 				textToDump += "\n";
 			}
 		}
+		textToDump += "\n\n";
 	}
 
 	return textToDump;
