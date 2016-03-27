@@ -53,22 +53,23 @@ void Robot::RobotInit()
 	cougar::CougarDebug::init();
 	cougar::CougarDebug::startMethod("Robot::RobotInit");
 	initModes();
-	RobotMap::init();
+	//RobotMap::init();
 
-	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization started");
+	cougar::CougarDebug::debugPrinter("OI/Subsystem/RobotMap initialization started");
+	RobotMap::init();
 	oi.reset(new OI());
 	driveTrain.reset(new DriveTrain());
 	shooter.reset(new Shooter());
 	intake.reset(new Intake());
-	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
+	cougar::CougarDebug::debugPrinter("OI/Subsystem/RobotMap initialization finished");
 
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
 	//chooser->AddDefault("Low Bar High Goal Autonomous", new LowBarAutonomous());
 	//chooser->AddObject("Breaker Forward Autonomous", new DriveForwardAutonomous());
-	chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous());
-	chooser->AddObject("Do Nothing Autonomous", new DoNothingAutonomous());
+	//chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous());
+	chooser->AddDefault("Do Nothing Autonomous", new DoNothingAutonomous());
 	SmartDashboard::PutData("Auto Modes", chooser);
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
 
@@ -100,7 +101,6 @@ void Robot::DisabledInit()
 {
 	update();
 	cougar::CougarDebug::startMethod("Robot::DisabledInit");
-	std::cout << buffer << std::endl;
 	buffer--;
 	if (buffer == 0) {
 		cougar::CougarDebug::end();

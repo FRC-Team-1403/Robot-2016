@@ -7,6 +7,7 @@
 #include "Commands/Intake/RollersOut.h"
 #include "Commands/Shooter/SetShooterDeckAngle.h"
 #include "Commands/Shooter/PowerUpRollers.h"
+#include "Commands/DoNothingAutonomous.h"
 
 #include "Commands/IntakeBall.h"
 #include "Commands/HighGoalBatter.h"
@@ -22,9 +23,10 @@ OI::OI()
 	this->operatorJoy.reset(new cougar::CougarJoystick(1, true));
 
 	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
-	//operatorButtonA->WhenPressed(new DropRollers());
-	//operatorButtonA->WhenPressed(new IntakeBall());
-	//operatorButtonA->WhenPressed(new PowerUpRollers(100, 100));
+	std::cout << "\n\nLOLOLOLOLOLOLOLOL\n\n";
+	//operatorButtonA->WhenPressed(new DoNothingAutonomous());
+	operatorButtonA->WhenPressed(new DropRollers(this->operatorJoy));
+	std::cout << "\n\nHAHAHAHAHAHAHAHAH\n\n";
 /*
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
 	//operatorButtonB->WhenPressed(new LiftRollers());
@@ -54,6 +56,7 @@ OI::OI()
 }
 
 std::shared_ptr<cougar::CougarJoystick> OI::GetDriverJoystick() {
+	std::cout <<
 	return driverJoy;
 }
 

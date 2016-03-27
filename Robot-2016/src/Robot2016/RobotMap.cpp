@@ -43,6 +43,8 @@ void RobotMap::init(){
 				// Name
 				"Drive", true));
 
+	cougar::CougarDebug::debugPrinter("Finished Drive initialization, beginning encoder init");
+
 	// Left Encoder
 	driveTrainLeftEncoder.reset(new cougar::CougarEncoder(
 				cougar::CougarConstants::DRIVETRAIN_ENCODER_LEFT_ACHANNEL,
@@ -56,6 +58,11 @@ void RobotMap::init(){
 				cougar::CougarConstants::DRIVETRAIN_ENCODER_RIGHT_BCHANNEL,
 				"Drive Train Right Encoder"));
 	driveTrainRightEncoder->SetDistancePerPulse(cougar::CougarConstants::DRIVE_ENCODER_TICKS_PER_FOOT);
+
+	cougar::CougarDebug::debugPrinter("Finished Drive initialization, finished encoder init");
+	//std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(1000)));
+
+	cougar::CougarDebug::debugPrinter("starting gyro initialization");
 
 	// Gyroscope
 	driveTrainGyro.reset(new cougar::CougarGyro(

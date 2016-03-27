@@ -27,6 +27,12 @@ public:
 	virtual bool Get() override;
 	virtual void update();
 
+	virtual void WhenPressed(Command *command) override;
+	virtual void WhileHeld(Command *command) override;
+	virtual void WhenReleased(Command *command) override;
+	virtual void CancelWhenPressed(Command *command) override;
+	virtual void ToggleWhenPressed(Command *command) override;
+
 private:
 	bool wasPressed_, wasReleased_, isDown_;
 	std::shared_ptr<CougarJoystick> stick_;

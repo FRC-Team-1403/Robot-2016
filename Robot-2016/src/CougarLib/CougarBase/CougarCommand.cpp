@@ -9,11 +9,12 @@
 
 namespace cougar {
 
-CougarCommand::CougarCommand(std::string name, std::shared_ptr<CougarJoystick> joy, double timeout)
-							: Command(name, timeout) {
-	std::cout << "Starting CougarCommand\n";
+CougarCommand::CougarCommand(std::string name, std::shared_ptr<CougarJoystick> joy, bool isDefaultCommand, double timeout)
+							/*: Command(name, timeout) */{
+	std::cout << "Starting CougarCommand" << this->GetName() << "\n";
 	this->joy_ = joy;
 	this->doEndListener = false;
+	this->isDefaultCommand_ = isDefaultCommand;
 	std::thread interrupt_listener(&CougarCommand::interruptListener, this);
 	interrupt_listener.detach();
 }
@@ -29,7 +30,8 @@ void CougarCommand::interruptListener() {
 		}
 
 		if (this->joy_.get() != nullptr) {
-			if (this->joy_->GetButtonBothSticks()) {
+			if (this->joy_->GetButtonBothSticks() && !isDefaultCommand_) {
+				std::cout << "loldone " << this->GetName() << "\n";
 				if(this->GetGroup() != nullptr) {
 					GetGroup()->Cancel();
 				}

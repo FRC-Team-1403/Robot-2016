@@ -16,7 +16,7 @@ namespace cougar {
 											can only be used on on-board Analog Inputs 0-1.
  */
 CougarGyro::CougarGyro(int32_t channel, std::string name) :
-		CougarGyro(std::make_shared<AnalogInput>(channel), name) {
+		CougarGyro(std::shared_ptr<AnalogInput>(new AnalogInput(channel)), name) {
 	CougarDebug::startMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 	CougarDebug::endMethod((std::string("CougarGyro::CougarGyro [channel ") + std::to_string(channel) + std::string("]")).c_str());
 

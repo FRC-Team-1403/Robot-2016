@@ -147,7 +147,7 @@ void CougarDebug::log(uint8_t level, std::string message) {
 		tabs += "  ";
 	}
 	try {
-		message = (tabs + debugLevels.at(level) + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
+		message = (tabs + debugLevels.at(level) + std::string(": ") + message + std::string(" ") + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
 	} catch (const std::out_of_range& err) {
 		if (level < UNIMPORTANT || level > FATAL_ERROR) {
 			debugPrinter(MESSAGE, "Invalid debug level passed");

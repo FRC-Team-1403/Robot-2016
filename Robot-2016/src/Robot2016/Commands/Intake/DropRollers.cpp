@@ -3,8 +3,8 @@
 #include "../../../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
 
 
-DropRollers::DropRollers() :
-	cougar::CougarCommand("DropRollers", Robot::oi->GetOperatorJoystick())
+DropRollers::DropRollers(std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("DropRollers", joy)
 
 {
 	// Use Requires() here to declare subsystem dependencies

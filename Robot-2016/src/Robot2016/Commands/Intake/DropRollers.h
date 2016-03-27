@@ -10,7 +10,7 @@
 class DropRollers: public cougar::CougarCommand
 {
 public:
-	DropRollers();
+	DropRollers(std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

@@ -2,7 +2,7 @@
 #include "../../Robot.h"
 
 DriveWithJoystick::DriveWithJoystick() :
-	cougar::CougarCommand("DriveWithJoystick", Robot::oi->GetOperatorJoystick())
+	cougar::CougarCommand("DriveWithJoystick", Robot::oi->GetOperatorJoystick(), true)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
