@@ -1,5 +1,6 @@
 /Debug/
 *.xml
 *.DS_Store
-.settings/*
+/Robot-2016/.settings/*
 /.metadata/*
+/RemoteSystemsTempFiles/*
