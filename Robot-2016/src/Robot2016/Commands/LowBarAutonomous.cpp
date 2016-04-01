@@ -5,7 +5,7 @@
 #include "TravelPosition.h"
 #include "Fire.h"
 
-LowBarAutonomous::LowBarAutonomous()
+LowBarAutonomous::LowBarAutonomous(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -24,11 +24,10 @@ LowBarAutonomous::LowBarAutonomous()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	//AddSequential(new LowBarPosition());
-	AddSequential(new LowBarAutonomous_Drive());
-	//AddSequential(new TravelPosition());
-	//AddSequential(new HighGoalBatter());
-	//AddSequential(new Fire());
-	//AddSequential(new StopAllDriver());
-	//AddSequential(new StopAllOperator());
+	AddSequential(new LowBarPosition(joy));
+	AddSequential(new LowBarAutonomous_Drive(joy));
+	AddSequential(new TravelPosition(joy));
+	AddSequential(new HighGoalBatter(joy));
+	AddSequential(new Fire(joy));
+
 }

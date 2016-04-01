@@ -11,8 +11,9 @@
 #include <memory>
 #include "WPILib.h"
 #include "CougarSpeedController.h"
-#include "../../CougarDebug.h"
-#include "../../CougarBase/Debuggable.h"
+#include "CougarDebug.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarMacros.h"
 #include <vector>
 #include <string>
 
@@ -24,8 +25,6 @@ public:
 			uint32_t PDPSlot1, uint32_t PDPSlot2, std::string name, bool inverted = false);
 	CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers,
 			std::string name, bool inverted = false);
-	explicit CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers);
-	explicit CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers);
 	virtual ~CougarSpeedControllerAggregate();
 
 	virtual void SetInverted(bool inverted) override;
@@ -50,6 +49,8 @@ protected:
 
 	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers_;
 	bool inverted_;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarSpeedControllerAggregate)
 };
 
 } /* namespace cougar */

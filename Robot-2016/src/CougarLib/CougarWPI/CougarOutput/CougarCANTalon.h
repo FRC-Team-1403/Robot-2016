@@ -20,8 +20,9 @@
 
 #include "WPILib.h"
 
-#include "../../CougarDebug.h"
-#include "../../CougarBase/Debuggable.h"
+#include "CougarDebug.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarMacros.h"
 
 #include <memory>
 #include <string>
@@ -41,7 +42,7 @@ class CougarCANTalon : public CANTalon,
 	virtual std::string toString() override;
 	virtual std::string dumpState() override;
 
-	DISALLOW_COPY_AND_ASSIGN(CougarCANTalon);
+	DISALLOW_COPY_AND_ASSIGN(CougarCANTalon)
 };
 
 } // namespace cougar

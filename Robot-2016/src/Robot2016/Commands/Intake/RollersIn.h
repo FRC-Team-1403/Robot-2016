@@ -8,7 +8,7 @@
 class RollersIn: public cougar::CougarCommand
 {
 public:
-	RollersIn();
+	RollersIn(std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

@@ -6,7 +6,7 @@
 #include "Intake/DropTrigger.h"
 
 
-TravelPosition::TravelPosition()
+TravelPosition::TravelPosition(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -29,9 +29,9 @@ TravelPosition::TravelPosition()
 
 	const float CARRYING_POS = 0;
 
-	AddParallel(new LiftRollers());
-	AddParallel(new SetShooterDeckAngle(0));
-	AddSequential(new LiftTrigger());
+	AddParallel(new LiftRollers(joy));
+	AddParallel(new SetShooterDeckAngle(CARRYING_POS, joy));
+	AddSequential(new LiftTrigger(joy));
 
 
 	cougar::CougarDebug::endMethod("TravelPosition::TravelPosition");

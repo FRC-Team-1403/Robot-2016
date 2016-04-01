@@ -19,44 +19,42 @@
 OI::OI()
 {
 	cougar::CougarDebug::startMethod("OI::OI");
-	this->driverJoy.reset(new cougar::CougarJoystick(0));
+	this->driverJoy.reset(new cougar::CougarJoystick(0, false));
 	this->operatorJoy.reset(new cougar::CougarJoystick(1, true));
 
 	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
-	std::cout << "\n\nLOLOLOLOLOLOLOLOL\n\n";
 	//operatorButtonA->WhenPressed(new DoNothingAutonomous());
-	operatorButtonA->WhenPressed(new DropRollers(this->operatorJoy));
-	std::cout << "\n\nHAHAHAHAHAHAHAHAH\n\n";
-/*
+	operatorButtonA->WhenPressed(new IntakeBall(this->operatorJoy));
+
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
-	//operatorButtonB->WhenPressed(new LiftRollers());
+	operatorButtonB->WhenPressed(new LowGoal(this->operatorJoy));
 	//operatorButtonB->WhileHeld(new StopAllOperator());
 	// TODO make a button to lift rollers
 
 	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));
-	operatorButtonX->WhenPressed(new HighGoalBatter());
+	operatorButtonX->WhenPressed(new HighGoalBatter(this->operatorJoy));
 
 	operatorButtonY.reset(new cougar::CougarButton(operatorJoy, 4));
-	operatorButtonY->WhenPressed(new Fire());
+	operatorButtonY->WhenPressed(new Fire(this->operatorJoy));
 
 	operatorButtonLB.reset(new cougar::CougarButton(operatorJoy, 5));
-	operatorButtonLB->WhileHeld(new RollersOut());
+	operatorButtonLB->WhileHeld(new RollersOut(this->operatorJoy));
 	//operatorButtonLB->WhenPressed(new SetShooterDeckAngle(0));
 
 	operatorButtonRB.reset(new cougar::CougarButton(operatorJoy, 6));
-	operatorButtonRB->WhileHeld(new TravelPosition());
+	operatorButtonRB->WhileHeld(new RollersIn(this->operatorJoy));
 
 	operatorButtonStart.reset(new cougar::CougarButton(operatorJoy, 8));
-	operatorButtonStart->WhenPressed(new LowBarPosition());
+	operatorButtonStart->WhenPressed(new LowBarPosition(this->operatorJoy));
 
 	operatorButtonBack.reset(new cougar::CougarButton(operatorJoy, 7));
-	operatorButtonBack->WhenPressed(new LowGoal());
-*/
+	operatorButtonBack->WhenPressed(new TravelPosition(this->operatorJoy));
+
 	cougar::CougarDebug::endMethod("OI::OI");
 }
 
 std::shared_ptr<cougar::CougarJoystick> OI::GetDriverJoystick() {
-	std::cout <<
+	//std::cout <<
 	return driverJoy;
 }
 

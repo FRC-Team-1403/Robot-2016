@@ -6,7 +6,7 @@
 #include "Intake/DropTrigger.h"
 
 
-IntakeBall::IntakeBall()
+IntakeBall::IntakeBall(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -30,16 +30,16 @@ IntakeBall::IntakeBall()
 	const float INTAKE_POS = -15;
 	const float CARRYING_POS = 0;
 
-	AddSequential(new LiftTrigger());
+	AddSequential(new LiftTrigger(joy));
 
-	AddParallel(new DropRollers());
-	AddParallel(new SetShooterDeckAngle(INTAKE_POS));
-	AddSequential(new DropTrigger());
+	AddParallel(new DropRollers(joy));
+	AddParallel(new SetShooterDeckAngle(INTAKE_POS, joy));
+	AddSequential(new DropTrigger(joy));
 
-	AddSequential(new RollersIn());
+	AddSequential(new RollersIn(joy));
 
-	AddParallel(new LiftTrigger());
-	AddSequential(new SetShooterDeckAngle(CARRYING_POS));
+	AddParallel(new LiftTrigger(joy));
+	AddSequential(new SetShooterDeckAngle(CARRYING_POS, joy));
 
 
 	cougar::CougarDebug::endMethod("IntakeBall::IntakeBall");

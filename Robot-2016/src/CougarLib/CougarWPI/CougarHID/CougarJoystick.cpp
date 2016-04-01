@@ -11,13 +11,13 @@ namespace cougar {
 
 int CougarJoystick::SMOOTHING_MODE;
 
-CougarJoystick::CougarJoystick(uint32_t port, int smoothingMode, bool ignoreModsMinusSmoothing) {
+CougarJoystick::CougarJoystick(uint32_t port, bool ignoreModsExceptSmoothing, int smoothingMode) {
 	CougarDebug::startMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 	std::shared_ptr<Joystick> tmpJoystick(new Joystick(port));
 	this->setSmoothingMode(smoothingMode);
 	this->joystick_ = tmpJoystick;
 	this->port_ = port;
-	this->ignoreMods_ = ignoreModsMinusSmoothing;
+	this->ignoreMods_ = ignoreModsExceptSmoothing;
 	CougarDebug::endMethod((std::string("CougarJoystick::CougarJoystick [port ") + std::to_string(port) + std::string("]")).c_str());
 }
 

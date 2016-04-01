@@ -12,7 +12,7 @@
 class PowerUpRollers: public cougar::CougarCommand
 {
 public:
-	PowerUpRollers(float topRollerPower, float bottomRollerPower, float time);
+	PowerUpRollers(float topRollerPower, float bottomRollerPower, float time, std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

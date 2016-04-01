@@ -20,8 +20,9 @@
 #define SRC_COUGARLIB_COUGARWPI_COUGARINPUT_COUGARGYRO_H_
 
 #include "WPILib.h"
-#include "../../CougarDebug.h"
-#include "../../CougarBase/Debuggable.h"
+#include "CougarDebug.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarMacros.h"
 
 namespace cougar {
 
@@ -40,6 +41,7 @@ public:
  protected:
 	int32_t m_channel;
 
+	DISALLOW_COPY_AND_ASSIGN(CougarGyro)
 };
 
 } /* namespace cougar */

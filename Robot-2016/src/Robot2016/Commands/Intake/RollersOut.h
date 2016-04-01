@@ -10,7 +10,7 @@
 class RollersOut : public cougar::CougarCommand
 {
 public:
-	RollersOut();
+	RollersOut(std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

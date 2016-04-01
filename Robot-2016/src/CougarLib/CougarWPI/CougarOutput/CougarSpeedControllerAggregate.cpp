@@ -31,17 +31,10 @@ CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<s
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::CougarSpeedControllerAggregate " + this->GetName());
 }
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers) :
-		CougarSpeedControllerAggregate(controllers->GetControllers(), controllers->GetName(), controllers->GetInverted()){}
-
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers) :
-			CougarSpeedControllerAggregate(controllers.GetControllers(), controllers.GetName(), controllers.GetInverted()){}
-
 CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate() {
 	CougarDebug::startMethod("CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate " + this->GetName());
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate " + this->GetName());
 }
-
 
 void CougarSpeedControllerAggregate::SetInverted(bool inverted) {
 	CougarDebug::startMethod("CougarSpeedControllerAggregate::SetInverted");

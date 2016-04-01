@@ -4,7 +4,7 @@
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
 
-HighGoalBatter::HighGoalBatter()
+HighGoalBatter::HighGoalBatter(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -25,5 +25,5 @@ HighGoalBatter::HighGoalBatter()
 
 	const float ANGLE = -30;
 
-	AddSequential(new SetShooterDeckAngle(ANGLE));
+	AddSequential(new SetShooterDeckAngle(ANGLE, joy));
 }

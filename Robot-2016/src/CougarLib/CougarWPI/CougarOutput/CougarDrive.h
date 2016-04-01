@@ -15,11 +15,12 @@
 #include <cmath>
 #include "CougarSpeedController.h"
 #include "CougarSpeedControllerAggregate.h"
-#include "../CougarHID/CougarJoystick.h"
-#include "../../CougarDebug.h"
-#include "../../CougarBase/Debuggable.h"
-#include "../../CougarConstants.h"
-#include "../CougarInput/CougarEncoder.h"
+#include "CougarWPI/CougarHID/CougarJoystick.h"
+#include "CougarDebug.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarConstants.h"
+#include "CougarWPI/CougarInput/CougarEncoder.h"
+#include "CougarMacros.h"
 
 namespace cougar {
 
@@ -43,12 +44,6 @@ public:
 			uint32_t rightPDPSlot1, uint32_t rightPDPSlot2,
 			std::string name, bool reversed = false);
 	CougarDrive(std::shared_ptr<SpeedController> left, std::shared_ptr<SpeedController> right, std::string name, bool reversed = false);
-
-	// TODO implement these constructors
-	/*
-	explicit CougarDrive(std::shared_ptr<CougarDrive> drive);
-	explicit CougarDrive(const CougarDrive &drive);
-	*/
 
 	virtual ~CougarDrive();
 
@@ -128,7 +123,7 @@ protected:
 	std::shared_ptr<RobotDrive> drive_;
 	int8_t reverse_;
 
-	DISALLOW_COPY_AND_ASSIGN(CougarDrive);
+	DISALLOW_COPY_AND_ASSIGN(CougarDrive)
 };
 
 } /* namespace cougar */

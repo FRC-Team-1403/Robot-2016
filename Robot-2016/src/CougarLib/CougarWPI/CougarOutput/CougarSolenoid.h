@@ -12,14 +12,10 @@
 #define SRC_COUGARLIB_COUGARWPI_COUGAROUTPUT_COUGARSOLENOID_H_
 
 #include "WPILib.h"
-#include "SolenoidBase.h"
-#include "LiveWindow/LiveWindowSendable.h"
-#include "tables/ITableListener.h"
-
-#include <limits>
 #include <memory>
 
-#include "../../CougarBase/Debuggable.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarMacros.h"
 
 
 #ifndef UINT32_MAX
@@ -57,7 +53,7 @@ private:
 	// LOL variable shadowing
 	uint32_t m_channel;	///< The channel on the module to control.
 
-	DISALLOW_COPY_AND_ASSIGN(CougarSolenoid);
+	DISALLOW_COPY_AND_ASSIGN(CougarSolenoid)
 };
 } /* namespace cougar */
 

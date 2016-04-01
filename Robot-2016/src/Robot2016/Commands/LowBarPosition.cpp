@@ -6,7 +6,7 @@
 #include "Intake/DropTrigger.h"
 
 
-LowBarPosition::LowBarPosition()
+LowBarPosition::LowBarPosition(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -29,9 +29,9 @@ LowBarPosition::LowBarPosition()
 
 	const float CARRYING_POS = 0;
 
-	AddParallel(new DropRollers());
-	AddParallel(new SetShooterDeckAngle(CARRYING_POS));
-	AddSequential(new LiftTrigger());
+	AddParallel(new DropRollers(joy));
+	AddParallel(new SetShooterDeckAngle(CARRYING_POS, joy));
+	AddSequential(new LiftTrigger(joy));
 
 	cougar::CougarDebug::endMethod("LowBarPosition::LowBarPosition");
 }

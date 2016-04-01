@@ -10,7 +10,8 @@
 
 #include "WPILib.h"
 #include "CougarJoystick.h"
-#include "../../CougarDebug.h"
+#include "CougarDebug.h"
+#include "CougarMacros.h"
 
 namespace cougar {
 
@@ -36,6 +37,8 @@ public:
 private:
 	bool wasPressed_, wasReleased_, isDown_;
 	std::shared_ptr<CougarJoystick> stick_;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarButton)
 };
 
 } /* namespace cougar */

@@ -68,8 +68,8 @@ void Robot::RobotInit()
 	chooser = new SendableChooser();
 	//chooser->AddDefault("Low Bar High Goal Autonomous", new LowBarAutonomous());
 	//chooser->AddObject("Breaker Forward Autonomous", new DriveForwardAutonomous());
-	//chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous());
-	chooser->AddDefault("Do Nothing Autonomous", new DoNothingAutonomous());
+	chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous(oi->GetDriverJoystick()));
+	chooser->AddObject("Do Nothing Autonomous", new DoNothingAutonomous(oi->GetDriverJoystick()));
 	SmartDashboard::PutData("Auto Modes", chooser);
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
 

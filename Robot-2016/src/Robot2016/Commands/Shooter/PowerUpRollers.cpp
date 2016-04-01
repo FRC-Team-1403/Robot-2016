@@ -3,8 +3,8 @@
 #include "../../../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
 
 
-PowerUpRollers::PowerUpRollers(float topRollerPower, float bottomRollerPower, float time) :
-	cougar::CougarCommand("PowerUpRollers", Robot::oi->GetOperatorJoystick())
+PowerUpRollers::PowerUpRollers(float topRollerPower, float bottomRollerPower, float time, std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("PowerUpRollers", joy, false, time)
 {
 	cougar::CougarDebug::startMethod("PowerUpRollers::PowerUpRollers");
 	Requires(Robot::shooter.get());
@@ -64,6 +64,7 @@ void PowerUpRollers::Interrupted()
 
 void PowerUpRollers::stopAll() {
 	Robot::intake->liftTriggerAirCylinder();	// lol hax
+	std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(100)));
 	Robot::shooter->topRoller->StopMotor();
 	Robot::shooter->bottomRoller->StopMotor();
 }

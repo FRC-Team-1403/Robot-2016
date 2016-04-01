@@ -8,7 +8,7 @@
 class DriveWithJoystick: public cougar::CougarCommand
 {
 public:
-	DriveWithJoystick();
+	DriveWithJoystick(std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

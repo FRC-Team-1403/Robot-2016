@@ -9,7 +9,8 @@
 #define SRC_COUGARLIB_COUGARBASE_COUGARCOMMAND_H_
 
 #include "WPILib.h"
-#include "../CougarWPI/CougarHID/CougarJoystick.h"
+#include "CougarWPI/CougarHID/CougarJoystick.h"
+#include "CougarDebug.h"
 
 namespace cougar {
 

@@ -1,7 +1,7 @@
 #include "DriveForwardAutonomous.h"
 #include "DriveTrain/Drive.h"
 
-DriveForwardAutonomous::DriveForwardAutonomous()
+DriveForwardAutonomous::DriveForwardAutonomous(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -20,6 +20,6 @@ DriveForwardAutonomous::DriveForwardAutonomous()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddSequential(new Drive(1, 1, 3.5));
+	AddSequential(new Drive(1, 1, 3.5, joy));
 	//AddSequential(new CougarWait(3));
 }

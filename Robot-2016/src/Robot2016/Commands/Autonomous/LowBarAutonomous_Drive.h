@@ -12,7 +12,7 @@
 class LowBarAutonomous_Drive: public cougar::CougarCommand
 {
 public:
-	LowBarAutonomous_Drive();
+	LowBarAutonomous_Drive(std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

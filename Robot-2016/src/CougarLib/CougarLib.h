@@ -13,6 +13,7 @@
 #include "CougarWPI/CougarWPI.h"
 #include "TrajectoryLib/TrajectoryLib.h"
 #include "CougarConstants.h"
+#include "CougarMacros.h"
 #include "CougarDebug.h"
 #include "CougarMath.h"
 

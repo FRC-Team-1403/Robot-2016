@@ -13,7 +13,8 @@
 
 #include "WPILib.h"
 
-#include "../../CougarBase/Debuggable.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarMacros.h"
 
 namespace cougar {
 
@@ -49,7 +50,7 @@ private:
 	uint32_t m_forwardChannel;	///< The forward channel on the module to control.
 	uint32_t m_reverseChannel;	///< The reverse channel on the module to control.
 
-	DISALLOW_COPY_AND_ASSIGN(CougarDoubleSolenoid);
+	DISALLOW_COPY_AND_ASSIGN(CougarDoubleSolenoid)
 };
 
 } /* namespace cougar */

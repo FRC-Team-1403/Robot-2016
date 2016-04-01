@@ -3,8 +3,8 @@
 #include "../../../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
 
 
-RollersOut::RollersOut() :
-	cougar::CougarCommand("RollersOut", Robot::oi->GetOperatorJoystick())
+RollersOut::RollersOut(std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("RollersOut", joy)
 {
 	Requires(Robot::intake.get());
 }

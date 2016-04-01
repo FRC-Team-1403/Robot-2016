@@ -9,7 +9,8 @@
 #define SRC_COUGARLIB_COUGARWPI_COUGARINPUT_COUGARENCODER_H_
 
 #include "WPILib.h"
-#include "../../CougarBase/Debuggable.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarMacros.h"
 
 namespace cougar {
 
@@ -28,6 +29,8 @@ public:
 
 	virtual std::string toString() override;
 	virtual std::string dumpState() override;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarEncoder)
 
 };
 

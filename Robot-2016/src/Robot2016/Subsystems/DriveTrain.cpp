@@ -23,7 +23,7 @@ DriveTrain::DriveTrain() :
 
 void DriveTrain::InitDefaultCommand()
 {
-	SetDefaultCommand(new DriveWithJoystick());
+	SetDefaultCommand(new DriveWithJoystick(Robot::oi->GetDriverJoystick()));
 }
 
 void DriveTrain::drive() {

@@ -29,12 +29,6 @@ CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> co
 	CougarDebug::endMethod("CougarSpeedController::CougarSpeedController " + this->GetName());
 }
 
-CougarSpeedController::CougarSpeedController(std::shared_ptr<CougarSpeedController> controller) :
-		CougarSpeedController(controller->GetController(), controller->GetPDPSlot(), controller->GetName(), controller->GetInverted()){}
-
-CougarSpeedController::CougarSpeedController(const CougarSpeedController &controller) :
-		CougarSpeedController(controller.GetController(), controller.GetPDPSlot(), controller.GetName(), controller.GetInverted()){}
-
 CougarSpeedController::~CougarSpeedController() {
 	CougarDebug::startMethod("CougarSpeedController::~CougarSpeedController " + this->GetName());
 	CougarDebug::endMethod("CougarSpeedController::~CougarSpeedController " + this->GetName());

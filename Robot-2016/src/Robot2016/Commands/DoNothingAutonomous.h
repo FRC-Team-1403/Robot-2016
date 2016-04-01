@@ -9,7 +9,7 @@
 class DoNothingAutonomous: public cougar::CougarCommand
 {
 public:
-	DoNothingAutonomous();
+	DoNothingAutonomous(std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();

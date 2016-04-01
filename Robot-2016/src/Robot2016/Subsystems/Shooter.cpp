@@ -1,6 +1,7 @@
 #include "Shooter.h"
 #include "../RobotMap.h"
 #include "../Commands/Shooter/AimWithJoystick.h"
+#include "Robot.h"
 
 Shooter::Shooter() :
 		cougar::CougarSubsystem("Shooter")
@@ -18,7 +19,7 @@ Shooter::Shooter() :
 
 void Shooter::InitDefaultCommand()
 {
-	SetDefaultCommand(new AimWithJoystick());
+	SetDefaultCommand(new AimWithJoystick(Robot::oi->GetOperatorJoystick()));
 }
 
 void Shooter::stop() {

@@ -9,7 +9,8 @@
 #define SRC_COUGARLIB_COUGARWPI_COUGARINPUT_COUGARDIGITALINPUT_H_
 
 #include "WPILib.h"
-#include "../../CougarBase/Debuggable.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarMacros.h"
 
 namespace cougar {
 
@@ -20,6 +21,8 @@ public:
 
 	virtual std::string toString() override;
 	virtual std::string dumpState() override;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarDigitalInput)
 };
 
 } /* namespace cougar */

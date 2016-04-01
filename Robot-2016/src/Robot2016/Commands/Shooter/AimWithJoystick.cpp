@@ -3,8 +3,8 @@
 
 #include "../../Robot.h"
 
-AimWithJoystick::AimWithJoystick() :
-	cougar::CougarCommand("AimWithJoystick", Robot::oi->GetOperatorJoystick(), true)
+AimWithJoystick::AimWithJoystick(std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("AimWithJoystick", joy, true)
 {
 	cougar::CougarDebug::startMethod("AimWithJoystick::AimWithJoystick");
 	Requires(Robot::shooter.get());

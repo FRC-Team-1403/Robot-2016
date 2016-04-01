@@ -3,11 +3,12 @@
 
 #include "Commands/CommandGroup.h"
 #include "WPILib.h"
+#include "CougarLib.h"
 
 class DriveBackwardAutonomous: public CommandGroup
 {
 public:
-	DriveBackwardAutonomous();
+	DriveBackwardAutonomous(std::shared_ptr<cougar::CougarJoystick> joy);
 };
 
 #endif

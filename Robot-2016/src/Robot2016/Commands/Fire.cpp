@@ -4,7 +4,7 @@
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
 
-Fire::Fire()
+Fire::Fire(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -24,7 +24,7 @@ Fire::Fire()
 	// arm.
 
 
-	AddSequential(new DropTrigger());
+	AddSequential(new DropTrigger(joy));
 
-	AddSequential(new PowerUpRollers(1, 1, 2));
+	AddSequential(new PowerUpRollers(1, 1, 2, joy));
 }
