@@ -30,7 +30,7 @@ void CougarCommand::interruptListener() {
 		}
 
 		if (this->joy_.get() != nullptr) {
-			if (this->joy_->GetButtonBothSticks() && !isDefaultCommand_) {
+			if (this->joy_->GetButtonBothSticks() && !isDefaultCommand_ && this->IsRunning()) {
 				CougarDebug::debugPrinter("Command %s interrupted", this->GetName().c_str());
 				if(this->GetGroup() != nullptr) {
 					GetGroup()->Cancel();
@@ -38,7 +38,7 @@ void CougarCommand::interruptListener() {
 				else {
 					Cancel();
 				}
-				break;
+				//break;
 			}
 		} else {
 			// LOL @ real exceptions
