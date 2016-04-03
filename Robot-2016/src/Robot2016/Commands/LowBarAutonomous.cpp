@@ -24,7 +24,12 @@ LowBarAutonomous::LowBarAutonomous(std::shared_ptr<cougar::CougarJoystick> joy)
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddSequential(new LowBarPosition(joy));
+	AddParallel(new DropRollers(joy));
+	AddParallel(new SetShooterDeckAngle(0, joy));
+	AddSequential(new LiftTrigger(joy));
+	AddSequential(new Drive(1, 1, 3, joy));
+
+
 	AddSequential(new LowBarAutonomous_Drive(joy));
 	AddSequential(new TravelPosition(joy));
 	AddSequential(new HighGoalBatter(joy));
