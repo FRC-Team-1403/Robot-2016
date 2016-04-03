@@ -44,5 +44,6 @@ void DropTrigger::Interrupted()
 }
 
 void DropTrigger::stopAll() {
+	std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(100)));
 
 }

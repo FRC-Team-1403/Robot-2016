@@ -20,6 +20,6 @@ DriveForwardAutonomous::DriveForwardAutonomous(std::shared_ptr<cougar::CougarJoy
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddSequential(new Drive(1, 1, 3.5, joy));
+	AddSequential(new Drive(1, 1, 3, joy));
 	//AddSequential(new CougarWait(3));
 }

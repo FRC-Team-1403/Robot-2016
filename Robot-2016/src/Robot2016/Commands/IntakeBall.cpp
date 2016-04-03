@@ -33,13 +33,13 @@ IntakeBall::IntakeBall(std::shared_ptr<cougar::CougarJoystick> joy)
 	AddSequential(new LiftTrigger(joy));
 
 	AddParallel(new DropRollers(joy));
-	AddParallel(new SetShooterDeckAngle(INTAKE_POS, joy));
+	AddParallel(new SetShooterDeckAngle(-15, joy));
 	AddSequential(new DropTrigger(joy));
 
 	AddSequential(new RollersIn(joy));
 
 	AddParallel(new LiftTrigger(joy));
-	AddSequential(new SetShooterDeckAngle(CARRYING_POS, joy));
+	AddSequential(new SetShooterDeckAngle(0, joy));
 
 
 	cougar::CougarDebug::endMethod("IntakeBall::IntakeBall");

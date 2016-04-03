@@ -25,5 +25,5 @@ HighGoalBatter::HighGoalBatter(std::shared_ptr<cougar::CougarJoystick> joy)
 
 	const float ANGLE = -30;
 
-	AddSequential(new SetShooterDeckAngle(ANGLE, joy));
+	AddSequential(new SetShooterDeckAngle(-27, joy));
 }

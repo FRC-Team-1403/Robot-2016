@@ -60,7 +60,7 @@ void AimWithJoystick::Interrupted()
 }
 
 void AimWithJoystick::stopAll() {
-	Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPosition);
-	Robot::shooter->topRoller->SetControlMode(CANSpeedController::kSpeed);
-	Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kSpeed);
+	//Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPosition);
+	//Robot::shooter->topRoller->SetControlMode(CANSpeedController::kSpeed);
+	//Robot::shooter->bottomRoller->SetControlMode(CANSpeedController::kSpeed);
 }

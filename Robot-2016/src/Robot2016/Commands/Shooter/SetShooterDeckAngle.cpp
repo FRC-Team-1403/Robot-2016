@@ -23,13 +23,15 @@ void SetShooterDeckAngle::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void SetShooterDeckAngle::Execute()
 {
-	if (!BANG_BANG)
+	if (!BANG_BANG) {
+		std::cout << "Angle: " << this->angle_ << "\n";
+		std::cout << "Angle val: " << this->angle_ * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO << "\n";
 		Robot::shooter->setAngleMotor(this->angle_ * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO);
-	else {
+	} else {
 		if (Robot::shooter->getAngleMotorDistance() > this->angle_) {
-			Robot::shooter->angleMotor->Set(-0.25);
+			Robot::shooter->angleMotor->Set(0.55);
 		} else if (Robot::shooter->getAngleMotorDistance() < this->angle_) {
-			Robot::shooter->angleMotor->Set(0.25);
+			Robot::shooter->angleMotor->Set(-0.55);
 		}
 	}
 }
@@ -40,12 +42,13 @@ bool SetShooterDeckAngle::IsFinished()
 
 	//std::cout << "Setpoint: " << Robot::shooter->angleMotor->GetSetpoint() << "\n";
 	//std::cout << "Position: " << Robot::shooter->angleMotor->GetPosition() << "\n";
+	//std::cout << "analog  val" << Robot::shooter->getAngleMotorDistance() << "\n";
 	//std::cout << "Speed: " << Robot::shooter->angleMotor->GetAnalogInVel() << "\n";
 
 	if (!BANG_BANG)
-		return std::abs(Robot::shooter->angleMotor->GetSetpoint() - Robot::shooter->angleMotor->GetPosition()) < 5;
+		return std::abs(Robot::shooter->angleMotor->GetSetpoint() - Robot::shooter->angleMotor->GetPosition()) < 8;
 	else
-		return std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_) < 5;
+		return std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_) < 8;
 }
 
 // Called once after isFinished returns true

@@ -20,5 +20,5 @@ DriveBackwardAutonomous::DriveBackwardAutonomous(std::shared_ptr<cougar::CougarJ
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddSequential(new Drive(-1, -1, 3.5, joy));
+	AddSequential(new Drive(-1, -1, 3, joy));
 }

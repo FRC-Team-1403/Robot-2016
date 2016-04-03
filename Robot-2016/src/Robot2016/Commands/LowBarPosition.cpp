@@ -30,7 +30,7 @@ LowBarPosition::LowBarPosition(std::shared_ptr<cougar::CougarJoystick> joy)
 	const float CARRYING_POS = 0;
 
 	AddParallel(new DropRollers(joy));
-	AddParallel(new SetShooterDeckAngle(CARRYING_POS, joy));
+	AddParallel(new SetShooterDeckAngle(0, joy));
 	AddSequential(new LiftTrigger(joy));
 
 	cougar::CougarDebug::endMethod("LowBarPosition::LowBarPosition");

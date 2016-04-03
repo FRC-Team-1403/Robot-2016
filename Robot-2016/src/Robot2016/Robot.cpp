@@ -49,11 +49,17 @@ bool Robot::isTest() {
 
 void Robot::RobotInit()
 {
+
+	CameraServer::GetInstance()->SetQuality(50);
+	CameraServer::GetInstance()->StartAutomaticCapture("cam1");
 	buffer = 3;
 	cougar::CougarDebug::init();
 	cougar::CougarDebug::startMethod("Robot::RobotInit");
 	initModes();
 	//RobotMap::init();
+	system("chmod 777 /home/lvuser/pi.sh");
+	std::thread pi(system, "/home/lvuser/pi.sh");
+	pi.detach();
 
 	cougar::CougarDebug::debugPrinter("OI/Subsystem/RobotMap initialization started");
 	RobotMap::init();
@@ -198,6 +204,7 @@ void Robot::TeleopPeriodic()
 
 
 	SmartDashboard::PutNumber("Servo", shooter->cameraServo->Get());
+	SmartDashboard::PutBoolean("BALL", !intake->ballSwitch->Get());
 }
 
 void Robot::TestPeriodic()

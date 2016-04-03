@@ -22,7 +22,7 @@ public:
 	int angle_;
 
 private:
-	static const bool BANG_BANG = false;
+	static const bool BANG_BANG = true;
 };
 
 #endif

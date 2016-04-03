@@ -20,7 +20,7 @@ void PowerUpRollers::Initialize()
 {
 	cougar::CougarDebug::startMethod("PowerUpRollers::Initialize");
 	this->init_time_ = Timer::GetFPGATimestamp();
-
+	std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(50)));
 	cougar::CougarDebug::endMethod("PowerUpRollers::Initialize");
 }
 
@@ -34,14 +34,14 @@ void PowerUpRollers::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool PowerUpRollers::IsFinished()
 {
-	std::cout << "Setpoint top: " << Robot::shooter->topRoller->GetSetpoint() << "\n";
+	/*std::cout << "Setpoint top: " << Robot::shooter->topRoller->GetSetpoint() << "\n";
 	std::cout << "Setpoint bottom: " << Robot::shooter->bottomRoller->GetSetpoint() << "\n";
 	std::cout << "Speed top: " << Robot::shooter->topRoller->GetSpeed() << "\n";
-	std::cout << "Speed bottom: " << Robot::shooter->bottomRoller->GetSpeed() << "\n";
+	std::cout << "Speed bottom: " << Robot::shooter->bottomRoller->GetSpeed() << "\n";*/
 
 
-	return std::abs(Robot::shooter->topRoller->GetSetpoint() - Robot::shooter->topRoller->GetSpeed()) < 10 &&
-		   std::abs(Robot::shooter->bottomRoller->GetSetpoint() - Robot::shooter->bottomRoller->GetSpeed()) < 10 &&
+	return std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED - Robot::shooter->topRoller->GetSpeed()) < 10 &&
+		   std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED - Robot::shooter->bottomRoller->GetSpeed()) < 10 &&
 		   Timer::GetFPGATimestamp() - init_time_ >= time_;
 }
 
