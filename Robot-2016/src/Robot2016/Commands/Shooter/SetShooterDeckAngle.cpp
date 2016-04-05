@@ -29,9 +29,19 @@ void SetShooterDeckAngle::Execute()
 		Robot::shooter->setAngleMotor(this->angle_ * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO);
 	} else {
 		if (Robot::shooter->getAngleMotorDistance() > this->angle_) {
-			Robot::shooter->angleMotor->Set(0.55);
+			if (std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_) > 40) {
+				Robot::shooter->angleMotor->Set(1);
+			}
+			else {
+				Robot::shooter->angleMotor->Set(0.55);
+			}
 		} else if (Robot::shooter->getAngleMotorDistance() < this->angle_) {
-			Robot::shooter->angleMotor->Set(-0.55);
+			if (std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_) > 40) {
+				Robot::shooter->angleMotor->Set(-1);
+			}
+			else {
+				Robot::shooter->angleMotor->Set(-0.55);
+			}
 		}
 	}
 }

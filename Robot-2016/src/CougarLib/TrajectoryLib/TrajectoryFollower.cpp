@@ -34,9 +34,6 @@ double TrajectoryFollower::calculate(double distance_so_far) {
 	if (current_segment < profile_->getNumSegments()) {
 		std::shared_ptr<Trajectory::Segment> segment = profile_->getSegment(current_segment);
 		double error = segment->pos - distance_so_far;
-		std::cout << "pos: " << segment->pos << "\n";
-		std::cout << "distance so far: " << distance_so_far << "\n";
-		std::cout << "error: " << error << "\n";
 		double output = kp_ * error + kd_ * ((error - last_error_)
 						/ segment->dt - segment->vel) + (kv_ * segment->vel
 						+ ka_ * segment->acc);

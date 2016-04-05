@@ -50,16 +50,16 @@ bool Robot::isTest() {
 void Robot::RobotInit()
 {
 
-	CameraServer::GetInstance()->SetQuality(50);
-	CameraServer::GetInstance()->StartAutomaticCapture("cam1");
+	//CameraServer::GetInstance()->SetQuality(50);
+	//CameraServer::GetInstance()->StartAutomaticCapture("cam1");
 	buffer = 3;
 	cougar::CougarDebug::init();
 	cougar::CougarDebug::startMethod("Robot::RobotInit");
 	initModes();
 	//RobotMap::init();
-	system("chmod 777 /home/lvuser/pi.sh");
-	std::thread pi(system, "/home/lvuser/pi.sh");
-	pi.detach();
+	//system("chmod 777 /home/lvuser/pi.sh");
+	//std::thread pi(system, "/home/lvuser/pi.sh");
+	//pi.detach();
 
 	cougar::CougarDebug::debugPrinter("OI/Subsystem/RobotMap initialization started");
 	RobotMap::init();
@@ -72,10 +72,10 @@ void Robot::RobotInit()
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
-	//chooser->AddDefault("Low Bar High Goal Autonomous", new LowBarAutonomous());
+	chooser->AddDefault("Low Bar Low Goal Autonomous", new LowBarAutonomous(oi->GetDriverJoystick()));
 	//chooser->AddObject("Breaker Forward Autonomous", new DriveForwardAutonomous());
-	chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous(oi->GetDriverJoystick()));
-	chooser->AddObject("Do Nothing Autonomous", new DoNothingAutonomous(oi->GetDriverJoystick()));
+	//chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous(oi->GetDriverJoystick()));
+	//chooser->AddObject("Do Nothing Autonomous", new DoNothingAutonomous(oi->GetDriverJoystick()));
 	SmartDashboard::PutData("Auto Modes", chooser);
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
 
@@ -86,16 +86,25 @@ void Robot::RobotInit()
 
 	config->dt = 0.02; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
 	config->max_acc = 30.0;
-	config->max_jerk = 40.0;
+	config->max_jerk = 30.0;
 	config->max_vel = 9.0;
 
 	// Low Bar
 	{
 		const std::string path_name = "LowBarPath";
 		std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
+
 		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, 0)));
-		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 0, 0)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 2, 0)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(8, 4, 0)));
+		//p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(1, 1, M_PI / 6)));
+		//p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(1, 1, M_PI / 6)));
+
+		/*
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(1, 1, M_PI / 6)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(3, 2, M_PI / 4)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(6, 4, M_PI / 2)));
+		*/
 		lowBarPath = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	}
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");

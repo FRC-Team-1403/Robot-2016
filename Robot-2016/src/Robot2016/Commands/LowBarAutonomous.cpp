@@ -4,6 +4,14 @@
 #include "HighGoalBatter.h"
 #include "TravelPosition.h"
 #include "Fire.h"
+#include "DriveTrain/Turn.h"
+#include "Shooter/SetShooterDeckAngle.h"
+#include "Intake/LiftTrigger.h"
+#include "Intake/DropTrigger.h"
+#include "Intake/LiftRollers.h"
+#include "Intake/DropRollers.h"
+#include "Intake/RollersOut.h"
+#include "DriveTrain/DriveWithEncoder.h"
 
 LowBarAutonomous::LowBarAutonomous(std::shared_ptr<cougar::CougarJoystick> joy)
 {
@@ -24,15 +32,23 @@ LowBarAutonomous::LowBarAutonomous(std::shared_ptr<cougar::CougarJoystick> joy)
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddParallel(new DropRollers(joy));
-	AddParallel(new SetShooterDeckAngle(0, joy));
-	AddSequential(new LiftTrigger(joy));
-	AddSequential(new Drive(1, 1, 3, joy));
-
-
 	AddSequential(new LowBarAutonomous_Drive(joy));
-	AddSequential(new TravelPosition(joy));
-	AddSequential(new HighGoalBatter(joy));
-	AddSequential(new Fire(joy));
 
+	/*
+	AddSequential(new DropRollers(joy));
+	AddSequential(new SetShooterDeckAngle(0, joy));
+	AddSequential(new LiftTrigger(joy));
+
+	AddSequential(new DriveWithEncoder(10.5, joy));
+	AddSequential(new Turn(-1 * M_PI / 2.25, joy));
+
+	AddSequential(new DriveWithEncoder(-3, joy));
+	AddParallel(new DropRollers(joy));
+
+	AddSequential(new SetShooterDeckAngle(20, joy));
+	AddSequential(new DropTrigger(joy));
+	AddSequential(new RollersOut(joy), 2);
+	AddParallel(new LiftRollers(joy));
+	AddParallel(new LiftTrigger(joy));
+	*/
 }

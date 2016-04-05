@@ -21,6 +21,7 @@ private:
 	std::shared_ptr<cougar::CougarButton> operatorButtonRB;
 	std::shared_ptr<cougar::CougarButton> operatorButtonStart;
 	std::shared_ptr<cougar::CougarButton> operatorButtonBack;
+	std::shared_ptr<cougar::CougarButton> driverButtonX;
 
 public:
 	std::shared_ptr<cougar::CougarJoystick> GetDriverJoystick();

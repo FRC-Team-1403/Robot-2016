@@ -8,6 +8,7 @@
 #include "Commands/Shooter/SetShooterDeckAngle.h"
 #include "Commands/Shooter/PowerUpRollers.h"
 #include "Commands/DoNothingAutonomous.h"
+#include "Commands/Autonomous/LowBarAutonomous_Drive.h"
 
 #include "Commands/IntakeBall.h"
 #include "Commands/HighGoalBatter.h"
@@ -49,6 +50,9 @@ OI::OI()
 
 	operatorButtonBack.reset(new cougar::CougarButton(operatorJoy, 7));
 	operatorButtonBack->WhenPressed(new TravelPosition(this->operatorJoy));
+
+	driverButtonX.reset(new cougar::CougarButton(driverJoy, 3));
+	driverButtonX->WhenPressed(new LowBarAutonomous_Drive(this->driverJoy));
 
 	cougar::CougarDebug::endMethod("OI::OI");
 }

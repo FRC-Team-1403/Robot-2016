@@ -10,16 +10,17 @@
 
 #include "CougarLib.h"
 
-class Turn : cougar::CougarCommand {
+class Turn : public cougar::CougarCommand {
 public:
-	Turn();
-	virtual ~Turn();
+	Turn(double angle, std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
 	virtual void stopAll() override;
+
+	double angle;
 };
 
 #endif /* SRC_ROBOT2016_COMMANDS_DRIVETRAIN_TURN_H_ */

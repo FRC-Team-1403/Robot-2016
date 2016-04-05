@@ -25,7 +25,7 @@ void LowBarAutonomous_Drive::Initialize()
 
 void LowBarAutonomous_Drive::Execute()
 {
-    driveController->loadProfileNoReset(Robot::lowBarPath->getLeftWheelTrajectory(), Robot::lowBarPath->getRightWheelTrajectory());
+   // driveController->loadProfileNoReset(Robot::lowBarPath->getLeftWheelTrajectory(), Robot::lowBarPath->getRightWheelTrajectory());
 	driveController->update();
 }
 
