@@ -8,6 +8,7 @@ AimWithJoystick::AimWithJoystick(std::shared_ptr<cougar::CougarJoystick> joy) :
 {
 	cougar::CougarDebug::startMethod("AimWithJoystick::AimWithJoystick");
 	Requires(Robot::shooter.get());
+	cam = 0.750;
 	cougar::CougarDebug::endMethod("AimWithJoystick::AimWithJoystick");
 }
 
@@ -28,11 +29,11 @@ void AimWithJoystick::Execute()
 		Robot::shooter->angleMotor->Set(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
 		Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
 		Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
-
-		Robot::shooter->setCameraServo(1);
+		//cam = Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY();
+		Robot::shooter->setCameraServo(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY());
 	} else {
-		//Robot::shooter->cameraServo->Set(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
-		Robot::shooter->setCameraServo(0.750);
+		Robot::shooter->cameraServo->Set(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
+		//Robot::shooter->setCameraServo(cam);
 	}
 }
 
@@ -46,6 +47,7 @@ bool AimWithJoystick::IsFinished()
 void AimWithJoystick::End()
 {
 	cougar::CougarDebug::startMethod("AimWithJoystick::End");
+	//Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPosition);
 	stopAll();
 	cougar::CougarDebug::endMethod("AimWithJoystick::End");
 }

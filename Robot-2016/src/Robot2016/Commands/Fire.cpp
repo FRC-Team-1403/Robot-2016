@@ -26,5 +26,5 @@ Fire::Fire(std::shared_ptr<cougar::CougarJoystick> joy)
 
 	AddSequential(new DropTrigger(joy));
 
-	AddSequential(new PowerUpRollers(1, 1, 2, joy));
+	AddSequential(new PowerUpRollers(0.89, 0.70, 2, joy));
 }

@@ -24,8 +24,12 @@ void SetShooterDeckAngle::Initialize()
 void SetShooterDeckAngle::Execute()
 {
 	if (!BANG_BANG) {
+
 		std::cout << "Angle: " << this->angle_ << "\n";
 		std::cout << "Angle val: " << this->angle_ * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO << "\n";
+		std::cout << "Actual Setpoint: " << Robot::shooter->angleMotor->GetSetpoint();
+		std::cout << "Actual Value: " << Robot::shooter->angleMotor->GetPosition();
+		std::cout << "Error: " << Robot::shooter->angleMotor->GetClosedLoopError();
 		Robot::shooter->setAngleMotor(this->angle_ * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO);
 	} else {
 		if (Robot::shooter->getAngleMotorDistance() > this->angle_) {
@@ -56,15 +60,16 @@ bool SetShooterDeckAngle::IsFinished()
 	//std::cout << "Speed: " << Robot::shooter->angleMotor->GetAnalogInVel() << "\n";
 
 	if (!BANG_BANG)
-		return std::abs(Robot::shooter->angleMotor->GetSetpoint() - Robot::shooter->angleMotor->GetPosition()) < 8;
+		return std::abs(Robot::shooter->angleMotor->GetSetpoint() - Robot::shooter->angleMotor->GetPosition()) < 5.4;
 	else
-		return std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_) < 8;
+		return std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_) < 5.4;
 }
 
 // Called once after isFinished returns true
 void SetShooterDeckAngle::End()
 {
 	cougar::CougarDebug::startMethod("SetShooterDeckAngle::End");
+	//Robot::shooter->angleMotor->SetControlMode(CANSpeedController::kPercentVbus);
 	stopAll();
 	cougar::CougarDebug::endMethod("SetShooterDeckAngle::End");
 }

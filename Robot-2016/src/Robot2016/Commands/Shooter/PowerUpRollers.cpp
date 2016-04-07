@@ -27,8 +27,8 @@ void PowerUpRollers::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void PowerUpRollers::Execute()
 {
-	Robot::shooter->setTopRoller(this->topRollerPower_ * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
-	Robot::shooter->setBottomRoller(this->bottomRollerPower_ * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED);
+	Robot::shooter->setTopRoller(this->topRollerPower_/* * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED*/);
+	Robot::shooter->setBottomRoller(this->bottomRollerPower_/* * cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED*/);
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -40,8 +40,8 @@ bool PowerUpRollers::IsFinished()
 	std::cout << "Speed bottom: " << Robot::shooter->bottomRoller->GetSpeed() << "\n";*/
 
 
-	return std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED - Robot::shooter->topRoller->GetSpeed()) < 10 &&
-		   std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED - Robot::shooter->bottomRoller->GetSpeed()) < 10 &&
+	return std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED - Robot::shooter->topRoller->GetSpeed()) < 10 ||
+		   std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED - Robot::shooter->bottomRoller->GetSpeed()) < 10 ||
 		   Timer::GetFPGATimestamp() - init_time_ >= time_;
 }
 
