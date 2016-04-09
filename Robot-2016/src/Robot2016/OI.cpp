@@ -51,8 +51,8 @@ OI::OI()
 	operatorButtonBack.reset(new cougar::CougarButton(operatorJoy, 7));
 	operatorButtonBack->WhenPressed(new TravelPosition(this->operatorJoy));
 
-	driverButtonX.reset(new cougar::CougarButton(driverJoy, 3));
-	driverButtonX->WhenPressed(new LowBarAutonomous_Drive(this->driverJoy));
+	//driverButtonX.reset(new cougar::CougarButton(driverJoy, 3));
+	//driverButtonX->WhenPressed(new LowBarAutonomous_Drive(this->driverJoy));
 
 	cougar::CougarDebug::endMethod("OI::OI");
 }

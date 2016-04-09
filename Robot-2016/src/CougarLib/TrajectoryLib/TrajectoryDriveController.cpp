@@ -62,13 +62,17 @@ void TrajectoryDriveController::update() {
 	if (onTarget()) {
 		Robot::driveTrain->setLeftRightPower(0.0, 0.0);
 	} else	{
-		double distanceR = -1 * direction * Robot::driveTrain->getLeftEncoderDistance();
+		double distanceR = direction * Robot::driveTrain->getLeftEncoderDistance();
 		double distanceL = -1 * direction * Robot::driveTrain->getRightEncoderDistance();
+		std::cout << "Distance Left " << distanceL << std::endl;
+		std::cout << "Distance Right " << distanceR << std::endl;
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Distance Left: %f", distanceL);
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "tDistance Right: %f", distanceR);
 
 		double speedLeft = direction * followerLeft->calculate(distanceL);
 		double speedRight = direction * followerRight->calculate(distanceR);
+		std::cout << "Speed Left " << speedLeft << std::endl;
+		std::cout << "Speed Right " << speedRight << std::endl;
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Speed Left: %f", speedLeft);
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Speed Right: %f", speedRight);
 
@@ -101,8 +105,8 @@ double TrajectoryDriveController::getGoal() {
 }
 
 void TrajectoryDriveController::init() {
-	followerLeft->configure(0.8, 0, 0, 1.0/10.0, 1.0/30.0);
-	followerRight->configure(0.8, 0, 0, 1.0/10.0, 1.0/30.0);
+	followerLeft->configure(0.8, 0, 0, 1.0/9.0, 1.0/40.0);
+	followerRight->configure(0.8, 0, 0, 1.0/9.0, 1.0/40.0);
 }
 
 } /* namespace cougar */

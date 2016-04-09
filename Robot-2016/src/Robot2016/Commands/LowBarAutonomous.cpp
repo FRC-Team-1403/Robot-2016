@@ -1,5 +1,6 @@
 #include "LowBarAutonomous.h"
 #include "Autonomous/LowBarAutonomous_Drive.h"
+#include "Autonomous/LowBarAutonomous_ReverseDrive.h"
 #include "LowBarPosition.h"
 #include "HighGoalBatter.h"
 #include "TravelPosition.h"
@@ -7,6 +8,7 @@
 #include "DriveTrain/Turn.h"
 #include "Shooter/SetShooterDeckAngle.h"
 #include "Intake/LiftTrigger.h"
+#include "Shooter/PowerUpRollers.h"
 #include "Intake/DropTrigger.h"
 #include "Intake/LiftRollers.h"
 #include "Intake/DropRollers.h"
@@ -32,7 +34,18 @@ LowBarAutonomous::LowBarAutonomous(std::shared_ptr<cougar::CougarJoystick> joy)
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
+	AddSequential(new DropRollers(joy));
 	AddSequential(new LowBarAutonomous_Drive(joy));
+
+	AddSequential(new LiftRollers(joy));
+	//AddSequential(new SetShooterDeckAngle(-19.5, joy));
+
+	//AddSequential(new DropTrigger(joy));
+
+	//AddSequential(new PowerUpRollers(0.89, 0.70, 2, joy));
+
+	//AddParallel(new DropRollers(joy));
+	//AddSequential(new LowBarAutonomous_ReverseDrive(joy));
 
 	/*
 	AddSequential(new DropRollers(joy));

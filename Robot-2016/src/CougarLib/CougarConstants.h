@@ -67,7 +67,7 @@ public:
 		TANK_DRIVE
 	};
 	static const int JOYSTICK_DRIVE_STATE = TANK_DRIVE;
-	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = (((8 * M_PI) / 12) / 256) / (96.0 / 88.5);
+	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = ((((8 * M_PI) / 12) / 256) / (96.0 / 88.5));/* / (158 / 153)*/;
 
 	// Shooter
 	static const bool SHOOTER_ROLLER_TOP_CANTALON_REVERSE_SENSOR = true;

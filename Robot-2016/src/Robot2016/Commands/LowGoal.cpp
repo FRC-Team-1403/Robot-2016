@@ -25,13 +25,14 @@ LowGoal::LowGoal(std::shared_ptr<cougar::CougarJoystick> joy)
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddParallel(new DropRollers(joy));
+	AddSequential(new LiftRollers(joy));
 	AddSequential(new SetShooterDeckAngle(20, joy));
 
 	AddSequential(new DropTrigger(joy));
 
 	AddSequential(new RollersOut(joy), 2);
 
-	AddParallel(new LiftRollers(joy));
 	AddParallel(new LiftTrigger(joy));
+	AddSequential(new SetShooterDeckAngle(0, joy));
+
 }

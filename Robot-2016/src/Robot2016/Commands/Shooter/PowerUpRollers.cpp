@@ -20,7 +20,7 @@ void PowerUpRollers::Initialize()
 {
 	cougar::CougarDebug::startMethod("PowerUpRollers::Initialize");
 	this->init_time_ = Timer::GetFPGATimestamp();
-	std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(50)));
+	std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(200)));
 	cougar::CougarDebug::endMethod("PowerUpRollers::Initialize");
 }
 
@@ -64,7 +64,7 @@ void PowerUpRollers::Interrupted()
 
 void PowerUpRollers::stopAll() {
 	Robot::intake->liftTriggerAirCylinder();	// lol hax
-	std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(100)));
+	std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(200)));
 	Robot::shooter->topRoller->StopMotor();
 	Robot::shooter->bottomRoller->StopMotor();
 }
