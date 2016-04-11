@@ -8,6 +8,7 @@ RollersIn::RollersIn(std::shared_ptr<cougar::CougarJoystick> joy) :
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 	Requires(Robot::intake.get());
+	Requires(Robot::shooter.get());
 }
 
 // Called just before this Command runs the first time

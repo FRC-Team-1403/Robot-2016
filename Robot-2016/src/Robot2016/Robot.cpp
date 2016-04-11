@@ -96,9 +96,10 @@ void Robot::RobotInit()
 		std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
 
 		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-		//p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(5, 0, 0)));
-		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(16, 0, 0)));
-		//p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(12.75, 5.5, 0)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(5, 0, 0)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(10, -6, -1 * M_PI / 2)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(15, -13, -1 * M_PI / 3)));
+		//p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(5, -4, -1 * M_PI / 2)));
 		lowBarPath = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	}
 
@@ -142,7 +143,8 @@ void Robot::AutonomousInit()
 	update();
 	cougar::CougarDebug::startMethod("Robot::AutonomousInit");
 
-	autonomousCommand.reset((Command *)chooser->GetSelected());
+	//autonomousCommand.reset((Command *)chooser->GetSelected());
+	autonomousCommand.reset(new DriveBackwardAutonomous(oi->GetDriverJoystick()));
 
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
@@ -207,8 +209,8 @@ void Robot::TeleopPeriodic()
 
 	SmartDashboard::PutNumber("POT distance", (shooter->getAngleMotorDistance() - cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO) / cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE);
 	SmartDashboard::PutNumber("POT velocity", shooter->getAngleMotorVelocity());
-	SmartDashboard::PutNumber("Top Roller velocity", shooter->getTopRollerVelocity());
-	SmartDashboard::PutNumber("Bottom Roller velocity", shooter->getTopRollerVelocity());
+	SmartDashboard::PutNumber("Top Roller Distance", shooter->topRoller->GetEncPosition());
+	SmartDashboard::PutNumber("Bottom Roller Distance", shooter->bottomRoller->GetEncPosition());
 	SmartDashboard::PutNumber("Intake limit switch", intake->getBallSwitchValue());
 	SmartDashboard::PutNumber("Roller Solenoid", intake->getRollersAirCylinderValue());
 	SmartDashboard::PutNumber("Trigger Solenoid", intake->getTriggerAirCylinderValue());

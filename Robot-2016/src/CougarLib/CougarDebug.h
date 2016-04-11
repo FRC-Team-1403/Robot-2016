@@ -98,6 +98,7 @@ private:
 	static std::map<int, std::string> debugLevels;
 	static std::deque<std::tuple<uint8_t, std::string>> printQueue;
 	static std::mutex loggingPrinterMutex_;
+	static std::unique_lock<std::mutex> printQueueLock_;
 
 	static int indentation;
 	static bool didInit;

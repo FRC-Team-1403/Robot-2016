@@ -32,7 +32,7 @@ public:
 	std::shared_ptr<TrajectoryFollower> followerRight;
 	double direction;
 	double heading;
-	double kTurn = -13.0/80.0;
+	double kTurn = -18.0/80.0;
 
 	virtual bool onTarget();
 	virtual void loadProfile(std::shared_ptr<Trajectory> leftProfile,

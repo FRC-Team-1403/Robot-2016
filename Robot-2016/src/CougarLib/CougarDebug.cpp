@@ -14,6 +14,7 @@ FILE *CougarDebug::dumpFile;
 std::map<int, std::string> CougarDebug::debugLevels;
 std::deque<std::tuple<uint8_t, std::string>> CougarDebug::printQueue;
 std::mutex CougarDebug::loggingPrinterMutex_;
+std::unique_lock<std::mutex> CougarDebug::printQueueLock_(loggingPrinterMutex_, std::defer_lock);
 
 int CougarDebug::indentation = 0;
 bool CougarDebug::didInit = false;
@@ -23,6 +24,7 @@ CougarDebug::CougarDebug() {}
 
 void CougarDebug::init() {
 	std::cout << "CougarDebug::init starting\n";
+	printQueueLock_.lock();
 	if (!debugLevels.empty())
 		debugLevels.clear();
 	debugLevels[0] = "UNIMPORTANT";
@@ -65,6 +67,8 @@ void CougarDebug::init() {
 	}
 
 	didInit = true;
+
+	printQueueLock_.unlock();
 
 	std::cout << "CougarDebug::init finished\n";
 }
@@ -161,7 +165,9 @@ void CougarDebug::log(uint8_t level, std::string message) {
 		}
 		message = (tabs + std::string("UNKNOWN DEBUG LEVEL") + std::string(": ") + std::string(message) + std::string(" at time ") + std::to_string(Timer::GetFPGATimestamp()) + std::string("\n")).c_str();
 	}
+	printQueueLock_.lock();
 	printQueue.push_back(std::make_tuple(level, message));
+	printQueueLock_.unlock();
 }
 
 void CougarDebug::print(uint8_t level, std::string message) {

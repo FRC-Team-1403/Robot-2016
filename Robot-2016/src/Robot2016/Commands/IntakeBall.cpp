@@ -4,6 +4,7 @@
 #include "Intake/RollersIn.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
+#include "Shooter/PowerUpRollers.h"
 
 
 IntakeBall::IntakeBall(std::shared_ptr<cougar::CougarJoystick> joy)

@@ -5,6 +5,7 @@
 #include "Intake/LiftRollers.h"
 #include "Intake/DropRollers.h"
 #include "Intake/RollersOut.h"
+#include "Shooter/PowerUpRollers.h"
 
 LowGoal::LowGoal(std::shared_ptr<cougar::CougarJoystick> joy)
 {
@@ -26,10 +27,11 @@ LowGoal::LowGoal(std::shared_ptr<cougar::CougarJoystick> joy)
 	// arm.
 
 	AddSequential(new LiftRollers(joy));
-	AddSequential(new SetShooterDeckAngle(20, joy));
+	AddSequential(new SetShooterDeckAngle(22.5, joy));
 
 	AddSequential(new DropTrigger(joy));
 
+	AddParallel(new PowerUpRollers(-1, 1, 2, joy));
 	AddSequential(new RollersOut(joy), 2);
 
 	AddParallel(new LiftTrigger(joy));
