@@ -20,7 +20,21 @@ public:
 	void Interrupted();
 	virtual void stopAll() override;
 
-	double angle;
+	double angleDelta;
+	double setpointAngle;
+	double initAngle;
+	double error;
+	double errorSum;
+	double lastError;
+
+	double power;
+	double powerP;
+	double powerI;
+	double powerD;
+
+	static constexpr double kP = 0.02;
+	static constexpr double kI = 0;
+	static constexpr double kD = 0;
 };
 
 #endif /* SRC_ROBOT2016_COMMANDS_DRIVETRAIN_TURN_H_ */

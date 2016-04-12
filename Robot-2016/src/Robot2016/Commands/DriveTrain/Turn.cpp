@@ -6,27 +6,47 @@ Turn::Turn(double angle, std::shared_ptr<cougar::CougarJoystick> joy) :
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
-	this->angle = angle;
+	this->angleDelta = angle;
 	Requires(Robot::driveTrain.get());
 }
 
 // Called just before this Command runs the first time
 void Turn::Initialize()
 {
-	Robot::driveTrain->resetGyro();
+	initAngle = Robot::driveTrain->getGyroAngleInRadians();
+	setpointAngle = initAngle + angleDelta;
+	error = setpointAngle;
+	errorSum = 0;
+	lastError = setpointAngle;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void Turn::Execute()
 {
-	Robot::driveTrain->setLeftRightPower(0.75, -0.75);
+	error = setpointAngle - Robot::driveTrain->getGyroAngleInRadians();
+
+		//proportional
+		powerP = kP * error;
+
+		//integral
+		errorSum += error;
+		powerI = kI * errorSum;
+
+		//derivative
+		powerD = kD * (error - lastError);
+
+		power = powerP + powerI + powerD;
+
+		std::cout << "Error: " << error << std::endl;
+		std::cout << "Power: " << power << std::endl;
+		Robot::driveTrain->setLeftRightPower(power, -1 * power);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool Turn::IsFinished()
 {
 	std::cout << "ANGLE: " << Robot::driveTrain->getGyroAngleInRadians() << "\n";
-	return Robot::driveTrain->getGyroAngleInRadians() < this->angle;
+	return std::abs(Robot::driveTrain->getGyroAngleInRadians() - this->setpointAngle) < 0.0001;
 }
 
 // Called once after isFinished returns true

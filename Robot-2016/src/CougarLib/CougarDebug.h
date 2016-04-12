@@ -25,6 +25,7 @@
 #include <deque>
 #include <tuple>
 #include <mutex>
+#include <ctime>
 #include "CougarBase/StateManager.h"
 
 namespace cougar {
@@ -48,11 +49,6 @@ public:
 	static void debugPrinter(const char *message = "", ...);
 	static void debugPrinter(int level = UNIMPORTANT, std::string message = "");
 	static void debugPrinter(std::string message = "");
-
-	// Changes the indendation level of debug statements.
-	// Default amount is one space
-	static void indent(int amount = 1);
-	static void unindent(int amount = 1);
 
 	// Used to print out nicely indented method debugging blocks.
 	// Should be used in all methods except simple getters.
@@ -78,12 +74,14 @@ public:
 		FATAL_ERROR = 3
 	};
 
+	static std::string getCurrentTime();
 private:
 	// Prevent this class from being instantiated
 	explicit CougarDebug();
 	virtual ~CougarDebug() {}
 
 	static void log(uint8_t level, std::string message);
+	static void internalLog(std::string message);
 	static void print(uint8_t level, std::string message);
 	static void writeToFile(uint8_t level, std::string message);
 	static void writeToRiolog(uint8_t level, std::string message);
@@ -100,9 +98,7 @@ private:
 	static std::mutex loggingPrinterMutex_;
 	static std::unique_lock<std::mutex> printQueueLock_;
 
-	static int indentation;
 	static bool didInit;
-	static bool doIndent;
 	static const bool WRITE_TO_RIOLOG = true;
 	static const bool WRITE_TO_FILE = true;
 	static const bool STATE_DUMPING_TO_RIOLOG = false;
