@@ -189,10 +189,10 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("azimuth", a[x]);
 
 */
-	SmartDashboard::PutNumber("Driver Left X", oi->GetDriverJoystick()->GetStickLeftAxisX());
-	SmartDashboard::PutNumber("Driver Left Y", oi->GetDriverJoystick()->GetStickLeftAxisY());
-	SmartDashboard::PutNumber("Driver Right X", oi->GetDriverJoystick()->GetStickRightAxisX());
-	SmartDashboard::PutNumber("Driver Right Y", oi->GetDriverJoystick()->GetStickRightAxisY());
+	//SmartDashboard::PutNumber("Driver Left X", oi->GetDriverJoystick()->GetStickLeftAxisX());
+	//SmartDashboard::PutNumber("Driver Left Y", oi->GetDriverJoystick()->GetStickLeftAxisY());
+	//SmartDashboard::PutNumber("Driver Right X", oi->GetDriverJoystick()->GetStickRightAxisX());
+	//SmartDashboard::PutNumber("Driver Right Y", oi->GetDriverJoystick()->GetStickRightAxisY());
 
 	SmartDashboard::PutNumber("Operator Left X", oi->GetOperatorJoystick()->GetStickLeftAxisX());
 	SmartDashboard::PutNumber("Operator Left Y", oi->GetOperatorJoystick()->GetStickLeftAxisY());
@@ -200,24 +200,24 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Operator Right Y", oi->GetOperatorJoystick()->GetStickRightAxisY());
 
 
-	SmartDashboard::PutNumber("Drive Position", driveTrain->getDistance());
-	SmartDashboard::PutNumber("Drive Velocity", driveTrain->getVelocity());
-	SmartDashboard::PutNumber("Drive Acceleration", driveTrain->getAcceleration());
+	//SmartDashboard::PutNumber("Drive Position", driveTrain->getDistance());
+	//SmartDashboard::PutNumber("Drive Velocity", driveTrain->getVelocity());
+	//SmartDashboard::PutNumber("Drive Acceleration", driveTrain->getAcceleration());
 	SmartDashboard::PutNumber("Drive Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());
 	SmartDashboard::PutNumber("Drive Train Right Encoder", driveTrain->getRightEncoderDistance());
 
 	SmartDashboard::PutNumber("POT distance", (shooter->getAngleMotorDistance() - cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO) / cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE);
-	SmartDashboard::PutNumber("POT velocity", shooter->getAngleMotorVelocity());
-	SmartDashboard::PutNumber("Top Roller Distance", shooter->topRoller->GetEncPosition());
-	SmartDashboard::PutNumber("Bottom Roller Distance", shooter->bottomRoller->GetEncPosition());
+	//SmartDashboard::PutNumber("POT velocity", shooter->getAngleMotorVelocity());
+	SmartDashboard::PutNumber("Top Roller Speed", shooter->topRoller->GetEncVel());
+	SmartDashboard::PutNumber("Bottom Roller Speed", shooter->bottomRoller->GetEncVel());
 	SmartDashboard::PutNumber("Intake limit switch", intake->getBallSwitchValue());
-	SmartDashboard::PutNumber("Roller Solenoid", intake->getRollersAirCylinderValue());
-	SmartDashboard::PutNumber("Trigger Solenoid", intake->getTriggerAirCylinderValue());
+	//SmartDashboard::PutNumber("Roller Solenoid", intake->getRollersAirCylinderValue());
+	//SmartDashboard::PutNumber("Trigger Solenoid", intake->getTriggerAirCylinderValue());
 
-	SmartDashboard::PutNumber("Angle Motor", shooter->angleMotor->Get());
-	SmartDashboard::PutNumber("Top Roller", shooter->topRoller->Get());
-	SmartDashboard::PutNumber("Bottom Roller", shooter->bottomRoller->Get());
+	//SmartDashboard::PutNumber("Angle Motor", shooter->angleMotor->Get());
+	//SmartDashboard::PutNumber("Top Roller", shooter->topRoller->Get());
+	//SmartDashboard::PutNumber("Bottom Roller", shooter->bottomRoller->Get());
 
 
 	SmartDashboard::PutNumber("Servo", shooter->cameraServo->Get());

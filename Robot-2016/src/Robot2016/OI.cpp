@@ -9,6 +9,7 @@
 #include "Commands/Shooter/PowerUpRollers.h"
 #include "Commands/LowBarAutonomous.h"
 #include "Commands/Autonomous/LowBarAutonomous_Drive.h"
+#include "Commands/DriveTrain/Turn.h"
 
 #include "Commands/IntakeBall.h"
 #include "Commands/HighGoalBatter.h"
@@ -22,6 +23,9 @@ OI::OI()
 	cougar::CougarDebug::startMethod("OI::OI");
 	this->driverJoy.reset(new cougar::CougarJoystick(0, false));
 	this->operatorJoy.reset(new cougar::CougarJoystick(1, true));
+
+	driverButtonLB.reset(new cougar::CougarButton(driverJoy, 5));
+	driverButtonLB->WhenPressed(new Turn(M_PI/2, this->driverJoy));
 
 	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
 	//operatorButtonA->WhenPressed(new DoNothingAutonomous());
@@ -58,7 +62,6 @@ OI::OI()
 }
 
 std::shared_ptr<cougar::CougarJoystick> OI::GetDriverJoystick() {
-	//std::cout <<
 	return driverJoy;
 }
 

@@ -19,7 +19,7 @@ public:
 	void Interrupted();
 	virtual void stopAll() override;
 
-	int angle_;
+	float angle_;
 
 private:
 	static const bool BANG_BANG = false;

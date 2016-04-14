@@ -40,8 +40,8 @@ bool PowerUpRollers::IsFinished()
 	std::cout << "Speed bottom: " << Robot::shooter->bottomRoller->GetSpeed() << "\n";*/
 
 
-	return std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED - Robot::shooter->topRoller->GetSpeed()) < 10 ||
-		   std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED - Robot::shooter->bottomRoller->GetSpeed()) < 10 ||
+	return (std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED * topRollerPower_) - std::abs(Robot::shooter->topRoller->GetEncVel()) < 10 &&
+		   std::abs(cougar::CougarConstants::SHOOTER_ROLLER_MAX_SPEED * bottomRollerPower_) - std::abs(Robot::shooter->bottomRoller->GetEncVel()) < 10) ||
 		   Timer::GetFPGATimestamp() - init_time_ >= time_;
 }
 

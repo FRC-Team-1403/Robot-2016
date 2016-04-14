@@ -2,7 +2,7 @@
 #include "../../Robot.h"
 
 Turn::Turn(double angle, std::shared_ptr<cougar::CougarJoystick> joy) :
-	cougar::CougarCommand("Turn", joy, true)
+	cougar::CougarCommand("Turn", joy, false)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -18,11 +18,13 @@ void Turn::Initialize()
 	error = setpointAngle;
 	errorSum = 0;
 	lastError = setpointAngle;
+	lastTime = 0;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void Turn::Execute()
 {
+
 	error = setpointAngle - Robot::driveTrain->getGyroAngleInRadians();
 
 		//proportional
@@ -33,20 +35,25 @@ void Turn::Execute()
 		powerI = kI * errorSum;
 
 		//derivative
-		powerD = kD * (error - lastError);
+		powerD = kD * ((error - lastError) / (Timer::GetFPGATimestamp() - lastTime));
+		lastTime = Timer::GetFPGATimestamp();
 
 		power = powerP + powerI + powerD;
 
-		std::cout << "Error: " << error << std::endl;
-		std::cout << "Power: " << power << std::endl;
-		Robot::driveTrain->setLeftRightPower(power, -1 * power);
+		cougar::CougarDebug::debugPrinter("Error: %f", error);
+		cougar::CougarDebug::debugPrinter("Power: %f", power);
+		cougar::CougarDebug::debugPrinter("PowerP: %f", powerP);
+		cougar::CougarDebug::debugPrinter("PowerI: %f", powerI);
+		cougar::CougarDebug::debugPrinter("PowerD: %f", powerD);
+
+		Robot::driveTrain->setLeftRightPower(-power,power);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool Turn::IsFinished()
 {
-	std::cout << "ANGLE: " << Robot::driveTrain->getGyroAngleInRadians() << "\n";
-	return std::abs(Robot::driveTrain->getGyroAngleInRadians() - this->setpointAngle) < 0.0001;
+	cougar::CougarDebug::debugPrinter("Angle: %f", Robot::driveTrain->getGyroAngleInRadians());
+	return std::abs(Robot::driveTrain->getGyroAngleInRadians() - this->setpointAngle) < 0.01;
 }
 
 // Called once after isFinished returns true

@@ -4,7 +4,7 @@
 
 
 SetShooterDeckAngle::SetShooterDeckAngle(float angle, std::shared_ptr<cougar::CougarJoystick> joy) :
-	cougar::CougarCommand("SetShooterDeckAngle", joy)
+	cougar::CougarCommand("SetShooterDeckAngle", joy, false, 2)
 {
 	cougar::CougarDebug::startMethod("SetShooterDeckAngle::SetShooterDeckAngle");
 	Requires(Robot::shooter.get());
@@ -25,12 +25,11 @@ void SetShooterDeckAngle::Initialize()
 void SetShooterDeckAngle::Execute()
 {
 	if (!BANG_BANG) {
+		cougar::CougarDebug::debugPrinter("Angle: %f", this->angle_);
+		cougar::CougarDebug::debugPrinter("Actual Setpoint: %f", Robot::shooter->angleMotor->GetSetpoint());
+		cougar::CougarDebug::debugPrinter("Actual Value: %f", Robot::shooter->angleMotor->GetPosition());
+		cougar::CougarDebug::debugPrinter("Error: %f", Robot::shooter->angleMotor->GetClosedLoopError());
 
-		std::cout << "Angle: " << this->angle_ << "\n";
-		std::cout << "Angle val: " << this->angle_;// * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO << "\n";
-		std::cout << "Actual Setpoint: " << Robot::shooter->angleMotor->GetSetpoint();
-		std::cout << "Actual Value: " << Robot::shooter->angleMotor->GetPosition();
-		std::cout << "Error: " << Robot::shooter->angleMotor->GetClosedLoopError();
 		Robot::shooter->setAngleMotor(this->angle_);// * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO);
 	} else {
 		if (Robot::shooter->getAngleMotorDistance() > this->angle_) {
@@ -58,14 +57,8 @@ void SetShooterDeckAngle::Execute()
 // Make this return true when this Command no longer needs to run execute()
 bool SetShooterDeckAngle::IsFinished()
 {
-
-	//std::cout << "Setpoint: " << Robot::shooter->angleMotor->GetSetpoint() << "\n";
-	//std::cout << "Position: " << Robot::shooter->angleMotor->GetPosition() << "\n";
-	//std::cout << "analog  val" << Robot::shooter->getAngleMotorDistance() << "\n";
-	//std::cout << "Speed: " << Robot::shooter->angleMotor->GetAnalogInVel() << "\n";
-
 	if (!BANG_BANG)
-		return std::abs(Robot::shooter->angleMotor->GetSetpoint() - Robot::shooter->angleMotor->GetPosition()) < 0.001;
+		return std::abs(Robot::shooter->angleMotor->GetSetpoint() - Robot::shooter->angleMotor->GetPosition()) < 2.95;
 	else
 		return std::abs(Robot::shooter->getAngleMotorDistance() - this->angle_) < 2.7;
 }

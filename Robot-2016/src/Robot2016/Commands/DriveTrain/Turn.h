@@ -31,10 +31,11 @@ public:
 	double powerP;
 	double powerI;
 	double powerD;
+	double lastTime;
 
-	static constexpr double kP = 0.02;
+	static constexpr double kP = 1.403;
 	static constexpr double kI = 0;
-	static constexpr double kD = 0;
+	static constexpr double kD = 0.001;
 };
 
 #endif /* SRC_ROBOT2016_COMMANDS_DRIVETRAIN_TURN_H_ */

@@ -13,8 +13,6 @@
 #include "Intake/LiftRollers.h"
 #include "Intake/DropRollers.h"
 #include "Intake/RollersOut.h"
-#include "DriveTrain/DriveWithEncoder.h"
-
 LowBarAutonomous::LowBarAutonomous(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:

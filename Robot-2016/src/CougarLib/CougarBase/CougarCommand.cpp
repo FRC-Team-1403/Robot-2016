@@ -11,7 +11,7 @@ namespace cougar {
 
 CougarCommand::CougarCommand(std::string name, std::shared_ptr<CougarJoystick> joy, bool isDefaultCommand, double timeout)
 							: Command(name, timeout) {
-	std::cout << "Starting CougarCommand" << this->GetName() << "\n";
+	CougarDebug::debugPrinter("Starting CougarCommand %s", this->GetName().c_str());
 	this->joy_ = joy;
 	this->doEndListener = false;
 	this->isDefaultCommand_ = isDefaultCommand;

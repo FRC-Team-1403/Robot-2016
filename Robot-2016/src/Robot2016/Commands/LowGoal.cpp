@@ -27,7 +27,7 @@ LowGoal::LowGoal(std::shared_ptr<cougar::CougarJoystick> joy)
 	// arm.
 
 	AddSequential(new LiftRollers(joy));
-	AddSequential(new SetShooterDeckAngle(22.5, joy));
+	AddSequential(new SetShooterDeckAngle(21, joy));
 
 	AddSequential(new DropTrigger(joy));
 

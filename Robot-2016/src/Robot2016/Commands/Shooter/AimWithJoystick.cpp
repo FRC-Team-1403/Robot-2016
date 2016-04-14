@@ -30,7 +30,7 @@ void AimWithJoystick::Execute()
 		Robot::shooter->setTopRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
 		Robot::shooter->setBottomRoller(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY() * -1);
 		//cam = Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY();
-		Robot::shooter->setCameraServo(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY());
+		//Robot::shooter->setCameraServo(Robot::oi->GetOperatorJoystick()->GetStickLeftAxisY());
 	} else {
 		Robot::shooter->cameraServo->Set(Robot::oi->GetOperatorJoystick()->GetStickRightAxisY());
 		//Robot::shooter->setCameraServo(cam);

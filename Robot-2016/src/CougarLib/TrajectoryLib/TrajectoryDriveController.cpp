@@ -64,33 +64,27 @@ void TrajectoryDriveController::update() {
 	} else	{
 		double distanceR = direction * Robot::driveTrain->getLeftEncoderDistance();
 		double distanceL = -1 * direction * Robot::driveTrain->getRightEncoderDistance();
-		std::cout << "Distance Left " << distanceL << std::endl;
-		std::cout << "Distance Right " << distanceR << std::endl;
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Distance Left: %f", distanceL);
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "tDistance Right: %f", distanceR);
+		CougarDebug::debugPrinter("Distance Left: %f", distanceL);
+		CougarDebug::debugPrinter("Distance Right: %f", distanceR);
 
 		double speedLeft = direction * followerLeft->calculate(distanceL);
 		double speedRight = direction * followerRight->calculate(distanceR);
-		std::cout << "Speed Left " << speedLeft << std::endl;
-		std::cout << "Speed Right " << speedRight << std::endl;
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Speed Left: %f", speedLeft);
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Speed Right: %f", speedRight);
+		CougarDebug::debugPrinter("Speed Left: %f", speedLeft);
+		CougarDebug::debugPrinter("Speed Right: %f", speedRight);
 
 		double goalHeading = followerLeft->getHeading();
 		double observedHeading = Robot::driveTrain->getGyroAngleInRadians();
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Observed Heading: %f", observedHeading);
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Goal Heading: %f", goalHeading);
+		CougarDebug::debugPrinter("Observed Heading: %f", observedHeading);
+		CougarDebug::debugPrinter("Goal Heading: %f", goalHeading);
 
 		double angleDiffRads = CougarMath::getDifferenceInAngleRadians(observedHeading, goalHeading);
-		//double angleDiff = (angleDiffRads * 180) / M_PI;
+		double angleDiff = (angleDiffRads * 180) / M_PI;
 
-		double turn = kTurn * angleDiffRads;
+		double turn = kTurn * angleDiff;
 
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Angle Difference: %f", angleDiffRads, turn);
-		std::cout << "AngleDiff " << angleDiffRads << std::endl;
-		std::cout << "Turn " << turn << std::endl;
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Turn: %f", turn);
-		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Is Finished: %d", this->onTarget());
+		CougarDebug::debugPrinter("Angle Difference: %f", angleDiffRads, turn);
+		CougarDebug::debugPrinter("Turn: %f", turn);
+		CougarDebug::debugPrinter("Is Finished: %d", this->onTarget());
 
 		Robot::driveTrain->setLeftRightPower(speedRight + turn, speedLeft - turn);
 	}

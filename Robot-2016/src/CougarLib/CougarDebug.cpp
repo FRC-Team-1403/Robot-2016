@@ -21,7 +21,7 @@ bool CougarDebug::didInit = false;
 CougarDebug::CougarDebug() {}
 
 void CougarDebug::init() {
-	std::cout << "CougarDebug::init starting\n";
+	internalLog("CougarDebug::init starting");
 
 	printQueueLock_.lock();
 	//StateManager::stateDumperLock_.lock();
@@ -35,11 +35,14 @@ void CougarDebug::init() {
 
 	if (WRITE_TO_FILE) {
 		system("mkdir -p /home/lvuser/log_files");
-		std::string filename = "/home/lvuser/log_files/log_" + getCurrentTime() + ".txt";
+		std::string filename = "/home/lvuser/log_files/log_";
+		filename += getCurrentTime();
+		filename += ".txt";
 		std::string create_file_command = "touch " + filename;
 		system(create_file_command.c_str());
 		std::string change_permissions_command = "chmod 777 " + filename;
 		system(change_permissions_command.c_str());
+		//logFile = 1;
 		logFile = fopen(filename.c_str(), "w");
 		fprintf(logFile, (std::string("Writing to file with logging level ") + debugLevels.at(static_cast<int>(FILE_DEBUG_LEVEL)) + "\n\n").c_str());
 
@@ -47,11 +50,14 @@ void CougarDebug::init() {
 
 	if (STATE_DUMPING_TO_FILE) {
 		system("mkdir -p /home/lvuser/dump_files");
-		std::string filename = "/home/lvuser/dump_files/dump_" + getCurrentTime() + ".txt";
+		std::string filename = "/home/lvuser/dump_files/dump_";
+		filename += getCurrentTime();
+		filename += ".txt";
 		std::string create_file_command = "touch " + filename;
 		system(create_file_command.c_str());
 		std::string change_permissions_command = "chmod 777 " + filename;
 		system(change_permissions_command.c_str());
+		//dumpFile = 1;
 		dumpFile = fopen(filename.c_str(), "w");
 	}
 
@@ -68,11 +74,11 @@ void CougarDebug::init() {
 	printQueueLock_.unlock();
 	//StateManager::stateDumperLock_.unlock();
 
-	std::cout << "CougarDebug::init finished\n";
+	internalLog("CougarDebug::init finished");
 }
 
 void CougarDebug::end() {
-	std::cout << "CougarDebug::end starting\n";
+	internalLog("CougarDebug::end starting");
 	//printQueueLock_.lock();
 	//StateManager::stateDumperLock_.lock();
 	if (WRITE_TO_FILE) {
@@ -85,15 +91,15 @@ void CougarDebug::end() {
 	}
 	//printQueueLock_.unlock();
 	//StateManager::stateDumperLock_.unlock();
-	std::cout << "CougarDebug::end finished\n";
+	internalLog("CougarDebug::end finished");
 }
 
 void CougarDebug::debugPrinter(int level, const char *message, ...) {
 	va_list args;
 	va_start(args, message);
 
-	char buf[strlen(message) * 2];
-	vsnprintf(buf, strlen(message), message, args);
+	char buf[1024];
+	vsnprintf(buf, 1024, message, args);
 
 	log(level, std::string(buf));
 
@@ -105,8 +111,8 @@ void CougarDebug::debugPrinter(const char *message, ...) {
 	va_list args;
 	va_start(args, message);
 
-	char buf[strlen(message) * 2];
-	vsnprintf(buf, strlen(message), message, args);
+	char buf[1024];
+	vsnprintf(buf, 1024, message, args);
 
 	log(level, std::string(buf));
 
@@ -195,13 +201,13 @@ void CougarDebug::print(uint8_t level, std::string message) {
 void CougarDebug::writeToFile(uint8_t level, std::string message) {
 	if (WRITE_TO_FILE && level >= static_cast<uint8_t>(FILE_DEBUG_LEVEL)) {
 		if (logFile != NULL)
-			fprintf(logFile, message.c_str());
+			fprintf(logFile, (message + "\n").c_str());
 	}
 }
 
 void CougarDebug::writeToRiolog(uint8_t level, std::string message) {
 	if (WRITE_TO_RIOLOG && level >= static_cast<uint8_t>(RIOLOG_DEBUG_LEVEL)) {
-		printf("%s", message.c_str());
+		printf("%s\n", message.c_str());
 	}
 }
 
