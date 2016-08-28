@@ -3,12 +3,17 @@
  *
  *  Created on: Jan 12, 2016
  *      Author: Thejas
+ *
+ *  The things in this class should really be
+ *  "...Log" or "...Logging", not "...Debug",
+ *  but it's too late to change that without
+ *  breaking everything and making my life harder.
  */
 
 #ifndef SRC_COUGARLIB_COUGARDEBUG_H_
 #define SRC_COUGARLIB_COUGARDEBUG_H_
 
-#include <WPILib.h>
+#include "WPILib.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdarg.h>
@@ -16,6 +21,12 @@
 #include <map>
 #include <stdexcept>
 #include <chrono>
+#include <thread>
+#include <deque>
+#include <tuple>
+#include <mutex>
+#include <ctime>
+#include "CougarBase/StateManager.h"
 
 namespace cougar {
 
@@ -39,11 +50,6 @@ public:
 	static void debugPrinter(int level = UNIMPORTANT, std::string message = "");
 	static void debugPrinter(std::string message = "");
 
-	// Changes the indendation level of debug statements.
-	// Default amount is one space
-	static void indent(int amount = 1);
-	static void unindent(int amount = 1);
-
 	// Used to print out nicely indented method debugging blocks.
 	// Should be used in all methods except simple getters.
 	// Methods that will be called a lot (whether in a simple loop or
@@ -61,27 +67,48 @@ public:
 	// Messages marked with a debug level higher than
 	// or equal to current debug level will be shown.
 	// If DEBUG is lower, messages become more verbose.
-	// TODO implement different debug levels for riolog and file
 	enum DEBUG_LEVEL {
 		UNIMPORTANT = 0,
 		MESSAGE = 1,
 		ISSUE = 2,
 		FATAL_ERROR = 3
 	};
-	static const int DEBUG = UNIMPORTANT;
 
+	static std::string getCurrentTime();
 private:
 	// Prevent this class from being instantiated
 	explicit CougarDebug();
 	virtual ~CougarDebug() {}
 
+	static void log(uint8_t level, std::string message);
+	static void internalLog(std::string message);
+	static void print(uint8_t level, std::string message);
+	static void writeToFile(uint8_t level, std::string message);
+	static void writeToRiolog(uint8_t level, std::string message);
+
+	// These MUST each be running in separate threads,
+	// or they will lock up the whole program.
+	static void throttledLoggingPrinter();
+	static void continuouslyDumpStates();
+
 	static FILE *logFile;
+	static FILE *dumpFile;
 	static std::map<int, std::string> debugLevels;
-	static int indentation;
+	static std::deque<std::tuple<uint8_t, std::string>> printQueue;
+	static std::mutex loggingPrinterMutex_;
+	static std::unique_lock<std::mutex> printQueueLock_;
+
 	static bool didInit;
-	static bool doIndent;
 	static const bool WRITE_TO_RIOLOG = true;
 	static const bool WRITE_TO_FILE = true;
+	static const bool STATE_DUMPING_TO_RIOLOG = false;
+	static const bool STATE_DUMPING_TO_FILE = true;
+
+	static const int LOGGING_PRINTER_INTERVAL_IN_MILLISECONDS = 250;
+	static const int DUMP_INTERVAL_IN_MILLISECONDS = 5000;
+
+	static const int RIOLOG_DEBUG_LEVEL = UNIMPORTANT;
+	static const int FILE_DEBUG_LEVEL = UNIMPORTANT;
 };
 
 } /* namespace cougar */

@@ -8,7 +8,11 @@
 #include "../CougarLib/CougarWPI/CougarOutput/CougarSpeedControllerAggregate.h"
 #include "../CougarLib/CougarDebug.h"
 #include "../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
+#include "../CougarLib/CougarWPI/CougarInput/CougarEncoder.h"
+#include "../CougarLib/CougarWPI/CougarInput/CougarDigitalInput.h"
 #include "../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
+#include "../CougarLib/CougarWPI/CougarOutput/CougarSolenoid.h"
+#include "../CougarLib/CougarWPI/CougarOutput/CougarDoubleSolenoid.h"
 #include "../CougarLib/CougarConstants.h"
 
 class RobotMap {
@@ -17,9 +21,9 @@ public:
 
 	//drive train
 	static std::shared_ptr<cougar::CougarDrive> drive;
-	static std::shared_ptr<Encoder> driveTrainRightEncoder;
-	static std::shared_ptr<Encoder> driveTrainLeftEncoder;
-	static std::shared_ptr<Gyro> driveTrainGyro;
+	static std::shared_ptr<cougar::CougarEncoder> driveTrainRightEncoder;
+	static std::shared_ptr<cougar::CougarEncoder> driveTrainLeftEncoder;
+	static std::shared_ptr<cougar::CougarGyro> driveTrainGyro;
 	static std::shared_ptr<ADXL362> driveTrainAccelerometer;
 
 	//shooter
@@ -30,9 +34,9 @@ public:
 
 	//intake
 	static std::shared_ptr<cougar::CougarSpeedController> intakeRoller;
-	static std::shared_ptr<DigitalInput> intakeBallSwitch;
-	static std::shared_ptr<DoubleSolenoid> intakeAngleAirCylinder;
-	static std::shared_ptr<Solenoid> intakeLiftAirCylinder;
+	static std::shared_ptr<cougar::CougarDigitalInput> intakeBallSwitch;
+	static std::shared_ptr<cougar::CougarDoubleSolenoid> intakeAngleAirCylinder;
+	static std::shared_ptr<cougar::CougarSolenoid> intakeLiftAirCylinder;
 };
 
 #endif

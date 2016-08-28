@@ -9,29 +9,25 @@
 
 namespace cougar {
 
-CougarSpeedController::CougarSpeedController(uint32_t port, uint32_t pdpSlot, std::string name, bool inverted /* = false */) {
+CougarSpeedController::CougarSpeedController(uint32_t port, uint32_t pdpSlot,
+		std::string name, bool inverted /* = false */) : Debuggable(name) {
 	CougarDebug::startMethod("CougarSpeedController::CougarSpeedController " + name);
 	this->controller_.reset(new Victor(port));
-	this->name_ = name;
+	this->port_ = port;
 	this->pdpSlot_ = pdpSlot;
 	this->inverted_ = inverted;
 	CougarDebug::endMethod("CougarSpeedController::CougarSpeedController " + this->GetName());
 }
 
-CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> controller, uint32_t pdpSlot, std::string name, bool inverted /* = false */) {
+CougarSpeedController::CougarSpeedController(std::shared_ptr<SpeedController> controller, uint32_t pdpSlot,
+		std::string name, bool inverted /* = false */) : Debuggable(name) {
 	CougarDebug::startMethod("CougarSpeedController::CougarSpeedController " + name);
 	this->controller_ = controller;
-	this->name_ = name;
+	this->port_ = -1;
 	this->pdpSlot_ = pdpSlot;
 	this->inverted_ = inverted;
 	CougarDebug::endMethod("CougarSpeedController::CougarSpeedController " + this->GetName());
 }
-
-CougarSpeedController::CougarSpeedController(std::shared_ptr<CougarSpeedController> controller) :
-		CougarSpeedController(controller->GetController(), controller->GetPDPSlot(), controller->GetName(), controller->GetInverted()){}
-
-CougarSpeedController::CougarSpeedController(const CougarSpeedController &controller) :
-		CougarSpeedController(controller.GetController(), controller.GetPDPSlot(), controller.GetName(), controller.GetInverted()){}
 
 CougarSpeedController::~CougarSpeedController() {
 	CougarDebug::startMethod("CougarSpeedController::~CougarSpeedController " + this->GetName());
@@ -91,6 +87,20 @@ const char *CougarSpeedController::GetCName() const {
 
 uint32_t CougarSpeedController::GetPDPSlot() const {
 	return this->pdpSlot_;
+}
+
+std::string CougarSpeedController::toString() {
+	std::string str = "CougarSpeedController " + this->name_ + "\n";
+	return str;
+}
+
+std::string CougarSpeedController::dumpState() {
+	std::string str = this->toString();
+	str += "Port: " + std::to_string(this->port_) + "\n";
+	str += "PDP Slot: " + std::to_string(this->pdpSlot_) + "\n";
+	str += "Inverted: " + std::to_string(this->inverted_) + "\n";
+	str += "Set Power: " + std::to_string(this->controller_->Get()) + "\n";
+	return str;
 }
 
 std::shared_ptr<SpeedController> CougarSpeedController::GetController() const {

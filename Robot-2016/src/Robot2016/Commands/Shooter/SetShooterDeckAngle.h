@@ -6,17 +6,23 @@
 #include <cmath>
 #include "../../../CougarLib/CougarDebug.h"
 #include "../../../CougarLib/CougarConstants.h"
+#include "../../../CougarLib/CougarBase/CougarCommand.h"
 
-class SetShooterDeckAngle: public Command {
+
+class SetShooterDeckAngle: public cougar::CougarCommand {
 public:
-	SetShooterDeckAngle(float angle);
+	SetShooterDeckAngle(float angle, std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	virtual void stopAll() override;
 
-	int angle_;
+	float angle_;
+
+private:
+	static const bool BANG_BANG = false;
 };
 
 #endif

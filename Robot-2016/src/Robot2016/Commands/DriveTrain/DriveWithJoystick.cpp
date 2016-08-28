@@ -1,7 +1,8 @@
 #include "DriveWithJoystick.h"
 #include "../../Robot.h"
 
-DriveWithJoystick::DriveWithJoystick()
+DriveWithJoystick::DriveWithJoystick(std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("DriveWithJoystick", joy, true)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -33,7 +34,7 @@ bool DriveWithJoystick::IsFinished()
 // Called once after isFinished returns true
 void DriveWithJoystick::End()
 {
-	Robot::driveTrain->stop();
+	stopAll();
 }
 
 // Called when another command which requires one or more of the same
@@ -41,4 +42,8 @@ void DriveWithJoystick::End()
 void DriveWithJoystick::Interrupted()
 {
 	End();
+}
+
+void DriveWithJoystick::stopAll() {
+	Robot::driveTrain->stop();
 }

@@ -13,6 +13,8 @@ private:
 	std::shared_ptr<cougar::CougarJoystick> driverJoy;
 	std::shared_ptr<cougar::CougarJoystick> operatorJoy;
 
+	std::shared_ptr<cougar::CougarButton> driverButtonLB;
+
 	std::shared_ptr<cougar::CougarButton> operatorButtonA;
 	std::shared_ptr<cougar::CougarButton> operatorButtonB;
 	std::shared_ptr<cougar::CougarButton> operatorButtonX;
@@ -21,6 +23,7 @@ private:
 	std::shared_ptr<cougar::CougarButton> operatorButtonRB;
 	std::shared_ptr<cougar::CougarButton> operatorButtonStart;
 	std::shared_ptr<cougar::CougarButton> operatorButtonBack;
+	std::shared_ptr<cougar::CougarButton> driverButtonX;
 
 public:
 	std::shared_ptr<cougar::CougarJoystick> GetDriverJoystick();

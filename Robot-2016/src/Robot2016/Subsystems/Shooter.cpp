@@ -1,36 +1,47 @@
 #include "Shooter.h"
 #include "../RobotMap.h"
 #include "../Commands/Shooter/AimWithJoystick.h"
+#include "Robot.h"
 
 Shooter::Shooter() :
-		Subsystem("Shooter")
+		cougar::CougarSubsystem("Shooter")
 {
 	bottomRoller = RobotMap::shooterRollerBottom;
+	this->addObject(bottomRoller);
 	topRoller = RobotMap::shooterRollerTop;
+	this->addObject(topRoller);
 	angleMotor = RobotMap::shooterAngleMotor;
+	this->addObject(angleMotor);
 	cameraServo = RobotMap::shooterCameraServo;
+	//this->addObject(cameraServo);
 	//table = NetworkTable::GetTable("SmartDashboard");
-	i = 0;
 }
 
 void Shooter::InitDefaultCommand()
 {
-	SetDefaultCommand(new AimWithJoystick());
+	SetDefaultCommand(new AimWithJoystick(Robot::oi->GetOperatorJoystick()));
 }
 
 void Shooter::stop() {
-	this->angleMotor->StopMotor();
-	this->topRoller->StopMotor();
-	this->bottomRoller->StopMotor();
+	this->angleMotor->Disable();
+	this->topRoller->Disable();
+	this->bottomRoller->Disable();
+
+	this->angleMotor->Enable();
+	this->topRoller->Enable();
+	this->bottomRoller->Enable();
 }
+
 double getAngle(){
 	//return table->GetNumber("azimuth", 0);
 	return 0;
 }
+
 double getDistance(){
 	//return table->GetNumber("distance",0);
 	return 0;
 }
+
 double Shooter::getPotentiometer() {
 	return angleMotor->GetEncPosition();
 }
@@ -59,14 +70,6 @@ int Shooter::getAngleMotorVelocity() {
 	return this->angleMotor->GetAnalogInVel();
 }
 
-int Shooter::getTopRollerDistance() {
-	return this->topRoller->GetEncPosition();
-}
-
-int Shooter::getBottomRollerDistance() {
-	return this->bottomRoller->GetEncPosition();
-}
-
 int Shooter::getTopRollerVelocity() {
 	return this->topRoller->GetEncVel();
 }
@@ -82,13 +85,3 @@ float Shooter::potToAngle(float pot) {
 float Shooter::angleToPot(float angle) {
 	return angle * cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE + cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO;
 }
-
-/*
-int Shooter::getI() {
-	return i;
-}
-
-void Shooter::setI(int value) {
-	i = value;
-}
-*/

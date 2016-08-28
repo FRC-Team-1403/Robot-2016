@@ -3,10 +3,8 @@
 #include "Shooter/PowerUpRollers.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
-#include "StopAllOperator.h"
-#include "CougarWait.h"
 
-Fire::Fire()
+Fire::Fire(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -26,14 +24,7 @@ Fire::Fire()
 	// arm.
 
 
-	AddSequential(new DropTrigger());
+	AddSequential(new DropTrigger(joy));
 
-	AddSequential(new PowerUpRollers(1, 1, 2));
-	//AddSequential(new CougarWait(0.5));
-
-	AddParallel(new PowerUpRollers(1, 1, 1));
-	AddSequential(new LiftTrigger());
-
-
-	AddSequential(new StopAllOperator());
+	AddSequential(new PowerUpRollers(0.83, 0.67, 2, joy));
 }

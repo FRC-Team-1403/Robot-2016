@@ -11,20 +11,20 @@
 #include <memory>
 #include "WPILib.h"
 #include "CougarSpeedController.h"
-#include "../../CougarDebug.h"
+#include "CougarDebug.h"
+#include "CougarBase/Debuggable.h"
+#include "CougarMacros.h"
 #include <vector>
 #include <string>
 
 namespace cougar {
 
-class CougarSpeedControllerAggregate : public SpeedController {
+class CougarSpeedControllerAggregate : public SpeedController, public Debuggable {
 public:
 	CougarSpeedControllerAggregate(uint32_t port1, uint32_t port2,
 			uint32_t PDPSlot1, uint32_t PDPSlot2, std::string name, bool inverted = false);
 	CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers,
 			std::string name, bool inverted = false);
-	explicit CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers);
-	explicit CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers);
 	virtual ~CougarSpeedControllerAggregate();
 
 	virtual void SetInverted(bool inverted) override;
@@ -41,12 +41,16 @@ public:
 	virtual std::string GetName() const;
 	virtual const char *GetCName() const;
 
+	virtual std::string toString() override;
+	virtual std::string dumpState() override;
+
 protected:
 	virtual std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> GetControllers() const;
 
 	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers_;
-	std::string name_;
 	bool inverted_;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarSpeedControllerAggregate)
 };
 
 } /* namespace cougar */

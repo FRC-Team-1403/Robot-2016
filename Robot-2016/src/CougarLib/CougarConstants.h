@@ -56,21 +56,32 @@ public:
 /**********************************Values**********************************/
 
 	// Drive Train
-	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = ((8 * M_PI) / 12) / 256;
+	enum DRIVE_STATES {
+		DIRECT_DRIVE,
+		FPID_DRIVE,
+	};
+	static const int DEFAULT_DRIVE_STATE = DIRECT_DRIVE;
+
+	enum JOYSTICK_DRIVE_MODES {
+		ARCADE_DRIVE,
+		TANK_DRIVE
+	};
+	static const int JOYSTICK_DRIVE_STATE = TANK_DRIVE;
+	static constexpr float DRIVE_ENCODER_TICKS_PER_FOOT = ((((8 * M_PI) / 12) / 256) / (96.0 / 88.5));/* / (158 / 153)*/;
 
 	// Shooter
 	static const bool SHOOTER_ROLLER_TOP_CANTALON_REVERSE_SENSOR = true;
 	static const bool SHOOTER_ROLLER_BOTTOM_CANTALON_REVERSE_SENSOR = true;
-	static const bool SHOOTER_DECK_ANGLE_CANTALON_REVERSE_SENSOR = false;
+	static const bool SHOOTER_DECK_ANGLE_CANTALON_REVERSE_SENSOR = true;
 
 	static const int SHOOTER_DECK_ANGLE_POTENTIOMETER_TURNS = 1;
 	static const int SHOOTER_DECK_ANGLE_FORWARD_LIMIT = 604;
 	static const int SHOOTER_DECK_ANGLE_REVERSE_LIMIT = 351;
 
-	static const int SHOOTER_DECK_ANGLE_ZERO = 549;
-	static const int SHOOTER_DECK_TICKS_PER_DEGREE = 5;
+	static constexpr float SHOOTER_DECK_ANGLE_ZERO = -562;
+	static constexpr float SHOOTER_DECK_TICKS_PER_DEGREE = -5.9;
 
-	static const int SHOOTER_ROLLER_MAX_SPEED = 4500;
+	static const int SHOOTER_ROLLER_MAX_SPEED = 2300;
 
 	static constexpr float SHOOTER_ROLLER_ENCODER_TICKS_PER_REV = 512.0 / 5.0;
 

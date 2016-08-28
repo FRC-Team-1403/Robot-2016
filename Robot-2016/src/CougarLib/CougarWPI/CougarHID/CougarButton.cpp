@@ -45,4 +45,34 @@ void CougarButton::update() {
 	isDown_ = pressed;
 }
 
+void CougarButton::WhenPressed(Command *command) {
+	CougarDebug::debugPrinter((std::string("CougarButton::WhenPressed [Command: ") + command->GetName() + "]").c_str());
+	Button::WhenPressed(command);
+	//CougarDebug::debugPrinter((std::string("CougarButton::WhenPressed [Command: ") + command->GetName() + "]").c_str());
+}
+
+void CougarButton::WhileHeld(Command *command) {
+	CougarDebug::debugPrinter((std::string("CougarButton::WhileHeld [Command: ") + command->GetName() + "]").c_str());
+	Button::WhileHeld(command);
+	//CougarDebug::debugPrinter((std::string("CougarButton::WhileHeld [Command: ") + command->GetName() + "]").c_str());
+}
+
+void CougarButton::WhenReleased(Command *command) {
+	CougarDebug::debugPrinter((std::string("CougarButton::WhenReleased [Command: ") + command->GetName() + "]").c_str());
+	Button::WhenReleased(command);
+	//CougarDebug::debugPrinter((std::string("CougarButton::WhenReleased [Command: ") + command->GetName() + "]").c_str());
+}
+
+void CougarButton::CancelWhenPressed(Command *command) {
+	CougarDebug::debugPrinter((std::string("CougarButton::CancelWhenPressed [Command: ") + command->GetName() + "]").c_str());
+	Button::CancelWhenPressed(command);
+	///CougarDebug::debugPrinter((std::string("CougarButton::CancelWhenPressed [Command: ") + command->GetName() + "]").c_str());
+}
+
+void CougarButton::ToggleWhenPressed(Command *command) {
+	CougarDebug::debugPrinter((std::string("CougarButton::ToggleWhenPressed [Command: ") + command->GetName() + "]").c_str());
+	Button::ToggleWhenPressed(command);
+	//CougarDebug::debugPrinter((std::string("CougarButton::ToggleWhenPressed [Command: ") + command->GetName() + "]").c_str());
+}
+
 } /* namespace cougar */

@@ -5,17 +5,20 @@
 #include "WPILib.h"
 #include "../../../CougarLib/CougarConstants.h"
 #include "../../../CougarLib/CougarDebug.h"
+#include "../../../CougarLib/CougarBase/CougarCommand.h"
+
 #include <cmath>
 
-class PowerUpRollers: public Command
+class PowerUpRollers: public cougar::CougarCommand
 {
 public:
-	PowerUpRollers(float topRollerPower, float bottomRollerPower, float time);
+	PowerUpRollers(float topRollerPower, float bottomRollerPower, float time, std::shared_ptr<cougar::CougarJoystick> joy);
 	void Initialize();
 	void Execute();
 	bool IsFinished();
 	void End();
 	void Interrupted();
+	virtual void stopAll() override;
 
 	float topRollerPower_, bottomRollerPower_;
 	float init_time_;

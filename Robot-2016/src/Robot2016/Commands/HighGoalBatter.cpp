@@ -3,10 +3,8 @@
 #include "Shooter/PowerUpRollers.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
-#include "StopAllOperator.h"
-#include "CougarWait.h"
 
-HighGoalBatter::HighGoalBatter()
+HighGoalBatter::HighGoalBatter(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -27,7 +25,5 @@ HighGoalBatter::HighGoalBatter()
 
 	const float ANGLE = -30;
 
-	AddSequential(new SetShooterDeckAngle(ANGLE));
-
-	AddSequential(new StopAllOperator());
+	AddSequential(new SetShooterDeckAngle(-17.5, joy));
 }

@@ -4,12 +4,16 @@
 #include "../Commands/DriveTrain/DriveWithJoystick.h"
 
 DriveTrain::DriveTrain() :
-		Subsystem("DriveTrain")
+		cougar::CougarSubsystem("DriveTrain")
 {
 	this->driveT = RobotMap::drive;
+	this->addObject(driveT);
 	this->driveTrainLeftEncoder = RobotMap::driveTrainLeftEncoder;
+	this->addObject(this->driveTrainLeftEncoder);
 	this->driveTrainRightEncoder = RobotMap::driveTrainRightEncoder;
+	this->addObject(this->driveTrainRightEncoder);
 	this->driveTrainGyro = RobotMap::driveTrainGyro;
+	this->addObject(this->driveTrainGyro);
 	this->time = Timer::GetFPGATimestamp();
 	this->angle = this->getGyroAngleInRadians();
 	this->distance = getDistance();
@@ -19,14 +23,12 @@ DriveTrain::DriveTrain() :
 
 void DriveTrain::InitDefaultCommand()
 {
-	SetDefaultCommand(new DriveWithJoystick());
+	SetDefaultCommand(new DriveWithJoystick(Robot::oi->GetDriverJoystick()));
 }
 
 void DriveTrain::drive() {
-	if (Robot::oi->GetDriverJoystick()->GetButtonStart()) {
-		this->driveT->ArcadeDrive(Robot::oi->GetDriverJoystick()->GetStickLeftAxisX(), 0);
-	}
-	this->driveT->TankDrive(Robot::oi->GetDriverJoystick());
+	//this->driveT->TankDrive(Robot::oi->GetDriverJoystick());
+	this->driveT->AutomaticDrive(Robot::oi->GetDriverJoystick(), this->driveTrainLeftEncoder, this->driveTrainRightEncoder);
 }
 
 double DriveTrain::getDistance() {

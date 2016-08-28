@@ -1,4 +1,3 @@
-#include "Commands/StopAllOperator.h"
 #include "OI.h"
 #include "Commands/Intake/DropRollers.h"
 #include "Commands/Intake/LiftRollers.h"
@@ -8,6 +7,9 @@
 #include "Commands/Intake/RollersOut.h"
 #include "Commands/Shooter/SetShooterDeckAngle.h"
 #include "Commands/Shooter/PowerUpRollers.h"
+#include "Commands/LowBarAutonomous.h"
+#include "Commands/Autonomous/LowBarAutonomous_Drive.h"
+#include "Commands/DriveTrain/Turn.h"
 
 #include "Commands/IntakeBall.h"
 #include "Commands/HighGoalBatter.h"
@@ -19,37 +21,42 @@
 OI::OI()
 {
 	cougar::CougarDebug::startMethod("OI::OI");
-	this->driverJoy.reset(new cougar::CougarJoystick(0));
+	this->driverJoy.reset(new cougar::CougarJoystick(0, false));
 	this->operatorJoy.reset(new cougar::CougarJoystick(1, true));
 
+	driverButtonLB.reset(new cougar::CougarButton(driverJoy, 5));
+	driverButtonLB->WhenPressed(new Turn(M_PI/2, this->driverJoy));
+
 	operatorButtonA.reset(new cougar::CougarButton(operatorJoy, 1));
-	//operatorButtonA->WhenPressed(new DropRollers());
-	operatorButtonA->WhenPressed(new IntakeBall());
-	//operatorButtonA->WhenPressed(new PowerUpRollers(100, 100));
+	//operatorButtonA->WhenPressed(new DoNothingAutonomous());
+	operatorButtonA->WhenPressed(new IntakeBall(this->operatorJoy));
 
 	operatorButtonB.reset(new cougar::CougarButton(operatorJoy, 2));
-	//operatorButtonB->WhenPressed(new LiftRollers());
-	operatorButtonB->WhileHeld(new StopAllOperator());
+	operatorButtonB->WhenPressed(new LowGoal(this->operatorJoy));
+	//operatorButtonB->WhileHeld(new StopAllOperator());
 	// TODO make a button to lift rollers
 
 	operatorButtonX.reset(new cougar::CougarButton(operatorJoy, 3));
-	operatorButtonX->WhenPressed(new HighGoalBatter());
+	operatorButtonX->WhenPressed(new HighGoalBatter(this->operatorJoy));
 
 	operatorButtonY.reset(new cougar::CougarButton(operatorJoy, 4));
-	operatorButtonY->WhenPressed(new Fire());
+	operatorButtonY->WhenPressed(new Fire(this->operatorJoy));
 
 	operatorButtonLB.reset(new cougar::CougarButton(operatorJoy, 5));
-	operatorButtonLB->WhileHeld(new RollersOut());
+	operatorButtonLB->WhileHeld(new RollersOut(this->operatorJoy));
 	//operatorButtonLB->WhenPressed(new SetShooterDeckAngle(0));
 
 	operatorButtonRB.reset(new cougar::CougarButton(operatorJoy, 6));
-	operatorButtonRB->WhileHeld(new TravelPosition());
+	operatorButtonRB->WhileHeld(new RollersIn(this->operatorJoy));
 
 	operatorButtonStart.reset(new cougar::CougarButton(operatorJoy, 8));
-	operatorButtonStart->WhenPressed(new LowBarPosition());
+	operatorButtonStart->WhenPressed(new LowBarPosition(this->operatorJoy));
 
 	operatorButtonBack.reset(new cougar::CougarButton(operatorJoy, 7));
-	operatorButtonBack->WhenPressed(new LowGoal());
+	operatorButtonBack->WhenPressed(new TravelPosition(this->operatorJoy));
+
+	driverButtonX.reset(new cougar::CougarButton(driverJoy, 3));
+	driverButtonX->WhenPressed(new LowBarAutonomous(this->driverJoy));
 
 	cougar::CougarDebug::endMethod("OI::OI");
 }
