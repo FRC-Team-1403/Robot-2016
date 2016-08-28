@@ -6,11 +6,19 @@
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarCANTalon.h"
 #include "../../CougarLib/CougarConstants.h"
 #include "../../CougarLib/CougarDebug.h"
+#include "../../CougarLib/CougarBase/CougarSubsystem.h"
+
 #include <memory>
 
-class Shooter: public Subsystem
+class Shooter: public cougar::CougarSubsystem
 {
 public:
+
+	enum AngleControlModes {
+		BANG_BANG,
+		PID_FEEDFORWARD
+	};
+
 
 	//projectile motion constants
 	double x, y, d, vi, angle, k, s, h, a, e;
@@ -47,19 +55,11 @@ public:
 	float potToAngle(float pot);
 	float angleToPot(float angle);
 
-	/*
 	//for projectile motion
 	double calculateAngle();
 	void setAngle(double value);
 	double getAngle();
 	double getDistance();
-	int getI();
-	void setI(int value);
-	int getE();
-	int getY();
-	int getVI();
-	int getX();
-	std::shared_ptr<NetworkTable> table;*/
 
 	bool getStopFlyWheels();
 
@@ -67,7 +67,6 @@ public:
 	std::shared_ptr<cougar::CougarCANTalon> topRoller;
 	std::shared_ptr<cougar::CougarCANTalon> angleMotor;
 	std::shared_ptr<Servo> cameraServo;
-
 
 };
 

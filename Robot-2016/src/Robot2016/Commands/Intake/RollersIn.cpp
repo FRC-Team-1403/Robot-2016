@@ -1,11 +1,14 @@
 #include "RollersIn.h"
 #include "../../Robot.h"
+#include "../../../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
 
-RollersIn::RollersIn()
+RollersIn::RollersIn(std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("RollersIn", joy)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
 	Requires(Robot::intake.get());
+	Requires(Robot::shooter.get());
 }
 
 // Called just before this Command runs the first time
@@ -31,7 +34,7 @@ bool RollersIn::IsFinished()
 void RollersIn::End()
 {
 	cougar::CougarDebug::startMethod("RollersIn::End");
-	Robot::intake->roller->StopMotor();
+	stopAll();
 	cougar::CougarDebug::endMethod("RollersIn::End");
 }
 
@@ -42,4 +45,8 @@ void RollersIn::Interrupted()
 	cougar::CougarDebug::startMethod("RollersIn::Interrupted");
 	End();
 	cougar::CougarDebug::endMethod("RollersIn::Interrupted");
+}
+
+void RollersIn::stopAll() {
+	Robot::intake->roller->StopMotor();
 }

@@ -1,7 +1,10 @@
 #include "RollersOut.h"
 #include "../../Robot.h"
+#include "../../../CougarLib/CougarWPI/CougarHID/CougarJoystick.h"
 
-RollersOut::RollersOut()
+
+RollersOut::RollersOut(std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("RollersOut", joy)
 {
 	Requires(Robot::intake.get());
 }
@@ -29,7 +32,7 @@ bool RollersOut::IsFinished()
 void RollersOut::End()
 {
 	cougar::CougarDebug::startMethod("RollersOut::End");
-	Robot::intake->setRoller(0);
+	stopAll();
 	cougar::CougarDebug::endMethod("RollersOut::End");
 }
 
@@ -40,4 +43,8 @@ void RollersOut::Interrupted()
 	cougar::CougarDebug::startMethod("RollersOut::Interrupted");
 	End();
 	cougar::CougarDebug::endMethod("RollersOut::Interrupted");
+}
+
+void RollersOut::stopAll() {
+	Robot::intake->roller->StopMotor();
 }

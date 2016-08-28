@@ -10,7 +10,8 @@
 
 #include "WPILib.h"
 #include "CougarJoystick.h"
-#include "../../CougarDebug.h"
+#include "CougarDebug.h"
+#include "CougarMacros.h"
 
 namespace cougar {
 
@@ -27,9 +28,17 @@ public:
 	virtual bool Get() override;
 	virtual void update();
 
+	virtual void WhenPressed(Command *command) override;
+	virtual void WhileHeld(Command *command) override;
+	virtual void WhenReleased(Command *command) override;
+	virtual void CancelWhenPressed(Command *command) override;
+	virtual void ToggleWhenPressed(Command *command) override;
+
 private:
 	bool wasPressed_, wasReleased_, isDown_;
 	std::shared_ptr<CougarJoystick> stick_;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarButton)
 };
 
 } /* namespace cougar */

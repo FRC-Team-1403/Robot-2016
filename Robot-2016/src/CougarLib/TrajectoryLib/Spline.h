@@ -15,7 +15,7 @@
 #include <cmath>
 #include "../CougarMath.h"
 #include "WaypointSequence.h"
-#include "../CougarDebug.h"
+#include "CougarDebug.h"
 namespace cougar {
 
 class Spline {

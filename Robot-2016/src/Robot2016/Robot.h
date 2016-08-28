@@ -29,6 +29,7 @@ public:
 	static std::shared_ptr<Intake> intake;
 
 	static std::shared_ptr<cougar::Path> lowBarPath;
+	static std::shared_ptr<cougar::Path> lowBarReversePath;
 	static int buffer;
 	static bool enabled;
 	static bool autonomous;

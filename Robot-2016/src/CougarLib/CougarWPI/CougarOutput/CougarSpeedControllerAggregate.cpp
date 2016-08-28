@@ -10,42 +10,31 @@
 namespace cougar {
 
 CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(uint32_t port1, uint32_t port2,
-		uint32_t PDPSlot1, uint32_t PDPSlot2, std::string name, bool inverted /* = false */) {
+		uint32_t PDPSlot1, uint32_t PDPSlot2, std::string name, bool inverted /* = false */) : Debuggable (name) {
 	CougarDebug::startMethod("CougarSpeedControllerAggregate::CougarSpeedControllerAggregate " + name);
 	std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> tmpControllers(new std::vector<std::shared_ptr<CougarSpeedController>>);
-	tmpControllers->push_back(std::shared_ptr<CougarSpeedController>(new CougarSpeedController(port1, PDPSlot1, name + "1")));
-	tmpControllers->push_back(std::shared_ptr<CougarSpeedController>(new CougarSpeedController(port2, PDPSlot2, name + "2")));
+	tmpControllers->push_back(std::shared_ptr<CougarSpeedController>(new CougarSpeedController(port1, PDPSlot1, name + "1", inverted)));
+	tmpControllers->push_back(std::shared_ptr<CougarSpeedController>(new CougarSpeedController(port2, PDPSlot2, name + "2", inverted)));
 	this->controllers_ = tmpControllers;
-	this->name_ = name;
 	this->inverted_ = inverted;
-	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
-		controller->SetInverted(this->inverted_);
-	}
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::CougarSpeedControllerAggregate " + this->GetName());
 }
 
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers, std::string name, bool inverted /* = false */) {
+CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> controllers,
+		std::string name, bool inverted /* = false */) : Debuggable(name) {
 	CougarDebug::startMethod("CougarSpeedControllerAggregate::CougarSpeedControllerAggregate " + name);
 	this->controllers_ = controllers;
-	this->name_ = name;
 	this->inverted_ = inverted;
 	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
 		controller->SetInverted(this->inverted_);
 	}
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::CougarSpeedControllerAggregate " + this->GetName());
 }
-
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(std::shared_ptr<CougarSpeedControllerAggregate> controllers) :
-		CougarSpeedControllerAggregate(controllers->GetControllers(), controllers->GetName(), controllers->GetInverted()){}
-
-CougarSpeedControllerAggregate::CougarSpeedControllerAggregate(const CougarSpeedControllerAggregate &controllers) :
-			CougarSpeedControllerAggregate(controllers.GetControllers(), controllers.GetName(), controllers.GetInverted()){}
 
 CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate() {
 	CougarDebug::startMethod("CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate " + this->GetName());
 	CougarDebug::endMethod("CougarSpeedControllerAggregate::~CougarSpeedControllerAggregate " + this->GetName());
 }
-
 
 void CougarSpeedControllerAggregate::SetInverted(bool inverted) {
 	CougarDebug::startMethod("CougarSpeedControllerAggregate::SetInverted");
@@ -106,13 +95,34 @@ void CougarSpeedControllerAggregate::PIDWrite(float output) {
 std::string CougarSpeedControllerAggregate::GetName() const {
 	return this->name_;
 }
+
 const char *CougarSpeedControllerAggregate::GetCName() const {
 	return this->name_.c_str();
+}
+
+std::string CougarSpeedControllerAggregate::toString() {
+	std::string str = "CougarSpeedControllerAggregate " + this->name_ + "\n";
+	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
+		str += controller->toString();
+		str += "\n";
+	}
+	return str;
+}
+
+std::string CougarSpeedControllerAggregate::dumpState() {
+	std::string str = this->toString();
+	str += "Inverted: " + std::to_string(this->inverted_) + "\n";
+
+	for (std::shared_ptr<CougarSpeedController> controller : *this->controllers_) {
+		str += controller->dumpState();
+		str += "\n";
+	}
+
+	return str;
 }
 
 std::shared_ptr<std::vector<std::shared_ptr<CougarSpeedController>>> CougarSpeedControllerAggregate::GetControllers() const {
 	return this->controllers_;
 }
-
 
 } /* namespace cougar */

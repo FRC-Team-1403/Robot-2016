@@ -3,13 +3,13 @@
 
 #include "Commands/CommandGroup.h"
 #include "WPILib.h"
-#include "../../CougarLib/CougarDebug.h"
+#include "CougarLib.h"
 
 
 class TravelPosition: public CommandGroup
 {
 public:
-	TravelPosition();
+	TravelPosition(std::shared_ptr<cougar::CougarJoystick> joy);
 };
 
 #endif

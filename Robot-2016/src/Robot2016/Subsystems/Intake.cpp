@@ -2,12 +2,16 @@
 #include "../RobotMap.h"
 
 Intake::Intake() :
-		Subsystem("Intake")
+		cougar::CougarSubsystem("Intake")
 {
 	this->roller = RobotMap::intakeRoller;
+	this->addObject(roller);
 	this->ballSwitch = RobotMap::intakeBallSwitch;
+	this->addObject(this->ballSwitch);
 	this->rollersAirCylinder = RobotMap::intakeAngleAirCylinder;
+	this->addObject(rollersAirCylinder);
 	this->triggerAirCylinder = RobotMap::intakeLiftAirCylinder;
+	this->addObject(triggerAirCylinder);
 	this->ballSwitch = RobotMap::intakeBallSwitch;
 }
 
@@ -20,22 +24,22 @@ void Intake::stop() {
 }
 
 void Intake::liftRollersAirCylinder() {
-	rollersAirCylinder->Set(DoubleSolenoid::kReverse);
+	rollersAirCylinder->DoubleSolenoid::Set(cougar::CougarDoubleSolenoid::kReverse);
 }
 
 void Intake::dropRollersAirCylinder() {
-	rollersAirCylinder->Set(DoubleSolenoid::kForward);
+	rollersAirCylinder->DoubleSolenoid::Set(cougar::CougarDoubleSolenoid::kForward);
 }
 
 void Intake::liftTriggerAirCylinder() {
-	triggerAirCylinder->Set(false);
+	triggerAirCylinder->Solenoid::Set(false);
 }
 
 void Intake::dropTriggerAirCylinder() {
-	triggerAirCylinder->Set(true);
+	triggerAirCylinder->Solenoid::Set(true);
 }
 
-enum DoubleSolenoid::Value Intake::getRollersAirCylinderValue() {
+enum cougar::CougarDoubleSolenoid::Value Intake::getRollersAirCylinderValue() {
 	return rollersAirCylinder->Get();
 }
 

@@ -41,6 +41,7 @@ bool Spline::reticulateSplines(double x0, double y0, double theta0,
 	result->y_offset_ = y0;
 	double x1_hat = sqrt((x1 - x0) * (x1 - x0) + (y1 - y0) * (y1 - y0));
 	if (x1_hat == 0) {
+		CougarDebug::debugPrinter(CougarDebug::FATAL_ERROR, "reticulateSplines failed - CASE 1");
 		return false;
 	}
 	result->knot_distance_ = x1_hat;
@@ -55,6 +56,7 @@ bool Spline::reticulateSplines(double x0, double y0, double theta0,
 	// line between p0 and p1.
 	if (almostEqual(abs(theta0_hat), M_PI / 2)
 					|| almostEqual(abs(theta1_hat), M_PI / 2)) {
+		CougarDebug::debugPrinter(CougarDebug::FATAL_ERROR, "reticulateSplines failed - CASE 2");
 		return false;
 	}
 	// We also cannot handle the case that the end angle is facing towards the
@@ -62,6 +64,7 @@ bool Spline::reticulateSplines(double x0, double y0, double theta0,
 	if (abs(CougarMath::getDifferenceInAngleRadians(theta0_hat,
 					theta1_hat))
 					>= M_PI / 2) {
+		CougarDebug::debugPrinter(CougarDebug::FATAL_ERROR, "reticulateSplines failed - CASE 3");
 		return false;
 	}
 	// Turn angles into derivatives (slopes)

@@ -10,14 +10,15 @@
 
 #include <memory>
 #include "WPILib.h"
-#include "../../CougarDebug.h"
+#include "CougarDebug.h"
+#include "CougarMacros.h"
 #include <cmath>
 
 namespace cougar {
 
 class CougarJoystick {
 public:
-	explicit CougarJoystick(uint32_t port, int smoothingMode = Smoothing::TRIPLE_SINE, bool ignoreModsExceptSmoothing = false);
+	explicit CougarJoystick(uint32_t port, bool ignoreModsExceptSmoothing = false, int smoothingMode = Smoothing::TRIPLE_SINE);
 	virtual ~CougarJoystick();
 
 	virtual void setSmoothingMode(int32_t mode);
@@ -32,7 +33,12 @@ public:
 	virtual bool GetButtonLB();
 	virtual bool GetButtonStart();
 	virtual bool GetButtonBack();
+	virtual bool GetButtonLeftStick();
+	virtual bool GetButtonRightStick();
+	virtual bool GetButtonBothSticks();
 	virtual bool GetRawButton(uint32_t port);
+	virtual bool IsZeroAxis(uint32_t axis);
+	virtual bool AreZeroSticks();
 
 	virtual float GetStickLeftAxisX();
 	virtual float GetStickLeftAxisY();
@@ -79,6 +85,8 @@ protected:
 	static int SMOOTHING_MODE;
 	static constexpr double SCALING_FACTOR = 0.75;
 	static constexpr double LIMIT = 1;
+
+	DISALLOW_COPY_AND_ASSIGN(CougarJoystick)
 };
 
 } /* namespace cougar */

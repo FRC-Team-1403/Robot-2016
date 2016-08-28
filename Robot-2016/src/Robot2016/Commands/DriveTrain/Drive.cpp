@@ -1,7 +1,8 @@
 #include "Drive.h"
 #include "../../Robot.h"
 
-Drive::Drive(float left, float right, float time)
+Drive::Drive(float left, float right, float time, std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("Drive", joy, false, time)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -34,7 +35,7 @@ bool Drive::IsFinished()
 // Called once after isFinished returns true
 void Drive::End()
 {
-	Robot::driveTrain->stop();
+	stopAll();
 }
 
 // Called when another command which requires one or more of the same
@@ -42,4 +43,8 @@ void Drive::End()
 void Drive::Interrupted()
 {
 	End();
+}
+
+void Drive::stopAll() {
+	Robot::driveTrain->stop();
 }

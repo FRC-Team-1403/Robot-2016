@@ -17,6 +17,7 @@
 #include <memory>
 #include <stdexcept>
 #include "../CougarMath.h"
+#include "CougarDebug.h"
 
 namespace cougar {
 

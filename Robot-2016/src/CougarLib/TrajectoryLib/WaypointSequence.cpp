@@ -30,7 +30,7 @@ void WaypointSequence::addWaypoint(std::shared_ptr<Waypoint> w) {
 	if (this->waypoints_->size() < this->max_waypoints_) {
 		this->waypoints_->push_back(w);
 	} else {
-		std::cout << "Index is above maximum waypoint value \n";
+		CougarDebug::debugPrinter(CougarDebug::FATAL_ERROR, "Index is above maximum waypoint value");
 	}
 }
 

@@ -5,6 +5,7 @@
 int Robot::buffer;
 std::shared_ptr<OI> Robot::oi;
 std::shared_ptr<cougar::Path> Robot::lowBarPath;
+std::shared_ptr<cougar::Path> Robot::lowBarReversePath;
 std::shared_ptr<DriveTrain> Robot::driveTrain;
 std::shared_ptr<Shooter> Robot::shooter;
 std::shared_ptr<Intake> Robot::intake;
@@ -49,26 +50,33 @@ bool Robot::isTest() {
 
 void Robot::RobotInit()
 {
+
+	CameraServer::GetInstance()->SetQuality(50);
+	CameraServer::GetInstance()->StartAutomaticCapture("cam1");
 	buffer = 3;
 	cougar::CougarDebug::init();
 	cougar::CougarDebug::startMethod("Robot::RobotInit");
 	initModes();
-	RobotMap::init();
+	//RobotMap::init();
+	system("chmod 777 /home/lvuser/pi.sh");
+	std::thread pi(system, "/home/lvuser/pi.sh");
+	pi.detach();
 
-	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization started");
+	cougar::CougarDebug::debugPrinter("OI/Subsystem/RobotMap initialization started");
+	RobotMap::init();
 	oi.reset(new OI());
 	driveTrain.reset(new DriveTrain());
 	shooter.reset(new Shooter());
 	intake.reset(new Intake());
-	cougar::CougarDebug::debugPrinter("OI/Subsystem initialization finished");
+	cougar::CougarDebug::debugPrinter("OI/Subsystem/RobotMap initialization finished");
 
 
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization started");
 	chooser = new SendableChooser();
-	//chooser->AddDefault("Low Bar High Goal Autonomous", new LowBarAutonomous());
+	//chooser->AddDefault("Low Bar Low Goal Autonomous", new LowBarAutonomous(oi->GetDriverJoystick()));
 	//chooser->AddObject("Breaker Forward Autonomous", new DriveForwardAutonomous());
-	chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous());
-	chooser->AddObject("Do Nothing Autonomous", new DoNothingAutonomous());
+	chooser->AddDefault("Intake Forward Autonomous", new DriveBackwardAutonomous(oi->GetDriverJoystick()));
+	//chooser->AddObject("Do Nothing Autonomous", new DoNothingAutonomous(oi->GetDriverJoystick()));
 	SmartDashboard::PutData("Auto Modes", chooser);
 	cougar::CougarDebug::debugPrinter("SendableChooser initialization finished");
 
@@ -78,19 +86,34 @@ void Robot::RobotInit()
 	const double kWheelbaseWidth = 23.5/12;
 
 	config->dt = 0.02; // Periodic methods are called every 20 ms (I think), so dt is 0.02 seconds.
-	config->max_acc = 30.0;
-	config->max_jerk = 40.0;
+	config->max_acc = 40.0;
+	config->max_jerk = 50.0;
 	config->max_vel = 9.0;
 
 	// Low Bar
 	{
 		const std::string path_name = "LowBarPath";
 		std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
+
 		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
-		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(2, 0, 0)));
-		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(4, 0, 0)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(5, 0, 0)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(10, -6, -1 * M_PI / 2)));
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(15, -13, -1 * M_PI / 3)));
+		//p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(5, -4, -1 * M_PI / 2)));
 		lowBarPath = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
 	}
+
+	// Low Bar Reverse
+	{
+		const std::string path_name = "LowBarReversePath";
+		std::shared_ptr<cougar::WaypointSequence> p(new cougar::WaypointSequence(10));
+
+		p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(0, 0, 0)));
+		//p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(-11, 15, M_PI / 3)));
+		//p->addWaypoint(std::shared_ptr<cougar::WaypointSequence::Waypoint>(new cougar::WaypointSequence::Waypoint(-16, 15, M_PI / 3)));
+		lowBarReversePath = cougar::PathGenerator::makePath(p, config, kWheelbaseWidth, path_name);
+	}
+
 	cougar::CougarDebug::debugPrinter("Motion mapping initialization finished");
 
 	cougar::CougarDebug::endMethod("Robot::RobotInit");
@@ -100,7 +123,6 @@ void Robot::DisabledInit()
 {
 	update();
 	cougar::CougarDebug::startMethod("Robot::DisabledInit");
-	std::cout << buffer << std::endl;
 	buffer--;
 	if (buffer == 0) {
 		cougar::CougarDebug::end();
@@ -121,7 +143,8 @@ void Robot::AutonomousInit()
 	update();
 	cougar::CougarDebug::startMethod("Robot::AutonomousInit");
 
-	autonomousCommand.reset((Command *)chooser->GetSelected());
+	//autonomousCommand.reset((Command *)chooser->GetSelected());
+	autonomousCommand.reset(new DriveBackwardAutonomous(oi->GetDriverJoystick()));
 
 	if (autonomousCommand != NULL)
 		autonomousCommand->Start();
@@ -156,7 +179,7 @@ void Robot::TeleopPeriodic()
 {
 	Scheduler::GetInstance()->Run();
 	update();
-
+/*
 	auto a = table->GetNumberArray("distance",0);
 	for(int x:a)
 	SmartDashboard::PutNumber("distance", a[x]);
@@ -165,11 +188,11 @@ void Robot::TeleopPeriodic()
 	for(int x:b)
 	SmartDashboard::PutNumber("azimuth", a[x]);
 
-
-	SmartDashboard::PutNumber("Driver Left X", oi->GetDriverJoystick()->GetStickLeftAxisX());
-	SmartDashboard::PutNumber("Driver Left Y", oi->GetDriverJoystick()->GetStickLeftAxisY());
-	SmartDashboard::PutNumber("Driver Right X", oi->GetDriverJoystick()->GetStickRightAxisX());
-	SmartDashboard::PutNumber("Driver Right Y", oi->GetDriverJoystick()->GetStickRightAxisY());
+*/
+	//SmartDashboard::PutNumber("Driver Left X", oi->GetDriverJoystick()->GetStickLeftAxisX());
+	//SmartDashboard::PutNumber("Driver Left Y", oi->GetDriverJoystick()->GetStickLeftAxisY());
+	//SmartDashboard::PutNumber("Driver Right X", oi->GetDriverJoystick()->GetStickRightAxisX());
+	//SmartDashboard::PutNumber("Driver Right Y", oi->GetDriverJoystick()->GetStickRightAxisY());
 
 	SmartDashboard::PutNumber("Operator Left X", oi->GetOperatorJoystick()->GetStickLeftAxisX());
 	SmartDashboard::PutNumber("Operator Left Y", oi->GetOperatorJoystick()->GetStickLeftAxisY());
@@ -177,26 +200,28 @@ void Robot::TeleopPeriodic()
 	SmartDashboard::PutNumber("Operator Right Y", oi->GetOperatorJoystick()->GetStickRightAxisY());
 
 
-	SmartDashboard::PutNumber("Drive Position", driveTrain->getDistance());
-	SmartDashboard::PutNumber("Drive Velocity", driveTrain->getVelocity());
-	SmartDashboard::PutNumber("Drive Acceleration", driveTrain->getAcceleration());
+	//SmartDashboard::PutNumber("Drive Position", driveTrain->getDistance());
+	//SmartDashboard::PutNumber("Drive Velocity", driveTrain->getVelocity());
+	//SmartDashboard::PutNumber("Drive Acceleration", driveTrain->getAcceleration());
 	SmartDashboard::PutNumber("Drive Angle", driveTrain->getGyroAngleInRadians());
 	SmartDashboard::PutNumber("Drive Train Left Encoder", driveTrain->getLeftEncoderDistance());
 	SmartDashboard::PutNumber("Drive Train Right Encoder", driveTrain->getRightEncoderDistance());
 
 	SmartDashboard::PutNumber("POT distance", (shooter->getAngleMotorDistance() - cougar::CougarConstants::SHOOTER_DECK_ANGLE_ZERO) / cougar::CougarConstants::SHOOTER_DECK_TICKS_PER_DEGREE);
-	SmartDashboard::PutNumber("POT velocity", shooter->getAngleMotorVelocity());
-	SmartDashboard::PutNumber("Top Roller position", shooter->getTopRollerDistance());
-	SmartDashboard::PutNumber("Bottom Roller position", shooter->getTopRollerDistance());
-	SmartDashboard::PutNumber("Top Roller velocity", shooter->getTopRollerVelocity());
-	SmartDashboard::PutNumber("Bottom Roller velocity", shooter->getTopRollerVelocity());
+	//SmartDashboard::PutNumber("POT velocity", shooter->getAngleMotorVelocity());
+	SmartDashboard::PutNumber("Top Roller Speed", shooter->topRoller->GetEncVel());
+	SmartDashboard::PutNumber("Bottom Roller Speed", shooter->bottomRoller->GetEncVel());
 	SmartDashboard::PutNumber("Intake limit switch", intake->getBallSwitchValue());
-	SmartDashboard::PutNumber("Roller Solenoid", intake->getRollersAirCylinderValue());
-	SmartDashboard::PutNumber("Trigger Solenoid", intake->getTriggerAirCylinderValue());
+	//SmartDashboard::PutNumber("Roller Solenoid", intake->getRollersAirCylinderValue());
+	//SmartDashboard::PutNumber("Trigger Solenoid", intake->getTriggerAirCylinderValue());
 
-	SmartDashboard::PutNumber("Angle Motor", shooter->angleMotor->Get());
-	SmartDashboard::PutNumber("Top Roller", shooter->topRoller->Get());
-	SmartDashboard::PutNumber("Bottom Roller", shooter->bottomRoller->Get());
+	//SmartDashboard::PutNumber("Angle Motor", shooter->angleMotor->Get());
+	//SmartDashboard::PutNumber("Top Roller", shooter->topRoller->Get());
+	//SmartDashboard::PutNumber("Bottom Roller", shooter->bottomRoller->Get());
+
+
+	SmartDashboard::PutNumber("Servo", shooter->cameraServo->Get());
+	SmartDashboard::PutBoolean("BALL", !intake->ballSwitch->Get());
 }
 
 void Robot::TestPeriodic()

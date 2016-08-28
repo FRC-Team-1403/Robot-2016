@@ -1,14 +1,13 @@
 #include "LowGoal.h"
-#include "Intake/RollersOutTimed.h"
-#include "CougarWait.h"
 #include "Shooter/SetShooterDeckAngle.h"
 #include "Intake/LiftTrigger.h"
 #include "Intake/DropTrigger.h"
 #include "Intake/LiftRollers.h"
 #include "Intake/DropRollers.h"
-#include "StopAllOperator.h"
+#include "Intake/RollersOut.h"
+#include "Shooter/PowerUpRollers.h"
 
-LowGoal::LowGoal()
+LowGoal::LowGoal(std::shared_ptr<cougar::CougarJoystick> joy)
 {
 	// Add Commands here:
 	// e.g. AddSequential(new Command1());
@@ -27,15 +26,15 @@ LowGoal::LowGoal()
 	// a CommandGroup containing them would require both the chassis and the
 	// arm.
 
-	AddParallel(new DropRollers());
-	AddSequential(new SetShooterDeckAngle(10));
+	AddSequential(new LiftRollers(joy));
+	AddSequential(new SetShooterDeckAngle(21, joy));
 
-	AddSequential(new DropTrigger());
+	AddSequential(new DropTrigger(joy));
 
-	AddSequential(new RollersOutTimed(2));
+	AddParallel(new PowerUpRollers(-1, 1, 2, joy));
+	AddSequential(new RollersOut(joy), 2);
 
-	AddParallel(new LiftRollers());
-	AddParallel(new LiftTrigger());
+	AddParallel(new LiftTrigger(joy));
+	AddSequential(new SetShooterDeckAngle(0, joy));
 
-	AddSequential(new StopAllOperator());
 }

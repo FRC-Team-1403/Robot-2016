@@ -4,14 +4,18 @@
 #include "WPILib.h"
 #include <cmath>
 #include "../../CougarLib/CougarWPI/CougarOutput/CougarDrive.h"
+#include "../../CougarLib/CougarWPI/CougarInput/CougarEncoder.h"
+#include "../../CougarLib/CougarWPI/CougarInput/CougarGyro.h"
+#include "../../CougarLib/CougarBase/CougarSubsystem.h"
 
-class DriveTrain: public Subsystem
+
+class DriveTrain: public cougar::CougarSubsystem
 {
 private:
 	std::shared_ptr<cougar::CougarDrive> driveT;
-	std::shared_ptr<Encoder> driveTrainRightEncoder;
-	std::shared_ptr<Encoder> driveTrainLeftEncoder;
-	std::shared_ptr<Gyro> driveTrainGyro;
+	std::shared_ptr<cougar::CougarEncoder> driveTrainRightEncoder;
+	std::shared_ptr<cougar::CougarEncoder> driveTrainLeftEncoder;
+	std::shared_ptr<cougar::CougarGyro> driveTrainGyro;
 
 	double time;
 	double distance;

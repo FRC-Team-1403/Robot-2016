@@ -1,7 +1,8 @@
 #include "LowBarAutonomous_Drive.h"
 #include "../../Robot.h"
 
-LowBarAutonomous_Drive::LowBarAutonomous_Drive()
+LowBarAutonomous_Drive::LowBarAutonomous_Drive(std::shared_ptr<cougar::CougarJoystick> joy) :
+	cougar::CougarCommand("LowBarAutonomous_Drive", joy)
 {
 	// Use Requires() here to declare subsystem dependencies
 	// eg. Requires(chassis);
@@ -24,7 +25,7 @@ void LowBarAutonomous_Drive::Initialize()
 
 void LowBarAutonomous_Drive::Execute()
 {
-    driveController->loadProfileNoReset(Robot::lowBarPath->getLeftWheelTrajectory(), Robot::lowBarPath->getRightWheelTrajectory());
+   // driveController->loadProfileNoReset(Robot::lowBarPath->getLeftWheelTrajectory(), Robot::lowBarPath->getRightWheelTrajectory());
 	driveController->update();
 }
 
@@ -38,8 +39,7 @@ bool LowBarAutonomous_Drive::IsFinished()
 void LowBarAutonomous_Drive::End()
 {
 	cougar::CougarDebug::startMethod("LowBarAutonomous_Drive::End");
-	Robot::driveTrain->stop();
-	driveController->disable();
+	stopAll();
 	cougar::CougarDebug::endMethod("LowBarAutonomous_Drive::End");
 }
 
@@ -50,4 +50,9 @@ void LowBarAutonomous_Drive::Interrupted()
 	cougar::CougarDebug::startMethod("LowBarAutonomous_Drive::Interrupted");
 	End();
 	cougar::CougarDebug::endMethod("LowBarAutonomous_Drive::Interrupted");
+}
+
+void LowBarAutonomous_Drive::stopAll() {
+	Robot::driveTrain->stop();
+	driveController->disable();
 }

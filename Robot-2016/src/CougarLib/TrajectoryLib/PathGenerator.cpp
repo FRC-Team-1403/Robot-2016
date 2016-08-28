@@ -29,9 +29,7 @@ std::shared_ptr<Trajectory> PathGenerator::generateFromPath(std::shared_ptr<Wayp
 	CougarDebug::startMethod("PathGenerator::generateFromPath");
 	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Passed path (actually a WaypointSequence) has %d waypoints", path->getNumWaypoints());
 	if (path->getNumWaypoints() < 2) {
-		CougarDebug::indent();
 		CougarDebug::debugPrinter(CougarDebug::FATAL_ERROR, "Number of waypoints is less than two. Returning empty trajectory.");
-		CougarDebug::unindent();
 		std::shared_ptr<Trajectory> tmp(new Trajectory(0));
 		return tmp;
 	}
@@ -43,35 +41,27 @@ std::shared_ptr<Trajectory> PathGenerator::generateFromPath(std::shared_ptr<Wayp
 	std::shared_ptr<std::vector<double>> spline_lengths; // Remember, Mrs. Jessu said not to use parallel lists!
 	spline_lengths.reset(new std::vector<double>());
 	double total_distance = 0;
-	CougarDebug::indent();
 	for (uint32_t i = 0; i < path->getNumWaypoints() - 1; ++i) {
 		splines->push_back(std::shared_ptr<Spline>(new Spline()));
 		try {
 			splines->at(i);
 		} catch (const std::out_of_range& oor) {
-			CougarDebug::indent();
 			CougarDebug::debugPrinter(CougarDebug::FATAL_ERROR, "Out of range error in PathGenerator::generateFromPath; trying to get element at index %d", i);
-			CougarDebug::unindent();
 			break;
 		}
 		if (!Spline::reticulateSplines(path->getWaypoint(i),
 						path->getWaypoint(i + 1), splines->at(i), Spline::QuinticHermite)) {
-			CougarDebug::indent();
 			CougarDebug::debugPrinter(CougarDebug::FATAL_ERROR, "ReticulateSplines returned false. Returning empty trajectory.");
-			CougarDebug::unindent();
 			std::shared_ptr<Trajectory> tmp(new Trajectory(0));
 			return tmp;
 		}
 		spline_lengths->push_back(splines->at(i)->calculateLength());
 		total_distance += spline_lengths->at(i);
 	}
-	CougarDebug::unindent();
 
-	CougarDebug::indent();
 	for (std::shared_ptr<Spline> spline : *splines.get()) {
 		CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Generated spline %s", spline->toString().c_str());
 	}
-	CougarDebug::unindent();
 
 	CougarDebug::debugPrinter(CougarDebug::MESSAGE, "Total distance is %d", total_distance);
 
@@ -103,9 +93,7 @@ std::shared_ptr<Trajectory> PathGenerator::generateFromPath(std::shared_ptr<Wayp
 				length_of_splines_finished += spline_lengths->at(cur_spline);
 				cur_spline_start_pos = length_of_splines_finished;
 				++cur_spline;
-				CougarDebug::unindent();
 			} else {
-				CougarDebug::indent();
 				traj->getSegment(i)->heading = splines->at(splines->size() - 1)->angleAt(1.0);
 				std::shared_ptr<std::vector<double>> coords = splines->at(splines->size() - 1)->getXandY(1.0);
 				traj->getSegment(i)->x = coords->at(0);

@@ -3,11 +3,12 @@
 
 #include "Commands/CommandGroup.h"
 #include "WPILib.h"
+#include "CougarLib.h"
 
 class LowBarAutonomous: public CommandGroup
 {
 public:
-	LowBarAutonomous();
+	LowBarAutonomous(std::shared_ptr<cougar::CougarJoystick> joy);
 };
 
 #endif

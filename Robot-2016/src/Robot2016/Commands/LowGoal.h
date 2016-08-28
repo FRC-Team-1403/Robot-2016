@@ -3,11 +3,12 @@
 
 #include "Commands/CommandGroup.h"
 #include "WPILib.h"
+#include "CougarLib.h"
 
 class LowGoal: public CommandGroup
 {
 public:
-	LowGoal();
+	LowGoal(std::shared_ptr<cougar::CougarJoystick> joy);
 };
 
 #endif
